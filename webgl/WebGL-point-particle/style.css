@@ -1,0 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+body {
+    background: #FFF;
+}
+
+canvas {
+    border: 1px solid #AAA;
+    background-color: #000;
+}
+p {
+    font-family: consolas;
+    color: #777;
+    font-size: 11pt;
+}

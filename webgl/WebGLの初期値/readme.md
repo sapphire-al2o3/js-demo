@@ -1,0 +1,2 @@
+ミップマップを使わないときは
+TEXTURE_MIN_FILTERをNEARESTかLINEARに設定しておくこと

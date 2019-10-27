@@ -1,0 +1,14 @@
+canvas {
+    border: 1px solid #AAA;
+}
+p {
+    font-family: consolas;
+    color: #777;
+    font-size: 11pt;
+}
+.palette div {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    border: 1px solid #AAA;
+}

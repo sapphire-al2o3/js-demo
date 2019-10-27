@@ -1,0 +1,3 @@
+lineWidthが効きません
+
+windowsのブラウザだとWebGLのバックエンドにDirectX(ANGLE)が使われてるのでラインの太さが指定できないっぽい

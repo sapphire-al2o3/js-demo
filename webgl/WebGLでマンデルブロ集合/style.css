@@ -1,0 +1,49 @@
+body {
+  background-color: #222;
+}
+canvas {
+  border: 1px solid #AAA;
+}
+
+.frame {
+    margin: 8px 4px;
+}
+
+.check {
+    border: 1px solid #999;
+	border-radius: 8px;
+	width: 12px;
+	height: 12px;
+	background-color: #999;
+	position: relative;
+	box-shadow: inset 1px 1px 4px #444;
+	margin: 1px 3px;
+    color: #FFF;
+}
+
+.check span {
+	position: absolute;
+	display: block;
+	width: 6px;
+	height: 6px;
+	background-color: #FFF;
+	border-radius: 5px;
+	border: 1px solid #FFF;
+	top: 2px;
+	left: 2px;
+	box-shadow: 0px 1px 3px #555;
+	background: -webkit-gradient(linear, left top, left bottom, from(#DDD), to(#999));
+}
+
+.check .label {
+    margin-left: 18px;
+    font-size: 9pt;
+    font-family: Verdana;
+    margin-top: 0px;
+}
+
+.check:hover {
+	border-top-color: #BBB;
+	border-bottom-color: #CCC;
+	background-color: #BBB;
+}

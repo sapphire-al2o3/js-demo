@@ -1,0 +1,14 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+body {
+  background: #000;
+  font: 30px sans-serif;
+}
+
+			canvas {
+				background-color: #000;
+			}
