@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #333;
+}
+canvas {
+    background-color: #000;
+}
+
+table {
+    border: 1px solid #AAA;
+    margin-bottom: 4px;
+    border-spacing: 0;
+    padding: 2px 4px;
+}
+
+th td {
+    margin: 0 8px;
+    padding: 0 4px;
+}
+
+th {
+    width: 60px;
+}
+
+th label {
+    font-family: consolas;
+    font-size: 75%;
+    color: #AAA;
+    font-weight: normal;
+}
+
+input[type="button"] {
+    width: 60px;
+}
+
+input[type="text"] {
+    width: 48px;
+    text-align: right;
+    padding: 0;
+    padding-right: 4px;
+    background-color: #EEE;
+    font-size: 75%;
+    border: 0;
+}
+
+input[type="text"]:focus {
+    background-color: #FFF;
+}

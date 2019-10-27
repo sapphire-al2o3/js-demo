@@ -1,0 +1,1 @@
+setLineDash、lineDashOffsetのテスト

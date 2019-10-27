@@ -1,0 +1,20 @@
+@font-face {
+    font-family: GanbaranaiFont;
+    font-style: normal;
+    font-weight: normal;
+    src: url("./font.woff") format("woff");
+}
+h1 {
+    font-family: GanbaranaiFont;
+    font-size: 20pt;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+p {
+    font-family: GanbaranaiFont;
+    font-size: 16pt;
+}
+canvas {
+    border: 1px solid #AAA;
+}

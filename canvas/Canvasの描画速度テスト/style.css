@@ -1,0 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+button {
+    width: 100px;
+}
+
+canvas {
+    backface-visibility: hidden;
+}
+
+span {
+    padding: 4px;
+}

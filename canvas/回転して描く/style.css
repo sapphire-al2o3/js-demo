@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+canvas {
+    background-color: #FFF;
+}
+
+body {
+  background: #fdd;
+}
+
+p {
+    margin-top: 5px;
+}
+
+p span {
+    cursor: pointer;
+    padding: 4px 8px;
+    background-color: #E7E7E7;
+    border: 1px solid #AAA;
+    margin-left: 4px;
+    border-radius: 3px;
+}
