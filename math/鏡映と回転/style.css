@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+canvas {
+    background-color: #F7F7F7;
+}
+
+body {
+  background: #dfd;
+  font: 30px sans-serif;
+}
+
+span {
+    border: 1px solid #AAA;
+    font-size: 12px;
+    padding: 4px;
+    background-color: #FFF;
+    cursor: pointer;
+}

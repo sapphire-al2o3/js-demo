@@ -1,0 +1,27 @@
+* {
+    font-family: Century;
+}
+
+body { background-color: #DDDDDD; font: 30px sans-serif; }
+
+p {
+    margin: 0;
+    padding: 0;
+    }
+
+form {
+    font-size: 11pt;
+    border: 1px solid #AAA;
+    margin: 4px;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+input[type="text"] {
+    width: 64px;
+}
+
+td input[type="text"] {
+    width: 128px;
+    margin-right: 4px;
+}

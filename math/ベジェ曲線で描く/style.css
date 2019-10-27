@@ -1,0 +1,8 @@
+body { background-color: #DDDDDD; font: 30px sans-serif; }
+canvas {
+border: 1px solid #AAA;  
+}
+span {
+  font-size: 9pt;
+  border: 1px solid #AAA;
+  }

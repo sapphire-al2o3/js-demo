@@ -1,0 +1,14 @@
+body { background-color: #DDDDDD; font: 30px sans-serif; }
+canvas { background-color: #FFF; }
+div.button {
+    font-size: 10pt;
+    font-family: Meiryo;
+	border: 1px solid #AAA;
+    width: 80px;
+    padding: 2px;
+    text-align: center;
+}
+
+div.button:hover {
+    background-color: #EEE;
+}
