@@ -1,5 +1,7 @@
 # js-demo
 
+https://sapphire-al2o3.github.io/js-demo/
+
 ## WebGL
 
 - [Bloom](https://sapphire-al2o3.github.io/js-demo/webgl/Bloom/)
@@ -15,7 +17,7 @@
 - [WebGLでインデックスカラー画像を表示](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLでインデックスカラー画像を表示/)
 - [WebGLでテキスト表示](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLでテキスト表示/)
 - [WebGLでトーラス](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLでトーラス/)
-- [WebGLでドット絵表示(ドットの形を変える/)](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLでドット絵表示(ドットの形を変える/)/)
+- [WebGLでドット絵表示(ドットの形を変える)](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLでドット絵表示(ドットの形を変える)/)
 - [WebGLでビデオにフィルタをかける](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLでビデオにフィルタをかける/)
 - [WebGLでポイントスプライト](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLでポイントスプライト/)
 - [WebGLでポイントライト](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLでポイントライト/)
