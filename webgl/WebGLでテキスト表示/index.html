@@ -33,7 +33,7 @@ window.onload = function() {
         Font.texture(this);
         timer = setAnimationFrame(render, 1000 / 30);
     };
-    img.src = 'http://jsrun.it/assets/g/m/U/c/gmUcA.png';
+    img.src = 'font.png';
     
     // フォント設定の読み込み
     var xhr = new XMLHttpRequest();
@@ -43,7 +43,7 @@ window.onload = function() {
             Font.font(json);
         }
     };
-    xhr.open('get', 'http://jsrun.it/assets/s/9/4/h/s94hO');
+    xhr.open('get', 'font.json');
     xhr.send();
     
     var frame = 0,
@@ -64,7 +64,7 @@ window.onload = function() {
 };
 </script>
 
-<script type="text/javascript" src="http://jsdo.it/sapphire_al2o3/webglutil/js"></script>
+<script type="text/javascript" src="../../lib/webglutil.js"></script>
 
 <script type="text/javascript" src="index.js"></script>
 </body>
