@@ -52,7 +52,7 @@
         width = canvas.width,
         height = canvas.height,
         centerX = width / 2,
-            centerY = height / 2;
+        centerY = height / 2;
     
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
