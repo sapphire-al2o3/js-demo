@@ -1,0 +1,30 @@
+body {
+}
+
+#wrapper {
+    width: 280px;
+    float: left;
+}
+#left {
+    float: left;
+    width: 80px;
+}
+#right {
+    width: 80px;
+    float: left;
+}
+ul {
+    margin: 0 auto;
+    padding: 0;
+    width: 240px;
+}
+li {
+    display: inline-block;
+    width: 32px;
+    height: 20px;
+    margin: 1px;
+    padding: 0;
+}
+input {
+    width: 72px;
+}

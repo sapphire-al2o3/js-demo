@@ -1,0 +1,2 @@
+canvasでクロスフェード
+SVGだとglobalAlphaが効かない
