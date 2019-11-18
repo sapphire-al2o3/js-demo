@@ -160,25 +160,6 @@ function interSeg(p0, v0, p1, v1) {
     return (v1.y * (p1.x - p0.x) - v1.x * (p1.y - p0.y)) * d;
 }
 
-// 2次方程式の解の公式
-function solve2(a, b, c) {
-	if(a === 0) {
-		return b === 0 ? [] : [-c / b];
-	}
-	
-	var d = b * b - 4 * a * c;
-	if(d < 0) return [];
-	
-	var ia = 0.5 / a;
-	
-	if(d === 0) {
-		return [-b * ia];
-	}
-	
-	var sd = Math.sqrt(d);
-	return [(-b + sd) * ia, (-b - sd) * ia];
-}
-
 function reflect(v, n, r) {
     var d = (v.x * n.x + v.y * n.y) * 2.0;
     r = r || {};
@@ -186,39 +167,6 @@ function reflect(v, n, r) {
     r.x = v.x - d * n.x * s;
     r.y = v.y - d * n.y * s;
     return r;
-}
-
-function Bezier2(p0, p1, p2) {
-	this.p0 = p0;
-	this.p1 = p1;
-	this.p2 = p2;
-	this.a = p0.x - 2 * p1.x + p2.x;
-	this.b = 2 * (p1.x - p0.x);
-	this.c = p0.x;
-	this.d = p0.y - 2 * p1.y + p2.y;
-	this.e = 2 * (p1.y - p0.y);
-	this.f = p0.y;
-}
-
-function bezier2(p0, p1, p2, t) {
-	if(t !== undefined) {
-		return {
-			x: (1 - t) * (1 - t) * p0.x + 2 * t * (1 - t) * p1.x + t * t * p2.x,
-			y: (1 - t) * (1 - t) * p0.y + 2 * t * (1 - t) * p1.y + t * t * p2.y
-		};
-	} else {
-		return {
-			a: p0.x - 2 * p1.x + p2.x,
-			b: 2 * (p1.x - p0.x),
-			c: p0.x
-		};
-	}
-}
-
-function bezier2Normal(p0, p1, p2, t) {
-	var x = 2 * (p2.x - 2 * p1.x + p0.x) * t + 2 * (p1.x - p0.x),
-		y = 2 * (p2.y - 2 * p1.y + p0.y) * t + 2 * (p1.y - p0.y);
-	return { x: y, y: -x };
 }
 
 function seg2Normal(v) {
@@ -229,63 +177,41 @@ function seg2Point(p, v, t) {
     return { x: p.x + v.x * t, y: p.y + v.y * t };
 }
 
-// 二次ベジェ曲線と半直線の当たり判定
-function rayToBezier2(p0, p1, p2, v, p) {
-	var a = p0.x - 2 * p1.x + p2.x,
-		b = 2 * (p1.x - p0.x),
-		c = p0.x,
-		d = p0.y - 2 * p1.y + p2.y,
-		e = 2 * (p1.y - p0.y),
-		f = p0.y;
-	
-	var t = solve2(
-		a * v.y - v.x * d,
-		b * v.y - v.x * e,
-		v.y * c - v.y * p.x - v.x * f + v.x * p.y
-	);
-	
-	var t0 = t[0];
-	return t0;
-}
-
 function length(v) {
-	return Math.sqrt(v.x * v.x + v.y * v.y);
+    return Math.sqrt(v.x * v.x + v.y * v.y);
 }
 
 function normalize(v) {
-	var n = length(v);
-	if(n === 0) return { x: 0, y: 0 };
-	
-	n = 1 / n;
-	return { x: v.x * n, y: v.y * n };
+    let n = length(v);
+    if(n === 0) return { x: 0, y: 0 };
+
+    n = 1 / n;
+    return { x: v.x * n, y: v.y * n };
 }
 
 function inRect(p0x, p0y, p1x, p1y, px, py) {
-	var minx = Math.min(p0x, p1x),
-		miny = Math.min(p0y, p1y),
-		maxx = Math.max(p0x, p1x),
-		maxy = Math.max(p0y, p1y);
-	return px >= minx && maxx >= px && py >= miny && maxy >= py;
+    let minx = Math.min(p0x, p1x),
+        miny = Math.min(p0y, p1y),
+        maxx = Math.max(p0x, p1x),
+        maxy = Math.max(p0y, p1y);
+    return px >= minx && maxx >= px && py >= miny && maxy >= py;
 }
 
 function hit(p, v, seg, out) {
-    
-    // var t = segToSeg(p, v, seg.p, seg.v);
+
     let t0 = interSeg(p, v, seg.p, seg.v),
         t1 = interSeg(seg.p, seg.v, p, v);
-
-    // segToSeg()
 
     if(t0 <= 1.0 && t0 >= 0 && t1 <= 1.0 && t1 >= 0) {
         let o = seg2Point(p, v, t0);
 
         let n = seg2Normal(seg.v);
         
-        var r = reflect(v, n);
-        var b = Math.random() * 0.2 + 0.5;
+        let r = reflect(v, n);
+        let b = Math.random() * 0.2 + 0.5;
         out.vx = r.x * b;
         out.vy = r.y * b;
-        var lx = p.x - o.x,
+        let lx = p.x - o.x,
             ly = p.y - o.y,
             l = Math.sqrt(lx * lx + ly * ly);
         r = normalize(r);
@@ -314,15 +240,9 @@ setInterval(function() {
     emitter.emit();
     emitter.update();
     emitter.particles.forEach(function(e, i) {
-        //if(e.y > width) e.vy *= -1;
-        // hit(e, bar);
-        
-        
 
         let v = { x: e.x - e.px, y: e.y - e.py },
             p = { x: e.px, y: e.py };
-
-        // hit(p, v, segments[0], e);
 
         for(let i = 0; i < segments.length; i++) {
             hit(p, v, segments[i], e);
@@ -342,11 +262,5 @@ setInterval(function() {
         ctx.lineTo(e.p.x + e.v.x, e.p.y + e.v.y);
         ctx.stroke();
     });
-
-    // ctx.beginPath();
-    // ctx.moveTo(p0.x, p0.y);
-    // ctx.quadraticCurveTo(p1.x, p1.y, p2.x, p2.y);
-    // ctx.stroke();
-    
     
 }, 1000 / 30);
