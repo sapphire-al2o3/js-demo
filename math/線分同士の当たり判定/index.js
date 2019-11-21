@@ -131,23 +131,13 @@ var emitter = new Emitter(120, 50, Particle);
 emitter.rate = 5;
 
 // 線分と線分の当たり判定
-function segToSeg(a, b) {
-    var v0 = a.end.sub(a.start),
-        c0 = b.start.sub(a.start).cross(v0),
-        c1 = b.end.sub(a.start).cross(v0),
-        v1 = b.end.sub(b.start),
-        c2 = a.start.sub(b.start).cross(v1),
-        c3 = a.end.sub(b.start).cross(v1);
+function segToSeg(p0, v0, p1, v1) {
+    let c0 = (p1.x - p0.x) * v0.y - (p1.y - p0.y) * v0.x,
+        c1 = (p1.x + v1.x - p0.x) * v0.y - (p1.y + v1.y - p0.y) * v0.x,
+        c2 = (p0.x - p1.x) * v1.y - (p0.y - p1.y) * v1.x,
+        c3 = (p0.x + v0.x - p1.x) * v1.y - (p0.y + v0.y - p1.y) * v1.x;
     return c0 * c1 < 0 && c2 * c3 < 0;
 }
-
-// function segToSeg(p0, v0, p1, v1) {
-//     let c0 = (p1.x - p0.x) * v0.y - (p1.y - p0.y) * v0.x,
-//         c1 = b.end.sub(a.start).cross(v0),
-//         c2 = a.start.sub(b.start).cross(v1),
-//         c3 = a.end.sub(b.start).cross(v1);
-//     return c0 * c1 < 0 && c2 * c3 < 0;
-// }
 
 function interSeg(p0, v0, p1, v1) {
     let d = v0.x * v1.y - v0.y * v1.x;
