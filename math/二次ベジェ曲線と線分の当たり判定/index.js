@@ -1,5 +1,3 @@
-
-
 function rgba(r, g, b, a) {
     return 'rgba(' + [r, g, b, a].join(',') + ')';
 }
@@ -8,7 +6,7 @@ function hsva(h, s, v, a) {
     var f=h/60,i=f^0,m=v-v*s,k=v*s*(f-i),p=v-k,q=k+m,c=255;
     return rgba([v,p,m,m,q,v][i]*255^0,[q,v,v,p,m,m][i]*255^0,[m,m,q,v,v,p][i]*255^0,a);
 }
-			
+
 function max(a, b) {
     return a > b ? a : b;
 }
@@ -73,7 +71,7 @@ Emitter.prototype = {
         for(var i = 0; i < this.rate; i++) {
             var x = this.x + range(-42.0, 42.0),
                 y = this.y + range(-8.0, 8.0),
-                    p = new this.Particle(x, y);
+                p = new this.Particle(x, y);
             ps.push(p);
         }
     },
@@ -130,8 +128,6 @@ var counter = document.getElementById('counter');
 var emitter = new Emitter(200, 100, Particle);
 emitter.rate = 5;
 
-//				var worker = new Worker('worker.js');
-//				worker.postMessage(emitter);
 
 // 2次方程式の解の公式
 function solve2(a, b, c) {
