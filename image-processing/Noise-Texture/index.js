@@ -2,8 +2,13 @@
     let canvas = document.getElementById('canvas'),
         ctx = canvas.getContext('2d');
     
-    document.body.appendChild(createRadio(['256', '128', '64', '32', '16'], (v, id, i) => {
+    document.getElementById('size').appendChild(createRadio(['256x256', '128x128', '64x64', '32x32', '16x16', '8x8'], (v, id, i) => {
         canvas.width = canvas.height = parseInt(id, 10);
+        render();
+    }));
+
+    document.getElementById('colors').appendChild(createRadio(['256', '32', '16', '4', '3', '2'], (v, id, i) => {
+        colorNum = parseInt(id, 10);
         render();
     }));
 
@@ -22,7 +27,7 @@
         return Math.random() * (l + 1) ^ 0;
     }
 
-    let colorNum = 32;
+    let colorNum = 256;
 
     function render() {
         let image = ctx.getImageData(0, 0, canvas.width, canvas.height),
@@ -48,4 +53,6 @@
 
         ctx.putImageData(image, 0, 0);
     }
+
+    render();
 })();
