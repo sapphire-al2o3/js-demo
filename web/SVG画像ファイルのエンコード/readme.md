@@ -1,0 +1,1 @@
+SVG画像をData URIにする

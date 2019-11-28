@@ -1,0 +1,78 @@
+input {
+    width: 32px;
+    font-size: 10pt;
+    text-align: right;
+    border-radius: 3px;
+    border: 1px solid #CCC;
+    box-shadow: inset #EEE 0 1px 2px 0;
+    line-height: 20px;
+    padding: 0 6px;
+    font-family: consolas, monospace;
+}
+
+input[type="number"] {
+    width: 64px;
+}
+
+.button {
+    cursor: pointer;
+    border: 1px solid #CCC;
+    border-radius: 3px;
+    box-shadow: rgba(255, 255, 255, 0.2) 0 1px 0 0 inset, rgba(0, 0, 0, 0.1) 0 1px 2px 0;
+    background-image: -webkit-linear-gradient(top, #FFF, #FFF 25%, #F7F7F7);
+    background-image: linear-gradient(#FFF, #FFF 25%, #F7F7F7);
+    background-image: -moz-linear-gradient(top, #FFF, #FFF 25%, #F7F7F7);
+    width: 16px;
+    height: 16px;
+    background-color: #FFF;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.button:hover {
+    border: 1px solid #AAA;
+}
+
+.button:active {
+    border: 1px solid #AAA;
+    background-image: -webkit-linear-gradient(top, #EEE, #EEE 25%, #FFF);
+    background-image: -moz-linear-gradient(top, #EEE, #EEE 25%, #FFF);
+    background-image: linear-gradient(top, #EEE, #EEE 25%, #FFF);
+ }
+
+.button span {
+    display: block;
+    background-image: url("input.png");
+    background-repeat: no-repeat;
+    height: 8px;
+    width: 8px;
+    margin-top: 4px;
+    margin-left: 4px;
+    -webkit-user-select: none;
+}
+
+.up {
+    background-position: 0 0;
+}
+.down {
+    background-position: -8px 0;
+}
+
+#num1 {
+    width: 24px;
+}
+
+.left, .right {
+    width: 8px;
+    height: 8px;
+    cursor: pointer;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-image: url("input_horz.png");
+    -webkit-user-select: none;
+}
+.left {
+    background-position: -8px 0;
+}
+.left:hover {
+}

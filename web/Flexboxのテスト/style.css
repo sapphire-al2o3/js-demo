@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+body {
+  background: #ddf;
+  font: 30px sans-serif;
+}
+
+.container div {
+    width: 80px;
+    height: 32px;
+    border: solid 2px #FFF;
+    
+    margin: 4px;
+    background-color: #7CF;
+}
+
+.container {
+    display: flex;
+}

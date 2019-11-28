@@ -1,0 +1,1 @@
+なぜか-webkit-border-imageとborder-imageで見え方が違う

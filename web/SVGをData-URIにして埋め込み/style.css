@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+body {
+  background: #fdd;
+}
+
+#undo {
+    margin: 32px;
+    width: 128px;
+    height: 128px;
+}

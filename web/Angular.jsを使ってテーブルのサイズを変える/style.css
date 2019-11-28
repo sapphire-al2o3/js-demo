@@ -1,0 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+
+table {
+	border: 1px solid #AAA;
+	border-radius: 6px;
+	margin: 0 auto;
+}
+
+td {
+    background-color: #EEE;
+    width: 32px;
+    height: 32px;
+    font-size: 40px;
+}

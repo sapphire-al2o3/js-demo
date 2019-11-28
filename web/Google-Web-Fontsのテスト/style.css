@@ -1,0 +1,5 @@
+body { background-color: #DDDDDD; font: 30px Jura, serif; }
+canvas {
+  border: 1px solid #AAA;
+  background-color: #FFF;
+}

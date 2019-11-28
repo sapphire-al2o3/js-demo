@@ -1,0 +1,54 @@
+.button {
+    position: relative;
+    top: 160px;
+    left: 50%;
+    border: 1px solid #CCC;
+    border-radius: 3px;
+    box-shadow: rgba(255, 255, 255, 0.2) 0 1px 0 0 inset, rgba(0, 0, 0, 0.1) 0 1px 2px 0;
+    background-image: -webkit-linear-gradient(top, #FFF, #FFF 25%, #F7F7F7);
+    background-image: linear-gradient(#FFF, #FFF 25%, #F7F7F7);
+    background-image: -moz-linear-gradient(top, #FFF, #FFF 25%, #F7F7F7);
+    width: 48px;
+    height: 48px;
+    background-color: #FFF;
+    display: block;
+    vertical-align: middle;
+    margin-top: 16px;
+}
+
+.button:hover {
+    border: 1px solid #AAA;
+}
+
+.button:active {
+    border: 1px solid #AAA;
+    background-image: -webkit-linear-gradient(top, #E7E7E7, #DDD 25%, #F7F7F7);
+    background-image: linear-gradient(#FFF, #FFF 25%, #F7F7F7);
+    background-image: -moz-linear-gradient(top, #FFF, #FFF 25%, #F7F7F7);
+    box-shadow: rgba(0, 0, 0, 0.2) 0 1px 3px 0px inset;
+}
+.button div {
+    width: 400px;
+    text-align: center;
+    position: relative;
+    left: -184px;
+    top: -48px;
+}
+
+.button span {
+	display: none;
+	-webkit-transition: visibility 0s linear 0.4s, opacity 0.4s linear 0.2s;
+	-moz-transition: opacity 0.4s linear 0.2s;
+	transition: opacity 0.4s linear 0.2s;
+}
+
+.button:hover span {
+    display: inline;
+    z-index: 100;
+    font-size: 9pt;
+    border: 1px solid #AAA;
+    border-radius: 3px;
+    background-color: #F7F7F7;
+    padding: 2px 6px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+}

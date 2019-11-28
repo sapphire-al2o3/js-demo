@@ -1,0 +1,2 @@
+jQuery使うとtableにappendしたときにtbodyが作られる
+tbodyがないとrowIndexが-1になる

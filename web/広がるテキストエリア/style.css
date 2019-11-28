@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+body {
+    text-align: center;
+}
+
+textarea {
+    height: 1em;
+    overflow: hidden;
+    transition: height 0.2s linear 0;
+    width: 300px;
+    border: 1px solid #AAA;
+    border-radius: 4px;
+    margin-top: 32px;
+    padding: 4px;
+}
+
+textarea:focus {
+    border: 1px solid #FFF;
+    outline: 0;
+    box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.1);
+}

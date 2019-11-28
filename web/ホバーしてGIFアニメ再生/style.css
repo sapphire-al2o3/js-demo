@@ -1,0 +1,22 @@
+div {
+    background-image: url("http://jsrun.it/assets/1/z/X/t/1zXtz.gif");
+    width: 48px;
+    height: 48px;
+    
+    margin: 120px 120px;
+}
+
+div:hover img {
+    display: none;
+}
+
+div:after {
+    content: url("http://jsrun.it/assets/l/W/y/y/lWyy5.png");
+    width: 48px;
+    height: 48px;
+    margin: -48px;
+}
+
+div:hover:after {
+    content: "";
+}

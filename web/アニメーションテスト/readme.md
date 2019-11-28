@@ -1,0 +1,3 @@
+requestAnimFrame
+setTimeout
+setInterval
