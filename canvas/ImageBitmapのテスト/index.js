@@ -10,7 +10,7 @@ image.onload = () => {
         sprite[0] = img;
     });
     createImageBitmap(image, 32, 0, 32, 32).then((img) => {
-    sprite[1] = img;
+        sprite[1] = img;
     });
     createImageBitmap(image, 64, 0, 32, 32).then((img) => {
         sprite[2] = img;
@@ -19,7 +19,7 @@ image.onload = () => {
         sprite[3] = img;
     });
 };
-    image.src = "http://jsrun.it/assets/C/0/W/d/C0WdX.png";
+image.src = "sprite.png";
     
 function drawImage() {
     console.time('Draw Image');
@@ -32,7 +32,7 @@ function drawImage() {
     }
     console.timeEnd('Draw Image');
 }
-        
+
 function drawImageBitmap() {
     console.time('Draw ImageBitmap');
     ctx.clearRect(0, 0, w, h);
