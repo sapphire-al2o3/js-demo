@@ -10,16 +10,6 @@
     
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    function draw1(image, abgr) {
-        var data = new Uint32Array(image.data.buffer),
-            w = image.width,
-            h = image.height;
-        
-        for(var i = 0, l = data.length; i < l; i++) {
-            data[i] = abgr;
-        }
-    }
-        
     function draw0(image, r, g, b, a) {
         var data = image.data,
             w = image.width,
@@ -30,6 +20,16 @@
             data[k + 1] = g;
             data[k + 2] = b;
             data[k + 3] = a;
+        }
+    }
+
+    function draw1(image, abgr) {
+        var data = new Uint32Array(image.data.buffer),
+            w = image.width,
+            h = image.height;
+        
+        for(var i = 0, l = data.length; i < l; i++) {
+            data[i] = abgr;
         }
     }
     
