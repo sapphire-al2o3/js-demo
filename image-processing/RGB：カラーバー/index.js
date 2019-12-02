@@ -44,9 +44,9 @@ function roundByte(v) {
 }
 function changeColor() {
     var r = roundByte($('#num1').val()),
-	g = roundByte($('#num2').val()),
-	b = roundByte($('#num3').val()),
-	color = rgb(r, g, b);
+        g = roundByte($('#num2').val()),
+        b = roundByte($('#num3').val()),
+        color = rgb(r, g, b);
     $('body').css('background-color', color);
     $('p').text(color.toUpperCase());
     $('p').css('color', gray(r, g, b) > 128 ? '#000' : '#FFF');
