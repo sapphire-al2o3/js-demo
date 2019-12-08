@@ -43,7 +43,7 @@
             for(let j = 0; j < image.width; j++) {
                 let index = (image.width * i + j) * 4;
                 for(let k = 0; k < 4; k++) {
-                    data[index + k] = (data[index + k] / 255 * 15 ^ 0) / 15 * 255 ^ 0;
+                    data[index + k] = (data[index + k] * 15 / 255 ^ 0) * (255 / 15) ^ 0;
                 }
             }
         }
