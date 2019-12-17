@@ -1,5 +1,5 @@
 div {
-    background-image: url("http://jsrun.it/assets/1/z/X/t/1zXtz.gif");
+    background-image: url("pen2.gif");
     width: 48px;
     height: 48px;
     
@@ -11,7 +11,7 @@ div:hover img {
 }
 
 div:after {
-    content: url("http://jsrun.it/assets/l/W/y/y/lWyy5.png");
+    content: url("play.png");
     width: 48px;
     height: 48px;
     margin: -48px;
