@@ -55,4 +55,4 @@ for(var i = 0, h = img.height; i < h; i++) {
     }
 }
 console && console.timeEnd('draw');
-ctx.putImageData(img, x, y);
+ctx.putImageData(img, 0, 0);
