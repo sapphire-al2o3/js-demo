@@ -1,3 +1,3 @@
-google chrome で170msくらい
-firefox で1600msくらい
-ループ中の関数を展開するとなぜかすごく遅くなる
+ジュリア集合
+
+![julia.png](julia.png)
