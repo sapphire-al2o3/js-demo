@@ -5,12 +5,24 @@
 <title>opener test</title>
 </head>
 <body>
+<p id="time"></p>
 <script type="text/javascript">
 if(window.opener.getArray) {
-    var a = window.opener.getArray();
+    let a = window.opener.getArray();
     console.log(a, a.constructor);
-    var t = window.opener.getTypedArray();
+    let t = window.opener.getTypedArray();
     console.log(t, t.constructor);
+
+    let b = a;
+
+    let start = Date.now();
+    let s = 0;
+    for(let i = 0; i < b.length; i++) {
+        s += b[i];
+    }
+    let time = Date.now() - start;
+    console.log(s, time);
+    document.getElementById('time').textContent = time;
 }
 </script>
 </body>
