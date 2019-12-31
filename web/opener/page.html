@@ -7,8 +7,10 @@
 <body>
 <script type="text/javascript">
 if(window.opener.getArray) {
-    console.log(window.opener.getArray());
-    console.log(window.opener.getTypedArray());
+    var a = window.opener.getArray();
+    console.log(a, a.constructor);
+    var t = window.opener.getTypedArray();
+    console.log(t, t.constructor);
 }
 </script>
 </body>
