@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>opener test</title>
+</head>
+<body>
+    <button id="send">Send</button>
+    <p id="time"></p>
+<script type="text/javascript">
+
+document.getElementById('send').addEventListener('click', () => {
+    // window.opener.postMessage('', '*');
+    window.opener.sendArray();
+}, false);
+
+window.addEventListener('message', e => {
+    let start = Date.now();
+    let a = e.data;
+    let s = 0;
+    for(let i = 0; i < 1000; i++) {
+        s += a[i];
+    }
+    let time = Date.now() - start;
+    console.log(s, time);
+    document.getElementById('time').textContent = time;
+
+}, false);
+</script>
+</body>
+</html>
