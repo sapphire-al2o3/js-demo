@@ -6,12 +6,17 @@
 </head>
 <body>
     <button id="send">Send</button>
+    <button id="send2">Send Message</button>
     <p id="time"></p>
 <script type="text/javascript">
 
 document.getElementById('send').addEventListener('click', () => {
-    // window.opener.postMessage('', '*');
+    // edgeだとエラーになる
     window.opener.sendArray();
+}, false);
+
+document.getElementById('send2').addEventListener('click', () => {
+    window.opener.postMessage('', '*');
 }, false);
 
 window.addEventListener('message', e => {
