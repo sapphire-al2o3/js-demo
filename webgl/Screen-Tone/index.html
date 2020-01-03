@@ -46,38 +46,8 @@ void main() {
     gl_Position = pMatrix * mvMatrix * vec4(pos, 1.0);
 }
 </script>
-
-<script id="outline-fs" type="x-shader/x-fragment">
-    // 輪郭線を表示する用のフラグメントシェーダ
-precision highp float;
-
-void main() {
-	gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
-}
-</script>
-<script id="outline-vs" type="x-shader/x-vertex">
-    // 輪郭線を表示する用の頂点シェーダ
-    // 法線方向に膨らませる
-attribute vec3 position;
-attribute vec3 normal;
-
-uniform mat4 mvMatrix;
-uniform mat4 pMatrix;
-uniform mat3 nMatrix;
-
-void main() {
-    vec3 pos = position;
-    vec3 n = nMatrix * normal;
-    vec2 nn = normalize(n.xy);
-    vec4 p = pMatrix * mvMatrix * vec4(pos, 1.0);
-    // スクリーンで1画素分になるように法線方向に移動する
-    // 透視除算されるのでwをかけておくこと
-	gl_Position = p + vec4(nn * 1.0 / 200.0 * p.w, 0.0, 0.0);
-}
-</script>
 <canvas id="canvas" width="300" height="300"></canvas>
 <script type="text/javascript" src="../../lib/webglutil.js"></script>
-
 <script type="text/javascript" src="index.js"></script>
 </body>
 </html>
