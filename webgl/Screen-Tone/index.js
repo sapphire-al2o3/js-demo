@@ -29,7 +29,8 @@
     matrix.pMatrix = new Matrix4();
 
     let light = [0.0, 0.7, 4.0],
-        size = [1, 1, 2];
+        size = [1, 1, 2],
+        thr = [0.2, 0.9];
 
     // カメラの行列設定
     Matrix4.perspective(45.0 * Math.PI / 180.0, gl.canvas.width / gl.canvas.height, 0.1, 1000.0, matrix.pMatrix);
@@ -67,6 +68,7 @@
         // program[0].uniform['color'].value = color ? 1.0 : 0.3;
         program[0].uniform['light'].value = light;
         program[0].uniform['size'].value = size;
+        program[0].uniform['thr'].value = thr;
         
         drawMesh(program[0], model.meshes[0]);
         
@@ -85,6 +87,11 @@
     }));
     document.body.appendChild(createSlider('pattern-mod', 0, v => {
         size[2] = v * 4 + 1;
+        render(0);
+    }));
+
+    document.body.appendChild(createSlider('pattern-thr', 0, v => {
+        thr[0] = v;
         render(0);
     }));
 }());
