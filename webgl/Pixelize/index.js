@@ -10,13 +10,20 @@
     // シェーダを初期化
     program.push(initShader(gl, 'shader-vs', 'shader-fs'));
 
-    // トーラスを作る
-    // let model = createTorus(32, 32);
-    // let model = createSphere(64);
-    let model = createCube();
+    let model = [
+        createTorus(32, 32),
+        createSphere(64),
+        createCube(),
+    ];
+
+    let index = 0;
+
+    model[0].meshes[0].vertexStream.position = model[0].meshes[0].vertexStream.position.map(x => x * 0.5);
 
     // 頂点バッファを作成
-    initBuffer(gl, model);
+    initBuffer(gl, model[0]);
+    initBuffer(gl, model[1]);
+    initBuffer(gl, model[2]);
 
     let camera = {},
         matrix = {};
@@ -71,7 +78,7 @@
         program[0].uniform['light'].value = light;
         program[0].uniform['size'].value = size;
         
-        drawMesh(program[0], model.meshes[0]);
+        drawMesh(program[0], model[index].meshes[0]);
         
         outline.draw(1, fb);
         scaling.draw();
@@ -91,6 +98,10 @@
     }));
     document.body.appendChild(createSlider('pattern-mod', 0, v => {
         size[2] = (v * 4 ^ 0) + 1;
+        render(0);
+    }));
+    document.body.appendChild(createRadio(['torus', 'sphere', 'cube'], (v, id, i) => {
+        index = i;
         render(0);
     }));
 }());
