@@ -105,20 +105,21 @@ var Outline = (function(global) {
 
 
 (function() {
-	'use strict';
-	
-	var gl = initContext('canvas'),
-		width = gl.canvas.width,
-		height = gl.canvas.height;
-	
-	var program = initShader(gl, 'shader-fs', 'shader-vs');
-	
-	var model = cube(200, 0.2), // 使ってない
-		m2 = cube(1500, 0.2); // キューブの数と大きさを指定
-	
-    var isOutline = true;
-    var check = createCheckbox('outline', function(v) {
+    'use strict';
+
+    var gl = initContext('canvas'),
+        width = gl.canvas.width,
+        height = gl.canvas.height;
+
+    var program = initShader(gl, 'shader-fs', 'shader-vs');
+
+    let model = cube(200, 0.2), // 使ってない
+        m2 = cube(1500, 0.2); // キューブの数と大きさを指定
+
+    let isOutline = true;
+    const check = createCheckbox('outline', function(v) {
         isOutline = v;
+        render();
     });
     document.body.appendChild(check);
     document.getElementById('outline').checked = true;
