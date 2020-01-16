@@ -63,6 +63,7 @@
         return {
             fbo: frameBuffer,
             tex: texture,
+            stencil: stencil,
             width: width,
             height: height
         };
@@ -92,8 +93,7 @@
         gl.bufferData(gl.ARRAY_BUFFER, buffer, gl.STATIC_DRAW);
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
         
-        // this.screen = createTexture(this.width, this.height);
-        this.down = createFBO(gl, this.width, this.height);
+        this.fb = createFBO(gl, this.width, this.height);
 
         var program = [];
         program.push(createShader(fullScreenFS, fullScreenVS));
@@ -109,21 +109,17 @@
 
     Outline.prototype.setup = function() {
         gl.bindFramebuffer(gl.FRAMEBUFFER, this.down.fbo);
-        return this.down;
+        return this.fb;
     };
 
     Outline.prototype.draw = function(lineWidth, fb) {
-        fb = fb || this.down;
+        fb = fb || this.fb;
         gl.bindBuffer(gl.ARRAY_BUFFER, this.quad);
         gl.enableVertexAttribArray(0);
         gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
         
         gl.disable(gl.CULL_FACE);
         gl.disable(gl.DEPTH_TEST);
-        
-        // テクスチャにコピー
-        // gl.bindTexture(gl.TEXTURE_2D, this.screen);
-        // gl.copyTexImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 0, 0, this.width, this.height, 0);
 
         gl.bindFramebuffer(gl.FRAMEBUFFER, fb.fbo);
         gl.viewport(0, 0, this.width, this.height);
