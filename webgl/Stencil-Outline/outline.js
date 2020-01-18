@@ -17,20 +17,21 @@
         void main(){
         vec2 o=screen.xy*offset;
         vec4 c=texture2D(tex,uv);
-        float e=max(texture2D(tex,uv+vec2(o.x,0.0)).a-c.a,0.0);
-        e+=max(texture2D(tex,uv+vec2(-o.x,0.0)).a-c.a,0.0);
-        e+=max(texture2D(tex,uv+vec2(0.0,o.y)).a-c.a,0.0);
-        e+=max(texture2D(tex,uv+vec2(0.0,-o.y)).a-c.a,0.0);
-        vec3 rgb=c.rgb*vec3(1.0,.2,.1)*(1.0-e);
-        gl_FragColor=vec4(rgb,1.0);}`;
+        //float e=max(texture2D(tex,uv+vec2(o.x,0.0)).a-c.a,0.0);
+        //e+=max(texture2D(tex,uv+vec2(-o.x,0.0)).a-c.a,0.0);
+        //e+=max(texture2D(tex,uv+vec2(0.0,o.y)).a-c.a,0.0);
+        //e+=max(texture2D(tex,uv+vec2(0.0,-o.y)).a-c.a,0.0);
+        //vec3 rgb=c.rgb*vec3(1.0,.2,.1)*(1.0-e);
+        gl_FragColor=c;}`;
 
     let gl,
+        ext,
         buffer = new Float32Array([1, 1, -1, 1, 1, -1, -1, -1]);
 
-    function createTexture(width, height, format) {
+    function createTexture(width, height, format, type) {
         var texture = gl.createTexture();
         gl.bindTexture(gl.TEXTURE_2D, texture);
-        gl.texImage2D(gl.TEXTURE_2D, 0, format, width, height, 0, format, gl.UNSIGNED_BYTE, null);
+        gl.texImage2D(gl.TEXTURE_2D, 0, format, width, height, 0, format, type, null);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
@@ -43,23 +44,29 @@
         gl.bindFramebuffer(gl.FRAMEBUFFER, frameBuffer);
         
         // color
-        let texture = createTexture(width, height, gl.RGBA);
+        let texture = createTexture(width, height, gl.RGBA, gl.UNSIGNED_BYTE);
         gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
         gl.bindTexture(gl.TEXTURE_2D, null);
 
         // stencil
-        let stencil = createTexture(width, height, gl.LUMINANCE);
-        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.STENCIL_ATTACHMENT, gl.TEXTURE_2D, stencil, 0);
+        let stencil = createTexture(width, height, gl.DEPTH_STENCIL, ext.UNSIGNED_INT_24_8_WEBGL);
+        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.DEPTH_STENCIL_ATTACHMENT, gl.TEXTURE_2D, stencil, 0);
+        // let stencil = gl.createRenderbuffer();
+        // gl.bindRenderbuffer(gl.RENDERBUFFER, stencil);
+        // gl.renderbufferStorage(gl.RENDERBUFFER, gl.STENCIL_INDEX8, width, height);
+        console.log(gl.getError());
         gl.bindTexture(gl.TEXTURE_2D, null);
-
+        console.log(gl.checkFramebufferStatus(gl.FRAMEBUFFER));
         // depth
-        var renderBuffer = gl.createRenderbuffer();
-        gl.bindRenderbuffer(gl.RENDERBUFFER, renderBuffer);
-        gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, width, height);
-        gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, renderBuffer);
-        
+        // var renderBuffer = gl.createRenderbuffer();
+        // gl.bindRenderbuffer(gl.RENDERBUFFER, renderBuffer);
+        // gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, width, height);
+        // gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, renderBuffer);
+
         gl.bindFramebuffer(gl.FRAMEBUFFER, null);
         
+        
+
         return {
             fbo: frameBuffer,
             tex: texture,
@@ -86,6 +93,9 @@
 
     function Outline(context) {
         gl = context;
+
+        ext = gl.getExtension('WEBGL_depth_texture');
+        console.log(ext);
         this.width = gl.drawingBufferWidth;
         this.height = gl.drawingBufferHeight;
         this.quad = gl.createBuffer();
@@ -108,7 +118,11 @@
     }
 
     Outline.prototype.setup = function() {
-        gl.bindFramebuffer(gl.FRAMEBUFFER, this.down.fbo);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, this.fb.fbo);
+        gl.stencilFunc(gl.ALWAYS, 255, 0xFF);
+        gl.stencilOp(gl.KEEP, gl.REPLACE, gl.REPLACE);
+        gl.clearStencil(0);
+        gl.enable(gl.STENCIL_TEST);
         return this.fb;
     };
 
@@ -120,12 +134,13 @@
         
         gl.disable(gl.CULL_FACE);
         gl.disable(gl.DEPTH_TEST);
+        gl.disable(gl.STENCIL_TEST);
 
-        gl.bindFramebuffer(gl.FRAMEBUFFER, fb.fbo);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
         gl.viewport(0, 0, this.width, this.height);
         gl.useProgram(this.program[0]);
         gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, this.screen);
+        gl.bindTexture(gl.TEXTURE_2D, fb.stencil);
         gl.uniform1i(this.location[0], 0);
         gl.uniform2f(this.location[1], 1 / this.width, 1 / this.height);
         gl.uniform2f(this.location[2], lineWidth, lineWidth);

@@ -64,8 +64,10 @@
         matrix.mMatrix.mul(matrix.vMatrix, matrix.mvMatrix);
         matrix.nMatrix = matrix.mvMatrix.toMatrix3().transpose().inverse();
 
+        outline.setup();
+
         gl.clearColor(1.0, 1.0, 0.0, 1.0);
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT | gl.STENCIL_BUFFER_BIT);
         
         gl.cullFace(gl.BACK);
         program[0].uniform['mvMatrix'].value = matrix.mvMatrix.data;
@@ -77,6 +79,8 @@
         drawMesh(program[0], model[0].meshes[0]);
         drawMesh(program[0], model[1].meshes[0]);
         
+        outline.draw(1);
+
         gl.flush();
     }
 
