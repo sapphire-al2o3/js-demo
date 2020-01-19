@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    let gl = initContext('canvas');
+    let gl = initContext('canvas', {'stencil':true});
 
     gl.viewport(0, 0, 300, 300);
 
@@ -76,7 +76,26 @@
         // program[0].uniform['color'].value = color ? 1.0 : 0.3;
         program[0].uniform['light'].value = light;
         
+        Matrix4.scale(2.5, 2.5, 2.5, matrix.mMatrix);
+        matrix.mMatrix.mul(matrix.vMatrix, matrix.mvMatrix);
+        program[0].uniform['mvMatrix'].value = matrix.mvMatrix.data;
+
+        gl.stencilFunc(gl.ALWAYS, 128, ~0);
+        gl.stencilOp(gl.KEEP, gl.REPLACE, gl.REPLACE);
+        gl.colorMask(false, false, false, false);
+        gl.depthMask(false);
+
         drawMesh(program[0], model[0].meshes[0]);
+
+        Matrix4.scale(0.7, 0.7, 0.7, matrix.mMatrix);
+        matrix.mMatrix.mul(matrix.vMatrix, matrix.mvMatrix);
+        program[0].uniform['mvMatrix'].value = matrix.mvMatrix.data;
+
+        gl.stencilFunc(gl.EQUAL, 128, ~0);
+        gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
+        gl.colorMask(true, true, true, true);
+        gl.depthMask(true);
+
         drawMesh(program[0], model[1].meshes[0]);
         
         outline.draw(1);

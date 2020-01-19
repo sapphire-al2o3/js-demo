@@ -22,7 +22,7 @@
         //e+=max(texture2D(tex,uv+vec2(0.0,o.y)).a-c.a,0.0);
         //e+=max(texture2D(tex,uv+vec2(0.0,-o.y)).a-c.a,0.0);
         //vec3 rgb=c.rgb*vec3(1.0,.2,.1)*(1.0-e);
-        gl_FragColor=c;}`;
+        gl_FragColor=vec4(c.rgb,1.0);}`;
 
     let gl,
         ext,
@@ -53,7 +53,8 @@
         gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.DEPTH_STENCIL_ATTACHMENT, gl.TEXTURE_2D, stencil, 0);
         // let stencil = gl.createRenderbuffer();
         // gl.bindRenderbuffer(gl.RENDERBUFFER, stencil);
-        // gl.renderbufferStorage(gl.RENDERBUFFER, gl.STENCIL_INDEX8, width, height);
+        // gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_STENCIL, width, height);
+        // gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_STENCIL_ATTACHMENT , gl.RENDERBUFFER, stencil);
         console.log(gl.getError());
         gl.bindTexture(gl.TEXTURE_2D, null);
         console.log(gl.checkFramebufferStatus(gl.FRAMEBUFFER));
@@ -119,31 +120,31 @@
 
     Outline.prototype.setup = function() {
         gl.bindFramebuffer(gl.FRAMEBUFFER, this.fb.fbo);
-        gl.stencilFunc(gl.ALWAYS, 255, 0xFF);
-        gl.stencilOp(gl.KEEP, gl.REPLACE, gl.REPLACE);
-        gl.clearStencil(0);
+        gl.stencilFunc(gl.ALWAYS, 128, ~0);
+        gl.stencilOp(gl.KEEP, gl.INCR, gl.INCR);
+        gl.clearStencil(127);
         gl.enable(gl.STENCIL_TEST);
         return this.fb;
     };
 
     Outline.prototype.draw = function(lineWidth, fb) {
         fb = fb || this.fb;
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.quad);
-        gl.enableVertexAttribArray(0);
-        gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
         
         gl.disable(gl.CULL_FACE);
         gl.disable(gl.DEPTH_TEST);
         gl.disable(gl.STENCIL_TEST);
 
         gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-        gl.viewport(0, 0, this.width, this.height);
         gl.useProgram(this.program[0]);
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, fb.stencil);
         gl.uniform1i(this.location[0], 0);
         gl.uniform2f(this.location[1], 1 / this.width, 1 / this.height);
         gl.uniform2f(this.location[2], lineWidth, lineWidth);
+        
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.quad);
+        gl.enableVertexAttribArray(0);
+        gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
         
         gl.useProgram(null);
