@@ -27,15 +27,25 @@
 
     gl.useProgram(program[0]);
 
+    
+    gl.activeTexture(gl.TEXTURE0);
     const img = document.getElementById('lut');
-    const tex = initTexture(gl, img);
+    const lut = initTexture(gl, img);
 
     program[0].uniform['lut'].value = 0;
-    setupUniform(program[0]);
 
-    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.bindTexture(gl.TEXTURE_2D, lut);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 
+    gl.activeTexture(gl.TEXTURE1);
+    const img2 = document.getElementById('dist');
+    const dist = initTexture(gl, img2);
+    program[0].uniform['dist'].value = 1;
+
+    gl.bindTexture(gl.TEXTURE_2D, dist);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+
+    setupUniform(program[0]);
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
     let light = [0.0, 0.7, 4.0],
