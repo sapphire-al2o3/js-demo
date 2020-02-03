@@ -18,8 +18,8 @@ uniform sampler2D lut;
 void main() {
     vec2 p = uv * 2.0 - 1.0;
     float y = clamp(1.0 - length(p), 0.0, 1.0);
-    float c = texture2D(lut, vec2(y, 0.0)).r;
-    gl_FragColor = vec4(c, c, c, 1.0);
+    vec4 c = texture2D(lut, vec2(y, 0.0));
+    gl_FragColor = c;
 }
 </script>
 <script id="shader-vs" type="x-shader/x-vertex">
