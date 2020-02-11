@@ -24,10 +24,11 @@ void main() {
     vec3 n = normalize(vNormal);
     vec3 l = normalize(light);
     vec2 uv = n.xy * 0.5 + 0.5;
-    //vec3 e = normalize(vPos);
-    //vec3 r = reflect(e, n);
-    //float m = 2. * sqrt(pow(r.x, 2.) + pow(r.y, 2.) + pow(r.z + 1., 2.));
-    //uv = r.xy / m + .5;
+    vec3 e = normalize(vPos);
+    vec3 r = reflect(e, n);
+    r.z += 1.0;
+    float m = 2.0 * length(r);
+    uv = r.xy / m + .5;
     vec4 c = texture2D(tex, uv);
     gl_FragColor = c;
 }
