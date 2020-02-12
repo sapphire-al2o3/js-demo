@@ -18,17 +18,18 @@ setAnimationFrame((dt) => {
     y = Math.sin(time * 0.01);
     d += dt * 0.1;
     d = d % 40;
-    // for(let i = 0; i < 20; i++) {
-    //     ctx.beginPath();
-    //     ctx.moveTo(i * 20 + d, 0);
-    //     ctx.lineTo(i * 20 + 300 + d, 300);
-    //     ctx.stroke();
-    // }
+    const s = 20;
+    for(let i = -20; i < 20; i++) {
+        ctx.beginPath();
+        ctx.moveTo(i * s - d, 0);
+        ctx.lineTo(320, i * s + 320 - d);
+        ctx.stroke();
+    }
 
     for(let i = -20; i < 20; i++) {
         ctx.beginPath();
-        ctx.moveTo(0, i * 20 + d);
-        ctx.lineTo(i * 20 + 320 + d, 320);
+        ctx.moveTo(0, i * s + d);
+        ctx.lineTo(i * s + 320 + d, 320);
         ctx.stroke();
     }
 }, 1000 / 30);
