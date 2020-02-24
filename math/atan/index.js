@@ -32,26 +32,65 @@ const w = canvas.width;
 const h = canvas.height;
 
 ctx.lineWidth = 1.5;
-ctx.strokeStyle = 'rgba(50,50,50,0.5)';
 
 function plot2D(ctx, f, w, h, itr) {
-    itr = itr === undefined ? 80 : itr;
+    itr = itr === undefined ? 100 : itr;
     ctx.beginPath();
-    let x = 0;
-    let y = f(0);
+    let x = -1;
+    let y = f(x);
     ctx.moveTo(x * w, h - y * h);
     
-    for (var i = 1; i <= itr; i++) {
+    for (var i = 1 - itr; i <= itr; i++) {
         x = i / itr;
-        y = f(i / itr);
+        y = f(x);
         ctx.lineTo(x * w, h - y * h);
     }
     ctx.stroke();
     console.log(f(1)*180/Math.PI);
 }
 
-plot2D(ctx, atan, w, h, 100);
-ctx.strokeStyle = 'rgba(0,100,0,0.5)';
-// plot2D(ctx, atan4, w, h, 100);
-ctx.strokeStyle = 'rgba(90,0,0,0.5)';
-plot2D(ctx, atan6, w, h, 100);
+let plot = [true, true, true, true];
+let colors = [
+    'rgba(50,50,50,0.5)',
+    'rgba(0,100,0,0.5)',
+    'rgba(90,0,0,0.5)',
+    'rgba(0,0,100,0.5)'
+];
+let func = [
+    atan,
+    atan2,
+    atan4,
+    atan6
+];
+
+function render() {
+    ctx.clearRect(0, 0, w, h);
+    for(let i = 0; i < plot.length; i++) {
+        if(plot[i]) {
+            ctx.strokeStyle = colors[i];
+            plot2D(ctx, func[i], w, h, 100);
+        }
+    }
+}
+
+document.body.appendChild(createCheckbox('atan', v => {
+    plot[0] = v;
+    render();
+}));
+
+document.body.appendChild(createCheckbox('0.994949x - 0.2870606x^3 + 0.07803717x^5', v => {
+    plot[1] = v;
+    render();
+}));
+
+document.body.appendChild(createCheckbox('(12x^2 + 45)x / (27x^2 + 45)', v => {
+    plot[2] = v;
+    render();
+}));
+
+document.body.appendChild(createCheckbox('(69 * x * x + 5 * x + 286) / (3 * x * x + 5) * x', v => {
+    plot[3] = v;
+    render();
+}));
+
+render();
