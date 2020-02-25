@@ -19,6 +19,8 @@
         -s, -s
     ]);
 
+    let offset = [0, 0, 0];
+
     gl.bufferData(gl.ARRAY_BUFFER, buffer, gl.STATIC_DRAW);
 
     var loc = gl.getAttribLocation(program[0], 'position');
@@ -45,6 +47,8 @@
     gl.bindTexture(gl.TEXTURE_2D, dist);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 
+    program[0].uniform['offset'].value = offset;
+
     setupUniform(program[0]);
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
@@ -69,4 +73,13 @@
     gl.canvas.addEventListener('click', () => {
         timer.toggle();
     });
+
+    document.body.appendChild(createSlider('offset', 0.5, v => {
+        offset[0] = v * 2.0 - 1.0;
+        setupUniform(program[0]);
+    }));
+    document.body.appendChild(createSlider('offset 2', 0.5, v => {
+        offset[1] = v * 2.0 - 1.0;
+        setupUniform(program[0]);
+    }));
 }());
