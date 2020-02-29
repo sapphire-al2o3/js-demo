@@ -68,29 +68,41 @@ function render() {
     for(let i = 0; i < plot.length; i++) {
         if(plot[i]) {
             ctx.strokeStyle = colors[i];
-            plot2D(ctx, func[i], w, h, 100);
+            plot2D(ctx, func[i], w, h, 200);
         }
     }
 }
 
-document.body.appendChild(createCheckbox('atan', v => {
+const check1 = createCheckbox('atan1', v => {
     plot[0] = v;
     render();
-}));
+});
+document.body.appendChild(check1);
+check1.querySelector('label').textContent = 'Math.atan';
+check1.querySelector('input').checked = true;
 
-document.body.appendChild(createCheckbox('0.994949x - 0.2870606x^3 + 0.07803717x^5', v => {
+const check2 = createCheckbox('atan2', v => {
     plot[1] = v;
     render();
-}));
+});
+document.body.appendChild(check2);
+check2.querySelector('label').textContent = '0.994949 * x - 0.2870606 * x ** 3 + 0.07803717 * x ** 5';
+check2.querySelector('input').checked = true;
 
-document.body.appendChild(createCheckbox('(12x^2 + 45)x / (27x^2 + 45)', v => {
+const check3 = createCheckbox('atan3', v => {
     plot[2] = v;
     render();
-}));
+});
+document.body.appendChild(check3);
+check3.querySelector('label').textContent = '(12 * x ** 2 + 45) * x / (27 * x ** 2 + 45)';
+check3.querySelector('input').checked = true;
 
-document.body.appendChild(createCheckbox('(69 * x * x + 5 * x + 286) / (3 * x * x + 5) * x', v => {
+const check4 = createCheckbox('atan4', v => {
     plot[3] = v;
     render();
-}));
+});
+document.body.appendChild(check4);
+check4.querySelector('label').textContent = '(69 * x * x + 5 * x + 286) / (3 * x * x + 5) * x * Math.PI / 180';
+check4.querySelector('input').checked = true;
 
 render();
