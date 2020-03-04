@@ -8,8 +8,8 @@
     // シェーダを初期化
     program.push(initShader(gl, 'shader-vs', 'shader-fs'));
 
-	var vbo = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+    var vbo = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
     
     const s = 1;
     const buffer = new Float32Array([
@@ -31,9 +31,6 @@
 
     setupUniform(program[0]);
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
-
-    let light = [0.0, 0.7, 4.0],
-        size = [1, 1, 2];
 
     let frame = 0,
         time = 0;
