@@ -49,6 +49,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [ベジェ曲線で描く](https://sapphire-al2o3.github.io/js-demo/math/ベジェ曲線で描く/)
 - [3次ベジェ曲面](https://sapphire-al2o3.github.io/js-demo/math/3次ベジェ曲面/)
 - [Catmull-Rom曲線](https://sapphire-al2o3.github.io/js-demo/math/Catmull-Rom曲線/)
+- [float](https://sapphire-al2o3.github.io/js-demo/math/float/)
 - [Hermite曲線](https://sapphire-al2o3.github.io/js-demo/math/Hermite曲線/)
 - [ラメ曲線](https://sapphire-al2o3.github.io/js-demo/math/ラメ曲線/)
 - [Math.imulのテスト](https://sapphire-al2o3.github.io/js-demo/math/Math.imulのテスト/)
