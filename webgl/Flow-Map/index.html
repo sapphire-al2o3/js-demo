@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>LUT Texture</title>
+<meta name="Description" content="" />
+<meta name="Keywords"  content="" />
+<link rel="stylesheet" type="text/css" media="screen,print" href="../../lib/webglutil.css" />
+<link rel="stylesheet" type="text/css" media="screen,print" href="style.css" />
+</head>
+<body>
+<script id="shader-fs" type="x-shader/x-fragment">
+precision highp float;
+varying vec2 uv;
+
+uniform sampler2D tex;
+uniform sampler2D map;
+uniform vec3 offset;
+
+void main() {
+    vec2 p = uv * 2.0 - 1.0;
+    float y = clamp(1.0 - length(p), 0.0, 1.0);
+    float a = atan(p.y, p.x) / 3.1415 * 0.5 + 0.5;
+    float d = texture2D(dist, vec2(a, 0.0)).r * 2.0 - 1.0;
+    vec4 c = texture2D(lut, vec2(y + d * offset.x + offset.y, 0.0));
+    gl_FragColor = c;
+}
+</script>
+<script id="shader-vs" type="x-shader/x-vertex">
+attribute vec3 position;
+varying vec2 uv;
+
+void main() {
+    vec3 pos = position;
+    uv = pos.xy * 0.5 + 0.5;
+    gl_Position = vec4(pos, 1.0);
+}
+</script>
+<canvas id="canvas" width="256" height="256"></canvas>
+<div>
+<img id="tex" src="checker.png" />
+<img id="dist" src="grad_lut.png" />
+</div>
+<script type="text/javascript" src="../../lib/webglutil.js"></script>
+<script type="text/javascript" src="index.js"></script>
+</body>
+</html>
