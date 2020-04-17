@@ -4,7 +4,7 @@ const w = canvas.width;
 const h = canvas.height;
 
 let time = 0;
-setAnimationFrame((dt) => {
+const timer = setAnimationFrame((dt) => {
 
     time += dt * 0.1;
 
@@ -21,3 +21,7 @@ setAnimationFrame((dt) => {
     }
 
 }, 1000 / 30);
+
+canvas.addEventListener('click', () => {
+    timer.toggle();
+}, false);
