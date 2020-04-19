@@ -91,6 +91,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [forked_-fireworks](https://sapphire-al2o3.github.io/js-demo/canvas/forked_-fireworks/)
 - [ImageBitmapのテスト](https://sapphire-al2o3.github.io/js-demo/canvas/ImageBitmapのテスト/)
 - [lineCap](https://sapphire-al2o3.github.io/js-demo/canvas/lineCap/)
+- [モアレ](https://sapphire-al2o3.github.io/js-demo/canvas/moire/)
 - [toDataURLの速度](https://sapphire-al2o3.github.io/js-demo/canvas/toDataURLの速度/)
 - [transformでの回転](https://sapphire-al2o3.github.io/js-demo/canvas/transformでの回転/)
 - [WebフォントでCavansに文字を描く](https://sapphire-al2o3.github.io/js-demo/canvas/WebフォントでCavansに文字を描く/)
