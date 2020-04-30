@@ -25,6 +25,22 @@ void main() {
     gl_FragColor = c;
 }
 </script>
+<script id="shader-fs-2" type="x-shader/x-fragment">
+precision highp float;
+varying vec2 uv;
+
+void main() {
+    vec2 p = uv * 2.0 - 1.0;
+    vec2 n = normalize(p);
+    n.x = -n.x * 0.5 + 0.5;
+    n.y = sign(n.y);
+    n.x = n.x * n.y * 0.5 + 0.5;
+    vec4 c = vec4(n.x, n.x, n.x, 1.0);
+    float a = atan(p.y, p.x) / 3.1415 * 0.5 + 0.5;
+    c = vec4(a, a, a, 1.0);
+    gl_FragColor = c;
+}
+</script>
 <script id="shader-vs" type="x-shader/x-vertex">
 attribute vec3 position;
 varying vec2 uv;

@@ -7,6 +7,7 @@
 
     // シェーダを初期化
     program.push(initShader(gl, 'shader-vs', 'shader-fs'));
+    program.push(initShader(gl, 'shader-vs', 'shader-fs-2'));
 
     var vbo = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
@@ -46,4 +47,11 @@
     }
 
     let timer = setAnimationFrame(render, 1000 / 30);
+
+    let shaderIndex = 0;
+    canvas.addEventListener('click', () => {
+        shaderIndex = 1 - shaderIndex;
+        gl.useProgram(program[shaderIndex]);
+        setupUniform(program[shaderIndex]);
+    }, false);
 }());
