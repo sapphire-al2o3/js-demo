@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8" />
-<title></title>
+<title>undefined</title>
 <meta name="Description" content="" />
 <meta name="Keywords"  content="" />
 <link rel="stylesheet" type="text/css" media="screen,print" href="../../lib/webglutil.css" />
@@ -47,5 +47,11 @@ void main() {
 <canvas id="canvas" width="300" height="300"></canvas>
 <script type="text/javascript" src="../../lib/webglutil.js"></script>
 <script type="text/javascript" src="index.js"></script>
+<p>GLSLで未定義になる計算</p>
+<ul>
+    <li>pow(1.0,1.0)</li>
+    <li>log2(0.0)</li>
+    <li>sqrt(-1.0)</li>
+</ul>
 </body>
 </html>
