@@ -49,7 +49,7 @@ function blitLine(src, sh, sw, dst, dw, dh, y, offsetX, offsetY) {
     for (let i = 0; i < dw; i++) {
         const dk = y * dw + i;
         const sx = (i - offsetX) % sw;
-        const sk = sy + sx; 
+        const sk = sy + sx;
         dst[dk] = src[sk];
     }
 }
