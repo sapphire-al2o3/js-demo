@@ -57,6 +57,7 @@ function blitLine(src, sh, sw, dst, dw, dh, y, offsetX, offsetY) {
 
 console.time('tiling 2');
 
+// 1ラインずつ描画
 for (let i = 0; i < ch; i++) {
     blitLine(src, w, h, dst, cw, ch, i, offsetX, offsetY);
     // const sy = (i - offsetY) % h * w;
@@ -72,6 +73,7 @@ console.timeEnd('tiling 2');
 
 console.time('tiling 1');
 
+// 1画像ずつ描画
 for (let i = offsetY; i < ch; i += h) {
     for (let j = offsetX; j < cw; j += w) {
         // ctx.drawImage(parrot, j, i);
