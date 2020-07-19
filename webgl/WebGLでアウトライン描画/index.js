@@ -43,8 +43,9 @@
         outline = true,
         color = false;
 
-    var timer = setAnimationFrame(function(delta) {
-        frame++;
+    function render(delta) {
+        if (delta > 0)
+            frame++;
         Matrix4.rotateXYZ(frame * 0.02, 0.0, frame * 0.02, matrix.mMatrix);
         matrix.mMatrix.mul(matrix.vMatrix, matrix.mvMatrix);
         matrix.nMatrix = matrix.mvMatrix.toMatrix3().transpose().inverse();
@@ -70,7 +71,9 @@
             drawMesh(program[1], model.meshes[0]);
         }
         gl.flush();
-    }, 1000 / 30);
+    }
+    
+    const timer = setAnimationFrame(render, 1000 / 30);
 
     gl.canvas.addEventListener('click', function() {
         timer.toggle();
@@ -78,9 +81,11 @@
     
     document.getElementById('outline').addEventListener('click', function() {
         outline = !outline;
+        render(0);
     });
     
     document.getElementById('color').addEventListener('click', function() {
         color = !color;
+        render(0);
     });
 }());
