@@ -30,7 +30,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [WebGLでワイヤフレーム](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLでワイヤフレーム/)
 - [WebGLで花火](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLで花火/)
 - [WebGLで草原](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLで草原/)
-- [WebGLにWebカメラのキャプチャをつけるテスト](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLにWebカメラのキャプチャをつけるテスト/)
+- [WebGLにWebカメラのキャプチャをつけるテスト](https://sapphire-al2o3.github.io/js-demo/webgl/capture-camera/)
 - [WebGLの初期値](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLの初期値/)
 - [WebGLの演算精度](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLの演算精度/)
 - [WebGLテスト](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLテスト/)
