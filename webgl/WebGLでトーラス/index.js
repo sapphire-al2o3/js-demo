@@ -1,4 +1,9 @@
 
+const quat = glMatrix.quat;
+const vec3 = glMatrix.vec3;
+const mat3 = glMatrix.mat3;
+const mat4 = glMatrix.mat4;
+
 var canvas,
     ctx,
     gl,
@@ -10,7 +15,7 @@ var canvas,
     tex,
     matrix = {},
     blockSlider,
-    cq = glMatrix.quat.create([0.0, 0.0, 0.0, 1.0]),
+    cq = quat.create([0.0, 0.0, 0.0, 1.0]),
     tq = quat.create(cq);
 
 // initialize
@@ -28,26 +33,26 @@ var canvas,
 })();
 
 var drag = false,
-	mouse = {};
+    mouse = {};
 function down(e) {
-	drag = true;
-	mouse.x = e.clientX;
-	mouse.y = e.clientY;
+    drag = true;
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
 }
 function move(e) {
     if(drag) {
-	var x = e.clientX,
-		y = e.clientY,
-	dx = (x - mouse.x) / 400.0,
-	dy = (y - mouse.y) / 400.0,
-	a = Math.sqrt(dx * dx + dy * dy);
-	if(a != 0.0) {
-	    var ar = a * Math.PI,
-	    	as = Math.sin(ar) / a,
-	    	dq = quat4.create([dy * as, dx * as, 0.0, Math.cos(ar)]);
-	    quat.multiply(dq, cq, tq);
-	}
-	render();
+        var x = e.clientX,
+            y = e.clientY,
+            dx = (x - mouse.x) / 400.0,
+            dy = (y - mouse.y) / 400.0,
+            a = Math.sqrt(dx * dx + dy * dy);
+        if(a != 0.0) {
+            var ar = a * Math.PI,
+                as = Math.sin(ar) / a,
+                dq = quat.fromValues(dy * as, dx * as, 0.0, Math.cos(ar));
+            quat.multiply(tq, dq, cq);
+        }
+        render();
     }
     e.preventDefault();
 }
@@ -64,7 +69,7 @@ window.onload = function ready() {
     canvas.addEventListener('mouseup', up, false);
     
     // WebGLのコンテキスト取得
-    gl = canvas.getContext('experimental-webgl');
+    gl = canvas.getContext('webgl');
     gl.viewportWidth = gl.canvas.width;
     gl.viewportHeight = gl.canvas.height;
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -79,7 +84,7 @@ window.onload = function ready() {
     initShader();
     
     setTimeout(function() {
-	    render();
+        render();
     }, 100);
 };
 
@@ -92,25 +97,25 @@ function createTorus(n, m) {
     t = 1.0;
     
     for(var i = 0; i <= n; i++) {
-	var ph = Math.PI * 2.0 * i / n,
-	    r = Math.cos(ph) * t,
-	    y = Math.sin(ph) * t;
-	
-	for(var j = 0; j <= m; j++) {
-	    var th = 2.0 * Math.PI * j / m,
-		x = Math.cos(th) * (s + r),
-		z = Math.sin(th) * (s + r);
-	    vertices.push(x, y, z);
-	    normals.push(r * Math.cos(th), y, r * Math.sin(th));
-	}
+        var ph = Math.PI * 2.0 * i / n,
+            r = Math.cos(ph) * t,
+            y = Math.sin(ph) * t;
+
+        for(var j = 0; j <= m; j++) {
+            var th = 2.0 * Math.PI * j / m,
+            x = Math.cos(th) * (s + r),
+            z = Math.sin(th) * (s + r);
+            vertices.push(x, y, z);
+            normals.push(r * Math.cos(th), y, r * Math.sin(th));
+        }
     }
-    
+
     for(i = 0; i < n; i++) {
-	for(j = 0; j < m; j++) {
-	    var count = (n + 1) * j + i;
-	    indices.push(count, count + n + 2, count + 1);
-	    indices.push(count, count + n + 1, count + n + 2);
-	}
+        for(j = 0; j < m; j++) {
+            var count = (n + 1) * j + i;
+            indices.push(count, count + n + 2, count + 1);
+            indices.push(count, count + n + 1, count + n + 2);
+        }
     }
     
     return {size: indices.length, v: vertices, i: indices, n: normals};
@@ -136,8 +141,8 @@ function initBuffer() {
 // シェーダの取得
 function getShader(gl, id) {
     var shaderScript = document.getElementById(id),
-	str = shaderScript.textContent,
-	shader = null;
+        str = shaderScript.textContent,
+        shader = null;
     
     if(shaderScript.type == 'x-shader/x-fragment') {
     	shader = gl.createShader(gl.FRAGMENT_SHADER);
@@ -162,19 +167,19 @@ function getShader(gl, id) {
 // シェーダの初期化
 function initShader() {
     var fs = getShader(gl, 'shader-fs'),
-	vs = getShader(gl, 'shader-vs');
-    
+        vs = getShader(gl, 'shader-vs');
+
     getError();
-    
+
     // Create the shader program
     program = gl.createProgram();
     gl.attachShader(program, vs);
     gl.attachShader(program, fs);
     gl.linkProgram(program);
-    
+
     // If creating the shader program failed, alert
     if(!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-	    alert(gl.getProgramInfoLog(program));
+        alert(gl.getProgramInfoLog(program));
     }
     
     gl.useProgram(program);
@@ -221,13 +226,17 @@ function preRender() {
     gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     // 行列設定
-    mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, matrix.pMatrix);
+    mat4.perspective(matrix.pMatrix, 45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0);
     mat4.identity(matrix.mvMatrix);
-    var vMatrix = mat4.create();
-    mat4.lookAt([-2, 12, -6], [0, 0, 0], [0, 1, 0], vMatrix);
-    mat4.multiply(vMatrix, quat4.toMat4(tq), matrix.mvMatrix);
-    mat4.toInverseMat3(matrix.mvMatrix, matrix.nMatrix);
-    mat3.transpose(matrix.nMatrix);
+    let vMatrix = mat4.create();
+    let rotMtx = mat4.create();
+    mat4.lookAt(vMatrix, [-2, 12, -6], [0, 0, 0], [0, 1, 0]);
+    // mat4.multiply(vMatrix, quat.toMat4(tq), matrix.mvMatrix);
+    // mat4.toInverseMat3(matrix.mvMatrix, matrix.nMatrix);
+    // mat3.transpose(matrix.nMatrix);
+    mat4.multiply(matrix.mvMatrix, vMatrix, glMatrix.mat4.fromQuat(rotMtx, tq));
+    mat3.normalFromMat4(matrix.nMatrix, matrix.mvMatrix);
+
     // ユニフォーム設定
     gl.uniformMatrix4fv(program.location.pMatrix, false, matrix.pMatrix);
     gl.uniformMatrix4fv(program.location.mvMatrix, false, matrix.mvMatrix);
