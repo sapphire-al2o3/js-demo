@@ -1,3 +1,8 @@
+const quat4 = glMatrix.quat;
+const mat4 = glMatrix.mat4;
+const mat3 = glMatrix.mat3;
+const vec3 = glMatrix.vec3;
+
 var canvas,
     ctx,
     gl,
@@ -241,7 +246,7 @@ function preRender() {
 	gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-	mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, matrix.pMatrix);
+	mat4.perspective(matrix.pMatrix, 45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0);
 	mat4.identity(matrix.mvMatrix);
 	//mat4.translate(mvMatrix, [-0.0, 0.0, -6.0]);
 	matrix.vMatrix = mat4.create();
@@ -250,11 +255,14 @@ function preRender() {
 		scale = vec3.create([4, 1, 4]);
 	mat4.identity(mMatrix);
 	mat4.scale(mMatrix, scale, mMatrix);
-	mat4.multiply(mMatrix, quat4.toMat4(tq), mMatrix);
+	// mat4.multiply(mMatrix, quat4.toMat4(tq), mMatrix);
+	let rotMtx = mat4.create();
+	mat4.multiply(mMatrix, mat4.fromQuat(rotMtx, tq), mMatrix);
 	
-	mat4.multiply(matrix.vMatrix, mMatrix, matrix.mvMatrix);
-	mat4.toInverseMat3(matrix.mvMatrix, matrix.nMatrix);
-	mat3.transpose(matrix.nMatrix);
+	mat4.multiply(matrix.mvMatrix, matrix.vMatrix, mMatrix);
+	// mat4.toInverseMat3(matrix.mvMatrix, matrix.nMatrix);
+	// mat3.transpose(matrix.nMatrix);
+	mat3.normalFromMat4(matrix.nMatrix, matrix.mvMatrix);
 	
 	gl.uniformMatrix4fv(program.location.pMatrix, false, matrix.pMatrix);
 	gl.uniformMatrix4fv(program.location.mvMatrix, false, matrix.mvMatrix);
