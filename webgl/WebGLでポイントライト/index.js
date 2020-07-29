@@ -73,7 +73,7 @@ window.onload = function ready() {
     canvas.addEventListener('mousemove', move, false);
     canvas.addEventListener('mouseup', up, false);
 
-    gl = canvas.getContext('experimental-webgl');
+    gl = canvas.getContext('webgl');
     
     gl.viewportWidth = gl.canvas.width;
     gl.viewportHeight = gl.canvas.height;
