@@ -11,7 +11,6 @@ var canvas,
     material = {},
     light = {},
     vbo = {},
-    tex,
     matrix = {},
     blockSlider,
     cq = quat4.create([0.0, 0.0, 0.0, 1.0]),
@@ -250,7 +249,7 @@ function preRender() {
 	mat4.identity(matrix.mvMatrix);
 	//mat4.translate(mvMatrix, [-0.0, 0.0, -6.0]);
 	matrix.vMatrix = mat4.create();
-	mat4.lookAt([-2, 8, -6], [0, 0, 0], [0, 1, 0], matrix.vMatrix);
+	mat4.lookAt(matrix.vMatrix, [-2, 8, -6], [0, 0, 0], [0, 1, 0]);
 	var mMatrix = mat4.create(),
 		scale = vec3.create([4, 1, 4]);
 	mat4.identity(mMatrix);
@@ -290,10 +289,6 @@ function preRender() {
 	//gl.vertexAttribPointer(program.vertex.color, 4, gl.FLOAT, false, 0, 0);
 	
 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vbo.idx);
-	
-	// テクスチャ
-	gl.activeTexture(gl.TEXTURE0);
-	gl.bindTexture(gl.TEXTURE_2D, tex);
 }
 
 function render() {
