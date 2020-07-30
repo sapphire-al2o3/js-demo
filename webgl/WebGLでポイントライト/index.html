@@ -58,7 +58,6 @@ attribute vec3 aVertexNormal;
 uniform mat4 mvMatrix;
 uniform mat4 pMatrix;
 uniform mat3 nMatrix;
-uniform vec3 uLightDirection;
 
 varying vec3 vNormal;
 varying vec3 vView;
@@ -67,7 +66,6 @@ varying vec3 vPosition;
 void main() {
     gl_Position = pMatrix * mvMatrix * vec4(aVertexPosition, 1);
     vNormal = normalize(nMatrix * aVertexNormal);
-    float dif = max(dot(vNormal, uLightDirection), 0.0);
     vView = -normalize(mvMatrix * vec4(aVertexPosition, 1.0)).xyz;
     vPosition = (mvMatrix * vec4(aVertexPosition, 1.0)).xyz;
 }

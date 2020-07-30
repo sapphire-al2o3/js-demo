@@ -22,8 +22,8 @@ var canvas,
     material.specular = new Float32Array([0.8, 0.8, 0.8, 1.0]);
     material.ambient = new Float32Array([0.05, 0.05, 0.05, 1.0]);
     material.emission = new Float32Array([0.0, 0.0, 0.0, 0.0]);
-    light.position = vec3.create([0.0, 0.0, 0.0]);
-    light.direction = vec3.create([1.0, 1.0, 0.0]);
+    light.position = vec3.fromValues(0.0, 0.0, 0.0);
+    light.direction = vec3.fromValues(1.0, 1.0, 0.0);
     light.intensity = 10.0;
     material.power = 100.0;
     matrix.pMatrix = mat4.create();
@@ -251,12 +251,12 @@ function preRender() {
 	matrix.vMatrix = mat4.create();
 	mat4.lookAt(matrix.vMatrix, [-2, 8, -6], [0, 0, 0], [0, 1, 0]);
 	var mMatrix = mat4.create(),
-		scale = vec3.create([4, 1, 4]);
+		scale = vec3.fromValues(4, 1, 4);
 	mat4.identity(mMatrix);
-	mat4.scale(mMatrix, scale, mMatrix);
+	mat4.fromScaling(mMatrix, scale);
 	// mat4.multiply(mMatrix, quat4.toMat4(tq), mMatrix);
 	let rotMtx = mat4.create();
-	mat4.multiply(mMatrix, mat4.fromQuat(rotMtx, tq), mMatrix);
+	// mat4.multiply(mMatrix, mat4.fromQuat(rotMtx, tq), mMatrix);
 	
 	mat4.multiply(matrix.mvMatrix, matrix.vMatrix, mMatrix);
 	// mat4.toInverseMat3(matrix.mvMatrix, matrix.nMatrix);
