@@ -15,8 +15,8 @@ var canvas,
     tex,
     matrix = {},
     blockSlider,
-    cq = quat.create([0.0, 0.0, 0.0, 1.0]),
-    tq = quat.create(cq);
+    cq = quat.create(),
+    tq = quat.create();
 
 // initialize
 (function() {

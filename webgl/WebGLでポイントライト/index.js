@@ -13,8 +13,8 @@ var canvas,
     vbo = {},
     matrix = {},
     blockSlider,
-    cq = quat4.create([0.0, 0.0, 0.0, 1.0]),
-    tq = quat4.create(cq);
+    cq = quat4.create(),
+    tq = quat4.create();
 
 // initialize
 (function() {
@@ -43,18 +43,17 @@ function down(e) {
 
 function move(e) {
     if(drag) {
-	var x = e.clientX,
-	    y = e.clientY,
-	    dx = (x - mouse.x) / 400.0,
-	    dy = (y - mouse.y) / 400.0,
-	    a = Math.sqrt(dx * dx + dy * dy);
-	if(a !== 0.0) {
-	    var ar = a * Math.PI,
-		as = Math.sin(ar) / a,
-		dq = quat4.create([dy * as, dx * as, 0.0, Math.cos(ar)]);
-	    quat4.multiply(dq, cq, tq);
-	}
-	render();
+		var x = e.clientX,
+			y = e.clientY,
+			dx = (x - mouse.x) / 400.0,
+			dy = (y - mouse.y) / 400.0,
+			a = Math.sqrt(dx * dx + dy * dy);
+		if(a !== 0.0) {
+			var ar = a * Math.PI,
+			as = Math.sin(ar) / a,
+			dq = quat4.fromValues(dy * as, dx * as, 0.0, Math.cos(ar));
+			quat4.multiply(tq, dq, cq);
+		}
     }
     e.preventDefault();
 }
@@ -256,7 +255,7 @@ function preRender() {
 	mat4.fromScaling(mMatrix, scale);
 	// mat4.multiply(mMatrix, quat4.toMat4(tq), mMatrix);
 	let rotMtx = mat4.create();
-	// mat4.multiply(mMatrix, mat4.fromQuat(rotMtx, tq), mMatrix);
+	mat4.multiply(mMatrix, mat4.fromQuat(rotMtx, tq), mMatrix);
 	
 	mat4.multiply(matrix.mvMatrix, matrix.vMatrix, mMatrix);
 	// mat4.toInverseMat3(matrix.mvMatrix, matrix.nMatrix);
