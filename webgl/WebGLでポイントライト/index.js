@@ -291,12 +291,12 @@ function preRender() {
 function render() {
     preRender();
 
-    light.position[1] = blockSlider.value * 10.0;
-    gl.uniform3fv(program.lightPositionUniform, light.position);
     light.position[0] = 4.0 * Math.sin(t + 0.3);
+    light.position[1] = blockSlider.value * 10.0;
     light.position[2] = 4.0 * Math.cos(0.5 * t);
     t += 0.05;
 
+    gl.uniform3fv(program.lightPositionUniform, light.position);
 
     gl.drawElements(gl.TRIANGLES, vertex.size, gl.UNSIGNED_SHORT, 0);
     gl.flush();
