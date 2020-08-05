@@ -19,18 +19,17 @@ var canvas,
     tq = quat.create();
 
 // initialize
-(function() {
-    material.diffuse = new Float32Array([0.7, 0.7, 1.0, 1.0]);
-    material.specular = new Float32Array([0.8, 0.8, 0.8, 1.0]);
-    material.ambient = new Float32Array([0.05, 0.05, 0.05, 1.0]);
-    material.emission = new Float32Array([0.0, 0.0, 0.0, 0.0]);
-    light.position = vec3.create([0.0, 4.0, 1.0]);
-    light.direction = vec3.create([0.0, 1.0, 0.0]);
-    light.intensity = new Float32Array([0.5]);
-    matrix.pMatrix = mat4.create();
-    matrix.mvMatrix = mat4.create();
-    matrix.nMatrix = mat3.create();
-})();
+
+material.diffuse = new Float32Array([0.7, 0.7, 1.0, 1.0]);
+material.specular = new Float32Array([0.8, 0.8, 0.8, 1.0]);
+material.ambient = new Float32Array([0.05, 0.05, 0.05, 1.0]);
+material.emission = new Float32Array([0.0, 0.0, 0.0, 0.0]);
+light.position = vec3.fromValues(0.0, 4.0, 1.0);
+light.direction = vec3.fromValues(0.0, 1.0, 0.0);
+light.intensity = new Float32Array([0.5]);
+matrix.pMatrix = mat4.create();
+matrix.mvMatrix = mat4.create();
+matrix.nMatrix = mat3.create();
 
 var drag = false,
     mouse = {};
