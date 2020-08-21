@@ -37,7 +37,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [アウトライン](https://sapphire-al2o3.github.io/js-demo/webgl/アウトライン/)
 - [フィードバックポストエフェクト](https://sapphire-al2o3.github.io/js-demo/webgl/フィードバックポストエフェクト/)
 - [フラットシェーディング](https://sapphire-al2o3.github.io/js-demo/webgl/フラットシェーディング/)
-- [ミップマップのバイアス](https://sapphire-al2o3.github.io/js-demo/webgl/ミップマップのバイアス/)
+- [ミップマップのバイアス](https://sapphire-al2o3.github.io/js-demo/webgl/Mipmap-Bias/)
 - [リサージュ曲線](https://sapphire-al2o3.github.io/js-demo/webgl/リサージュ曲線/)
 - [星空](https://sapphire-al2o3.github.io/js-demo/webgl/星空/)
 - [深度テクスチャ](https://sapphire-al2o3.github.io/js-demo/webgl/深度テクスチャ/)
