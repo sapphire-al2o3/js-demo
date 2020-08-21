@@ -1,37 +1,37 @@
 var gl,
-	program,
-	frame = 0,
-	bias = 0.0;
+    program,
+    frame = 0,
+    bias = 0.0;
 
 function createPlaneMesh(m) {
-	var position = [],
-		texcoord = [],
-		index = [];
-	
-	position = [
-		-32.0, 32.0, 0.0,
-		32.0, 32.0, 0.0,
-		-32.0, -32.0, 0.0,
-		32.0, -32.0, 0.0
-	];
-	
-	texcoord = [
-		0.0, 1.0,
-		1.0, 1.0,
-		0.0, 0.0,
-		1.0, 0.0
-	];
-	
-	index = [1, 0, 2, 1, 2, 3];
-	
-	return {
-		material: m,
+    var position = [],
+        texcoord = [],
+        index = [];
+
+    position = [
+        -32.0, 32.0, 0.0,
+        32.0, 32.0, 0.0,
+        -32.0, -32.0, 0.0,
+        32.0, -32.0, 0.0
+    ];
+
+    texcoord = [
+        0.0, 1.0,
+        1.0, 1.0,
+        0.0, 0.0,
+        1.0, 0.0
+    ];
+
+    index = [1, 0, 2, 1, 2, 3];
+
+    return {
+        material: m,
         indexStream: index,
         vertexStream: {
             position: position,
             uv: texcoord
         }
-	};
+    };
 }
 
 window.onload = function () {
@@ -51,7 +51,7 @@ window.onload = function () {
     ];
     model.meshes.push(createPlaneMesh(0));
 
-    slider('slider', -2.0, 2.0, function(value) {
+    slider('slider', -2.0, 2.0, 0.0, value => {
         bias = value;
         render(model);
     });
@@ -154,7 +154,7 @@ function render(model) {
 	getError(gl);
 }
 
-function slider(id, min, max, func) {
+function slider(id, min, max, def, func) {
 	var elm = document.getElementById(id),
 		w = elm.clientWidth,
 		d = max - min;
@@ -190,6 +190,8 @@ function slider(id, min, max, func) {
 		
 		if(func) func(elm.value);
 	};
-	elm.value = 1.0;
-	return elm;
+    elm.value = def;
+    let x = (def - min) / d * w - 5;
+    elm.firstChild.style.left = x + 'px';
+    return elm;
 }
