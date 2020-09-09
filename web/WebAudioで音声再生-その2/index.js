@@ -1,15 +1,15 @@
 // forked from sapphire_al2o3's "WebAudioで音声再生" http://jsdo.it/sapphire_al2o3/o9el
-(function() {
-    var context = new (window.AudioContext || window.webkitAudioContext)(),
-        loading = document.getElementById('loading'),
+window.onload = () => {
+    let loading = document.getElementById('loading'),
         source,
         audio = new Audio();
     
     function play() {
-        var source = context.createMediaElementSource(audio),
+        let context = new AudioContext();
+        let source = context.createMediaElementSource(audio),
             filter = context.createBiquadFilter();
-        filter.type = 0;
-        filter.frequency.value = 4000;
+        filter.type = 'lowpass';
+        filter.frequency.value = 300;
         source.connect(filter);
         filter.connect(context.destination);
         audio.play();
@@ -17,14 +17,14 @@
     }
     
     function load(file) {
-        var f = new FileReader();
+        let f = new FileReader();
         f.onload = function(e) {
             loading.textContent = '100%';
             document.getElementById('play').style.display = 'inline';
             var blob = new Blob([e.target.result], {"type": file.type});
-			audio.src = window.URL.createObjectURL(blob);
-			document.getElementById('play').style.display = 'inline';
-			source = play();
+            audio.src = window.URL.createObjectURL(blob);
+            document.getElementById('play').style.display = 'inline';
+            source = play();
             audio.play();
         };
         f.readAsArrayBuffer(file);
@@ -59,4 +59,4 @@
         e.target.textContent = playing ? 'Play' : 'Stop';
         playing = !playing;
     });
-})();
+};
