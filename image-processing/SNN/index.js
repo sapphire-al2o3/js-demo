@@ -24,8 +24,8 @@ window.onload = () => {
     let width = image.width,
         height = image.height;
 
-    for(let i = w; i < height - w; i++) {
-        for(let j = w; j < width - w; j++) {
+    for(let i = 0; i < height; i++) {
+        for(let j = 0; j < width; j++) {
             let index = (i * width + j) * 4;
             let r = data[index],
                 g = data[index + 1],
@@ -37,11 +37,16 @@ window.onload = () => {
             for(let k = -w; k < w; k++) {
                 let y0 = i + k,
                     y1 = i + (w - k);
+                if(y0 < 0 || y0 >= height) continue;
+                if(y1 < 0 || y1 >= height) continue;
                 for(let l = -w; l < w; l++) {
                     let x0 = j + l,
                         x1 = j + (w - l);
-                    let index0 = (y0 * width + x0) * 4,
+                    if(x0 < 0 || x0 >= width) continue;
+                    if(x1 < 0 || x1 >= width) continue;
+                        let index0 = (y0 * width + x0) * 4,
                         index1 = (y1 * width + x1) * 4;
+                    
                     let r0 = data[index0],
                         g0 = data[index0 + 1],
                         b0 = data[index0 + 2],
