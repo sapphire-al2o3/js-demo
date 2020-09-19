@@ -46,6 +46,7 @@ https://sapphire-al2o3.github.io/js-demo/
 ## Math
 
 - [2x2行列の固有値](https://sapphire-al2o3.github.io/js-demo/math/2x2行列の固有値/)
+- [2次ベジェ曲線](https://sapphire-al2o3.github.io/js-demo/math/bezier2d/)
 - [3Dの行列テスト](https://sapphire-al2o3.github.io/js-demo/math/3Dの行列テスト/)
 - [ベジェ曲線で描く](https://sapphire-al2o3.github.io/js-demo/math/ベジェ曲線で描く/)
 - [3次ベジェ曲面](https://sapphire-al2o3.github.io/js-demo/math/3次ベジェ曲面/)
