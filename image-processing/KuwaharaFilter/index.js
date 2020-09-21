@@ -1,9 +1,5 @@
 window.onload = () => {
 
-    function sqdist(r0, g0, b0, r1, g1, b1) {
-        return (r0 - r1) * (r0 - r1) + (g0 - g1) * (g0 - g1) + (b0 - b1) * (b0 - b1);
-    }
-
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
 
