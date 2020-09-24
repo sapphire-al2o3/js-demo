@@ -35,24 +35,32 @@ window.onload = () => {
         }
     }
 
-    for(let i = 0; i < height; i++) {
-        for(let j = 0; j < width; j++) {
+    const size = width * height;
+    for(let i = 0; i < size; i++) {
             
-            for(let k = -radius; k <= radius; k++) {
-                let y = i + k;
-                for(let l = -radius; l <= radius; l++) {
-                    let index = (y * wdith + j + l) * 4;
-                    let r = data[index];
-                    let g = data[index + 1];
-                    let b = data[index + 2];
-                    
-                }
+            let index = i * 4;
+            let r = data[index];
+            let g = data[index + 1];
+            let b = data[index + 2];
+
+            let sr, sg, sb, sw;
+            sr = sg = sb = sw = 0;
+
+            for(let k = 0; k < indices.length; k++) {
+                let t = index + indices[k] * 4;
+                let rr = data[t];
+                let gg = data[t + 1];
+                let bb = data[t + 2];
+
+                sr += rr;
+                sg += gg;
+                sb += bb;
+                sw += 0;
             }
 
-            let index = (i * width + j) * 4;
-            ret[index] = r;
-            ret[index + 1] = g;
-            ret[index + 2] = b;
+            ret[index] = sr / sw ^ 0;
+            ret[index + 1] = sg / sw ^ 0;
+            ret[index + 2] = sb / sw ^ 0;
             ret[index + 3] = 255;
         }
     }
