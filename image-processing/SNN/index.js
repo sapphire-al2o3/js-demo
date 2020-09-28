@@ -34,9 +34,6 @@ window.onload = () => {
                 count = 0;
             let rr, gg, bb;
             rr = gg = bb = 0;
-            if(index == 1016) {
-                console.log(r, g, b);
-            }
             for(let k = -w; k < w; k++) {
                 let y0 = i + k,
                     y1 = i - k;
