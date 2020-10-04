@@ -16,6 +16,9 @@ window.onload = () => {
     const ret = result.data;
 
     let a = 1,
+        freqR = 1,
+        freqG = 1,
+        freqB = 1,
         phaseR = 0,
         phaseG = 0,
         phaseB = 0;
@@ -24,8 +27,8 @@ window.onload = () => {
         return v < 0 ? 0 : v > 255 ? 255 : v;
     }
 
-    function curve(v, p) {
-        return clamp((Math.sin(v / 255 * a + p) + 1) / 2 * 255 ^ 0);
+    function curve(v, f, p) {
+        return clamp((Math.sin(v / 255 * Math.PI * f + p) * a + 1) / 2 * 255 ^ 0);
     }
 
     function render() {
@@ -39,9 +42,9 @@ window.onload = () => {
                     g = data[index + 1],
                     b = data[index + 2],
                     a = data[index + 3];
-                ret[index] = curve(r, phaseR);
-                ret[index + 1] = curve(g, phaseG);
-                ret[index + 2] = curve(b, phaseB);
+                ret[index] = curve(r, freqR, phaseR);
+                ret[index + 1] = curve(g, freqG, phaseG);
+                ret[index + 2] = curve(b, freqB, phaseB);
                 ret[index + 3] = a;
             }
         }
@@ -52,7 +55,7 @@ window.onload = () => {
     render();
 
     document.body.appendChild(createSlider('a', 0.5, v => {
-        a = v * 4;
+        freqR = freqG = freqB = v * 2;
         render();
     }));
 
