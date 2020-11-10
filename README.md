@@ -7,6 +7,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [Bloom](https://sapphire-al2o3.github.io/js-demo/webgl/Bloom/)
 - [conic-gradient](https://sapphire-al2o3.github.io/js-demo/webgl/conic-gradient/)
 - [Distance-Field](https://sapphire-al2o3.github.io/js-demo/webgl/Distance-Field/)
+- [facing](https://sapphire-al2o3.github.io/js-demo/webgl/facing/)
 - [forked_-WebGLでリサージュ曲線](https://sapphire-al2o3.github.io/js-demo/webgl/forked_-WebGLでリサージュ曲線/)
 - [FXAA](https://sapphire-al2o3.github.io/js-demo/webgl/FXAA/)
 - [Lambert](https://sapphire-al2o3.github.io/js-demo/webgl/Lambert/)
