@@ -7,9 +7,10 @@
   var p0 = {x: 100, y: 100, label: 'P0'},
       p1 = {x: 300, y: 300, label: 'P1'},
       p2 = {x: 300, y: 100, label: 'P2'},
-      p3 = {x: 100, y: 200, label: 'P3'};
+      p3 = {x: 100, y: 200, label: 'P3'},
+      p4 = {x: 100, y: 300, label: 'P4'};
   var active = {};
-  var shapes = [p0, p1, p2, p3];
+  var shapes = [p0, p1, p2, p3, p4];
   
   ctx.lineWidth = 2.0;
   ctx.font = '9pt consolas';
@@ -85,10 +86,12 @@
     
     
     ctx.clearRect(0, 0, 400, 400);
+    ctx.strokeStyle = '#999';
     catmullRomCurve(ctx, p0.x, p0.y, p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, 1);
     catmullRomCurve(ctx, p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, 1);
     catmullRomCurve(ctx, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p3.x, p3.y, 1);
-    
+    catmullRomCurve(ctx, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y, p4.x, p4.y, 1);
+    ctx.strokeStyle = '#000';
     shapes.forEach(function(e) {
       if(d.distance(e) < 6) {
         ctx.strokeCircle(e.x, e.y, 6);
@@ -99,7 +102,6 @@
     });
   }
   draw();
-  //setInterval(draw, 33);
 })();
 
 
