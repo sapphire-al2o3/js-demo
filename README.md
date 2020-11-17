@@ -110,6 +110,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [パターンアニメーション](https://sapphire-al2o3.github.io/js-demo/canvas/パターンアニメーション/)
 - [マンデブロ集合](https://sapphire-al2o3.github.io/js-demo/canvas/マンデブロ集合/)
 - [ジュリア集合](https://sapphire-al2o3.github.io/js-demo/canvas/julia/)
+- [コッホ曲線](https://sapphire-al2o3.github.io/js-demo/canvas/koch/)
 - [円形グラデーション](https://sapphire-al2o3.github.io/js-demo/canvas/円形グラデーション/)
 - [円錐グラデーション](https://sapphire-al2o3.github.io/js-demo/canvas/円錐グラデーション/)
 - [動く四角](https://sapphire-al2o3.github.io/js-demo/canvas/動く四角/)
