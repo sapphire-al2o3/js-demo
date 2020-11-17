@@ -41,7 +41,7 @@ koch(n, p1, p2);
 koch(n, p2, p3);
 koch(n, p3, p1);
 
-const slider = createSlider('glow', 1, v => {
+const slider = createSlider('n', 1, v => {
     let nn = v * 5 ^ 0;
     if (nn === n) {
         return;
