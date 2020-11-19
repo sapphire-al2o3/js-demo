@@ -113,7 +113,7 @@ let time = 0;
 function render(delta) {
     time += delta;
 
-    Matrix4.rotateXYZ(0.0, time * 0.002, 0.0, matrix.mMatrix);
+    Matrix4.rotateXYZ(0.0, time * 0.002, time * 0.002, matrix.mMatrix);
     matrix.mMatrix.mul(matrix.vMatrix, matrix.mvMatrix);
     matrix.nMatrix = matrix.mvMatrix.toMatrix3().transpose().inverse();
 
@@ -135,3 +135,25 @@ let timer = setAnimationFrame(render, 1000 / 30);
 gl.canvas.addEventListener('click', () => {
     timer.toggle();
 });
+
+const slider = createSlider('n', 1, v => {
+    let nn = v * 5 ^ 0;
+    if (nn === n) {
+        return;
+    }
+    n = nn;
+    
+    vertices.length = 0;
+    normals.length = 0;
+    const r = 4;
+    const p1 = [0, 0, -r / 2 / S_60];
+    const p2 = [-r / 2, 0, r / 4 / S_60];
+    const p3 = [r / 2, 0, r / 4 / S_60];
+    fractal(n, p1, p2, p3);
+
+    setupAttribute('position', vertices);
+    setupAttribute('normal', normals);
+});
+
+document.body.appendChild(slider);
+
