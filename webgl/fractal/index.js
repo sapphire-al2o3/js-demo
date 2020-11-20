@@ -62,11 +62,16 @@ function fractal(n, p1, p2, p3) {
 }
 
 let n = 5;
-const r = 4;
-const p1 = [0, 0, -r / 2 / S_60];
-const p2 = [-r / 2, 0, r / 4 / S_60];
-const p3 = [r / 2, 0, r / 4 / S_60];
-fractal(n, p1, p2, p3);
+
+function setup(n) {
+    const r = 3;
+    const p1 = [0, 0, -r / 2 / S_60];
+    const p2 = [-r / 2, 0, r / 4 / S_60];
+    const p3 = [r / 2, 0, r / 4 / S_60];
+    fractal(n, p1, p2, p3);
+}
+
+setup(n);
 
 const gl = initContext('canvas');
 
@@ -74,7 +79,7 @@ const program = [];
 const camera = {};
 const matrix = {};
 
-camera.position = new Vector3(0, 4.0, 4.0);
+camera.position = new Vector3(1, 3.0, 4.0);
 camera.target = new Vector3(0, 0.0, 0);
 camera.up = new Vector3(0, 1, 0);
 matrix.mMatrix = new Matrix4();
@@ -111,7 +116,7 @@ gl.clearColor(0.0, 0.0, 0.0, 1.0);
 let time = 0;
 
 function render(delta) {
-    time += delta;
+    // time += delta;
 
     Matrix4.rotateXYZ(0.0, time * 0.002, time * 0.002, matrix.mMatrix);
     matrix.mMatrix.mul(matrix.vMatrix, matrix.mvMatrix);
@@ -124,9 +129,7 @@ function render(delta) {
     setupUniform(program[0]);
 
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    
     gl.drawArrays(gl.TRIANGLES, 0, vertices.length / 3);
-
     gl.flush();
 }
 
@@ -145,11 +148,8 @@ const slider = createSlider('n', 1, v => {
     
     vertices.length = 0;
     normals.length = 0;
-    const r = 4;
-    const p1 = [0, 0, -r / 2 / S_60];
-    const p2 = [-r / 2, 0, r / 4 / S_60];
-    const p3 = [r / 2, 0, r / 4 / S_60];
-    fractal(n, p1, p2, p3);
+
+    setup(n);
 
     setupAttribute('position', vertices);
     setupAttribute('normal', normals);
