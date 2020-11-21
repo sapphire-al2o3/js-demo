@@ -61,7 +61,7 @@ function fractal(n, p1, p2, p3) {
     fractal(n - 1, [nx, ny, nz], [ux, uy, uz], [sx, sy, sz]);
 }
 
-let n = 0;
+let n = 5;
 
 function setup(n) {
     const r = 3;
