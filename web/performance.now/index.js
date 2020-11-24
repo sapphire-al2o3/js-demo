@@ -1,11 +1,11 @@
 var timer = {
-	time: function(tag) {
-		this.tags[tag] = performance.now();
-	},
-	timeEnd: function(tag) {
-		return (tag, performance.now() - this.tags[tag]);
-	},
-	tags: {}
+    time: function(tag) {
+        this.tags[tag] = performance.now();
+    },
+    timeEnd: function(tag) {
+        return (tag, performance.now() - this.tags[tag]);
+    },
+    tags: {}
 };
 
 timer.time('test1');
