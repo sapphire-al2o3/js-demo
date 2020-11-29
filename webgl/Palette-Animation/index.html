@@ -16,11 +16,12 @@ varying vec2 uv;
 
 uniform sampler2D index;
 uniform sampler2D palette;
+uniform float paletteSize;
 uniform float offset;
 
 void main() {
     vec4 i = texture2D(index, uv);
-    vec4 p = texture2D(palette, vec2(fract(i.x), 0.0));
+    vec4 p = texture2D(palette, vec2(fract(i.x + offset) * paletteSize, 0.0));
     gl_FragColor = p;
 }
 </script>
