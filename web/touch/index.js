@@ -10,7 +10,7 @@ document.body.addEventListener('touchstart', e => {
     const touches = e.touches;
     ctx.moveTo(touches[0].pageX, touches[0].pageY);
     for (let i = 1; i < touches.length; i++) {
-        ctx.lineTo(touch.pageX, touch.pageY);
+        ctx.lineTo(touches[i].pageX, touches[i].pageY);
         // ctx.arc(touch.pageX, touch.pageY, 4, 0, 2 * Math.PI, false);
         // ctx.fill();
     }
