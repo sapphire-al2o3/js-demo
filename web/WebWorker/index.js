@@ -11,6 +11,7 @@ const timer = {
 timer.time('test1');
 
 const worker = new Worker('worker.js');
+worker.postMessage(1000);
 worker.addEventListener('message', e => {
     const time = timer.timeEnd('test1');
     document.getElementById('time').textContent = 'time : ' + time;
