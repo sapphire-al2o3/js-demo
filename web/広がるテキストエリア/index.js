@@ -1,5 +1,5 @@
 
-var wideArea = function() {
+const wideArea = function() {
     var text = $(this).val();
     var lines = text.split('\n');
     $(this).css('height', lines.length + 'em');
