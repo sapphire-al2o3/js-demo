@@ -18,6 +18,14 @@ body {
     background-color: #7CF;
 }
 
+.column {
+    flex-direction: column;
+}
+
+.column div {
+    background-color: #F7C;
+}
+
 .container {
     display: flex;
 }
