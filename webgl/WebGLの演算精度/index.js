@@ -1,7 +1,6 @@
 (function() {
      var canvas = $('<canvas>').get(0),
          gl = canvas.getContext('experimental-webgl'),
-         tex = gl.createTexture(),
          td = $('td'),
          p = 0;
     
