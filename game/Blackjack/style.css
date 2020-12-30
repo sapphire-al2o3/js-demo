@@ -1,0 +1,19 @@
+div {
+    width: 100px;
+    padding: 4px;
+    font-size: 10pt;
+    border: 1px solid #AAA;
+    margin-bottom: 8px;
+    text-align: center;
+    font-family: Tahoma;
+    cursor: pointer;
+}
+
+#console {
+    width: auto;
+    text-align: left;
+}
+
+div:hover {
+    background-color: #F7F7F7;
+}
