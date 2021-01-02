@@ -72,7 +72,7 @@ function render(model) {
 		var mesh = model.meshes[i];
 		
 		gl.bindBuffer(gl.ARRAY_BUFFER, mesh.vbo.position);
-		gl.vertexAttribPointer(program.attribute[0].location, 3, gl.FLOAT, false, 0, 0);
+		gl.vertexAttribPointer(program.attribute['aVertexPosition'].location, 3, gl.FLOAT, false, 0, 0);
 		//gl.bindBuffer(gl.ARRAY_BUFFER, mesh.vbo.normal);
 		//gl.vertexAttribPointer(program.attribute[1].location, program.attribute[1].size, gl.FLOAT, false, 0, 0);
 
