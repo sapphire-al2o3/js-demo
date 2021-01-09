@@ -70,6 +70,15 @@ function render(x, y, px, py) {
     let sx = w / s,
         sy = h / s;
     
+    let mx = x / sx ^ 0,
+        my = y / sy ^ 0,
+        mpx = px / sx ^ 0,
+        mpy = py / sy ^ 0;
+
+    if (mx !== mpx || my !== mpy) {
+        return;
+    }
+
     x = x % sx;
     y = y % sy;
     px = px % sx;
