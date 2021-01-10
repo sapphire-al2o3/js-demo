@@ -64,7 +64,7 @@ document.getElementById('r3').addEventListener('click', function(e) {
     rot = 3;
 });
 
-let s = 4;
+let s = 8;
 
 function render(x, y, px, py) {
     let sx = w / s,
@@ -86,9 +86,21 @@ function render(x, y, px, py) {
 
     for (let i = 0; i < s; i++) {
         for (let j = 0; j < s; j++) {
+            let ax = px + i * sx,
+                ay = py + j * sy,
+                bx = x + i * sx,
+                by = y + j * sy;
+            if (i % 2 == 0) {
+                ax = sx - ax;
+                bx = sx - bx;
+            }
+            if (j % 2 == 0) {
+                ay = sy - ay;
+                by = sy - by;
+            }
             ctx.beginPath();
-            ctx.moveTo(px + i * sx, py + j * sy);
-            ctx.lineTo(x + i * sx, y + j * sy);
+            ctx.moveTo(ax, ay);
+            ctx.lineTo(bx, by);
             ctx.stroke();
         }
     }
