@@ -3,14 +3,14 @@ const ctx = canvas.getContext('2d');
 const w = canvas.width;
 const h = canvas.height;
     
-    var px = 0,
-        py = 0,
-        rect,
-        rot = 32,
-        down = false;
-    
-    ctx.lineWidth = 1.0;
-    ctx.strokeStyle = 'rgba(250, 100, 0, 0.4)';
+let px = 0,
+    py = 0,
+    rect,
+    rot = 32,
+    down = false;
+
+ctx.lineWidth = 1.0;
+ctx.strokeStyle = 'rgba(250, 100, 0, 0.4)';
     
 function mousemove(e) {
     if(down) {
@@ -48,20 +48,18 @@ document.getElementById('clear').addEventListener('click', function() {
     ctx.fillStyle = '#FFF';
     ctx.fillRect(0, 0, w, h);
 });
-document.getElementById('r32').addEventListener('click', function(e) {
-    rot = 32;
-});
+
 document.getElementById('r16').addEventListener('click', function(e) {
-    rot = 16;
+    s = 16;
 });
 document.getElementById('r8').addEventListener('click', function(e) {
-    rot = 8;
+    s = 8;
 });
-document.getElementById('r64').addEventListener('click', function(e) {
-    rot = 64;
+document.getElementById('r4').addEventListener('click', function(e) {
+    s = 4;
 });
-document.getElementById('r3').addEventListener('click', function(e) {
-    rot = 3;
+document.getElementById('r2').addEventListener('click', function(e) {
+    s = 2;
 });
 
 let s = 8;
@@ -86,21 +84,21 @@ function render(x, y, px, py) {
 
     for (let i = 0; i < s; i++) {
         for (let j = 0; j < s; j++) {
-            let ax = px + i * sx,
-                ay = py + j * sy,
-                bx = x + i * sx,
-                by = y + j * sy;
-            if (i % 2 == 0) {
+            let ax = px,
+                ay = py,
+                bx = x,
+                by = y;
+            if (i % 2 == 1) {
                 ax = sx - ax;
                 bx = sx - bx;
             }
-            if (j % 2 == 0) {
+            if (j % 2 == 1) {
                 ay = sy - ay;
                 by = sy - by;
             }
             ctx.beginPath();
-            ctx.moveTo(ax, ay);
-            ctx.lineTo(bx, by);
+            ctx.moveTo(ax + sx * i, ay + sy * j);
+            ctx.lineTo(bx + sx * i, by + sy * j);
             ctx.stroke();
         }
     }
