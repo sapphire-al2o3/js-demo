@@ -44,25 +44,35 @@ function mousedown(e) {
     
 canvas.addEventListener('mousedown', mousedown);
     
-document.getElementById('clear').addEventListener('click', function() {
+document.getElementById('clear').addEventListener('click', () => {
     ctx.fillStyle = '#FFF';
     ctx.fillRect(0, 0, w, h);
 });
 
-document.getElementById('r16').addEventListener('click', function(e) {
+document.getElementById('r16').addEventListener('click', e => {
     s = 16;
+    document.querySelector('.selected').className = '';
+    e.target.className = 'selected';
 });
-document.getElementById('r8').addEventListener('click', function(e) {
+document.getElementById('r8').addEventListener('click', e => {
     s = 8;
+    document.querySelector('.selected').className = '';
+    e.target.className = 'selected';
 });
 document.getElementById('r4').addEventListener('click', function(e) {
     s = 4;
+    document.querySelector('.selected').className = '';
+    e.target.className = 'selected';
 });
 document.getElementById('r2').addEventListener('click', function(e) {
     s = 2;
+    document.querySelector('.selected').className = '';
+    e.target.className = 'selected';
 });
 
 let s = 8;
+
+document.getElementById('r8').className = 'selected';
 
 function render(x, y, px, py) {
     let sx = w / s,

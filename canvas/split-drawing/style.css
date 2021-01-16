@@ -14,9 +14,13 @@ p {
 
 p span {
     cursor: pointer;
-    padding: 4px 8px;
+    padding: 4px 12px;
     background-color: #E7E7E7;
     border: 1px solid #AAA;
     margin-left: 4px;
     border-radius: 3px;
+}
+
+p span.selected {
+    background-color: #77AAFF;
 }
