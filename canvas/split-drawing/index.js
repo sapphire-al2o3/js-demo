@@ -45,7 +45,8 @@ function mousedown(e) {
 canvas.addEventListener('mousedown', mousedown);
     
 document.getElementById('clear').addEventListener('click', () => {
-    ctx.fillStyle = '#FFF';
+    ctx.fillStyle = '#000';
+    ctx.clearRect(0, 0, w, h);
     ctx.fillRect(0, 0, w, h);
 });
 
