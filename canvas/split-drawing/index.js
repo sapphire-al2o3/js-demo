@@ -60,12 +60,12 @@ document.getElementById('r8').addEventListener('click', e => {
     document.querySelector('.selected').className = '';
     e.target.className = 'selected';
 });
-document.getElementById('r4').addEventListener('click', function(e) {
+document.getElementById('r4').addEventListener('click', e => {
     s = 4;
     document.querySelector('.selected').className = '';
     e.target.className = 'selected';
 });
-document.getElementById('r2').addEventListener('click', function(e) {
+document.getElementById('r2').addEventListener('click', e => {
     s = 2;
     document.querySelector('.selected').className = '';
     e.target.className = 'selected';
