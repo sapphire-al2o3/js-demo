@@ -84,7 +84,14 @@ function render(x, y, px, py) {
         mpx = px / sx ^ 0,
         mpy = py / sy ^ 0;
 
-    if (mx !== mpx || my !== mpy) {
+    if (mx !== mpx) {
+        let dx = x - px,
+            dy = y - py;
+        console.log(py);
+        py = dy / dx * (mx * sx - px) + py;
+        console.log(py);
+    }
+    if (my !== mpy) {
         return;
     }
 
