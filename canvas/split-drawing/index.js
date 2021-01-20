@@ -71,29 +71,13 @@ document.getElementById('r2').addEventListener('click', e => {
     e.target.className = 'selected';
 });
 
-let s = 8;
+let s = 2;
 
-document.getElementById('r8').className = 'selected';
+document.getElementById('r2').className = 'selected';
 
-function render(x, y, px, py) {
+function drawLine(x, y, px, py) {
     let sx = w / s,
         sy = h / s;
-    
-    let mx = x / sx ^ 0,
-        my = y / sy ^ 0,
-        mpx = px / sx ^ 0,
-        mpy = py / sy ^ 0;
-
-    if (mx !== mpx) {
-        let dx = x - px,
-            dy = y - py;
-        console.log(py);
-        py = dy / dx * (mx * sx - px) + py;
-        console.log(py);
-    }
-    if (my !== mpy) {
-        return;
-    }
 
     x = x % sx;
     y = y % sy;
@@ -121,3 +105,35 @@ function render(x, y, px, py) {
         }
     }
 }
+
+function render(x, y, px, py) {
+    let sx = w / s,
+        sy = h / s;
+    
+    let mx = x / sx ^ 0,
+        my = y / sy ^ 0,
+        mpx = px / sx ^ 0,
+        mpy = py / sy ^ 0;
+
+    if (mx !== mpx) {
+        let dx = x - px,
+            dy = y - py;
+        console.log(x, px);
+        let yy = dy / dx * (mx * sx - px) + py;
+        let xx = mpx * sx - 0.5;
+        console.log(xx);
+        // return;
+        drawLine(x, y, xx, py);
+        // px = xx;
+        // py = yy;
+    }
+    if (my !== mpy) {
+        return;
+    }
+
+    drawLine(x, y, px, py);
+}
+
+render(10, 10, 300, 100);
+// render(300, 100, 200, 150);
+
