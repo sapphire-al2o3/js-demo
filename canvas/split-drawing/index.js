@@ -38,11 +38,11 @@ function mousedown(e) {
     py = e.pageY - rect.top + 0.5;
     down = true;
     
-    document.addEventListener('mousemove', mousemove);
-    document.addEventListener('mouseup', mouseup);
+    document.addEventListener('mousemove', mousemove, false);
+    document.addEventListener('mouseup', mouseup, false);
 }
     
-canvas.addEventListener('mousedown', mousedown);
+canvas.addEventListener('mousedown', mousedown, false);
     
 document.getElementById('clear').addEventListener('click', () => {
     ctx.fillStyle = '#000';
@@ -71,13 +71,27 @@ document.getElementById('r2').addEventListener('click', e => {
     e.target.className = 'selected';
 });
 
+document.getElementById('flip').addEventListener('click', e => {
+    flip = !flip;
+    e.target.className = e.target.className == 'selected' ? '' : 'selected';
+});
+
 let s = 2;
+let flip = false;
 
 document.getElementById('r2').className = 'selected';
 
 function drawLine(x, y, px, py) {
     let sx = w / s,
         sy = h / s;
+
+    let ex = 1,
+        ey = 1;
+    
+    if (!flip) {
+        ex = 1 - (x / sx ^ 0) % 2;
+        ey = 1 - (y / sy ^ 0) % 2;
+    }
 
     x = x % sx;
     y = y % sy;
@@ -90,11 +104,11 @@ function drawLine(x, y, px, py) {
                 ay = py,
                 bx = x,
                 by = y;
-            if (i % 2 == 1) {
+            if (i % 2 == ex) {
                 ax = sx - ax;
                 bx = sx - bx;
             }
-            if (j % 2 == 1) {
+            if (j % 2 == ey) {
                 ay = sy - ay;
                 by = sy - by;
             }
@@ -115,17 +129,19 @@ function render(x, y, px, py) {
         mpx = px / sx ^ 0,
         mpy = py / sy ^ 0;
 
+    // console.log(mx, my, mpx, mpy);
+
     if (mx !== mpx) {
         let dx = x - px,
             dy = y - py;
-        console.log(x, px);
-        let yy = dy / dx * (mx * sx - px) + py;
+        // console.log(x, px, mpx * sx);
+        let yy = dy / dx * (mpx * sx - px) + py;
         let xx = mpx * sx - 0.5;
-        console.log(xx);
-        // return;
-        drawLine(x, y, xx, py);
-        // px = xx;
-        // py = yy;
+        // console.log(xx, yy);
+        return;
+        drawLine(xx, yy, px, py);
+        px = xx;
+        py = yy;
     }
     if (my !== mpy) {
         return;
@@ -134,6 +150,7 @@ function render(x, y, px, py) {
     drawLine(x, y, px, py);
 }
 
-render(10, 10, 300, 100);
+// render(10, 10, 300, 100);
+// render(300, 100, 10, 10);
 // render(300, 100, 200, 150);
 
