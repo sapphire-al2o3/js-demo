@@ -10,8 +10,8 @@ let px = 0,
     down = false;
 
 ctx.lineWidth = 1.0;
-ctx.strokeStyle = 'rgba(250, 100, 0, 0.4)';
-    
+ctx.strokeStyle = 'rgba(255, 100, 20, 0.5)';
+
 function mousemove(e) {
     if(down) {
         let x = e.pageX - rect.left + 0.5,
@@ -23,7 +23,7 @@ function mousemove(e) {
         py = y;
     }
 }
-    
+
 function mouseup(e) {
     if(down) {
         down = false;
@@ -76,10 +76,10 @@ document.getElementById('flip').addEventListener('click', e => {
     e.target.className = e.target.className == 'selected' ? '' : 'selected';
 });
 
-let s = 2;
+let s = 8;
 let flip = false;
 
-document.getElementById('r2').className = 'selected';
+document.getElementById('r8').className = 'selected';
 
 function drawLine(x, y, px, py) {
     let sx = w / s,
@@ -134,12 +134,13 @@ function render(x, y, px, py) {
     if (mx !== mpx) {
         let dx = x - px,
             dy = y - py;
-        // console.log(x, px, mpx * sx);
-        let yy = dy / dx * (mpx * sx - px) + py;
-        let xx = mpx * sx - 0.5;
-        // console.log(xx, yy);
-        return;
+        console.log(x, y, px, py);
+        if (dx === 0) console.error('err');
+        let xx = mx > mpx ? mx * sx : mpx * sx;
+        let yy = dy / dx * (xx - px) + py;
+        console.log(xx, yy, px, py);
         drawLine(xx, yy, px, py);
+        return;
         px = xx;
         py = yy;
     }
