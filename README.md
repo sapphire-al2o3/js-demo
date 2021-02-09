@@ -78,6 +78,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [鏡映と回転](https://sapphire-al2o3.github.io/js-demo/math/鏡映と回転/)
 - [斜方投射](https://sapphire-al2o3.github.io/js-demo/math/斜方投射/)
 - [線分同士の当たり判定](https://sapphire-al2o3.github.io/js-demo/math/線分同士の当たり判定/)
+- [正規分布](https://sapphire-al2o3.github.io/js-demo/math/Gaussian)
 
 ## Canvas
 
