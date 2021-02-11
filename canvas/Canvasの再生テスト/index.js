@@ -15,55 +15,57 @@ document.getElementById('rec').addEventListener('click', function(e) {
     rec = !rec;
     this.textContent = rec ? 'STOP' : 'REC';
     if(rec) {
-	record = [];
-	ctx.clearRect(0, 0, 400, 400);
-	ctx.restore();
+        record = [];
+        ctx.clearRect(0, 0, 400, 400);
+        ctx.restore();
     }
 }, false);
 
 document.getElementById('play').addEventListener('click', function(e) {
     if(record.length > 0) {
-	rec = false;
-	document.getElementById('rec').textContent = 'REC';
-	play();
+        rec = false;
+        document.getElementById('rec').textContent = 'REC';
+        play();
     }
 }, false);
 
-canvas.addEventListener('mousedown', function(e) {
+canvas.addEventListener('mousedown', e => {
+    const rect = e.target.getBoundingClientRect();
     down = true;
-    x = e.pageX;
-    y = e.pageY;
+    x = e.clientX - rect.x;
+    y = e.clientY - rect.y;
     rec && record.push({act: 'begin', x: x, y: y});
 }, false);
 
-canvas.addEventListener('mousemove', function(e) {
+canvas.addEventListener('mousemove', e => {
     if(down) {
-	ctx.beginPath();
-	ctx.moveTo(x, y);
-	x = e.pageX;
-	y = e.pageY;
-	ctx.lineTo(x, y);
-	ctx.stroke();
-	ctx.closePath();
-	rec && record.push({act: 'lineTo', x: x, y: y});
+        const rect = e.target.getBoundingClientRect();
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        x = e.clientX - rect.x;
+        y = e.clientY - rect.y;
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ctx.closePath();
+        rec && record.push({act: 'lineTo', x: x, y: y});
     }
 }, false);
 
-canvas.addEventListener('mouseup', function(e) {
+canvas.addEventListener('mouseup', e => {
     down = false;
 }, false);
 
-var colors = document.querySelectorAll('#colors li');
+let colors = document.querySelectorAll('#colors li');
 for(var i = 0; i < colors.length; i++) {
     colors[i].addEventListener('click', function() {
-        var color = this.style.backgroundColor;
-	ctx.strokeStyle = color;
-	rec && record.push({act: 'strokeStyle', color: color});
+        let color = this.style.backgroundColor;
+        ctx.strokeStyle = color;
+        rec && record.push({act: 'strokeStyle', color: color});
     }, false);
 }
 
 var pen = 1.0;
-document.getElementById('pen').addEventListener('click', function(e) {
+document.getElementById('pen').addEventListener('click', e => {
     pen += 1.0;
     ctx.lineWidth = pen;
     setPenWidth(pen);
@@ -84,16 +86,16 @@ var stop = false,
     timer = 0;
 
 function play() {
-    var i = 0,
-	l = record.length;
+    let i = 0,
+        l = record.length;
     ctx.clearRect(0, 0, 400, 400);
     ctx.restore();
     timer = setTimeout(function() {
-	if(!stop && i < l) {
-	    var c = record[i++];
-	    command(c);
-	    timer = setTimeout(arguments.callee, 1000 / 30);
-	}
+        if(!stop && i < l) {
+            var c = record[i++];
+            command(c);
+            timer = setTimeout(arguments.callee, 1000 / 30);
+        }
     }, 1000 / 30);
 }
 
@@ -101,24 +103,24 @@ function command(c) {
     //console.log(c);
     switch(c.act) {
     case 'begin':
-	x = c.x;
-	y = c.y;
-	break;
+        x = c.x;
+        y = c.y;
+        break;
     case 'lineTo':
-	ctx.beginPath();
-	ctx.moveTo(x, y);
-	x = c.x;
-	y = c.y;
-	ctx.lineTo(c.x, c.y);
-	ctx.stroke();
-	break;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        x = c.x;
+        y = c.y;
+        ctx.lineTo(c.x, c.y);
+        ctx.stroke();
+        break;
     case 'strokeStyle':
-	ctx.strokeStyle = c.color;
-	break;
+        ctx.strokeStyle = c.color;
+        break;
     case 'lineWidth':
-	ctx.lineWidth = c.width;
-	break;
+        ctx.lineWidth = c.width;
+        break;
     default:
-	break;
+        break;
     }
 }
