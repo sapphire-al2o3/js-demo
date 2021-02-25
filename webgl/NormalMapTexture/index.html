@@ -19,11 +19,14 @@ uniform float scale;
 
 void main() {
     float y = texture2D(tex, uv).r;
-    float y1 = texture2D(tex, uv + vec2(offset.x, 0.0)).r;
-    float y2 = texture2D(tex, uv + vec2(0.0, offset.y)).r;
-    float dx = clamp((y1 - y) * scale * 0.5 + 0.5, 0.0, 1.0);
-    float dy = (y2 - y) * scale * 0.5 + 0.5;
-    vec4 c = vec4(dx, dy, 1.0, 1.0);
+    float vx1 = texture2D(tex, uv + vec2(offset.x, 0.0)).r;
+    float vx2 = texture2D(tex, uv - vec2(offset.x, 0.0)).r;
+    float vy1 = texture2D(tex, uv + vec2(0.0, offset.y)).r;
+    float vy2 = texture2D(tex, uv - vec2(0.0, offset.y)).r;
+    vec3 dx = vec3(1., 0., (vx1 - vx2) * scale * .5);
+    vec3 dy = vec3(0., 1., (vy1 - vy2) * scale * .5);
+    vec3 n = cross(dy, dx);
+    vec4 c = vec4(n.xy * .5 + .5, 1.0, 1.0);
     gl_FragColor = c;
 }
 </script>
