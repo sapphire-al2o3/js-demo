@@ -69,16 +69,16 @@
         timer.toggle();
     });
 
-    document.body.appendChild(createSlider('offset x', 0.5, v => {
-        offset[0] = v * 2.0 - 1.0;
+    document.body.appendChild(createSlider('offset x', 1 / 4, v => {
+        offset[0] = v * 4 / img.width;
         setupUniform(program[0]);
     }));
-    document.body.appendChild(createSlider('offset y', 0.5, v => {
-        offset[1] = v * 2.0 - 1.0;
+    document.body.appendChild(createSlider('offset y', 1 / 4, v => {
+        offset[1] = v * 4 / img.height;
         setupUniform(program[0]);
     }));
-    document.body.appendChild(createSlider('scale', 0.5, v => {
-        scale = v * 4.0;
+    document.body.appendChild(createSlider('scale', 1 / 8, v => {
+        scale = v * 8.0;
         program[0].uniform['scale'].value = scale;
         setupUniform(program[0]);
     }));
