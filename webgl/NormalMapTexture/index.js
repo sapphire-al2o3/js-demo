@@ -20,7 +20,7 @@
     ]);
 
     let offset = [0, 0];
-    let scale = 1;
+    let scale = 2;
 
     gl.bufferData(gl.ARRAY_BUFFER, buffer, gl.STATIC_DRAW);
 
@@ -29,7 +29,6 @@
     gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 
     gl.useProgram(program[0]);
-
     
     gl.activeTexture(gl.TEXTURE0);
     const img = document.getElementById('tex');
@@ -50,16 +49,9 @@
     setupUniform(program[0]);
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
-    let frame = 0,
-        time = 0;
-
     function render(delta) {
-        time += delta;
-
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-        
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-
         gl.flush();
     }
 
@@ -77,7 +69,7 @@
         offset[1] = v * 4 / img.height;
         setupUniform(program[0]);
     }));
-    document.body.appendChild(createSlider('scale', 1 / 8, v => {
+    document.body.appendChild(createSlider('scale', scale / 8, v => {
         scale = v * 8.0;
         program[0].uniform['scale'].value = scale;
         setupUniform(program[0]);
