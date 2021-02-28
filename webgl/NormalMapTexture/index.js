@@ -24,7 +24,7 @@
 
     gl.bufferData(gl.ARRAY_BUFFER, buffer, gl.STATIC_DRAW);
 
-    var loc = gl.getAttribLocation(program[0], 'position');
+    const loc = gl.getAttribLocation(program[0], 'position');
     gl.enableVertexAttribArray(loc);
     gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 
@@ -74,4 +74,25 @@
         program[0].uniform['scale'].value = scale;
         setupUniform(program[0]);
     }));
+    img.addEventListener('drop', e => {
+        e.preventDefault();
+        loadFile(e);
+    }, false);
+      
+    img.addEventListener('dragover', e => {
+        e.preventDefault();
+    }, false);
+      
+    function loadFile(e) {
+        let file = e.dataTransfer.files[0],
+            reader = new FileReader();
+        reader.onload = e => {
+            img.src = reader.result;
+            img.onload = () => {
+                gl.bindTexture(gl.TEXTURE_2D, tex);
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+            };
+        };
+        reader.readAsDataURL(file);
+    }
 }());
