@@ -23,8 +23,8 @@ void main() {
     float vx2 = texture2D(tex, uv - vec2(offset.x, 0.0)).r;
     float vy1 = texture2D(tex, uv + vec2(0.0, offset.y)).r;
     float vy2 = texture2D(tex, uv - vec2(0.0, offset.y)).r;
-    vec3 dx = vec3(1., 0., (vx1 - vx2) * scale * .5);
-    vec3 dy = vec3(0., 1., (vy1 - vy2) * scale * .5);
+    vec3 dx = vec3(1., 0., (vx2 - vx1) * scale * .5);
+    vec3 dy = vec3(0., 1., (vy2 - vy1) * scale * .5);
     vec3 n = normalize(cross(dy, dx));
     vec4 c = vec4(n.xy * .5 + .5, 1.0, 1.0);
     gl_FragColor = c;
