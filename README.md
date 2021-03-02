@@ -13,6 +13,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [FXAA](https://sapphire-al2o3.github.io/js-demo/webgl/FXAA/)
 - [Lambert](https://sapphire-al2o3.github.io/js-demo/webgl/Lambert/)
 - [lineWidthのテスト](https://sapphire-al2o3.github.io/js-demo/webgl/lineWidthのテスト/)
+- [NormalMapTexture](https://sapphire-al2o3.github.io/js-demo/webgl/NormalMapTexture/)
 - [Pixelize](https://sapphire-al2o3.github.io/js-demo/webgl/Pixelize/)
 - [Screen-Tone](https://sapphire-al2o3.github.io/js-demo/webgl/Screen-Tone/)
 - [undefined](https://sapphire-al2o3.github.io/js-demo/webgl/undefined/)
