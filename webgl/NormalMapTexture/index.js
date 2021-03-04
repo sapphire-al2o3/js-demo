@@ -89,6 +89,13 @@
         reader.onload = e => {
             img.src = reader.result;
             img.onload = () => {
+                if (img.width != canvas.width || img.height != canvas.height) {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    gl.viewportWidth = canvas.width;
+                    gl.viewportHeight = canvas.height;
+                    gl.viewport(0, 0, canvas.width, canvas.height);
+                }
                 gl.bindTexture(gl.TEXTURE_2D, tex);
                 gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
             };
