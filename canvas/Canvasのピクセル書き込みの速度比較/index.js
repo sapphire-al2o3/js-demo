@@ -1,15 +1,22 @@
 (function() {
     'use strict';
 
-    var canvas = document.getElementById('canvas'),
+    let canvas = document.getElementById('canvas'),
         ctx = canvas.getContext('2d'),
         width = canvas.width,
         height = canvas.height,
         centerX = width / 2,
         centerY = height / 2;
     
+    const timeLabel = document.getElementById('time');
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    function printTime(time) {
+        timeLabel.textContent = `${time.toFixed(2)} ms`;
+    }
+
     function draw0(image, r, g, b, a) {
         var data = image.data,
             w = image.width,
@@ -47,30 +54,40 @@
     }
     
     var timeA = 0;
-    document.getElementById('a').addEventListener('click', function() {
+    document.getElementById('a').addEventListener('click', () => {
         var image = ctx.createImageData(width, height);
         var r = Math.random() * 256 | 0;
         console.time('a');
+        let start = performance.now();
         draw0(image, r, 255, 0, 255);
+        let span = performance.now() - start;
         console.timeEnd('a');
+        printTime(span);
         ctx.putImageData(image, 0, 0);
+        printTime(span);
     });
     
-    document.getElementById('b').addEventListener('click', function() {
+    document.getElementById('b').addEventListener('click', () => {
         var image = ctx.createImageData(width, height);
         var r = Math.random() * 256 | 0;
         console.time('b');
+        let start = performance.now();
         draw1(image, 0xFF00FF00 | r);
+        let span = performance.now() - start;
         console.timeEnd('b');
+        printTime(span);
         ctx.putImageData(image, 0, 0);
     });
     
-    document.getElementById('c').addEventListener('click', function() {
+    document.getElementById('c').addEventListener('click', () => {
         var image = ctx.createImageData(width, height);
         var r = Math.random() * 256 | 0;
         console.time('c');
+        let start = performance.now();
         draw2(image, r, 255, 0, 255);
+        let span = performance.now() - start;
         console.timeEnd('c');
+        printTime(span);
         ctx.putImageData(image, 0, 0);
     });
 
