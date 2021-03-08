@@ -54,7 +54,7 @@ function grad(hash, x, y, z) {
 const p = [];
 
 for (let x = 0; x < 512; x++) {
-    p[x] = permutation[x % 256];
+    p[x] = permutation[x & 255];
 }
 
 function perlin(x, y, z) {
@@ -93,7 +93,7 @@ function perlin(x, y, z) {
               u);
     y1 = lerp(x1, x2, v);
 
-    x1 = lerp(grad(aab, xf  , yf  , zf - 1),
+    x1 = lerp(grad(aab, xf, yf, zf - 1),
               grad(bab, xf - 1, yf, zf - 1),
               u);
     x2 = lerp(grad(abb, xf, yf - 1, zf - 1),
@@ -104,9 +104,8 @@ function perlin(x, y, z) {
     return (lerp(y1, y2, w) + 1) / 2;
 }
 
-function octavePerlin(x, y, z, octaves, persistence) {
+function octavePerlin(x, y, z, octaves, persistence, frequency = 4) {
     let total = 0,
-        frequency = 1,
         amplitude = 1,
         maxValue = 0;
     for (let i = 0; i < octaves; i++) {
@@ -123,11 +122,11 @@ function octavePerlin(x, y, z, octaves, persistence) {
 
 const image = ctx.createImageData(w, h);
 const data = image.data;
-
+console.time('noise');
 for (let i = 0; i < h; i++) {
     for (let j = 0; j < w; j++) {
         let k = (i * w + j) * 4;
-        let y = octavePerlin(j / w * 4, i / h * 4, 0, 8, 0.5);
+        let y = octavePerlin(j / w, i / h, 0, 5, 0.5);
         // let y = perlin(i / w * 32, j / h * 32, 0);
         data[k] = data[k + 1] = data[k + 2] = y * 255 ^ 0;
         data[k + 3] = 255;
@@ -135,3 +134,4 @@ for (let i = 0; i < h; i++) {
 }
 
 ctx.putImageData(image, 0, 0);
+console.timeEnd('noise');
