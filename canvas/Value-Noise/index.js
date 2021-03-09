@@ -17,11 +17,16 @@ function lerp(a, b, x) {
 }
 
 function fade(t) {
-    return t * t * t * (t * (t * 6 - 15) + 10);
+    // return t * t * t * (t * (t * 6 - 15) + 10);
+    return t * t * (3 - 2 * t);
 }
 
 const p = [];
 const permutation = [];
+
+for (let x = 0; x < 256; x++) {
+    permutation[x] = Math.random() * 256 ^ 0;
+}
 
 for (let x = 0; x < 512; x++) {
     p[x] = permutation[x & 255];
@@ -31,32 +36,17 @@ function noise(x, y) {
     
     let xi = (x ^ 0) & 255;
     let yi = (y ^ 0) & 255;
-    let zi = (z ^ 0) & 255;
     let xf = x - (x ^ 0);
     let yf = y - (y ^ 0);
-    let zf = z - (z ^ 0);
     let u = fade(xf);
     let v = fade(yf);
-    let w = fade(zf);
 
-    let x1, x2, y1, y2;
-    x1 = lerp(grad(aaa, xf,     yf, zf),
-              grad(baa, xf - 1, yf, zf),
-              u);
-    x2 = lerp(grad(aba, xf,     yf - 1, zf),
-              grad(bba, xf - 1, yf - 1, zf),
-              u);
-    y1 = lerp(x1, x2, v);
-
-    x1 = lerp(grad(aab, xf, yf, zf - 1),
-              grad(bab, xf - 1, yf, zf - 1),
-              u);
-    x2 = lerp(grad(abb, xf, yf - 1, zf - 1),
-              grad(bbb, xf - 1, yf - 1, zf - 1),
-              u);
-    y2 = lerp(x1, x2, v);
+    let a = p[p[xi] + yi];
+    let b = p[p[inc(xi)] + yi];
+    let c = p[p[xi] + inc(yi)];
+    let d = p[p[inc(xi)] + inc(yi)];
     
-    return (lerp(y1, y2, w) + 1) / 2;
+    return lerp(a, b, u) + (c - a) * v * (1 - u) + (d - b) * u * v;
 }
 
 function octave(x, y, octaves, persistence, frequency = 4) {
@@ -75,18 +65,27 @@ function octave(x, y, octaves, persistence, frequency = 4) {
     return total / maxValue;
 }
 
-const image = ctx.createImageData(w, h);
-const data = image.data;
-console.time('noise');
-for (let i = 0; i < h; i++) {
-    for (let j = 0; j < w; j++) {
-        let k = (i * w + j) * 4;
-        let y = octave(j / w, i / h, 5, 0.5);
-        // let y = perlin(i / w * 32, j / h * 32, 0);
-        data[k] = data[k + 1] = data[k + 2] = y * 255 ^ 0;
-        data[k + 3] = 255;
+function render(data, octaves = 5, persistence = 0.5) {
+    console.time('noise');
+    for (let i = 0; i < h; i++) {
+        for (let j = 0; j < w; j++) {
+            let k = (i * w + j) * 4;
+            let y = octave(j / w, i / h, octaves, 0.5);
+            // let y = noise(i / w * 32, j / h * 32, 0);
+            data[k] = data[k + 1] = data[k + 2] = y ^ 0;
+            data[k + 3] = 255;
+        }
     }
+    
+    ctx.putImageData(image, 0, 0);
+    console.timeEnd('noise');
 }
 
-ctx.putImageData(image, 0, 0);
-console.timeEnd('noise');
+const image = ctx.createImageData(w, h);
+const data = image.data;
+
+render(data);
+
+document.body.appendChild(createSlider('octaves', 5 / 8, v => {
+    render(data, v * 8 ^ 0);
+}));
