@@ -49,11 +49,12 @@ function noise(x, y) {
     return lerp(a, b, u) + (c - a) * v * (1 - u) + (d - b) * u * v;
 }
 
-function octave(x, y, octaves, persistence, frequency = 4) {
+function octave(x, y, octaves, persistence, frequency = 5) {
     let total = 0,
         amplitude = 1,
         maxValue = 0;
     for (let i = 0; i < octaves; i++) {
+        repeat = frequency;
         total += noise(x * frequency, y * frequency) * amplitude;
         
         maxValue += amplitude;
@@ -70,7 +71,7 @@ function render(data, octaves = 5, persistence = 0.5) {
     for (let i = 0; i < h; i++) {
         for (let j = 0; j < w; j++) {
             let k = (i * w + j) * 4;
-            let y = octave(j / w, i / h, octaves, 0.5);
+            let y = octave(j / w, i / h, octaves, persistence);
             // let y = noise(i / w * 32, j / h * 32, 0);
             data[k] = data[k + 1] = data[k + 2] = y ^ 0;
             data[k + 3] = 255;
@@ -86,6 +87,15 @@ const data = image.data;
 
 render(data);
 
+let octaves = 5,
+    persistence = 0.5;
+
 document.body.appendChild(createSlider('octaves', 5 / 8, v => {
-    render(data, v * 8 ^ 0);
+    octaves = v * 8 ^ 0;
+    render(data, octaves);
+}));
+
+document.body.appendChild(createSlider('persistence', 0.5, v => {
+    persistence = v;
+    render(data, octaves, persistence);
 }));
