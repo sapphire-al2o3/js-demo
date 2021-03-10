@@ -17,8 +17,7 @@ function lerp(a, b, x) {
 }
 
 function fade(t) {
-    // return t * t * t * (t * (t * 6 - 15) + 10);
-    return t * t * (3 - 2 * t);
+    return t * t * t * (t * (t * 6 - 15) + 10);
 }
 
 const p = [];
@@ -91,7 +90,7 @@ let octaves = 5,
     persistence = 0.5;
 
 document.body.appendChild(createSlider('octaves', 5 / 8, v => {
-    octaves = v * 8 ^ 0;
+    octaves = (v * 8 ^ 0) + 1;
     render(data, octaves);
 }));
 
