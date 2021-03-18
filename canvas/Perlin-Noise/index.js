@@ -122,11 +122,15 @@ function octavePerlin(x, y, z, octaves, persistence, frequency = 4) {
 
 const image = ctx.createImageData(w, h);
 const data = image.data;
+
+let phaseX = Math.random() * w;
+let phaseY = Math.random() * h;
+
 console.time('noise');
 for (let i = 0; i < h; i++) {
     for (let j = 0; j < w; j++) {
         let k = (i * w + j) * 4;
-        let y = octavePerlin(j / w, i / h, 0, 5, 0.5);
+        let y = octavePerlin((j + phaseX) / w, (i + phaseY) / h, 0, 5, 0.5);
         // let y = perlin(i / w * 32, j / h * 32, 0);
         data[k] = data[k + 1] = data[k + 2] = y * 255 ^ 0;
         data[k + 3] = 255;
