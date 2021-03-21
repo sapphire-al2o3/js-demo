@@ -9,7 +9,10 @@ function dist2(sx, sy, ex, ey) {
     return (ex - sx) * (ey - sy);
 }
 
+const min = (a, b) => Math.min(a, b);
+
 const b = 3;
+const maxd = b * b + 1;
 const bw = w / b ^ 0;
 const bh = h / b ^ 0;
 const randx = [];
@@ -28,14 +31,19 @@ function cell(x, y) {
     let iy = y / b ^ 0;
     let fx = x - ix;
     let fy = y - iy;
-    
+    let distance = maxd;
     for (let i = -1; i <= 1; i++) {
         for (let j = -1; j <= 1; j++) {
             let k = (y + i) * bw + (x + j);
             let cx = randx[k];
             let cy = randy[k];
+            let d = dist2(cx, cy, fx, fy);
+            if (d < distance) {
+                distance = d;
+            }
         }
     }
+    return distance;
 }
 
 function render(data, octaves = 5, persistence = 0.5) {
