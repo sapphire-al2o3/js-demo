@@ -21,8 +21,8 @@ const randy = [];
 for (let y = 0; y < bh; y++) {
     for (let x = 0; x < bw; x++) {
         let k = y * bw + x;
-        randx[k] = Math.random();
-        randy[k] = Math.random();
+        randx[k] = Math.random() * b;
+        randy[k] = Math.random() * b;
     }
 }
 
@@ -48,11 +48,11 @@ function cell(x, y) {
 
 function render(data, octaves = 5, persistence = 0.5) {
     console.time('noise');
-    for (let i = 0; i < h; i++) {
-        for (let j = 0; j < w; j++) {
+    for (let i = 1; i < h - 1; i++) {
+        for (let j = 1; j < w - 1; j++) {
             let k = (i * w + j) * 4;
-            let y = cell(j, i);
-            data[k] = data[k + 1] = data[k + 2] = y ^ 0;
+            let y = cell(j, i) * 255 ^ 0;
+            data[k] = data[k + 1] = data[k + 2] = y;
             data[k + 3] = 255;
         }
     }
