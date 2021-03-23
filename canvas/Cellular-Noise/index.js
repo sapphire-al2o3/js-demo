@@ -6,12 +6,14 @@ const h = canvas.height;
 let repeat = w;
 
 function dist2(sx, sy, ex, ey) {
-    return (ex - sx) * (ey - sy);
+    let dx = ex - sx;
+    let dy = ey - sy;
+    return Math.sqrt(dx * dx + dy * dy);
 }
 
 const min = (a, b) => Math.min(a, b);
 
-const b = 3;
+const b = 32;
 const maxd = b * b + 1;
 const bw = w / b ^ 0;
 const bh = h / b ^ 0;
@@ -29,8 +31,8 @@ for (let y = 0; y < bh; y++) {
 function cell(x, y) {
     let ix = x / b ^ 0;
     let iy = y / b ^ 0;
-    let fx = x - ix;
-    let fy = y - iy;
+    let fx = x / b - ix;
+    let fy = y / b - iy;
     let distance = maxd;
     for (let i = -1; i <= 1; i++) {
         for (let j = -1; j <= 1; j++) {
@@ -43,7 +45,7 @@ function cell(x, y) {
             }
         }
     }
-    return distance;
+    return distance
 }
 
 function render(data, octaves = 5, persistence = 0.5) {
@@ -51,7 +53,7 @@ function render(data, octaves = 5, persistence = 0.5) {
     for (let i = 1; i < h - 1; i++) {
         for (let j = 1; j < w - 1; j++) {
             let k = (i * w + j) * 4;
-            let y = cell(j, i) * 255 ^ 0;
+            let y = cell(j, i) ^ 0;
             data[k] = data[k + 1] = data[k + 2] = y;
             data[k + 3] = 255;
         }
