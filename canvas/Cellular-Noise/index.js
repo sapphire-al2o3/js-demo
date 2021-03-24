@@ -13,18 +13,18 @@ function dist2(sx, sy, ex, ey) {
 
 const min = (a, b) => Math.min(a, b);
 
-const b = 32;
+const b = 64;
 const maxd = b * b + 1;
 const bw = w / b ^ 0;
 const bh = h / b ^ 0;
 const randx = [];
 const randy = [];
 
-for (let y = 0; y < bh; y++) {
-    for (let x = 0; x < bw; x++) {
-        let k = y * bw + x;
-        randx[k] = Math.random() * b;
-        randy[k] = Math.random() * b;
+for (let y = 0; y < bh + 2; y++) {
+    for (let x = 0; x < bw + 2; x++) {
+        let k = y * (bw + 2) + x;
+        randx[k] = ((x - 1) + Math.random()) * b;
+        randy[k] = ((y - 1) + Math.random()) * b;
     }
 }
 
@@ -36,10 +36,10 @@ function cell(x, y) {
     let distance = maxd;
     for (let i = -1; i <= 1; i++) {
         for (let j = -1; j <= 1; j++) {
-            let k = (y + i) * bw + (x + j);
+            let k = (iy + i + 1) * (bw + 2) + (ix + j + 1);
             let cx = randx[k];
             let cy = randy[k];
-            let d = dist2(cx, cy, fx, fy);
+            let d = dist2(cx, cy, fx * b, fy * b);
             if (d < distance) {
                 distance = d;
             }
@@ -50,8 +50,8 @@ function cell(x, y) {
 
 function render(data, octaves = 5, persistence = 0.5) {
     console.time('noise');
-    for (let i = 1; i < h - 1; i++) {
-        for (let j = 1; j < w - 1; j++) {
+    for (let i = 0; i < h; i++) {
+        for (let j = 0; j < w; j++) {
             let k = (i * w + j) * 4;
             let y = cell(j, i) ^ 0;
             data[k] = data[k + 1] = data[k + 2] = y;
