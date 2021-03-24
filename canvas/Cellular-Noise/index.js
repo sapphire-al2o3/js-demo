@@ -39,7 +39,7 @@ function cell(x, y) {
             let k = (iy + i + 1) * (bw + 2) + (ix + j + 1);
             let cx = randx[k];
             let cy = randy[k];
-            let d = dist2(cx, cy, fx * b, fy * b);
+            let d = dist2(cx, cy, x, y);
             if (d < distance) {
                 distance = d;
             }
@@ -53,7 +53,7 @@ function render(data, octaves = 5, persistence = 0.5) {
     for (let i = 0; i < h; i++) {
         for (let j = 0; j < w; j++) {
             let k = (i * w + j) * 4;
-            let y = cell(j, i) ^ 0;
+            let y = cell(j, i) * 2 ^ 0;
             data[k] = data[k + 1] = data[k + 2] = y;
             data[k + 3] = 255;
         }
@@ -67,3 +67,18 @@ const image = ctx.createImageData(w, h);
 const data = image.data;
 
 render(data);
+
+/*
+
+ctx.fillStyle = '#F00';
+
+for (let y = 1; y < bh + 1; y++) {
+    for (let x = 1; x < bw + 1; x++) {
+        let k = y * (bw + 2) + x;
+        let cx = randx[k];
+        let cy = randy[k];
+        ctx.fillRect(cx, cy, 2, 2);
+    }
+}
+
+*/
