@@ -79,19 +79,21 @@ function render(data, octaves = 5, persistence = 0.5) {
     console.timeEnd('noise');
 }
 
+function plot() {
+    ctx.fillStyle = '#F00';
+
+    for (let y = 0; y < bh; y++) {
+        for (let x = 0; x < bw; x++) {
+            let k = y * bw + x;
+            let cx = randx[k] + x * b;
+            let cy = randy[k] + y * b;
+            ctx.fillRect(cx, cy, 2, 2);
+        }
+    }
+}
+
 const image = ctx.createImageData(w, h);
 const data = image.data;
 
 render(data);
-
-
-ctx.fillStyle = '#F00';
-
-for (let y = 0; y < bh; y++) {
-    for (let x = 0; x < bw; x++) {
-        let k = y * bw + x;
-        let cx = randx[k] + x * b;
-        let cy = randy[k] + y * b;
-        ctx.fillRect(cx, cy, 2, 2);
-    }
-}
+plot();
