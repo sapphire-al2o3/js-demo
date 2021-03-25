@@ -20,12 +20,27 @@ const bh = h / b ^ 0;
 const randx = [];
 const randy = [];
 
-for (let y = 0; y < bh + 2; y++) {
-    for (let x = 0; x < bw + 2; x++) {
-        let k = y * (bw + 2) + x;
-        randx[k] = ((x - 1) + Math.random()) * b;
-        randy[k] = ((y - 1) + Math.random()) * b;
+// for (let y = 0; y < bh + 2; y++) {
+//     for (let x = 0; x < bw + 2; x++) {
+//         let k = y * (bw + 2) + x;
+//         randx[k] = ((x - 1) + Math.random()) * b;
+//         randy[k] = ((y - 1) + Math.random()) * b;
+//     }
+// }
+
+for (let y = 0; y < bh; y++) {
+    for (let x = 0; x < bw; x++) {
+        let k = y * bw + x;
+        randx[k] = Math.random() * b;
+        randy[k] = Math.random() * b;
     }
+}
+
+function randp(x, y) {
+    let rx = (x + bw) % bw;
+    let ry = (y + bh) % bh;
+    let k = ry * bw + rx;
+    return [randx[k] + x * b, randy[k] + y * b];
 }
 
 function cell(x, y) {
@@ -36,9 +51,10 @@ function cell(x, y) {
     let distance = maxd;
     for (let i = -1; i <= 1; i++) {
         for (let j = -1; j <= 1; j++) {
-            let k = (iy + i + 1) * (bw + 2) + (ix + j + 1);
-            let cx = randx[k];
-            let cy = randy[k];
+            // let k = (iy + i + 1) * (bw + 2) + (ix + j + 1);
+            // let cx = randx[k];
+            // let cy = randy[k];
+            let [cx, cy] = randp(ix + j, iy + i);
             let d = dist2(cx, cy, x, y);
             if (d < distance) {
                 distance = d;
@@ -68,17 +84,14 @@ const data = image.data;
 
 render(data);
 
-/*
 
 ctx.fillStyle = '#F00';
 
-for (let y = 1; y < bh + 1; y++) {
-    for (let x = 1; x < bw + 1; x++) {
-        let k = y * (bw + 2) + x;
-        let cx = randx[k];
-        let cy = randy[k];
+for (let y = 0; y < bh; y++) {
+    for (let x = 0; x < bw; x++) {
+        let k = y * bw + x;
+        let cx = randx[k] + x * b;
+        let cy = randy[k] + y * b;
         ctx.fillRect(cx, cy, 2, 2);
     }
 }
-
-*/
