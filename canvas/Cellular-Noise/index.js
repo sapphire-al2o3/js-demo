@@ -8,7 +8,7 @@ let repeat = w;
 function dist2(sx, sy, ex, ey) {
     let dx = ex - sx;
     let dy = ey - sy;
-    return Math.sqrt(dx * dx + dy * dy);
+    return dx * dx + dy * dy;
 }
 
 const min = (a, b) => Math.min(a, b);
@@ -19,52 +19,46 @@ const bw = w / b ^ 0;
 const bh = h / b ^ 0;
 const randx = [];
 const randy = [];
-
-// for (let y = 0; y < bh + 2; y++) {
-//     for (let x = 0; x < bw + 2; x++) {
-//         let k = y * (bw + 2) + x;
-//         randx[k] = ((x - 1) + Math.random()) * b;
-//         randy[k] = ((y - 1) + Math.random()) * b;
-//     }
-// }
+const randc = [];
 
 for (let y = 0; y < bh; y++) {
     for (let x = 0; x < bw; x++) {
         let k = y * bw + x;
         randx[k] = Math.random() * b;
         randy[k] = Math.random() * b;
+        randc[k] = Math.random() * 256 ^ 0;
     }
-}
-
-function randp(x, y) {
-    let rx = (x + bw) % bw;
-    let ry = (y + bh) % bh;
-    let k = ry * bw + rx;
-    return [randx[k] + x * b, randy[k] + y * b];
 }
 
 function cell(x, y) {
     let ix = x / b ^ 0;
     let iy = y / b ^ 0;
-    let fx = x / b - ix;
-    let fy = y / b - iy;
     let distance = maxd;
+    let c = 0;
     for (let i = -1; i <= 1; i++) {
+        let ry = (iy + i + bh) % bh;
+        let by = (iy + i) * b;
         for (let j = -1; j <= 1; j++) {
-            // let k = (iy + i + 1) * (bw + 2) + (ix + j + 1);
-            // let cx = randx[k];
-            // let cy = randy[k];
-            let [cx, cy] = randp(ix + j, iy + i);
+
+            let rx = (ix + j + bw) % bw;
+            
+            let k = ry * bw + rx;
+            
+            let cx = randx[k] + (ix + j) * b;
+            let cy = randy[k] + by;
+
             let d = dist2(cx, cy, x, y);
             if (d < distance) {
                 distance = d;
+                c = randc[k];
             }
         }
     }
-    return distance
+    return Math.sqrt(distance);
+    // return c;
 }
 
-function render(data, octaves = 5, persistence = 0.5) {
+function render(data) {
     console.time('noise');
     for (let i = 0; i < h; i++) {
         for (let j = 0; j < w; j++) {
