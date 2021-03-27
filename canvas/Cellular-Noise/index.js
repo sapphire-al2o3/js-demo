@@ -20,6 +20,7 @@ const bh = h / b ^ 0;
 const randx = [];
 const randy = [];
 const randc = [];
+let voronoi = false;
 
 for (let y = 0; y < bh; y++) {
     for (let x = 0; x < bw; x++) {
@@ -54,8 +55,7 @@ function cell(x, y) {
             }
         }
     }
-    return Math.sqrt(distance);
-    // return c;
+    return voronoi ? c : Math.sqrt(distance) * 2;
 }
 
 function render(data) {
@@ -63,7 +63,7 @@ function render(data) {
     for (let i = 0; i < h; i++) {
         for (let j = 0; j < w; j++) {
             let k = (i * w + j) * 4;
-            let y = cell(j, i) * 2 ^ 0;
+            let y = cell(j, i) ^ 0;
             data[k] = data[k + 1] = data[k + 2] = y;
             data[k + 3] = 255;
         }
@@ -91,3 +91,9 @@ const data = image.data;
 
 render(data);
 plot();
+
+document.body.appendChild(createCheckbox('Voronoi', v => {
+    voronoi = v;
+    render(data);
+    plot();
+}));
