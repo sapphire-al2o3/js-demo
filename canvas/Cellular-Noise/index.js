@@ -21,6 +21,7 @@ const randx = [];
 const randy = [];
 const randc = [];
 let voronoi = false;
+let point = false;
 
 for (let y = 0; y < bh; y++) {
     for (let x = 0; x < bw; x++) {
@@ -74,6 +75,9 @@ function render(data) {
 }
 
 function plot() {
+    if (!point) {
+        return;
+    }
     ctx.fillStyle = '#F00';
 
     for (let y = 0; y < bh; y++) {
@@ -94,6 +98,12 @@ plot();
 
 document.body.appendChild(createCheckbox('Voronoi', v => {
     voronoi = v;
+    render(data);
+    plot();
+}));
+
+document.body.appendChild(createCheckbox('point', v => {
+    point = v;
     render(data);
     plot();
 }));
