@@ -126,5 +126,6 @@ https://sapphire-al2o3.github.io/js-demo/
 - [炎っぽいエフェクト](https://sapphire-al2o3.github.io/js-demo/canvas/炎っぽいエフェクト/)
 - [真ん中の正方形の大きさが変わるように見えるやつ](https://sapphire-al2o3.github.io/js-demo/canvas/真ん中の正方形の大きさが変わるように見えるやつ/)
 - [＠がんばらないジェネレータ](https://sapphire-al2o3.github.io/js-demo/canvas/＠がんばらないジェネレータ/)
+- [Cellular Noise](https://sapphire-al2o3.github.io/js-demo/canvas/Cellular-Noise/)
 - [Perlin Noise](https://sapphire-al2o3.github.io/js-demo/canvas/Perlin-Noise/)
 - [Value Noise](https://sapphire-al2o3.github.io/js-demo/canvas/Value-Noise/)
