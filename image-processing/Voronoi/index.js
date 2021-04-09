@@ -28,25 +28,24 @@ window.onload = () => {
         return x < min ? min : x > max ? max : x;
     }
 
-    const min = (a, b) => Math.min(a, b);
+    let b = 12;
+    let maxd = b * b * 2;
+    let bw = w / b ^ 0;
+    let bh = h / b ^ 0;
+    let randx = [];
+    let randy = [];
 
-    const b = 8;
-    const maxd = b * b + 1;
-    const bw = w / b ^ 0;
-    const bh = h / b ^ 0;
-    const randx = [];
-    const randy = [];
-    const randc = [];
-    let voronoi = false;
-    let point = false;
-
-    for (let y = 0; y < bh; y++) {
-        for (let x = 0; x < bw; x++) {
-            let k = y * bw + x;
-            randx[k] = Math.random() * b;
-            randy[k] = Math.random() * b;
-            let cx = randx[k] + x * b ^ 0;
-            let cy = randy[k] + y * b ^ 0;
+    function table(size) {
+        b = size;
+        maxd = b * b * 2;
+        bw = w / b ^ 0;
+        bh = h / b ^ 0;
+        for (let y = 0; y < bh; y++) {
+            for (let x = 0; x < bw; x++) {
+                let k = y * bw + x;
+                randx[k] = Math.random() * b;
+                randy[k] = Math.random() * b;
+            }
         }
     }
 
@@ -77,8 +76,11 @@ window.onload = () => {
         return clamp(c, 0, w * h);
     }
 
-    function render(data) {
+    function render(data, size) {
         console.time('noise');
+
+        table(size);
+
         for (let i = 0; i < h; i++) {
             for (let j = 0; j < w; j++) {
                 let k = (i * w + j) * 4;
@@ -98,5 +100,10 @@ window.onload = () => {
         console.timeEnd('noise');
     }
 
-    render(data);
+    render(data, b);
+
+    document.body.appendChild(createRadio(['32', '24', '16', '12', '8'], (v, id, i) => {
+        b = parseInt(id, 10);
+        render(data, b);
+    }));
 };
