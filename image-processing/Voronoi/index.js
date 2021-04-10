@@ -102,8 +102,8 @@ window.onload = () => {
 
     render(data, b);
 
-    document.body.appendChild(createRadio(['32', '24', '16', '12', '8'], (v, id, i) => {
+    document.body.appendChild(createRadio(['32', '24', '16', '12', '8', '6'], (v, id, i) => {
         b = parseInt(id, 10);
         render(data, b);
-    }));
+    }, 3));
 };
