@@ -34,8 +34,15 @@ window.onload = () => {
     let bh = h / b ^ 0;
     let randx = [];
     let randy = [];
+    let randr = [];
+    let randg = [];
+    let randb = [];
+    let randc = [];
+    let average = false;
+    let fix = false;
 
     function table(size) {
+        let update = b !== size || !fix;
         b = size;
         maxd = b * b * 2;
         bw = w / b ^ 0;
@@ -43,8 +50,11 @@ window.onload = () => {
         for (let y = 0; y < bh; y++) {
             for (let x = 0; x < bw; x++) {
                 let k = y * bw + x;
-                randx[k] = Math.random() * b;
-                randy[k] = Math.random() * b;
+                if (update) {
+                    randx[k] = Math.random() * b;
+                    randy[k] = Math.random() * b;
+                }
+                randr[k] = randg[k] = randb[k] = randc[k] = 0;
             }
         }
     }
@@ -76,23 +86,71 @@ window.onload = () => {
         return clamp(c, 0, w * h);
     }
 
+    function accum(x, y) {
+        let ix = x / b ^ 0;
+        let iy = y / b ^ 0;
+        let distance = maxd;
+        let c = 0;
+        for (let i = -1; i <= 1; i++) {
+            let ry = (iy + i + bh) % bh;
+            let by = (iy + i) * b;
+            for (let j = -1; j <= 1; j++) {
+
+                let rx = (ix + j + bw) % bw;
+                
+                let k = ry * bw + rx;
+                
+                let cx = randx[k] + (ix + j) * b;
+                let cy = randy[k] + by;
+
+                let d = dist2(cx, cy, x, y);
+                if (d < distance) {
+                    distance = d;
+                    c = k;
+                }
+            }
+        }
+        return c;
+    }
+
     function render(data, size) {
         console.time('noise');
 
         table(size);
+        if (average) {
+            for (let i = 0; i < h; i++) {
+                for (let j = 0; j < w; j++) {
+                    let k = (i * w + j) * 4;
+                    let y = accum(j, i);
+                    randr[y] += data[k];
+                    randg[y] += data[k + 1];
+                    randb[y] += data[k + 2];
+                    randc[y]++;
+                }
+            }
+            for (let i = 0; i < randc.length; i++) {
+                randr[i] = randr[i] / randc[i] ^ 0;
+                randg[i] = randg[i] / randc[i] ^ 0;
+                randb[i] = randb[i] / randc[i] ^ 0;
+            }
+        }
 
         for (let i = 0; i < h; i++) {
             for (let j = 0; j < w; j++) {
                 let k = (i * w + j) * 4;
-                let y = cell(j, i) * 4;
-                ret[k] = data[y];
-                ret[k + 1] = data[y + 1]; 
-                ret[k + 2] = data[y + 2];
-                ret[k + 3] = 255;
-                // ret[k] = y;
-                // ret[k + 1] = y;
-                // ret[k + 2] = 0;
-                // ret[k + 3] = 255;
+                if (average) {
+                    let y = accum(j, i);
+                    ret[k] = randr[y];
+                    ret[k + 1] = randg[y];
+                    ret[k + 2] = randb[y];
+                    ret[k + 3] = 255;
+                } else {
+                    let y = cell(j, i) * 4;
+                    ret[k] = data[y];
+                    ret[k + 1] = data[y + 1]; 
+                    ret[k + 2] = data[y + 2];
+                    ret[k + 3] = 255;
+                }
             }
         }
         
@@ -103,7 +161,28 @@ window.onload = () => {
     render(data, b);
 
     document.body.appendChild(createRadio(['32', '24', '16', '12', '8', '6'], (v, id, i) => {
-        b = parseInt(id, 10);
+        render(data, parseInt(id, 10));
+    }, 3));
+
+    document.body.appendChild(createCheckbox('average', v => {
+        average = v;
         render(data, b);
     }, 3));
+
+    document.body.appendChild(createCheckbox('fix', v => {
+        fix = v;
+    }, 3));
+
+    document.body.addEventListener('drop', e => {
+        const file = e.dataTransfer.files[0];
+        const reader = new FileReader();
+        reader.onload = e => {
+            img.src = reader.result;
+            img.onload = () => {
+                ctx.drawImage(img, 0, 0, w, h);
+            };
+        };
+        reader.readAsDataURL(file);
+        e.preventDefault();
+    }, false);
 };
