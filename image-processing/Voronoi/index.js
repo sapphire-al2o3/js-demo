@@ -8,15 +8,22 @@ window.onload = () => {
     canvas.width = img.width;
     canvas.height = img.height;
 
-    const w = canvas.width;
-    const h = canvas.height;
+    let w = canvas.width;
+    let h = canvas.height;
 
     ctx.drawImage(img, 0, 0, w, h);
 
-    const image = ctx.getImageData(0, 0, w, h);
-    const result = ctx.createImageData(w, h);
-    const data = image.data;
-    const ret = result.data;
+    let image = ctx.getImageData(0, 0, w, h);
+    let result = ctx.createImageData(w, h);
+    let data = image.data;
+    let ret = result.data;
+
+    function buffer(w, h) {
+        image = ctx.getImageData(0, 0, w, h);
+        result = ctx.createImageData(w, h);
+        data = image.data;
+        ret = result.data;
+    }
 
     function dist2(sx, sy, ex, ey) {
         let dx = ex - sx;
@@ -173,13 +180,22 @@ window.onload = () => {
         fix = v;
     }, 3));
 
+    document.body.addEventListener('dragover', e => {
+        e.preventDefault();
+    }, false);
+
     document.body.addEventListener('drop', e => {
         const file = e.dataTransfer.files[0];
         const reader = new FileReader();
         reader.onload = e => {
             img.src = reader.result;
             img.onload = () => {
+                w = canvas.width = img.width;
+                h = canvas.height = img.height;
                 ctx.drawImage(img, 0, 0, w, h);
+                buffer(w, h);
+                table(b);
+                render(data, b);
             };
         };
         reader.readAsDataURL(file);
