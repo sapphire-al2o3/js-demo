@@ -180,25 +180,29 @@ window.onload = () => {
         fix = v;
     }, 3));
 
-    document.body.addEventListener('dragover', e => {
-        e.preventDefault();
-    }, false);
+    function dropImage(img, cb) {
+        document.body.addEventListener('dragover', e => {
+            e.preventDefault();
+        }, false);
 
-    document.body.addEventListener('drop', e => {
-        const file = e.dataTransfer.files[0];
-        const reader = new FileReader();
-        reader.onload = e => {
-            img.src = reader.result;
-            img.onload = () => {
-                w = canvas.width = img.width;
-                h = canvas.height = img.height;
-                ctx.drawImage(img, 0, 0, w, h);
-                buffer(w, h);
-                table(b);
-                render(data, b);
+        document.body.addEventListener('drop', e => {
+            const file = e.dataTransfer.files[0];
+            const reader = new FileReader();
+            reader.onload = e => {
+                img.src = reader.result;
+                img.onload = cb;
             };
-        };
-        reader.readAsDataURL(file);
-        e.preventDefault();
-    }, false);
+            reader.readAsDataURL(file);
+            e.preventDefault();
+        }, false);
+    }
+
+    dropImage(img, () => {
+        w = canvas.width = img.width;
+        h = canvas.height = img.height;
+        ctx.drawImage(img, 0, 0, w, h);
+        buffer(w, h);
+        table(b);
+        render(data, b);
+    });
 };
