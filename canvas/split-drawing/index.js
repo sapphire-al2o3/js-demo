@@ -134,11 +134,11 @@ function render(x, y, px, py) {
     if (mx !== mpx) {
         let dx = x - px,
             dy = y - py;
-        console.log(x, y, px, py);
+        // console.log(x, y, px, py);
         if (dx === 0) console.error('err');
         let xx = mx > mpx ? mx * sx : mpx * sx;
         let yy = dy / dx * (xx - px) + py;
-        console.log(xx, yy, px, py);
+        // console.log(xx, yy, px, py);
         drawLine(xx, yy, px, py);
         return;
         px = xx;
