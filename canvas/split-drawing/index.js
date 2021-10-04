@@ -11,6 +11,7 @@ let px = 0,
 
 ctx.lineWidth = 1.0;
 ctx.strokeStyle = 'rgba(255, 100, 20, 0.5)';
+// ctx.globalCompositeOperation = 'lighter';
 
 function mousemove(e) {
     if(down) {
@@ -76,8 +77,19 @@ document.getElementById('flip').addEventListener('click', e => {
     e.target.className = e.target.className == 'selected' ? '' : 'selected';
 });
 
+document.getElementById('addition').addEventListener('click', e => {
+    addition = !addition;
+    if (addition) {
+        ctx.globalCompositeOperation = 'lighter';
+    } else {
+        ctx.globalCompositeOperation = 'source-over';
+    }
+    e.target.className = e.target.className == 'selected' ? '' : 'selected';
+});
+
 let s = 8;
 let flip = false;
+let addition = false;
 
 document.getElementById('r8').className = 'selected';
 
