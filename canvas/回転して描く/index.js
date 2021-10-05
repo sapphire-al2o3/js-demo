@@ -1,16 +1,17 @@
 (function() {
     'use strict';
     
-    var canvas = document.getElementById('canvas'),
+    let canvas = document.getElementById('canvas'),
         ctx = canvas.getContext('2d'),
         w = canvas.width,
         h = canvas.height;
     
-    var px = 0,
+    let px = 0,
         py = 0,
         rect,
         rot = 32,
-        down = false;
+        down = false,
+        bgcolor = '#FFF';
     
     ctx.lineWidth = 1.0;
     ctx.strokeStyle = 'rgba(250, 100, 0, 0.4)';
@@ -47,24 +48,34 @@
     
     canvas.addEventListener('mousedown', mousedown);
     
-    document.getElementById('reset').addEventListener('click', function() {
-        ctx.fillStyle = '#FFF';
+    document.getElementById('reset').addEventListener('click', () => {
+        ctx.fillStyle = bgcolor;
         ctx.fillRect(0, 0, w, h);
     });
-    document.getElementById('r32').addEventListener('click', function(e) {
+    document.getElementById('r32').addEventListener('click', () => {
         rot = 32;
     });
-    document.getElementById('r16').addEventListener('click', function(e) {
+    document.getElementById('r16').addEventListener('click', () => {
         rot = 16;
     });
-    document.getElementById('r8').addEventListener('click', function(e) {
+    document.getElementById('r8').addEventListener('click', () => {
         rot = 8;
     });
-    document.getElementById('r64').addEventListener('click', function(e) {
+    document.getElementById('r64').addEventListener('click', () => {
         rot = 64;
     });
-    document.getElementById('r3').addEventListener('click', function(e) {
+    document.getElementById('r3').addEventListener('click', () => {
         rot = 3;
+    });
+    document.getElementById('bgblack').addEventListener('click', () => {
+        bgcolor = '#000';
+        ctx.fillStyle = bgcolor;
+        ctx.fillRect(0, 0, w, h);
+    });
+    document.getElementById('bgwhite').addEventListener('click', () => {
+        bgcolor = '#FFF';
+        ctx.fillStyle = bgcolor;
+        ctx.fillRect(0, 0, w, h);
     });
     function render(x, y, px, py) {
         
