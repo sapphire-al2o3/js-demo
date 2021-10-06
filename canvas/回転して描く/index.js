@@ -18,7 +18,7 @@
     
     function mousemove(e) {
         if(down) {
-            var x = e.pageX - rect.left + 0.5,
+            let x = e.pageX - rect.left + 0.5,
                 y = e.pageY - rect.top + 0.5;
             
             render(x, y, px, py);
@@ -79,13 +79,13 @@
     });
     function render(x, y, px, py) {
         
-        var r = Math.PI * 2.0 / rot,
+        let r = Math.PI * 2.0 / rot,
             c = Math.cos(r),
             s = Math.sin(r),
             tx = (w + h * s - w * c) * 0.5,
             ty = (h - w * s - h * c) * 0.5;
         
-        for(var i = 0; i < rot; i++) {
+        for(let i = 0; i < rot; i++) {
             ctx.transform(c, s, -s, c, tx, ty);
             ctx.beginPath();
             ctx.moveTo(px, py);
