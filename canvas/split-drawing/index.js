@@ -7,10 +7,11 @@ let px = 0,
     py = 0,
     rect,
     rot = 32,
-    down = false;
+    down = false,
+    color = 'rgba(255, 100, 20, 0.5)';
 
 ctx.lineWidth = 1.0;
-ctx.strokeStyle = 'rgba(255, 100, 20, 0.5)';
+ctx.strokeStyle = color;
 // ctx.globalCompositeOperation = 'lighter';
 
 function mousemove(e) {
@@ -42,9 +43,9 @@ function mousedown(e) {
     document.addEventListener('mousemove', mousemove, false);
     document.addEventListener('mouseup', mouseup, false);
 }
-    
+
 canvas.addEventListener('mousedown', mousedown, false);
-    
+
 document.getElementById('clear').addEventListener('click', () => {
     ctx.fillStyle = '#000';
     ctx.clearRect(0, 0, w, h);
@@ -53,28 +54,49 @@ document.getElementById('clear').addEventListener('click', () => {
 
 document.getElementById('r16').addEventListener('click', e => {
     s = 16;
-    document.querySelector('.selected').className = '';
+    document.querySelector('#size .selected').className = '';
     e.target.className = 'selected';
 });
 document.getElementById('r8').addEventListener('click', e => {
     s = 8;
-    document.querySelector('.selected').className = '';
+    document.querySelector('#size .selected').className = '';
     e.target.className = 'selected';
 });
 document.getElementById('r4').addEventListener('click', e => {
     s = 4;
-    document.querySelector('.selected').className = '';
+    document.querySelector('#size .selected').className = '';
     e.target.className = 'selected';
 });
 document.getElementById('r2').addEventListener('click', e => {
     s = 2;
-    document.querySelector('.selected').className = '';
+    document.querySelector('#size .selected').className = '';
     e.target.className = 'selected';
 });
 
 document.getElementById('flip').addEventListener('click', e => {
     flip = !flip;
     e.target.className = e.target.className == 'selected' ? '' : 'selected';
+});
+
+document.getElementById('c0').addEventListener('click', e => {
+    color = 'rgba(255, 100, 20, 0.5)';
+    ctx.strokeStyle = color;
+    document.querySelector('#color .selected').className = '';
+    e.target.className = 'selected';
+});
+
+document.getElementById('c1').addEventListener('click', e => {
+    color = 'rgba(20, 100, 255, 0.5)';
+    ctx.strokeStyle = color;
+    document.querySelector('#color .selected').className = '';
+    e.target.className = 'selected';
+});
+
+document.getElementById('c2').addEventListener('click', e => {
+    color = 'rgba(100, 255, 20, 0.5)';
+    ctx.strokeStyle = color;
+    document.querySelector('#color .selected').className = '';
+    e.target.className = 'selected';
 });
 
 document.getElementById('addition').addEventListener('click', e => {
@@ -92,6 +114,7 @@ let flip = false;
 let addition = false;
 
 document.getElementById('r8').className = 'selected';
+document.getElementById('c0').className = 'selected';
 
 function drawLine(x, y, px, py) {
     let sx = w / s,
