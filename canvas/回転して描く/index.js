@@ -16,6 +16,8 @@
     ctx.lineWidth = 1.0;
     ctx.strokeStyle = 'rgba(250, 100, 0, 0.4)';
     
+    document.getElementById('r32').className = 'selected';
+
     function mousemove(e) {
         if(down) {
             let x = e.pageX - rect.left + 0.5,
@@ -46,26 +48,32 @@
         document.addEventListener('mouseup', mouseup);
     }
     
+    function setRot(e, r) {
+        rot = r;
+        document.querySelector('.selected').className = '';
+        e.target.className = 'selected';
+    }
+
     canvas.addEventListener('mousedown', mousedown);
-    
+
     document.getElementById('reset').addEventListener('click', () => {
         ctx.fillStyle = bgcolor;
         ctx.fillRect(0, 0, w, h);
     });
-    document.getElementById('r32').addEventListener('click', () => {
-        rot = 32;
+    document.getElementById('r64').addEventListener('click', (e) => {
+        setRot(e, 64);
     });
-    document.getElementById('r16').addEventListener('click', () => {
-        rot = 16;
+    document.getElementById('r32').addEventListener('click', (e) => {
+        setRot(e, 32);
     });
-    document.getElementById('r8').addEventListener('click', () => {
-        rot = 8;
+    document.getElementById('r16').addEventListener('click', (e) => {
+        setRot(e, 16);
     });
-    document.getElementById('r64').addEventListener('click', () => {
-        rot = 64;
+    document.getElementById('r8').addEventListener('click', (e) => {
+        setRot(e, 8);
     });
-    document.getElementById('r3').addEventListener('click', () => {
-        rot = 3;
+    document.getElementById('r3').addEventListener('click', (e) => {
+        setRot(e, 3);
     });
     document.getElementById('bgblack').addEventListener('click', () => {
         bgcolor = '#000';
