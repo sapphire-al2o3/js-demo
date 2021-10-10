@@ -78,25 +78,23 @@ document.getElementById('flip').addEventListener('click', e => {
     e.target.className = e.target.className == 'selected' ? '' : 'selected';
 });
 
-document.getElementById('c0').addEventListener('click', e => {
-    color = 'rgba(255, 100, 20, 0.5)';
+function setColor(e, r, g, b, a) {
+    color = `rgba(${r},${g},${b},${a})`;
     ctx.strokeStyle = color;
     document.querySelector('#color .selected').className = '';
     e.target.className = 'selected';
+}
+
+document.getElementById('c0').addEventListener('click', e => {
+    setColor(e, 255, 100, 20, 0.5);
 });
 
 document.getElementById('c1').addEventListener('click', e => {
-    color = 'rgba(20, 100, 255, 0.5)';
-    ctx.strokeStyle = color;
-    document.querySelector('#color .selected').className = '';
-    e.target.className = 'selected';
+    setColor(e, 20, 100, 255, 0.5);
 });
 
 document.getElementById('c2').addEventListener('click', e => {
-    color = 'rgba(100, 255, 20, 0.5)';
-    ctx.strokeStyle = color;
-    document.querySelector('#color .selected').className = '';
-    e.target.className = 'selected';
+    setColor(e, 100, 255, 20, 0.5);
 });
 
 document.getElementById('addition').addEventListener('click', e => {
