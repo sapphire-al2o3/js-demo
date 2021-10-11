@@ -52,25 +52,23 @@ document.getElementById('clear').addEventListener('click', () => {
     ctx.fillRect(0, 0, w, h);
 });
 
-document.getElementById('r16').addEventListener('click', e => {
-    s = 16;
+function setDivision(e, d) {
+    s = d;
     document.querySelector('#size .selected').className = '';
     e.target.className = 'selected';
+}
+
+document.getElementById('r16').addEventListener('click', e => {
+    setDivision(e, 16);
 });
 document.getElementById('r8').addEventListener('click', e => {
-    s = 8;
-    document.querySelector('#size .selected').className = '';
-    e.target.className = 'selected';
+    setDivision(e, 8);
 });
 document.getElementById('r4').addEventListener('click', e => {
-    s = 4;
-    document.querySelector('#size .selected').className = '';
-    e.target.className = 'selected';
+    setDivision(e, 4);
 });
 document.getElementById('r2').addEventListener('click', e => {
-    s = 2;
-    document.querySelector('#size .selected').className = '';
-    e.target.className = 'selected';
+    setDivision(e, 2);
 });
 
 document.getElementById('flip').addEventListener('click', e => {
