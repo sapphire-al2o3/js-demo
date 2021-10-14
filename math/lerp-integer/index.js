@@ -51,7 +51,7 @@ function render(f) {
     plot2D(ctx, f, w, h, 400);
 }
 
-function def(t) {
+function linear(t) {
     return lerp(s, e, t);
 }
 function floor(t) {
@@ -61,9 +61,9 @@ function ceil(t) {
     return Math.ceil(lerp(s, e, t));
 }
 
-document.body.appendChild(createRadio(['lerp', 'floor', 'ceil'], (checked, id) => {
-    if (id === 'lerp') {
-        render(def);
+document.body.appendChild(createRadio(['linear', 'floor', 'ceil'], (checked, id) => {
+    if (id === 'linear') {
+        render(linear);
     } else if (id === 'floor') {
         render(floor);
     } else if (id === 'ceil') {
@@ -71,4 +71,4 @@ document.body.appendChild(createRadio(['lerp', 'floor', 'ceil'], (checked, id) =
     }
 }, 0));
 
-render(def);
+render(linear);
