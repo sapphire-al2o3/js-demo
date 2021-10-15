@@ -31,6 +31,12 @@ function plot2D(ctx, f, w, h, itr) {
 }
 
 function grid(x, y) {
+    for (let i = 1; i < x; i++) {
+        ctx.beginPath();
+        ctx.moveTo(i * w / x + 0.5, 0);
+        ctx.lineTo(i * w / x + 0.5, h);
+        ctx.stroke();
+    }
     for (let i = 1; i < y; i++) {
         ctx.beginPath();
         ctx.moveTo(0, i * h / y + 0.5);
@@ -55,7 +61,7 @@ function linear(t) {
     return lerp(s, e, t);
 }
 function floor(t) {
-    return Math.floor(lerp(s, e, t));
+    return Math.floor(lerp(1, e, t));
 }
 function ceil(t) {
     return Math.ceil(lerp(s, e, t));
