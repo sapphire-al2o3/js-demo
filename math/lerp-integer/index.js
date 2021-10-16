@@ -61,10 +61,20 @@ function linear(t) {
     return lerp(s, e, t);
 }
 function floor(t) {
-    return Math.floor(lerp(1, e, t));
+    return Math.floor(lerp(s, e, t));
 }
 function ceil(t) {
     return Math.ceil(lerp(s, e, t));
+}
+
+function ceilfloor(t) {
+    return (Math.ceil(lerp(s, e, t)) + Math.floor(lerp(s, e, t))) * 0.5;
+}
+
+function print(f) {
+    for (let i = 0; i <= 1.0; i += 0.25) {
+        console.log(i, f(i));
+    }
 }
 
 document.body.appendChild(createRadio(['linear', 'floor', 'ceil'], (checked, id) => {
