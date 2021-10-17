@@ -67,8 +67,8 @@ function ceil(t) {
     return Math.ceil(lerp(s, e, t));
 }
 
-function ceilfloor(t) {
-    return (Math.ceil(lerp(s, e, t)) + Math.floor(lerp(s, e, t))) * 0.5;
+function ceilfix(t) {
+    return t === 1 ? e : Math.ceil(lerp(s, e - 1, t));
 }
 
 function print(f) {
@@ -77,13 +77,15 @@ function print(f) {
     }
 }
 
-document.body.appendChild(createRadio(['linear', 'floor', 'ceil'], (checked, id) => {
+document.body.appendChild(createRadio(['linear', 'floor', 'ceil', 'ceil_fix'], (checked, id) => {
     if (id === 'linear') {
         render(linear);
     } else if (id === 'floor') {
         render(floor);
     } else if (id === 'ceil') {
         render(ceil);
+    } else if (id === 'ceil_fix') {
+        render(ceilfix);
     }
 }, 0));
 
