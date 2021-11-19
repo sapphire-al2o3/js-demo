@@ -48,6 +48,8 @@
     let frame = 0,
         time = 0;
 
+    let rect1 = [150, 50, 100, 100];
+
     function render(delta) {
         time += delta;
         light[0] = Math.cos(time * 0.001);
@@ -58,9 +60,18 @@
         matrix.mMatrix.mul(matrix.vMatrix, matrix.mvMatrix);
         matrix.nMatrix = matrix.mvMatrix.toMatrix3().transpose().inverse();
 
-        gl.scissor(50, 50, 100, 100);
+        rect1[0] = 150 + 100 * Math.sin(time * 0.003);
+        rect1[1] = 50 + 100 * Math.cos(time * 0.004);
+        rect1[2] = 100 + 50 * Math.cos(time * 0.005);
+        rect1[3] = 100 + 50 * Math.cos(time * 0.006);
+
+        gl.scissor(0, 0, 300, 300);
         gl.clearColor(1.0, 1.0, 0.0, 1.0);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+        gl.scissor(rect1[0], rect1[1], rect1[2], rect1[3]);
+        // gl.clearColor(1.0, 1.0, 0.0, 1.0);
+        // gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
         
         gl.cullFace(gl.BACK);
         program[0].uniform['mvMatrix'].value = matrix.mvMatrix.data;
@@ -75,9 +86,9 @@
 
         drawMesh(program[0], model.meshes[0]);
         
-        gl.scissor(150, 50, 100, 100);
-        gl.clearColor(1.0, 0.0, 1.0, 1.0);
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        // gl.scissor(rect1[0], rect1[1], rect1[2], rect1[3]);
+        // gl.clearColor(1.0, 0.0, 1.0, 1.0);
+        // gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
         gl.flush();
     }
