@@ -19,7 +19,7 @@
 
     let camera = {},
         matrix = {};
-    camera.position = new Vector3(0, 4.0, 2.0);
+    camera.position = new Vector3(0, 3.0, 1.0);
     camera.target = new Vector3(0, 0.3, 0);
     camera.up = new Vector3(0, 1, 0);
     matrix.mMatrix = new Matrix4();
@@ -52,8 +52,8 @@
 
     function render(delta) {
         time += delta;
-        light[0] = Math.cos(time * 0.001);
-        light[2] = Math.sin(time * 0.001);
+        // light[0] = Math.cos(time * 0.001);
+        // light[2] = Math.sin(time * 0.001);
         // Matrix4.rotateXYZ(frame * 0.02, 0.0, frame * 0.02, matrix.mMatrix);
         // Matrix4.scale(0.5, 0.5, 0.5, matrix.mMatrix);
         Matrix4.identity(matrix.mMatrix);
@@ -62,14 +62,14 @@
 
         rect1[0] = 150 + 100 * Math.sin(time * 0.003);
         rect1[1] = 50 + 100 * Math.cos(time * 0.004);
-        rect1[2] = 100 + 50 * Math.cos(time * 0.005);
-        rect1[3] = 100 + 50 * Math.cos(time * 0.006);
+        rect1[2] = 100 + 100 * Math.cos(time * 0.005);
+        rect1[3] = 100 + 100 * Math.cos(time * 0.006);
 
         gl.scissor(0, 0, 300, 300);
-        gl.clearColor(1.0, 1.0, 0.0, 1.0);
+        gl.clearColor(0.5, 1.0, 0.5, 1.0);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        gl.scissor(rect1[0], rect1[1], rect1[2], rect1[3]);
+        gl.scissor(rect1[1], 0, rect1[3], 300);
         // gl.clearColor(1.0, 1.0, 0.0, 1.0);
         // gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
         
@@ -77,18 +77,21 @@
         program[0].uniform['mvMatrix'].value = matrix.mvMatrix.data;
         program[0].uniform['pMatrix'].value = matrix.pMatrix.data;
         program[0].uniform['nMatrix'].value = matrix.nMatrix.data;
-        // program[0].uniform['color'].value = color ? 1.0 : 0.3;
+        program[0].uniform['color'].value = [1, 0.2, 0];
         program[0].uniform['light'].value = light;
-        program[0].uniform['size'].value = size;
-        program[0].uniform['thr'].value = thr;
+        // program[0].uniform['size'].value = size;
+        // program[0].uniform['thr'].value = thr;
         
         
 
         drawMesh(program[0], model.meshes[0]);
         
-        // gl.scissor(rect1[0], rect1[1], rect1[2], rect1[3]);
+        gl.scissor(0, rect1[0], 300, rect1[2]);
         // gl.clearColor(1.0, 0.0, 1.0, 1.0);
         // gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+        program[0].uniform['color'].value = [0.2, 0.2, 1];
+        drawMesh(program[0], model.meshes[0]);
 
         gl.flush();
     }
