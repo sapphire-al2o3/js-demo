@@ -15,6 +15,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [lineWidthのテスト](https://sapphire-al2o3.github.io/js-demo/webgl/lineWidthのテスト/)
 - [NormalMapTexture](https://sapphire-al2o3.github.io/js-demo/webgl/NormalMapTexture/)
 - [Pixelize](https://sapphire-al2o3.github.io/js-demo/webgl/Pixelize/)
+- [Scissor](https://sapphire-al2o3.github.io/js-demo/webgl/Scissor/)
 - [Screen-Tone](https://sapphire-al2o3.github.io/js-demo/webgl/Screen-Tone/)
 - [undefined](https://sapphire-al2o3.github.io/js-demo/webgl/undefined/)
 - [uniform配列のテスト](https://sapphire-al2o3.github.io/js-demo/webgl/uniform-array/)
