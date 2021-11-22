@@ -5,6 +5,7 @@
 
     gl.viewport(0, 0, 300, 300);
     gl.enable(gl.SCISSOR_TEST);
+    gl.cullFace(gl.BACK);
     var program = [];
 
     // シェーダを初期化
@@ -28,16 +29,14 @@
     matrix.mvMatrix = new Matrix4();
     matrix.pMatrix = new Matrix4();
 
-    let light = [0.0, 0.7, 4.0],
-        size = [1, 1, 2],
-        thr = [0.2, 0.9];
+    let light = [0.0, 0.7, 4.0];
 
     // カメラの行列設定
     Matrix4.perspective(45.0 * Math.PI / 180.0, gl.canvas.width / gl.canvas.height, 0.1, 1000.0, matrix.pMatrix);
     Matrix4.lookAt(camera.position, camera.target, camera.up, matrix.vMatrix);
 
     function drawMesh(program, mesh) {
-        var gl = program.context;
+        let gl = program.context;
         gl.useProgram(program);
         setupUniform(program);
         setupAttribute(program, mesh.vbo);
@@ -60,36 +59,28 @@
         matrix.mMatrix.mul(matrix.vMatrix, matrix.mvMatrix);
         matrix.nMatrix = matrix.mvMatrix.toMatrix3().transpose().inverse();
 
-        rect1[0] = 150 + 100 * Math.sin(time * 0.003);
-        rect1[1] = 50 + 100 * Math.cos(time * 0.004);
-        rect1[2] = 100 + 100 * Math.cos(time * 0.005);
-        rect1[3] = 100 + 100 * Math.cos(time * 0.006);
+        rect1[0] = 150 + 100 * Math.sin(time * 0.001);
+        rect1[1] = 50 + 100 * Math.cos(time * 0.002);
+        rect1[2] = 100 + 100 * Math.sin(time * 0.003);
+        rect1[3] = 100 + 100 * Math.cos(time * 0.004);
 
+        program[0].uniform['mvMatrix'].value = matrix.mvMatrix.data;
+        program[0].uniform['pMatrix'].value = matrix.pMatrix.data;
+        program[0].uniform['nMatrix'].value = matrix.nMatrix.data;
+        program[0].uniform['light'].value = light;
+
+        //
         gl.scissor(0, 0, 300, 300);
         gl.clearColor(0.5, 1.0, 0.5, 1.0);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
+        // 
         gl.scissor(rect1[1], 0, rect1[3], 300);
-        // gl.clearColor(1.0, 1.0, 0.0, 1.0);
-        // gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-        
-        gl.cullFace(gl.BACK);
-        program[0].uniform['mvMatrix'].value = matrix.mvMatrix.data;
-        program[0].uniform['pMatrix'].value = matrix.pMatrix.data;
-        program[0].uniform['nMatrix'].value = matrix.nMatrix.data;
         program[0].uniform['color'].value = [1, 0.2, 0];
-        program[0].uniform['light'].value = light;
-        // program[0].uniform['size'].value = size;
-        // program[0].uniform['thr'].value = thr;
-        
-        
-
         drawMesh(program[0], model.meshes[0]);
         
+        //
         gl.scissor(0, rect1[0], 300, rect1[2]);
-        // gl.clearColor(1.0, 0.0, 1.0, 1.0);
-        // gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
         program[0].uniform['color'].value = [0.2, 0.2, 1];
         drawMesh(program[0], model.meshes[0]);
 
