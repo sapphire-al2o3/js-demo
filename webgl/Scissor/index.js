@@ -51,6 +51,7 @@
 
     function render(delta) {
         time += delta;
+        frame++;
         // light[0] = Math.cos(time * 0.001);
         // light[2] = Math.sin(time * 0.001);
         // Matrix4.rotateXYZ(frame * 0.02, 0.0, frame * 0.02, matrix.mMatrix);
@@ -85,6 +86,11 @@
         drawMesh(program[0], model.meshes[0]);
 
         gl.flush();
+
+        if (frame > 60) {
+            console.log(delta);
+            frame = 0;
+        }
     }
 
     let timer = setAnimationFrame(render, 1000 / 30);
