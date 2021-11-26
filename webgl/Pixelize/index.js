@@ -57,9 +57,10 @@
 
     function render(delta) {
         time += delta;
-        light[0] = Math.cos(time * 0.001);
-        light[2] = Math.sin(time * 0.001);
-        Matrix4.rotateXYZ(time * 0.002, 0.0, time * 0.002, matrix.mMatrix);
+        let rot = time * 0.001;
+        light[0] = Math.cos(rot);
+        light[2] = Math.sin(rot);
+        Matrix4.rotateXYZ(rot, 0.0, rot, matrix.mMatrix);
         // Matrix4.scale(0.5, 0.5, 0.5, matrix.mMatrix);
         // Matrix4.identity(matrix.mMatrix);
         matrix.mMatrix.mul(matrix.vMatrix, matrix.mvMatrix);
