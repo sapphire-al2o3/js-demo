@@ -30,50 +30,50 @@ document.getElementById('ryx').addEventListener('click', function(e) {
 }, false);
 
 function rotate90R(image) {
-    var data = image.data,
+    let data = image.data,
         w = image.width,
         h = image.height;
     
-	for(var i = 1; i < h; i++) {
-		var y = i * w;
-		for(var j = i; j < w; j++) {
-			var s = (y + j) * 4,
+	for(let i = 1; i < h; i++) {
+        let y = i * w;
+        for(let j = i; j < w; j++) {
+            let s = (y + j) * 4,
                 t = (j * w + i) * 4;
                 r = data[s],
                 g = data[s + 1],
                 b = data[s + 2],
                 a = data[s + 3];
-			data[s] = data[t];
+            data[s] = data[t];
             data[s + 1] = data[t + 1];
             data[s + 2] = data[t + 2];
             data[s + 3] = data[t + 3];
-			data[t] = r;
+            data[t] = r;
             data[t + 1] = g;
             data[t + 2] = b;
             data[t + 3] = a;
-		}
-	}
-	
-	for(var i = 0; i < h; i++) {
-		var y = i * w;
-		var x = y + w - 1;
-		for(var j = 0; j < w / 2; j++) {
-			var s = (y + j) * 4,
+        }
+    }
+    
+    for(let i = 0; i < h; i++) {
+        let y = i * w;
+        let x = y + w - 1;
+        for(let j = 0; j < w / 2; j++) {
+            let s = (y + j) * 4,
                 t = (x - j) * 4,
                 r = data[s],
                 g = data[s + 1],
                 b = data[s + 2],
                 a = data[s + 3];
-			data[s] = data[t];
+            data[s] = data[t];
             data[s + 1] = data[t + 1];
             data[s + 2] = data[t + 2];
             data[s + 3] = data[t + 3];
-			data[t] = r;
+            data[t] = r;
             data[t + 1] = g;
             data[t + 2] = b;
             data[t + 3] = a;
-		}
-	}
+        }
+    }
 }
 
 function flipX(image) {
@@ -81,77 +81,77 @@ function flipX(image) {
         w = image.width,
         h = image.height;
     
-	for(var i = 0; i < h; i++) {
-		var y = i * w;
-		var x = y + w - 1;
-		for(var j = 0; j < w / 2; j++) {
-			var s = (y + j) * 4,
+    for(let i = 0; i < h; i++) {
+        let y = i * w;
+        let x = y + w - 1;
+        for(let j = 0; j < w / 2; j++) {
+            let s = (y + j) * 4,
                 t = (x - j) * 4,
                 r = data[s],
                 g = data[s + 1],
                 b = data[s + 2],
                 a = data[s + 3];
-			data[s] = data[t];
+            data[s] = data[t];
             data[s + 1] = data[t + 1];
             data[s + 2] = data[t + 2];
             data[s + 3] = data[t + 3];
-			data[t] = r;
+            data[t] = r;
             data[t + 1] = g;
             data[t + 2] = b;
             data[t + 3] = a;
-		}
-	}
+        }
+    }
 }
 
 function flipY(image) {
-    var data = image.data,
+    let data = image.data,
         w = image.width,
         h = image.height;
     
-	for(var i = 0; i < h / 2; i++) {
-		var y = i * w;
-		var x = (h - i - 1) * w;
-		for(var j = 0; j < w; j++) {
-			var s = (y + j) * 4,
+    for(let i = 0; i < h / 2; i++) {
+        let y = i * w;
+        let x = (h - i - 1) * w;
+        for(let j = 0; j < w; j++) {
+            let s = (y + j) * 4,
                 t = (x + j) * 4,
                 r = data[s],
                 g = data[s + 1],
                 b = data[s + 2],
                 a = data[s + 3];
-			data[s] = data[t];
+            data[s] = data[t];
             data[s + 1] = data[t + 1];
             data[s + 2] = data[t + 2];
             data[s + 3] = data[t + 3];
-			data[t] = r;
+            data[t] = r;
             data[t + 1] = g;
             data[t + 2] = b;
             data[t + 3] = a;
-		}
-	}
+        }
+    }
 }
 
 function flipXY(image) {
-    var data = image.data,
+    let data = image.data,
         w = image.width,
         h = image.height;
     
-	for(var i = 1; i < h; i++) {
-		var y = i * w;
-		for(var j = i; j < w; j++) {
-			var s = (y + j) * 4,
+    for(let i = 1; i < h; i++) {
+        let y = i * w;
+        for(let j = i; j < w; j++) {
+            let s = (y + j) * 4,
                 t = (j * w + i) * 4;
                 r = data[s],
                 g = data[s + 1],
                 b = data[s + 2],
                 a = data[s + 3];
-			data[s] = data[t];
+            data[s] = data[t];
             data[s + 1] = data[t + 1];
             data[s + 2] = data[t + 2];
             data[s + 3] = data[t + 3];
-			data[t] = r;
+            data[t] = r;
             data[t + 1] = g;
             data[t + 2] = b;
             data[t + 3] = a;
-		}
-	}
+        }
+    }
 }
