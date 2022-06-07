@@ -78,9 +78,9 @@ input {
 #r-bar {
     background: -webkit-linear-gradient(left, #000, #F00);
 }
-#b-bar {
+#g-bar {
     background: -webkit-linear-gradient(left, #000, #0F0);
 }
-#g-bar {
+#b-bar {
     background: -webkit-linear-gradient(left, #000, #00F);
 }
