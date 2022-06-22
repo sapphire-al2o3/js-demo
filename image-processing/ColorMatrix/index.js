@@ -102,9 +102,9 @@ window.onload = () => {
     }
 
     function multiplyMatrix(m, r, g, b) {
-        let rr = m[0] * r + m[1] * g + m[2] * b + m[3];
-            gg = m[4] * r + m[5] * g + m[6] * b + m[7];
-            bb = m[8] * r + m[9] * g + m[10] * b + m[11]
+        let rr = m[0] * r + m[1] * g + m[2] * b + m[3],
+            gg = m[4] * r + m[5] * g + m[6] * b + m[7],
+            bb = m[8] * r + m[9] * g + m[10] * b + m[11];
         return [rr, gg, bb];
     }
 
