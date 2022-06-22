@@ -93,7 +93,7 @@ window.onload = () => {
 
     function getValue(m) {
         for(let i = 0; i < matrix.length; i++) {
-            matrix[i] = inputMatrix[i].value ^ 0;
+            matrix[i] = parseFloat(inputMatrix[i].value);
         }
     }
 
