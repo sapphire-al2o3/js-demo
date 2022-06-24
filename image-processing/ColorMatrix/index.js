@@ -1,3 +1,5 @@
+'use strict';
+
 window.onload = () => {
 
     const canvas = document.getElementById('canvas');
