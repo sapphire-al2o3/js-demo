@@ -7,23 +7,26 @@ const h = canvas.height;
 const size = 16;
 const scale = w / size;
 
-ctx.lineWidth = 1.0;
+function render(r) {
+    ctx.clearRect(0, 0, w, h);
 
-ctx.fillStyle = "#F44";
-drawCircle0(0, 0, 16, 16);
-// drawCircle0(0, 0, 15, 15);
+    ctx.lineWidth = 1.0;
 
+    ctx.fillStyle = "#F44";
+    // drawCircle0(0, 0, 16, 16);
+    drawCircle1(0, 0, r, r);
 
-ctx.strokeStyle = '#000';
-ctx.beginPath();
-ctx.arc(w / 2, h / 2, w / 2, 0, Math.PI * 2, true);
-ctx.stroke();
+    ctx.strokeStyle = '#000';
+    ctx.beginPath();
+    ctx.arc(w / 2, h / 2, w / 2, 0, Math.PI * 2, true);
+    ctx.stroke();
 
-ctx.beginPath();
-ctx.arc(w / 2, h / 2, w / 2 - 10, 0, Math.PI * 2, true);
-ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(w / 2, h / 2, w / 2 - 10, 0, Math.PI * 2, true);
+    ctx.stroke();
 
-drawGrid();
+    drawGrid();
+}
 
 function drawGrid() {
     ctx.strokeStyle = '#CCC';
@@ -72,3 +75,46 @@ function drawCircle0(x0, y0, x1, y1) {
         drawDot(dx - (size / 2 - y) - 1, r - x - 1);
     }
 }
+
+// Michener algorithm
+function drawCircle1(x0, y0, x1, y1) {
+    let dx = x1 - x0;
+    let dy = y1 - y0;
+    let cx = dx / 2 ^ 0 + x0;
+    let cy = dy / 2 ^ 0 + y0;
+    let mcx = cx;
+    let mcy = cy;
+    let r = dx / 2 ^ 0;
+    let d = 3 - 2 * r;
+
+    if (dx & 1 == 1) {
+        mcx++;
+        mcy++;
+    }
+
+    let y = r;
+    for (let x = 0; x <= y; x++) {
+        if (d >= 0) {
+            d -= 4 * y;
+            y--;
+        }
+
+        d += 4 * (x + 1) + 2;
+        drawDot(mcx + y, mcy + x);
+        drawDot(cx - y, mcy + x);
+        drawDot(mcx + y, cy - x);
+        drawDot(cx - y, cy - x);
+
+        drawDot(mcx + x, mcy + y);
+        drawDot(cx - x, mcy + y);
+        drawDot(mcx + x, cy - y);
+        drawDot(cx - x, cy - y);
+    }
+}
+
+document.body.appendChild(createSlider('radius', 1, v => {
+    let r = v * 15 ^ 0;
+    render(r);
+}));
+
+render(15);
