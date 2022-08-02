@@ -1,3 +1,5 @@
+// https://web.wakayama-u.ac.jp/~tokoi/lecture/cg/cgnote03.pdf
+// http://dencha.ojaru.jp/programs_07/pg_graphic_09a2.html
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -16,13 +18,15 @@ function render(r) {
     // drawCircle0(0, 0, 16, 16);
     drawCircle1(0, 0, r, r);
 
-    ctx.strokeStyle = '#000';
+    let cx = w / 2 - (size - r - 1) / 2 * scale;
+
+    ctx.strokeStyle = '#333';
     ctx.beginPath();
-    ctx.arc(w / 2, h / 2, w / 2, 0, Math.PI * 2, true);
+    ctx.arc(cx, cx, (r + 1) * scale / 2, 0, Math.PI * 2, true);
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.arc(w / 2, h / 2, w / 2 - 10, 0, Math.PI * 2, true);
+    ctx.arc(cx, cx, r * scale / 2, 0, Math.PI * 2, true);
     ctx.stroke();
 
     drawGrid();
@@ -110,6 +114,10 @@ function drawCircle1(x0, y0, x1, y1) {
         drawDot(mcx + x, cy - y);
         drawDot(cx - x, cy - y);
     }
+}
+
+function drawEllipse0(a, b) {
+    
 }
 
 document.body.appendChild(createSlider('radius', 1, v => {
