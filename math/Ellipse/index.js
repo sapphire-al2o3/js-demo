@@ -11,25 +11,25 @@ const h = canvas.height;
 const size = 16;
 const scale = w / size;
 
-function render(r) {
+function render(a, b) {
     ctx.clearRect(0, 0, w, h);
 
     ctx.lineWidth = 1.0;
 
     ctx.fillStyle = "#F44";
     // drawCircle0(0, 0, 16, 16);
-    drawCircle1(0, 0, r, r);
+    drawEllipse(0, 0, a, b);
 
-    let cx = w / 2 - (size - r - 1) / 2 * scale;
+    // let cx = w / 2 - (size - r - 1) / 2 * scale;
 
-    ctx.strokeStyle = '#333';
-    ctx.beginPath();
-    ctx.arc(cx, cx, (r + 1) * scale / 2, 0, Math.PI * 2, true);
-    ctx.stroke();
+    // ctx.strokeStyle = '#333';
+    // ctx.beginPath();
+    // ctx.arc(cx, cx, (r + 1) * scale / 2, 0, Math.PI * 2, true);
+    // ctx.stroke();
 
-    ctx.beginPath();
-    ctx.arc(cx, cx, r * scale / 2, 0, Math.PI * 2, true);
-    ctx.stroke();
+    // ctx.beginPath();
+    // ctx.arc(cx, cx, r * scale / 2, 0, Math.PI * 2, true);
+    // ctx.stroke();
 
     drawGrid();
 }
@@ -59,68 +59,57 @@ function drawDot(x, y) {
     ctx.fillRect(x * scale, y * scale, scale, scale);
 }
 
-function drawCircle0(x0, y0, x1, y1) {
-    let dx = x1 - x0;
-    let dy = y1 - y0;
-    let r = dx / 2 ^ 0;
+function drawEllipse(x0, y0, x1, y1) {
 
-    let xr = r / Math.sqrt(2);
+    let a = (x1 - x0) / 2;
+    let b = (y1 - y0) / 2;
 
-    for (let x = 0; x < xr; x++) {
-        let y = Math.sqrt(r * r - x * x) + 0.5 ^ 0;
-        drawDot(x + r, size / 2 - y);
-        drawDot(r - x - 1, size / 2 - y);
+    let cx = a + x0;
+    let cy = b + y0;
 
-        drawDot(x + r, dy - (size / 2 - y) - 1);
-        drawDot(r - x - 1, dy - (size / 2 - y) - 1);
+    let x = a;
+    let y = 0;
+    let d = b * a * b;
+    let aa = b * b;
+    let bb = a * a;
+    let f = -2 * d + aa + 2 * bb;
+    let h = -4 * d + 2 * aa + bb;
 
-        drawDot(size / 2 - y, x + r);
-        drawDot(size / 2 - y, r - x - 1);
 
-        drawDot(dx - (size / 2 - y) - 1, x + r);
-        drawDot(dx - (size / 2 - y) - 1, r - x - 1);
-    }
-}
 
-// Michener algorithm
-function drawCircle1(x0, y0, x1, y1) {
-    let dx = x1 - x0;
-    let dy = y1 - y0;
-    let cx = dx / 2 ^ 0 + x0;
-    let cy = dy / 2 ^ 0 + y0;
-    let mcx = cx;
-    let mcy = cy;
-    let r = dx / 2 ^ 0;
-    let d = 3 - 2 * r;
-
-    if (dx & 1 == 1) {
-        mcx++;
-        mcy++;
-    }
-
-    let y = r;
-    for (let x = 0; x <= y; x++) {
-        if (d >= 0) {
-            d -= 4 * y;
-            y--;
-        }
-
-        d += 4 * (x + 1) + 2;
-        drawDot(mcx + y, mcy + x);
-        drawDot(cx - y, mcy + x);
-        drawDot(mcx + y, cy - x);
-        drawDot(cx - y, cy - x);
-
-        drawDot(mcx + x, mcy + y);
-        drawDot(cx - x, mcy + y);
-        drawDot(mcx + x, cy - y);
+    while (x >= 0) {
+        drawDot(cx + x, cy + y);
+        drawDot(cx - x, cy + y);
+        drawDot(cx + x, cy - y);
         drawDot(cx - x, cy - y);
+        console.log(cx, cy);
+
+        if (f >= 0) {
+            x--;
+            f -= 4 * aa * x;
+            h -= 4 * aa * x - 2 * aa;
+        }
+        if (h < 0) {
+            y++;
+            f += 4 * bb * y + 2 * bb;
+            h += 4 * bb * y;
+        }
     }
+
+
 }
 
-document.body.appendChild(createSlider('radius', 1, v => {
-    let r = v * 15 ^ 0;
-    render(r);
+let a = 15;
+let b = 10;
+
+document.body.appendChild(createSlider('a2', 1, v => {
+    a = v * 15 ^ 0;
+    render(a, b);
 }));
 
-render(15);
+document.body.appendChild(createSlider('b2', 1, v => {
+    b = v * 15 ^ 0;
+    render(a, b);
+}));
+
+render(a, b);
