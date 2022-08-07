@@ -219,13 +219,17 @@ function drawEllipse2(x0, y0, x1, y1) {
 let a = 15;
 let b = 15;
 
-document.body.appendChild(createSlider('a2', 1, v => {
+let param = document.getElementById('param');
+
+document.body.appendChild(createSlider('ax2', 1, v => {
     a = v * 15 ^ 0;
+    param.textContent = `${a}x${b}`;
     render(a, b);
 }));
 
-document.body.appendChild(createSlider('b2', 1, v => {
+document.body.appendChild(createSlider('bx2', 1, v => {
     b = v * 15 ^ 0;
+    param.textContent = `${a}x${b}`;
     render(a, b);
 }));
 

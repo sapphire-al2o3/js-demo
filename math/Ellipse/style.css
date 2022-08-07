@@ -1,3 +1,10 @@
 canvas {
     border: 1px solid #AAA;
 }
+
+p {
+    font-size: 10pt;
+    color: #777;
+    padding: 2px;
+    margin: 0;
+}
