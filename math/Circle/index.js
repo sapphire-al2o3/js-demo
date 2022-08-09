@@ -118,8 +118,11 @@ function drawCircle1(x0, y0, x1, y1) {
     }
 }
 
+let param = document.getElementById('param');
+
 document.body.appendChild(createSlider('radius', 1, v => {
     let r = v * 15 ^ 0;
+    param.textContent = r.toString();
     render(r);
 }));
 
