@@ -11,17 +11,17 @@ const h = canvas.height;
 const size = 16;
 const scale = w / size;
 
-function render(a, b) {
+function render(a, b, m) {
     ctx.clearRect(0, 0, w, h);
 
     ctx.lineWidth = 1.0;
 
     ctx.fillStyle = "#F44";
-    // drawCircle0(0, 0, 16, 16);
-    drawEllipse2(0, 0, a, b);
-
-    // let cx = w / 2 - (size - r - 1) / 2 * scale;
-
+    if (m === 0) {
+        drawEllipse(0, 0, a, b);
+    } else {
+        drawEllipse2(0, 0, a, b);
+    }
     ctx.strokeStyle = '#333';
     strokeEllipse(scale / 2, scale / 2, a * scale + scale / 2, b * scale + scale / 2);
 
@@ -99,7 +99,6 @@ function drawEllipse(x0, y0, x1, y1) {
         drawDot(cx - x, cy0 + y);
         drawDot(cx0 + x, cy - y);
         drawDot(cx - x, cy - y);
-        console.log(cx, cy);
 
         if (f >= 0) {
             x--;
@@ -218,19 +217,25 @@ function drawEllipse2(x0, y0, x1, y1) {
 
 let a = 15;
 let b = 15;
+let m = 0;
 
 let param = document.getElementById('param');
 
 document.body.appendChild(createSlider('ax2', 1, v => {
     a = v * 15 ^ 0;
     param.textContent = `${a}x${b}`;
-    render(a, b);
+    render(a, b, m);
 }));
 
 document.body.appendChild(createSlider('bx2', 1, v => {
     b = v * 15 ^ 0;
     param.textContent = `${a}x${b}`;
-    render(a, b);
+    render(a, b, m);
 }));
 
-render(a, b);
+document.body.appendChild(createRadio(['f1', 'f2'], (v, id, i) => {
+    m = i;
+    render(a, b, m);
+}));
+
+render(a, b, m);
