@@ -11,7 +11,7 @@ const h = canvas.height;
 const size = 16;
 const scale = w / size;
 
-function render(a, b, m) {
+function render(a, b, m, g = true) {
     ctx.clearRect(0, 0, w, h);
 
     ctx.lineWidth = 1.0;
@@ -29,7 +29,9 @@ function render(a, b, m) {
     // ctx.arc(cx, cx, r * scale / 2, 0, Math.PI * 2, true);
     // ctx.stroke();
 
-    drawGrid();
+    if (g) {
+        drawGrid();
+    }
 }
 
 function drawGrid() {
