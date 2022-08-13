@@ -19,12 +19,28 @@ function render(a, b, m, g = true) {
     ctx.fillStyle = "#F44";
     if (m === 0) {
         drawEllipse(0, 0, a, b);
-    } else {
+    } else if (m === 1) {
         drawEllipse2(0, 0, a, b);
+    } else {
+        drawEllipse3(0, 0, a, b);
     }
     ctx.strokeStyle = '#333';
     strokeEllipse(scale / 2, scale / 2, a * scale + scale / 2, b * scale + scale / 2);
 
+    ctx.lineWidth = 2.0;
+    ctx.strokeStyle = '#0F0';
+    ctx.beginPath();
+    ctx.moveTo(0.5 * scale, (b + 1) * scale / 2);
+    ctx.lineTo((a + 0.5) * scale, (b + 1) * scale / 2);
+    ctx.stroke();
+
+    ctx.strokeStyle = '#00F';
+    ctx.beginPath();
+    ctx.moveTo((a + 1) * scale / 2, 0.5 * scale);
+    ctx.lineTo((a + 1) * scale / 2, (b + 0.5) * scale);
+    ctx.stroke();
+
+    ctx.lineWidth = 1.0;
     // ctx.beginPath();
     // ctx.arc(cx, cx, r * scale / 2, 0, Math.PI * 2, true);
     // ctx.stroke();
@@ -213,8 +229,63 @@ function drawEllipse2(x0, y0, x1, y1) {
         drawDot(x, y1 - y + y0);
         drawDot(x1 - x + x0, y1 - y + y0);
 	}
+}
 
-	ctx.fill();
+function diffEllipse(a, b, x, y) {
+    return b * b * x * x + a * a * y * y - a * a * b * b;
+}
+
+function drawEllipse3(x0, y0, x1, y1) {
+    // long diameter
+    let a2 = x1 - x0;
+    // short diameter
+    let b2 = y1 - y0;
+
+    let a = a2 / 2 ^ 0;
+    let b = b2 / 2 ^ 0;
+
+    let cx = x0 + a;
+    let cy = y0 + b;
+
+    let mx = cx;
+    let my = cy;
+    let fx = 0;
+    let fy = 0;
+
+    if (a2 & 1 === 1) {
+        mx++;
+        fx = 0.5;
+    }
+    if (b2 & 1 === 1) {
+        my++;
+        fy = 0.5;
+    }
+
+    let y = b;
+    let x = 0;
+    for (x = 0; x * b * b <= y * a * a; x++) {
+        let d0 = diffEllipse(a2 * 0.5, b2 * 0.5, x + 1 + fx, y + fy);
+        let d1 = diffEllipse(a2 * 0.5, b2 * 0.5, x + 1 + fx, y - 1 + fy);
+        if (Math.abs(d0) > Math.abs(d1)) {
+            y--;
+        }
+        console.log(x, y, d0, d1);
+        drawDot(mx + x + 1, my + y);
+        // drawDot(cx - x, my + y);
+    }
+
+    x = a;
+    for (y = 0; x * b * b >= y * a * a; y++) {
+        let d0 = diffEllipse(a2 * 0.5, b2 * 0.5, x, y + 1);
+        let d1 = diffEllipse(a2 * 0.5, b2 * 0.5, x - 1, y + 1);
+        if (Math.abs(d0) > Math.abs(d1)) {
+            x--;
+        }
+        // drawDot(mx + x, my + y);
+    }
+
+    // console.log(x);
+    // console.log(cx, cy);
 }
 
 let a = 15;
@@ -235,9 +306,9 @@ document.body.appendChild(createSlider('bx2', 1, v => {
     render(a, b, m);
 }));
 
-document.body.appendChild(createRadio(['f1', 'f2'], (v, id, i) => {
+document.body.appendChild(createRadio(['f1', 'f2', 'f3'], (v, id, i) => {
     m = i;
     render(a, b, m);
 }));
 
-render(a, b, m);
+render(15, 14, 2);
