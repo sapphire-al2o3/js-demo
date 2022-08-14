@@ -232,6 +232,7 @@ function drawEllipse2(x0, y0, x1, y1) {
 }
 
 function diffEllipse(a, b, x, y) {
+    // console.log(a, b, x, y);
     return b * b * x * x + a * a * y * y - a * a * b * b;
 }
 
@@ -261,17 +262,21 @@ function drawEllipse3(x0, y0, x1, y1) {
         fy = 0.5;
     }
 
+    let fa = a2 * 0.5;
+    let fb = b2 * 0.5;
+
     let y = b;
     let x = 0;
-    for (x = 0; x * b * b <= y * a * a; x++) {
-        let d0 = diffEllipse(a2 * 0.5, b2 * 0.5, x + 1 + fx, y + fy);
-        let d1 = diffEllipse(a2 * 0.5, b2 * 0.5, x + 1 + fx, y - 1 + fy);
+    for (x = 0; x * b * b < y * a * a; x++) {
+        let d0 = diffEllipse(fa, fb, x + 1 + fx, y + fy);
+        let d1 = diffEllipse(fa, fb, x + 1 + fx, y - 1 + fy);
         if (Math.abs(d0) > Math.abs(d1)) {
             y--;
         }
-        console.log(x, y, d0, d1);
+        // console.log(x, y, d0, d1);
         drawDot(mx + x + 1, my + y);
         // drawDot(cx - x, my + y);
+        // console.log(x + fx + 1 < y + fy);
     }
 
     x = a;
@@ -311,4 +316,4 @@ document.body.appendChild(createRadio(['f1', 'f2', 'f3'], (v, id, i) => {
     render(a, b, m);
 }));
 
-render(15, 14, 2);
+render(15, 15, 2);
