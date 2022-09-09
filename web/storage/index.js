@@ -12,11 +12,18 @@ if (text !== undefined) {
 }
 
 // ブラウザを閉じるときに保存する
-const save = () => {
+const save = (p) => {
     date = (new Date()).toString();
-    localStorage.setItem('date', date);
+    localStorage.setItem('date', p + date);
 
     localStorage.setItem('text', $textarea.value);
 };
 
-window.addEventListener('pagehide', save, false);
+window.addEventListener('pagehide', (e) => {
+    save('h:');
+}, false);
+document.addEventListener('visibilitychange', (e) => {
+    if (document.visibilityState === 'visible') {
+        save('v:');
+    }
+}, false);
