@@ -19,9 +19,11 @@ const save = (p) => {
     localStorage.setItem('text', $textarea.value);
 };
 
+// モバイルブラウザではpagehideが発生しない
 window.addEventListener('pagehide', (e) => {
     save('h:');
 }, false);
+// ページの表示状態が変わったとき
 document.addEventListener('visibilitychange', (e) => {
     if (document.visibilityState === 'visible') {
         save('v:');
