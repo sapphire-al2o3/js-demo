@@ -236,6 +236,10 @@ function diffEllipse(a, b, x, y) {
     return b * b * x * x + a * a * y * y - a * a * b * b;
 }
 
+function diffCircle(r, x, y) {
+    return r * r - x * x - y * y;
+}
+
 function drawEllipse3(x0, y0, x1, y1) {
     // long diameter
     let a2 = x1 - x0;
@@ -270,10 +274,14 @@ function drawEllipse3(x0, y0, x1, y1) {
     for (x = 0; x * b * b < y * a * a; x++) {
         let d0 = diffEllipse(fa, fb, x + 1 + fx, y + fy);
         let d1 = diffEllipse(fa, fb, x + 1 + fx, y - 1 + fy);
+
+        let c0 = diffCircle(fb, x + 1 + fx, y + fy);
+        let c1 = diffCircle(fb, x + 1 + fx, y - 1 + fy);
+
         if (Math.abs(d0) > Math.abs(d1)) {
             y--;
         }
-        // console.log(x, y, d0, d1);
+        console.log(x + 1, y, d0, d1, c0, c1);
         drawDot(mx + x + 1, my + y);
         // drawDot(cx - x, my + y);
         // console.log(x + fx + 1 < y + fy);
