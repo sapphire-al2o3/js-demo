@@ -281,7 +281,10 @@ function drawEllipse3(x0, y0, x1, y1) {
         if (Math.abs(d0) > Math.abs(d1)) {
             y--;
         }
-        console.log(x + 1, y, d0, d1, c0, c1);
+        console.log(x + 1, y, d0, d1);
+        if (fb === fa) {
+            console.log(x + 1, y, c0, c1);
+        }
         drawDot(mx + x + 1, my + y);
         // drawDot(cx - x, my + y);
         // console.log(x + fx + 1 < y + fy);
