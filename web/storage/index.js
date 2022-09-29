@@ -19,12 +19,18 @@ const save = (p) => {
     localStorage.setItem('text', $textarea.value);
 };
 
-// モバイルブラウザではpagehideが発生しない
+window.addEventListener('unload', (e) => {
+    console.log('unload');
+}, false);
+
+// モバイルブラウザでは閉じたときにpagehideが発生しない
 window.addEventListener('pagehide', (e) => {
+    console.log('pagehide');
     save('h:');
 }, false);
 // ページの表示状態が変わったとき
 document.addEventListener('visibilitychange', (e) => {
+    console.log(document.visibilityState);
     if (document.visibilityState === 'visible') {
         save('v:');
     }
