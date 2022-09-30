@@ -1,22 +1,35 @@
 let date = localStorage.getItem('date');
-let text = localStorage.getItem('text');
+let countText = localStorage.getItem('count');
+let count = 0;
 
 const $date = document.getElementById('date');
 if (date !== undefined) {
     $date.textContent = date;
 }
 
-const $textarea = document.getElementById('textarea');
-if (text !== undefined) {
-    $textarea.value = text;
+const $count = document.getElementById('count');
+if (countText !== undefined && countText !== null) {
+    count = parseInt(countText);
+    if (!isNaN(count)) {
+        $count.textContent = count.toString();
+    } else {
+        count = 0;
+        $count.textContent = '0';
+    }
 }
+
+document.getElementById('reset').addEventListener('click', (e) => {
+    count = 0;
+    $date.textContent = '';
+    $count.textContent = count.toString();
+}, false);
 
 // ブラウザを閉じるときに保存する
 const save = (p) => {
+    count++;
     date = (new Date()).toString();
     localStorage.setItem('date', p + date);
-
-    localStorage.setItem('text', $textarea.value);
+    localStorage.setItem('count', count.toString());
 };
 
 window.addEventListener('unload', (e) => {
