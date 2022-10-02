@@ -3,11 +3,12 @@ let count = 0;
 const $date = document.getElementById('date');
 const $count = document.getElementById('count');
 
+// localStorageから読み込む
 function load() {
     let date = localStorage.getItem('date');
     let countText = localStorage.getItem('count');
 
-    if (date !== undefined) {
+    if (date !== undefined && date !== null) {
         $date.textContent = date;
     }
 
@@ -27,7 +28,7 @@ load();
 document.getElementById('reset').addEventListener('click', (e) => {
     count = 0;
     $date.textContent = '';
-    $count.textContent = count.toString();
+    $count.textContent = '0';
     localStorage.removeItem('date');
     localStorage.removeItem('count');
 }, false);
@@ -53,6 +54,7 @@ window.addEventListener('pagehide', (e) => {
     console.log('pagehide');
     save('h:');
 }, false);
+
 // ページの表示状態が変わったとき
 document.addEventListener('visibilitychange', (e) => {
     console.log(document.visibilityState);
