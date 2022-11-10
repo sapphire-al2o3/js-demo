@@ -2,7 +2,7 @@ setTimeout(function() {
 var canvas = document.getElementById('canvas'),
     screen = canvas.getContext('2d'),
     buffer = document.getElementById('buffer'),
-    buf = buffer.getContext('2d'),
+    buf = buffer.getContext('2d', {'willReadFrequently': true}),
     back = document.getElementById('back'),
     ctx = back.getContext('2d'),
     points = [],
