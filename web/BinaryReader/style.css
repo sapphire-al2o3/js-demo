@@ -1,0 +1,15 @@
+p {
+    font-size: 10pt;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+}
+
+textarea {
+    width: 400px;
+}
