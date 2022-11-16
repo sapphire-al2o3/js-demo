@@ -1,22 +1,22 @@
 // forked from sapphire_al2o3's "Web Audioで音声再生 その2" http://jsdo.it/sapphire_al2o3/8uD2
 (function() {
-    var context = new (window.AudioContext || window.webkitAudioContext)(),
+    let context = new (window.AudioContext || window.webkitAudioContext)(),
         source,
         timer,
         audio = new Audio(),
         analyser = context.createAnalyser(),
         timeDomain = new Uint8Array(1024);
-    var canvas = document.getElementById('canvas'),
-		ctx = canvas.getContext('2d');
+    let canvas = document.getElementById('canvas'),
+        ctx = canvas.getContext('2d');
     function render() {
         analyser.getByteTimeDomainData(timeDomain);
         
-        var r = Math.abs(timeDomain[0] - 128),
+        let r = Math.abs(timeDomain[0] - 128),
             x = canvas.width / 2,
             y = canvas.height / 2;
         
-        for(var i = 1; i < timeDomain.length; i++) {
-            var t = Math.abs(timeDomain[i] - 128);
+        for(let i = 1; i < timeDomain.length; i++) {
+            let t = Math.abs(timeDomain[i] - 128);
             r += t;
         }
         
@@ -34,7 +34,7 @@
     }
     
     function play() {
-        var source = context.createMediaElementSource(audio),
+        let source = context.createMediaElementSource(audio),
             filter = context.createBiquadFilter();
         source.connect(analyser);
         analyser.connect(context.destination);
@@ -43,13 +43,13 @@
     }
     
     function load(file) {
-        var f = new FileReader();
+        const f = new FileReader();
         f.onload = function(e) {
             document.getElementById('text').style.display = 'none';
             canvas.style.display = 'block';
-            var blob = new Blob([e.target.result], {"type": file.type});
-			audio.src = window.URL.createObjectURL(blob);
-			play();
+            let blob = new Blob([e.target.result], {"type": file.type});
+            audio.src = window.URL.createObjectURL(blob);
+            play();
             audio.play();
             timer = setInterval(render, 1000 / 30);
         };
@@ -57,20 +57,20 @@
         
     }
     
-    document.addEventListener('dragover', function(e) {
+    document.addEventListener('dragover', (e) => {
         e.dataTransfer.dropEffect = 'copy';
         e.preventDefault();
         e.stopPropagation();
     });
     
-    document.addEventListener('drop', function(e) {
+    document.addEventListener('drop', (e) => {
         if(source) source.stop(0);
         load(e.dataTransfer.files[0]);
         e.preventDefault();
         e.stopPropagation();
     });
-    var playing = true;
-    canvas.addEventListener('click', function(e) {
+    let playing = true;
+    canvas.addEventListener('click', (e) => {
         if(!playing) {
             audio.play();
         } else {
