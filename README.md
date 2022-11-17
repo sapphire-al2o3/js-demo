@@ -95,6 +95,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [Canvasのピクセル書き込みの速度比較](https://sapphire-al2o3.github.io/js-demo/canvas/Canvasのピクセル書き込みの速度比較/)
 - [Canvasの再生テスト](https://sapphire-al2o3.github.io/js-demo/canvas/Canvasの再生テスト/)
 - [Canvasの描画速度テスト](https://sapphire-al2o3.github.io/js-demo/canvas/Canvasの描画速度テスト/)
+- [createImageBitmapのテスト](https://sapphire-al2o3.github.io/js-demo/canvas/createImageBitmap/)
 - [fillRectとrectの速度比較](https://sapphire-al2o3.github.io/js-demo/canvas/fillRectとrectの速度比較/)
 - [forked_-fireworks](https://sapphire-al2o3.github.io/js-demo/canvas/forked_-fireworks/)
 - [ImageBitmapのテスト](https://sapphire-al2o3.github.io/js-demo/canvas/ImageBitmapのテスト/)
