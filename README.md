@@ -132,3 +132,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [Cellular Noise](https://sapphire-al2o3.github.io/js-demo/canvas/Cellular-Noise/)
 - [Perlin Noise](https://sapphire-al2o3.github.io/js-demo/canvas/Perlin-Noise/)
 - [Value Noise](https://sapphire-al2o3.github.io/js-demo/canvas/Value-Noise/)
+
+# Image Processing
+
+- [Voronoi](https://sapphire-al2o3.github.io/js-demo/image-processing/Voronoi/)
