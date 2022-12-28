@@ -32,7 +32,18 @@ const drawRect = () => {
     ctx.lineTo(rect.x + rect.w, rect.y + rect.h);
     ctx.lineTo(rect.x + rect.w, rect.y + rect.h - 20);
     ctx.stroke();
-
 };
+
+canvas.addEventListener('mousedown', e => {
+
+}, false);
+
+canvas.addEventListener('mousemove', e => {
+
+}, false);
+
+canvas.addEventListener('mouseup', e => {
+
+}, false);
 
 drawRect();
