@@ -127,15 +127,31 @@ let phaseX = Math.random() * w;
 let phaseY = Math.random() * h;
 
 console.time('noise');
-for (let i = 0; i < h; i++) {
-    for (let j = 0; j < w; j++) {
-        let k = (i * w + j) * 4;
-        let y = octavePerlin((j + phaseX) / w, (i + phaseY) / h, 0, 5, 0.5);
-        // let y = perlin(i / w * 32, j / h * 32, 0);
-        data[k] = data[k + 1] = data[k + 2] = y * 255 ^ 0;
-        data[k + 3] = 255;
+const render = (oct) => {
+    for (let i = 0; i < h; i++) {
+        for (let j = 0; j < w; j++) {
+            let k = (i * w + j) * 4;
+            let y = octavePerlin((j + phaseX) / w, (i + phaseY) / h, 0, oct, 0.5);
+            // let y = perlin(i / w * 32, j / h * 32, 0);
+            data[k] = data[k + 1] = data[k + 2] = y * 255 ^ 0;
+            data[k + 3] = 255;
+        }
     }
-}
 
-ctx.putImageData(image, 0, 0);
+    ctx.putImageData(image, 0, 0);
+}
+render(5);
 console.timeEnd('noise');
+
+let octaves = 5,
+    persistence = 0.5;
+
+document.body.appendChild(createSlider('octaves', 1, v => {
+    octaves = (v * 4 ^ 0) + 1;
+    render(octaves);
+}));
+
+// document.body.appendChild(createSlider('persistence', 0.5, v => {
+//     persistence = v;
+//     render(octaves, persistence);
+// }));

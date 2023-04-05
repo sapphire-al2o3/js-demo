@@ -4,9 +4,12 @@
   border: 0;
 }
 
+body {
+    margin: 16px;
+}
+
 canvas {
     background-color: #000;
-    margin: 32px;
 }
 
 p {
