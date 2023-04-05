@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    let gl = initContext('canvas');
+    let gl = initContext('canvas', { preserveDrawingBuffer : true });
 
     let program = [];
 
