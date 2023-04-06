@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Flow Map Texture</title>
+        <meta name="Description" content="" />
+        <meta name="Keywords"  content="" />
+        <link rel="stylesheet" type="text/css" media="screen,print" href="../../lib/webglutil.css" />
+        <link rel="stylesheet" type="text/css" media="screen,print" href="style.css" />
+    </head>
+<body>
+<script id="shader-fs" type="x-shader/x-fragment">
+precision highp float;
+varying vec2 uv;
+
+uniform sampler2D tex;
+uniform vec2 offset;
+uniform float scale;
+
+void main() {
+    //float y = texture2D(tex, uv).r;
+    float vx1 = texture2D(tex, uv + vec2(offset.x, 0.0)).r;
+    float vx2 = texture2D(tex, uv - vec2(offset.x, 0.0)).r;
+    float vy1 = texture2D(tex, uv + vec2(0.0, offset.y)).r;
+    float vy2 = texture2D(tex, uv - vec2(0.0, offset.y)).r;
+    float x = (vx2 - vx1) * scale * -0.5;
+    float y = (vy2 - vy1) * scale * -0.5;
+    vec3 n = vec3(x, y, 1.0);
+    vec4 c = vec4(n.xy * .5 + .5, 0.0, 1.0);
+    gl_FragColor = c;
+}
+</script>
+<script id="shader-vs" type="x-shader/x-vertex">
+attribute vec3 position;
+varying vec2 uv;
+
+void main() {
+    vec3 pos = position;
+    uv = pos.xy * 0.5 + 0.5;
+    gl_Position = vec4(pos, 1.0);
+}
+</script>
+<canvas id="canvas" width="256" height="256"></canvas>
+<div>
+    <img id="tex" src="height_map_tex.png" />
+</div>
+<script type="text/javascript" src="../../lib/webglutil.js"></script>
+<script type="text/javascript" src="index.js"></script>
+</body>
+</html>
