@@ -61,14 +61,22 @@
         timer.toggle();
     });
 
-    document.body.appendChild(createSlider('offset x', 1 / 4, v => {
+    const sliderX = createSlider('offset x', 1 / 4, v => {
         offset[0] = v * 4 / img.width;
         setupUniform(program[0]);
-    }));
-    document.body.appendChild(createSlider('offset y', 1 / 4, v => {
+        labelX.textContent = `offset x [${(v * 4).toFixed(2)}]`;
+    });
+    const labelX = sliderX.querySelector('label');
+    document.body.appendChild(sliderX);
+
+    const sliderY = createSlider('offset y', 1 / 4, (v, id) => {
         offset[1] = v * 4 / img.height;
         setupUniform(program[0]);
-    }));
+        labelY.textContent = `offset y [${(v * 4).toFixed(2)}]`;
+    });
+    const labelY = sliderY.querySelector('label');
+    document.body.appendChild(sliderY);
+
     document.body.appendChild(createSlider('scale', scale / 8, v => {
         scale = v * 8.0;
         program[0].uniform['scale'].value = scale;
