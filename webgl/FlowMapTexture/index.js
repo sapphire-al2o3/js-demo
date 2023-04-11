@@ -77,11 +77,14 @@
     const labelY = sliderY.querySelector('label');
     document.body.appendChild(sliderY);
 
-    document.body.appendChild(createSlider('scale', scale / 8, v => {
+    const sliderScale = createSlider('scale', scale / 8, v => {
         scale = v * 8.0;
         program[0].uniform['scale'].value = scale;
         setupUniform(program[0]);
-    }));
+        labelScale.textContent = `scale ${scale.toFixed(2)}`;
+    });
+    const labelScale = sliderScale.querySelector('label');
+    document.body.appendChild(sliderScale);
     img.addEventListener('drop', e => {
         e.preventDefault();
         loadFile(e);
