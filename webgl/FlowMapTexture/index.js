@@ -81,7 +81,7 @@
         scale = v * 8.0;
         program[0].uniform['scale'].value = scale;
         setupUniform(program[0]);
-        labelScale.textContent = `scale ${scale.toFixed(2)}`;
+        labelScale.textContent = `scale [${scale.toFixed(2)}]`;
     });
     const labelScale = sliderScale.querySelector('label');
     document.body.appendChild(sliderScale);
