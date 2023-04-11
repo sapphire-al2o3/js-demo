@@ -67,6 +67,7 @@
         labelX.textContent = `offset x [${(v * 4).toFixed(2)}]`;
     });
     const labelX = sliderX.querySelector('label');
+    labelX.textContent = 'offset x [1.00]';
     document.body.appendChild(sliderX);
 
     const sliderY = createSlider('offset y', 1 / 4, (v, id) => {
@@ -75,6 +76,7 @@
         labelY.textContent = `offset y [${(v * 4).toFixed(2)}]`;
     });
     const labelY = sliderY.querySelector('label');
+    labelY.textContent = 'offset y [1.00]';
     document.body.appendChild(sliderY);
 
     const sliderScale = createSlider('scale', scale / 8, v => {
@@ -84,6 +86,7 @@
         labelScale.textContent = `scale [${scale.toFixed(2)}]`;
     });
     const labelScale = sliderScale.querySelector('label');
+    labelScale.textContent = `scale [${scale.toFixed(2)}]`;
     document.body.appendChild(sliderScale);
     img.addEventListener('drop', e => {
         e.preventDefault();
