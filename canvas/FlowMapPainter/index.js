@@ -21,7 +21,7 @@ canvas[0].addEventListener('mousedown', (e) => {
     ctx.moveTo(px, py);
 }, false);
 
-canvas[0].addEventListener('mousemove', function(e) {
+canvas[0].addEventListener('mousemove', (e) => {
     if (down) {
         const rect = e.target.getBoundingClientRect();
         let x = e.clientX - rect.left + 0.5,
@@ -35,10 +35,14 @@ canvas[0].addEventListener('mousemove', function(e) {
     }
 }, false);
 
-canvas[0].addEventListener('mouseup', function(e) {
+canvas[0].addEventListener('mouseup', (e) => {
     if (down) {
         down = false;
     }
+}, false);
+
+document.getElementById('clear').addEventListener('click', (e) => {
+    clearCanvas();
 }, false);
 
 function circle(x, y, r) {
