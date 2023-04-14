@@ -80,6 +80,10 @@ document.getElementById('clear').addEventListener('click', (e) => {
     clearCanvas();
 }, false);
 
+document.getElementById('size').addEventListener('change', (e) => {
+    ctx.lineWidth = e.target.value;
+}, false);
+
 function circle(x, y, r) {
     ctx[3].arc(x, y, r, 0, Math.PI * 2.0, false);
 }
