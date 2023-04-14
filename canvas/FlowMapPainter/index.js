@@ -15,6 +15,7 @@ let img = new Image(),
 ctx.lineWidth = 32.0;
 ctx.strokeStyle = strokeColor;
 ctx.fillStyle = strokeColor;
+ctx.lineCap = 'round';
 
 ctx.fillStyle = baseColor;
 ctx.fillRect(0, 0, width, height);
