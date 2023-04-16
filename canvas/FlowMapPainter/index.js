@@ -4,7 +4,10 @@ let img = new Image(),
     down = false,
     px = 0,
     py = 0,
-    power = 16,
+    power = 8,
+    pdx = 0,
+    pdy = 0,
+    weight = 0.2,
     width = canvas[0].width,
     height = canvas[0].height,
     strokeColor = 'rgba(200, 200, 255, 1.0)',
@@ -39,6 +42,8 @@ function vecColor(dx, dy) {
     dx = clamp(dx * power / width);
     dy = clamp(dy * power / height);
 
+    dy *= -1;
+
     // normalize
     // let l = dx * dx + dy * dy;
     // dx /= l;
@@ -47,6 +52,27 @@ function vecColor(dx, dy) {
     let r = (dx * 127 ^ 0) + 127;
     let g = (dy * 127 ^ 0) + 127;
     return `rgb(${r}, ${g}, 0)`;
+}
+
+function vecNormColor(dx, dy) {
+    
+    dx = clamp(dx * power / width);
+    dy = clamp(dy * power / height);
+
+    // normalize
+    let l = dx * dx + dy * dy;
+    if (l > 0) {
+        dx /= l;
+        dy /= l;
+    }
+
+    let r = (dx * 127 ^ 0) + 127;
+    let g = (dy * 127 ^ 0) + 127;
+    return `rgb(${r}, ${g}, 0)`;
+}
+
+function lerp(a, b, t) {
+    return a * (1 - t) + b * t;
 }
 
 canvas[0].addEventListener('mousemove', (e) => {
@@ -58,6 +84,9 @@ canvas[0].addEventListener('mousemove', (e) => {
         let dx = px - x,
             dy = py - y;
         
+        dx = lerp(pdx, dx, weight);
+        dy = lerp(pdy, dy, weight);
+
         ctx.strokeStyle = vecColor(dx, dy);
 
         ctx.beginPath();
@@ -67,6 +96,8 @@ canvas[0].addEventListener('mousemove', (e) => {
         
         px = x;
         py = y;
+        pdx = dx;
+        pdy = dy;
     }
 }, false);
 
