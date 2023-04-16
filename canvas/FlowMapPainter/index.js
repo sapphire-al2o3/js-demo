@@ -23,6 +23,8 @@ ctx.lineCap = 'round';
 ctx.fillStyle = baseColor;
 ctx.fillRect(0, 0, width, height);
 
+// ctx.globalAlpha = 0.2;
+
 canvas[0].addEventListener('mousedown', (e) => {
     const rect = e.target.getBoundingClientRect();
     down = true;
@@ -112,11 +114,11 @@ document.getElementById('clear').addEventListener('click', (e) => {
 }, false);
 
 document.getElementById('size').addEventListener('change', (e) => {
-    ctx.lineWidth = e.target.value;
+    ctx.lineWidth = parseInt(e.target.value, 10);
 }, false);
 
 document.getElementById('weight').addEventListener('change', (e) => {
-    weight = e.target.value;
+    weight = parseFloat(e.target.value);
 }, false);
 
 function circle(x, y, r) {
