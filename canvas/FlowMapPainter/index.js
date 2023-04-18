@@ -10,12 +10,13 @@ let img = new Image(),
     weight = 0.2,
     width = canvas[0].width,
     height = canvas[0].height,
+    lineWidth = 32.0,
     strokeColor = 'rgba(200, 200, 255, 1.0)',
     baseColor = 'rgb(127, 127, 0)';
 
 // let image = ctx.getImageData(0, 0, canvas[0].width, canvas[0].height);
 
-ctx.lineWidth = 32.0;
+ctx.lineWidth = lineWidth;
 ctx.strokeStyle = strokeColor;
 ctx.fillStyle = strokeColor;
 ctx.lineCap = 'round';
@@ -114,11 +115,24 @@ document.getElementById('clear').addEventListener('click', (e) => {
 }, false);
 
 document.getElementById('size').addEventListener('change', (e) => {
-    ctx.lineWidth = parseInt(e.target.value, 10);
+    ctx.lineWidth = lineWidth = parseInt(e.target.value, 10);
 }, false);
 
 document.getElementById('weight').addEventListener('change', (e) => {
     weight = parseFloat(e.target.value);
+}, false);
+
+document.getElementById('tex-size').addEventListener('change', (e) => {
+    let size = parseInt(e.target.value, 10);
+    canvas[0].width = size;
+    canvas[0].height = size;
+    width = size;
+    height = size;
+
+    ctx.lineCap = 'round';
+    ctx.lineWidth = lineWidth;
+    ctx.fillStyle = baseColor;
+    ctx.fillRect(0, 0, width, height);
 }, false);
 
 function circle(x, y, r) {
