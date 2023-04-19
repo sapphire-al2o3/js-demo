@@ -11,6 +11,7 @@ let img = new Image(),
     width = canvas[0].width,
     height = canvas[0].height,
     lineWidth = 32.0,
+    rect,
     strokeColor = 'rgba(200, 200, 255, 1.0)',
     baseColor = 'rgb(127, 127, 0)';
 
@@ -31,13 +32,16 @@ ctx.fillRect(0, 0, width, height);
 // ctx.globalAlpha = 0.2;
 
 canvas[0].addEventListener('mousedown', (e) => {
-    const rect = e.target.getBoundingClientRect();
+    rect = e.target.getBoundingClientRect();
     down = true;
     px = e.clientX - rect.left + 0.5;
     py = e.clientY - rect.top + 0.5;
     
     // ctx.beginPath();
     // ctx.moveTo(px, py);
+
+    document.addEventListener('mousemove', mousemove, false);
+    document.addEventListener('mouseup', mouseup, false);
 }, false);
 
 function clamp(x) {
@@ -82,9 +86,8 @@ function lerp(a, b, t) {
     return a * (1 - t) + b * t;
 }
 
-canvas[0].addEventListener('mousemove', (e) => {
+function mousemove(e) {
     if (down) {
-        const rect = e.target.getBoundingClientRect();
         let x = e.clientX - rect.left + 0.5,
             y = e.clientY - rect.top + 0.5;
         
@@ -106,7 +109,15 @@ canvas[0].addEventListener('mousemove', (e) => {
         pdx = dx;
         pdy = dy;
     }
-}, false);
+}
+
+function mouseup(e) {
+    if (down) {
+        down = false;
+        document.removeEventListener('mousemove', mousemove);
+        document.removeEventListener('mouseup', mouseup);
+    }
+}
 
 canvas[0].addEventListener('mouseup', (e) => {
     if (down) {
