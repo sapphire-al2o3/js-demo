@@ -118,6 +118,10 @@ document.getElementById('size').addEventListener('change', (e) => {
     ctx.lineWidth = lineWidth = parseInt(e.target.value, 10);
 }, false);
 
+document.getElementById('power').addEventListener('change', (e) => {
+    power = parseInt(e.target.value, 10);
+}, false);
+
 document.getElementById('weight').addEventListener('change', (e) => {
     weight = parseFloat(e.target.value);
 }, false);
