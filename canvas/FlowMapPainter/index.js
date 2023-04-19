@@ -14,6 +14,10 @@ let img = new Image(),
     strokeColor = 'rgba(200, 200, 255, 1.0)',
     baseColor = 'rgb(127, 127, 0)';
 
+const defaultWeight = 0.2;
+const defaultPower = 8;
+const defaultLineWidth = 32.0;
+
 // let image = ctx.getImageData(0, 0, canvas[0].width, canvas[0].height);
 
 ctx.lineWidth = lineWidth;
@@ -137,6 +141,19 @@ document.getElementById('tex-size').addEventListener('change', (e) => {
     ctx.lineWidth = lineWidth;
     ctx.fillStyle = baseColor;
     ctx.fillRect(0, 0, width, height);
+}, false);
+
+document.getElementById('reset').addEventListener('click', (e) => {
+    weight = defaultWeight;
+    power = defaultPower;
+    lineWidth = defaultLineWidth;
+
+    document.getElementById('power').value = power;
+    document.getElementById('weight').value = weight;
+    document.getElementById('size').value = lineWidth;
+
+    ctx.lineCap = 'round';
+    ctx.lineWidth = lineWidth;
 }, false);
 
 function circle(x, y, r) {
