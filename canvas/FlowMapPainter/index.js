@@ -19,8 +19,6 @@ const defaultWeight = 0.2;
 const defaultPower = 8;
 const defaultLineWidth = 32.0;
 
-// let image = ctx.getImageData(0, 0, canvas[0].width, canvas[0].height);
-
 ctx.lineWidth = lineWidth;
 ctx.strokeStyle = strokeColor;
 ctx.fillStyle = strokeColor;
@@ -165,6 +163,47 @@ document.getElementById('reset').addEventListener('click', (e) => {
 
     ctx.lineCap = 'round';
     ctx.lineWidth = lineWidth;
+}, false);
+
+function smooth() {
+    let src = ctx.getImageData(0, 0, canvas[0].width, canvas[0].height);
+    let dst = ctx.createImageData(width, height);
+
+    let sd = src.data;
+    let dd = dst.data;
+
+    for (let i = 0; i < height; i++) {
+        for (let j = 0; j < width; j++) {
+            let p = (i * width + j) * 4;
+            let r = 0,
+                g = 0,
+                b = 0,
+                count = 0;
+            let top = i - 1 < 0 ? 0 : i - 1;
+            let bottom = i + 1 >= height ? height - 1 : i + 1;
+            let left = j - 1 < 0 ? 0 : j - 1;
+            let right = j + 1 >= width ? width - 1 : j + 1;
+            for (let k = top; k <= bottom; k++) {
+                for (let l = left; l <= right; l++) {
+                    let q = (k * width + l) * 4;
+                    r += sd[q];
+                    g += sd[q + 1];
+                    b += sd[q + 2];
+                    count++;
+                }
+            }
+            dd[p] = r / count ^ 0;
+            dd[p + 1] = g / count ^ 0;
+            dd[p + 2] = b / count ^ 0;
+            dd[p + 3] = 255;
+        }
+    }
+
+    ctx.putImageData(dst, 0, 0);
+}
+
+document.getElementById('smooth').addEventListener('click', (e) => {
+    smooth();
 }, false);
 
 function circle(x, y, r) {
