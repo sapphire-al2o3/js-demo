@@ -114,14 +114,10 @@ function mouseup(e) {
         down = false;
         document.removeEventListener('mousemove', mousemove);
         document.removeEventListener('mouseup', mouseup);
+
+        updateTex(canvas[0]);
     }
 }
-
-canvas[0].addEventListener('mouseup', (e) => {
-    if (down) {
-        down = false;
-    }
-}, false);
 
 document.getElementById('clear').addEventListener('click', (e) => {
     clearCanvas();
@@ -261,6 +257,11 @@ gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
 
 gl.useProgram(program);
 gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+function updateTex(img) {
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+}
 
 function render(delta) {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);

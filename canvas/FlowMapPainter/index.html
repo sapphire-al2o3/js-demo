@@ -12,9 +12,11 @@
   <script id="shader-fs" type="x-shader/x-fragment">
     precision highp float;
     varying vec2 uv;
+    uniform sampler2D tex;
     
     void main() {
         vec4 c = vec4(uv, 0.0, 1.0);
+        c = texture2D(tex, uv);
         gl_FragColor = c;
     }
     </script>
