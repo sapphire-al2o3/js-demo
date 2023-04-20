@@ -9,7 +9,27 @@
 <link rel="stylesheet" type="text/css" media="screen,print" href="style.css" />
 </head>
 <body>
-<canvas id='canvas0' width="256" height="256"></canvas>
+  <script id="shader-fs" type="x-shader/x-fragment">
+    precision highp float;
+    varying vec2 uv;
+    
+    void main() {
+        vec4 c = vec4(uv, 0.0, 1.0);
+        gl_FragColor = c;
+    }
+    </script>
+    <script id="shader-vs" type="x-shader/x-vertex">
+    attribute vec3 position;
+    varying vec2 uv;
+    
+    void main() {
+        vec3 pos = position;
+        uv = pos.xy * 0.5 + 0.5;
+        gl_Position = vec4(pos, 1.0);
+    }
+    </script>
+<canvas id="canvas0" width="256" height="256"></canvas>
+<canvas id="preview" width="256" height="256"></canvas>
 <form>
   <input type="button" value="Clear" id="clear" />
   <!-- <input type="checkbox" onclick="setCap(this);" checked />Cap
@@ -34,7 +54,7 @@
   <input type="button" value="Reset" id="reset" />
 </form>
 
-
+<script type="text/javascript" src="../../lib/webglutil.js"></script>
 <script type="text/javascript" src="index.js"></script>
 </body>
 </html>

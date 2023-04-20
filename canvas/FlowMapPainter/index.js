@@ -234,3 +234,38 @@ function setJoin(e) {
     ctx.lineJoin = e.checked ? 'round' : 'miter';
 }
 
+const gl = initContext('preview', { preserveDrawingBuffer : true });
+const program = initShader(gl, 'shader-vs', 'shader-fs');
+const vbo = gl.createBuffer();
+
+gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+
+const s = 1;
+const buffer = new Float32Array([
+    s, s,
+    -s, s,
+    s, -s,
+    -s, -s
+]);
+
+gl.bufferData(gl.ARRAY_BUFFER, buffer, gl.STATIC_DRAW);
+
+const loc = gl.getAttribLocation(program, 'position');
+gl.enableVertexAttribArray(loc);
+gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+const tex = initTexture(gl, canvas[0]);
+gl.bindTexture(gl.TEXTURE_2D, tex);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
+
+gl.useProgram(program);
+gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+function render(delta) {
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    gl.flush();
+}
+
+let timer = setAnimationFrame(render, 1000 / 30);
