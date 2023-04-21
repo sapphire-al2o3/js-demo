@@ -200,6 +200,95 @@ function smooth() {
 
 document.getElementById('smooth').addEventListener('click', (e) => {
     smooth();
+    updateTex(canvas[0]);
+}, false);
+
+function cone(invert = false) {
+    let dst = ctx.createImageData(width, height);
+    let cx = width / 2,
+        cy = height / 2;
+    let dd = dst.data;
+
+    for (let i = 0; i < height; i++) {
+        for (let j = 0; j < width; j++) {
+            let p = (i * width + j) * 4;
+            let x = j + 0.5,
+                y = i + 0.5;
+            
+            let dx = cx - x,
+                dy = cy - y;
+
+            if (invert) {
+                dx *= -1;
+                dy *= -1;
+            }
+
+            let l = Math.sqrt(dx * dx + dy * dy);
+            // l = Math.sqrt(cx * cx + cy * cy);
+            if (l > 0) {
+                dx /= l;
+                dy /= l;
+
+                dx *= 0.2;
+                dy *= -0.2;
+            }
+
+            // dx = dx / width * 0.5;
+            // dy = dy / width * 0.5;
+
+            dd[p] = (dx * 127 ^ 0) + 128;
+            dd[p + 1] = (dy * 127 ^ 0) + 128;
+            dd[p + 2] = 0;
+            dd[p + 3] = 255;
+        }
+    }
+
+    ctx.putImageData(dst, 0, 0);
+}
+
+document.getElementById('cone').addEventListener('click', (e) => {
+    const invert = document.getElementById('invert').checked;
+    cone(invert);
+    updateTex(canvas[0]);
+}, false);
+
+function spiral() {
+    let dst = ctx.createImageData(width, height);
+    let cx = width / 2,
+        cy = height / 2;
+    let dd = dst.data;
+
+    for (let i = 0; i < height; i++) {
+        for (let j = 0; j < width; j++) {
+            let p = (i * width + j) * 4;
+            let x = j + 0.5,
+                y = i + 0.5;
+            
+            let dx = y - cy;
+                dy = cx - x;
+
+            let l = Math.sqrt(dx * dx + dy * dy);
+            if (l > 0) {
+                dx /= l;
+                dy /= l;
+
+                dx *= 0.2;
+                dy *= -0.2;
+            }
+
+            dd[p] = (dx * 127 ^ 0) + 128;
+            dd[p + 1] = (dy * 127 ^ 0) + 128;
+            dd[p + 2] = 0;
+            dd[p + 3] = 255;
+        }
+    }
+
+    ctx.putImageData(dst, 0, 0);
+}
+
+document.getElementById('spiral').addEventListener('click', (e) => {
+    spiral();
+    updateTex(canvas[0]);
 }, false);
 
 function circle(x, y, r) {

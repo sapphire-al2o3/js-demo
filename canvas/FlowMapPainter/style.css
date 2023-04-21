@@ -4,3 +4,8 @@ canvas {
   border: 1px solid #AAA;
 }
 
+label {
+  font-size: 10pt;
+  margin-right: 16px;
+}
+
