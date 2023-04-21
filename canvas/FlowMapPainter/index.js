@@ -13,7 +13,7 @@ let img = new Image(),
     lineWidth = 32.0,
     rect,
     strokeColor = 'rgba(200, 200, 255, 1.0)',
-    baseColor = 'rgb(127, 127, 0)';
+    baseColor = 'rgb(128, 128, 0)';
 
 const defaultWeight = 0.2;
 const defaultPower = 8;
@@ -58,8 +58,8 @@ function vecColor(dx, dy) {
     // dx /= l;
     // dy /= l;
 
-    let r = (dx * 127 ^ 0) + 127;
-    let g = (dy * 127 ^ 0) + 127;
+    let r = (dx * 127 ^ 0) + 128;
+    let g = (dy * 127 ^ 0) + 128;
     return `rgb(${r}, ${g}, 0)`;
 }
 
@@ -75,8 +75,8 @@ function vecNormColor(dx, dy) {
         dy /= l;
     }
 
-    let r = (dx * 127 ^ 0) + 127;
-    let g = (dy * 127 ^ 0) + 127;
+    let r = (dx * 127 ^ 0) + 128;
+    let g = (dy * 127 ^ 0) + 128;
     return `rgb(${r}, ${g}, 0)`;
 }
 
