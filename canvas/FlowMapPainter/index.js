@@ -250,23 +250,50 @@ const loc = gl.getAttribLocation(program, 'position');
 gl.enableVertexAttribArray(loc);
 gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 
-const tex = initTexture(gl, canvas[0]);
-gl.bindTexture(gl.TEXTURE_2D, tex);
+const locTime = gl.getUniformLocation(program, 'time');
+
+const flowTex = initTexture(gl, canvas[0]);
+gl.bindTexture(gl.TEXTURE_2D, flowTex);
 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
+
+const pixels = new Uint8Array(width * height * 4);
+let k = 0;
+for (let i = 0; i < height; i++) {
+    for (let j = 0; j < width; j++) {
+        let y = ((i / 16 ^ 0) + (j / 16 ^ 0)) % 2 == 0 ? 100 : 200;
+        pixels[k] = pixels[k + 1] = pixels[k + 2] = y;
+        pixels[k + 3] = 255;
+        k += 4;
+    }
+}
+
+gl.activeTexture(gl.TEXTURE1);
+const tex = gl.createTexture();
+gl.bindTexture(gl.TEXTURE_2D, tex);
+gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+gl.uniform1i(gl.getUniformLocation(program, 'tex'), 1);
 
 gl.useProgram(program);
 gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
 function updateTex(img) {
-    gl.bindTexture(gl.TEXTURE_2D, tex);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, flowTex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
 }
+
+let time = 0;
 
 function render(delta) {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.uniform1f(locTime, time / 1000);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     gl.flush();
+
+    time += delta;
 }
 
 let timer = setAnimationFrame(render, 1000 / 30);
