@@ -220,6 +220,8 @@ function line(x, y, ex, ey) {
 function clearCanvas() {
     ctx.fillStyle = baseColor;
     ctx.fillRect(0, 0, width, height);
+
+    updateTex(canvas[0]);
 }
 
 function setCap(e) {
