@@ -208,6 +208,7 @@ function cone(invert = false) {
     let cx = width / 2,
         cy = height / 2;
     let dd = dst.data;
+    let f = 0.2;
 
     for (let i = 0; i < height; i++) {
         for (let j = 0; j < width; j++) {
@@ -229,8 +230,8 @@ function cone(invert = false) {
                 dx /= l;
                 dy /= l;
 
-                dx *= 0.2;
-                dy *= -0.2;
+                dx *= f;
+                dy *= -f;
             }
 
             // dx = dx / width * 0.5;
