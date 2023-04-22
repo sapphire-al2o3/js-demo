@@ -27,7 +27,7 @@ ctx.lineCap = 'round';
 ctx.fillStyle = baseColor;
 ctx.fillRect(0, 0, width, height);
 
-// ctx.globalAlpha = 0.2;
+// ctx.globalAlpha = 0.5;
 
 canvas[0].addEventListener('mousedown', (e) => {
     rect = e.target.getBoundingClientRect();
@@ -258,6 +258,8 @@ function spiral() {
         cy = height / 2;
     let dd = dst.data;
 
+    let r = 0.2;
+
     for (let i = 0; i < height; i++) {
         for (let j = 0; j < width; j++) {
             let p = (i * width + j) * 4;
@@ -272,8 +274,8 @@ function spiral() {
                 dx /= l;
                 dy /= l;
 
-                dx *= 0.2;
-                dy *= -0.2;
+                dx = dx * r * (1 + (l / width) * 0.0);
+                dy = dy * -r * (1 + (l / width) * 0.0);
             }
 
             dd[p] = (dx * 127 ^ 0) + 128;
@@ -290,6 +292,55 @@ document.getElementById('spiral').addEventListener('click', (e) => {
     spiral();
     updateTex(canvas[0]);
 }, false);
+
+function wave(dirX, dirY) {
+    let dst = ctx.createImageData(width, height);
+    let dd = dst.data;
+
+    for (let i = 0; i < height; i++) {
+        for (let j = 0; j < width; j++) {
+            let p = (i * width + j) * 4;
+            let t = j * Math.PI;
+            let dx = 0;
+                dy = Math.cos(t * 0.06 + 0.1) +
+                    0.5 * Math.cos(t * 0.01 + 1.4) +
+                    0.25 * Math.cos(t * 0.1) +
+                    0.125 * Math.cos(t * 0.05);
+
+            dy += 2;
+
+            dx = dx * 0.2;
+            dy = dy * 0.3;
+
+            let f = (height - i) / height;
+            dy *= f;
+
+            dd[p] = (dx * 127 ^ 0) + 128;
+            dd[p + 1] = (dy * 127 ^ 0) + 128;
+            dd[p + 2] = 0;
+            dd[p + 3] = 255;
+        }
+    }
+
+    ctx.putImageData(dst, 0, 0);
+}
+
+function blend(src, t) {
+    let dst = ctx.getImageData(0, 0, canvas[0].width, canvas[0].height);
+
+    let sd = src.data;
+    let dd = dst.data;
+
+    for (let i = 0; i < height; i++) {
+        for (let j = 0; j < width; j++) {
+            let p = (i * width + j) * 4;
+
+            dd[p] = lerp(dd[p], sd[p], t) ^ 0;
+            dd[p + 1] = lerp(dd[p + 1], sd[p + 1], t) ^ 0;
+        }
+    }
+    ctx.putImageData(dst, 0, 0);
+}
 
 function circle(x, y, r) {
     ctx[3].arc(x, y, r, 0, Math.PI * 2.0, false);
