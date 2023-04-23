@@ -203,7 +203,7 @@ document.getElementById('smooth').addEventListener('click', (e) => {
     updateTex(canvas[0]);
 }, false);
 
-function cone(invert, radius) {
+function radial(invert, radius) {
     let dst = ctx.createImageData(width, height);
     let cx = width / 2,
         cy = height / 2;
@@ -225,17 +225,14 @@ function cone(invert, radius) {
             dy *= inv;
 
             let l = Math.sqrt(dx * dx + dy * dy);
-
-            let m = 1 - l / r;
-            m = m < 0 ? 0 : m;
-
-            // l = Math.sqrt(cx * cx + cy * cy);
             if (l > 0) {
                 dx /= l;
                 dy /= l;
 
-                dx *= m * m;
-                dy *= m * m;
+                // let m = 1 - l / r;
+                // m = m < 0 ? 0 : m;
+                // dx *= m;
+                // dy *= m;
 
                 dx *= f;
                 dy *= -f;
@@ -254,9 +251,9 @@ function cone(invert, radius) {
     ctx.putImageData(dst, 0, 0);
 }
 
-document.getElementById('cone').addEventListener('click', (e) => {
+document.getElementById('radial').addEventListener('click', (e) => {
     const invert = document.getElementById('invert').checked;
-    cone(invert);
+    radial(invert);
     updateTex(canvas[0]);
 }, false);
 
