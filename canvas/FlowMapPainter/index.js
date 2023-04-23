@@ -203,12 +203,14 @@ document.getElementById('smooth').addEventListener('click', (e) => {
     updateTex(canvas[0]);
 }, false);
 
-function cone(invert = false) {
+function cone(invert, radius) {
     let dst = ctx.createImageData(width, height);
     let cx = width / 2,
         cy = height / 2;
     let dd = dst.data;
     let f = 0.2;
+    let inv = invert ? -1 : 1;
+    let r = cx * 2;
 
     for (let i = 0; i < height; i++) {
         for (let j = 0; j < width; j++) {
@@ -219,16 +221,21 @@ function cone(invert = false) {
             let dx = cx - x,
                 dy = cy - y;
 
-            if (invert) {
-                dx *= -1;
-                dy *= -1;
-            }
+            dx *= inv;
+            dy *= inv;
 
             let l = Math.sqrt(dx * dx + dy * dy);
+
+            let m = 1 - l / r;
+            m = m < 0 ? 0 : m;
+
             // l = Math.sqrt(cx * cx + cy * cy);
             if (l > 0) {
                 dx /= l;
                 dy /= l;
+
+                dx *= m * m;
+                dy *= m * m;
 
                 dx *= f;
                 dy *= -f;
@@ -294,13 +301,33 @@ document.getElementById('spiral').addEventListener('click', (e) => {
     updateTex(canvas[0]);
 }, false);
 
+function length(x, y) {
+    return Math.sqrt(x * x + y * y);
+}
+
 function wave(dirX, dirY) {
     let dst = ctx.createImageData(width, height);
     let dd = dst.data;
+    let cx = width / 2,
+        cy = height / 2;
 
     for (let i = 0; i < height; i++) {
         for (let j = 0; j < width; j++) {
             let p = (i * width + j) * 4;
+
+            let x = j - cx + 0.5,
+                y = i - cy + 0.5;
+            let n = dirX * x + dirY * y;
+            let nx = n * dirX,
+                ny = n * dirY;
+            let c = dirX * y - dirY * x;
+            let px = x - nx,
+                py = y - ny;
+
+            let l = length(nx, ny);
+            // dx = nx / l;
+            // dy = ny / l;
+
             let t = j * Math.PI;
             let dx = 0;
                 dy = Math.cos(t * 0.06 + 0.1) +
@@ -311,7 +338,7 @@ function wave(dirX, dirY) {
             dy += 2;
 
             dx = dx * 0.2;
-            dy = dy * 0.3;
+            dy = dy * 0.2;
 
             let f = (height - i) / height;
             dy *= f;
@@ -325,6 +352,14 @@ function wave(dirX, dirY) {
 
     ctx.putImageData(dst, 0, 0);
 }
+
+document.getElementById('wave').addEventListener('click', (e) => {
+    let a = 60 / 180 * Math.PI,
+        x = Math.cos(a),
+        y = Math.sin(a);
+    wave(x, y);
+    updateTex(canvas[0]);
+}, false);
 
 function blend(src, t) {
     let dst = ctx.getImageData(0, 0, canvas[0].width, canvas[0].height);
