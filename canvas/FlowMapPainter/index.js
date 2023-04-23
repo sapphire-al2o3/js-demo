@@ -203,14 +203,13 @@ document.getElementById('smooth').addEventListener('click', (e) => {
     updateTex(canvas[0]);
 }, false);
 
-function radial(invert, radius) {
+function radial(invert, fade, radius) {
     let dst = ctx.createImageData(width, height);
     let cx = width / 2,
         cy = height / 2;
     let dd = dst.data;
     let f = 0.2;
     let inv = invert ? -1 : 1;
-    let r = cx * 2;
 
     for (let i = 0; i < height; i++) {
         for (let j = 0; j < width; j++) {
@@ -229,13 +228,17 @@ function radial(invert, radius) {
                 dx /= l;
                 dy /= l;
 
-                // let m = 1 - l / r;
-                // m = m < 0 ? 0 : m;
-                // dx *= m;
-                // dy *= m;
+                if (fade) {
+                    let m = l / radius;
+                    m = m > 1 ? 1 : m;
+                    dx *= (1 - m * m);
+                    dy *= (1 - m * m);
+                }
 
                 dx *= f;
                 dy *= -f;
+            } else {
+                dx = dy = 0;
             }
 
             // dx = dx / width * 0.5;
@@ -253,7 +256,8 @@ function radial(invert, radius) {
 
 document.getElementById('radial').addEventListener('click', (e) => {
     const invert = document.getElementById('invert').checked;
-    radial(invert);
+    const fade = document.getElementById('fade').checked;
+    radial(invert, fade, width / 2 * 1.2);
     updateTex(canvas[0]);
 }, false);
 
