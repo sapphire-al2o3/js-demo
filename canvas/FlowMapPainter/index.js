@@ -231,14 +231,13 @@ function radial(invert, fade, radius) {
                 if (fade) {
                     let m = l / radius;
                     m = m > 1 ? 1 : m;
-                    dx *= (1 - m * m);
-                    dy *= (1 - m * m);
+                    m = (1 - m * m);
+                    dx *= m;
+                    dy *= m;
                 }
 
                 dx *= f;
                 dy *= -f;
-            } else {
-                dx = dy = 0;
             }
 
             // dx = dx / width * 0.5;
@@ -261,12 +260,12 @@ document.getElementById('radial').addEventListener('click', (e) => {
     updateTex(canvas[0]);
 }, false);
 
-function spiral() {
+function spiral(ccw) {
     let dst = ctx.createImageData(width, height);
     let cx = width / 2,
         cy = height / 2;
     let dd = dst.data;
-
+    let inv = ccw ? -1 : 1;
     let r = 0.2;
 
     for (let i = 0; i < height; i++) {
@@ -277,6 +276,9 @@ function spiral() {
             
             let dx = y - cy;
                 dy = cx - x;
+
+            dx *= inv;
+            dy *= inv;
 
             let l = Math.sqrt(dx * dx + dy * dy);
             if (l > 0) {
@@ -298,7 +300,8 @@ function spiral() {
 }
 
 document.getElementById('spiral').addEventListener('click', (e) => {
-    spiral();
+    const ccw = document.getElementById('ccw').checked;
+    spiral(ccw);
     updateTex(canvas[0]);
 }, false);
 
