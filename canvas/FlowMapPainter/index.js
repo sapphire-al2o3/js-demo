@@ -328,24 +328,68 @@ function wave(dirX, dirY) {
             let px = x - nx,
                 py = y - ny;
 
-            let l = length(nx, ny);
-            // dx = nx / l;
-            // dy = ny / l;
+            let l = length(px, py);
 
-            let t = j * Math.PI;
-            let dx = 0;
-                dy = Math.cos(t * 0.06 + 0.1) +
+            let t = l * Math.PI;
+            let d = Math.cos(t * 0.06 + 0.1) +
                     0.5 * Math.cos(t * 0.01 + 1.4) +
                     0.25 * Math.cos(t * 0.1) +
                     0.125 * Math.cos(t * 0.05);
+            d = Math.abs(d);
+            let dx = dirX * d;
+            let dy = dirY * d;
 
-            dy += 2;
+            dx = dx * 0.1;
+            dy = dy * 0.1;
 
-            dx = dx * 0.2;
+            // let f = (height - i) / height;
+            // dy *= f;
+
+            dd[p] = (dx * 127 ^ 0) + 128;
+            dd[p + 1] = (dy * 127 ^ 0) + 128;
+            dd[p + 2] = 0;
+            dd[p + 3] = 255;
+        }
+    }
+
+    ctx.putImageData(dst, 0, 0);
+}
+
+function octave(t) {
+    let f = 32;
+    let a = 1;
+    let c = 0;
+    for (let i = 0; i < 8; i++) {
+        c += Math.cos(t * f) * a;
+        a *= 0.5;
+        f *= 2;
+    }
+    return c;
+}
+
+function wave2(dirX, dirY) {
+    let dst = ctx.createImageData(width, height);
+    let dd = dst.data;
+    let cx = width / 2,
+        cy = height / 2;
+
+    for (let i = 0; i < height; i++) {
+        for (let j = 0; j < width; j++) {
+            let p = (i * width + j) * 4;
+
+            let x = j - cx + 0.5,
+                y = i - cy + 0.5;
+            
+            let t = j / width;
+            let c = octave(t) + 2;
+            let dx = c < 0 ? 0 : c;
+            let dy = 0;
+
+            dx = dx * 0.1;
             dy = dy * 0.2;
 
-            let f = (height - i) / height;
-            dy *= f;
+            // let f = (height - i) / height;
+            // dy *= f;
 
             dd[p] = (dx * 127 ^ 0) + 128;
             dd[p + 1] = (dy * 127 ^ 0) + 128;
@@ -358,9 +402,10 @@ function wave(dirX, dirY) {
 }
 
 document.getElementById('wave').addEventListener('click', (e) => {
-    let a = 60 / 180 * Math.PI,
-        x = Math.cos(a),
-        y = Math.sin(a);
+    const angle = parseInt(document.getElementById('angle').value, 10);
+    const rad = angle / 180 * Math.PI;
+    const x = Math.cos(rad);
+    const y = Math.sin(rad);
     wave(x, y);
     updateTex(canvas[0]);
 }, false);
