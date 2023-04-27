@@ -309,11 +309,12 @@ function length(x, y) {
     return Math.sqrt(x * x + y * y);
 }
 
-function wave(dirX, dirY) {
+function wave(dirX, dirY, fade) {
     let dst = ctx.createImageData(width, height);
     let dd = dst.data;
     let cx = width / 2,
         cy = height / 2;
+    let r = length(cx, cy);
 
     for (let i = 0; i < height; i++) {
         for (let j = 0; j < width; j++) {
@@ -324,7 +325,7 @@ function wave(dirX, dirY) {
             let n = dirX * x + dirY * y;
             let nx = n * dirX,
                 ny = n * dirY;
-            let c = dirX * y - dirY * x;
+            // let c = dirX * y - dirY * x;
             let px = x - nx,
                 py = y - ny;
 
@@ -339,11 +340,15 @@ function wave(dirX, dirY) {
             let dx = dirX * d;
             let dy = dirY * d;
 
-            dx = dx * 0.1;
-            dy = dy * 0.1;
+            if (fade && n < 0) {
+                let f = (r + n) / r;
+                f = f * f;
+                dx *= f;
+                dy *= f;
+            }
 
-            // let f = (height - i) / height;
-            // dy *= f;
+            dx *= 0.2;
+            dy *= -0.2;
 
             dd[p] = (dx * 127 ^ 0) + 128;
             dd[p + 1] = (dy * 127 ^ 0) + 128;
@@ -401,12 +406,18 @@ function wave2(dirX, dirY) {
     ctx.putImageData(dst, 0, 0);
 }
 
+document.getElementById('angle').addEventListener('input', (e) => {
+    const angle = parseInt(e.target.value, 10);
+    document.getElementById('angle-view').style.backgroundImage = `conic-gradient(#0075FF 0deg ${angle}deg, #BBB ${angle}deg 360deg)`;
+});
+
 document.getElementById('wave').addEventListener('click', (e) => {
     const angle = parseInt(document.getElementById('angle').value, 10);
-    const rad = angle / 180 * Math.PI;
-    const x = Math.cos(rad);
-    const y = Math.sin(rad);
-    wave(x, y);
+    const rad = (angle + 90) / 180 * Math.PI;
+    const x = -Math.cos(rad);
+    const y = -Math.sin(rad);
+    const fade = document.getElementById('wave-fade').checked;
+    wave(x, y, fade);
     updateTex(canvas[0]);
 }, false);
 

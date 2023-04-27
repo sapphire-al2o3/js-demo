@@ -13,3 +13,10 @@ p {
   margin-bottom: 4px;
 }
 
+.ring {
+  width: 24px;
+  height: 24px;
+  background-image: conic-gradient(#0075FF 0deg 0deg, #BBB 0deg 360deg);
+  border-radius: 50%;
+  display: inline-block;
+}
