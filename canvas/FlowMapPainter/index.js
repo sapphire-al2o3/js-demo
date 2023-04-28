@@ -273,20 +273,20 @@ function spiral(ccw) {
             let p = (i * width + j) * 4;
             let x = j + 0.5,
                 y = i + 0.5;
-            
+
             let dx = y - cy;
                 dy = cx - x;
 
             dx *= inv;
             dy *= inv;
 
-            let l = Math.sqrt(dx * dx + dy * dy);
+            let l = length(dx, dy);
             if (l > 0) {
                 dx /= l;
                 dy /= l;
 
-                dx = dx * r * (1 + (l / width) * 0.0);
-                dy = dy * -r * (1 + (l / width) * 0.0);
+                dx = dx * r;
+                dy = dy * -r;
             }
 
             dd[p] = (dx * 127 ^ 0) + 128;
@@ -496,10 +496,11 @@ gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
 
 const pixels = new Uint8Array(width * height * 4);
+const size = 16;
 let k = 0;
 for (let i = 0; i < height; i++) {
     for (let j = 0; j < width; j++) {
-        let y = ((i / 16 ^ 0) + (j / 16 ^ 0)) % 2 == 0 ? 100 : 200;
+        let y = ((i / size ^ 0) + (j / size ^ 0)) % 2 == 0 ? 100 : 200;
         pixels[k] = pixels[k + 1] = pixels[k + 2] = y;
         pixels[k + 3] = 255;
         k += 4;
