@@ -4,13 +4,13 @@ const ctx = canvas.getContext('2d');
 ctx.fillStyle = '#AAA';
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-document.getElementById('test').addEventListener('click', e => {
+document.getElementById('load').addEventListener('click', e => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     canvas.style.backgroundImage = 'url(penguin.jpg)';
 }, false);
 
 
-document.getElementById('test2').addEventListener('click', e => {
+document.getElementById('refresh').addEventListener('click', e => {
     canvas.width += 1;
     canvas.width += -1;
 }, false);
