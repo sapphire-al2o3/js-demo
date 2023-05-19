@@ -210,6 +210,10 @@ function radial(invert, fade, radius) {
     let dd = dst.data;
     let f = 0.2;
     let inv = invert ? -1 : 1;
+    let gear = false;
+    let t = -15 / 180 * Math.PI;
+    let c = Math.cos(t),
+        s = Math.sin(t);
 
     for (let i = 0; i < height; i++) {
         for (let j = 0; j < width; j++) {
@@ -228,6 +232,18 @@ function radial(invert, fade, radius) {
                 dx /= l;
                 dy /= l;
 
+                // x = dx * c - dy * s;
+                // y = dx * s + dy * c;
+                // dx = x;
+                // dy = y;
+
+                if (gear) {
+                    let g = Math.cos(dx * 30) * 0.5 + 0.5;
+                    g += Math.cos(dy * 50) * 0.5 + 0.5;
+                    dx *= g * 0.5 + 1;
+                    dy *= g * 0.5 + 1;
+                }
+
                 if (fade) {
                     let m = l / radius;
                     m = m > 1 ? 1 : m;
@@ -239,9 +255,6 @@ function radial(invert, fade, radius) {
                 dx *= f;
                 dy *= -f;
             }
-
-            // dx = dx / width * 0.5;
-            // dy = dy / width * 0.5;
 
             dd[p] = (dx * 127 ^ 0) + 128;
             dd[p + 1] = (dy * 127 ^ 0) + 128;
@@ -309,12 +322,23 @@ function length(x, y) {
     return Math.sqrt(x * x + y * y);
 }
 
-function wave(dirX, dirY, fade) {
+function octave(t, f, a = 1) {
+    let c = 0;
+    for (let i = 0; i < 4; i++) {
+        c += Math.cos(t * f) * a;
+        a *= 0.5;
+        f *= 2;
+    }
+    return c;
+}
+
+function wave(dirX, dirY, fade, freq = 8) {
     let dst = ctx.createImageData(width, height);
     let dd = dst.data;
     let cx = width / 2,
         cy = height / 2;
     let r = length(cx, cy);
+    let v = 0.2;
 
     for (let i = 0; i < height; i++) {
         for (let j = 0; j < width; j++) {
@@ -336,6 +360,8 @@ function wave(dirX, dirY, fade) {
                     0.5 * Math.cos(t * 0.01 + 1.4) +
                     0.25 * Math.cos(t * 0.1) +
                     0.125 * Math.cos(t * 0.05);
+            d = octave(t / r, freq, 0.5);
+
             d = Math.abs(d);
             let dx = dirX * d;
             let dy = dirY * d;
@@ -347,8 +373,8 @@ function wave(dirX, dirY, fade) {
                 dy *= f;
             }
 
-            dx *= 0.2;
-            dy *= -0.2;
+            dx *= v;
+            dy *= -v;
 
             dd[p] = (dx * 127 ^ 0) + 128;
             dd[p + 1] = (dy * 127 ^ 0) + 128;
@@ -358,18 +384,6 @@ function wave(dirX, dirY, fade) {
     }
 
     ctx.putImageData(dst, 0, 0);
-}
-
-function octave(t) {
-    let f = 32;
-    let a = 1;
-    let c = 0;
-    for (let i = 0; i < 8; i++) {
-        c += Math.cos(t * f) * a;
-        a *= 0.5;
-        f *= 2;
-    }
-    return c;
 }
 
 function wave2(dirX, dirY) {
