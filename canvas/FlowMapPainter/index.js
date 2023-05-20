@@ -322,12 +322,13 @@ function length(x, y) {
     return Math.sqrt(x * x + y * y);
 }
 
-function octave(t, f, a = 1) {
+function octave(t, f, a = 1, p = 0) {
     let c = 0;
     for (let i = 0; i < 4; i++) {
-        c += Math.cos(t * f) * a;
+        c += Math.cos(t * f + p) * a;
         a *= 0.5;
         f *= 2;
+        p *= 1.5;
     }
     return c;
 }
@@ -356,11 +357,11 @@ function wave(dirX, dirY, fade, freq = 8) {
             let l = length(px, py);
 
             let t = l * Math.PI;
-            let d = Math.cos(t * 0.06 + 0.1) +
-                    0.5 * Math.cos(t * 0.01 + 1.4) +
-                    0.25 * Math.cos(t * 0.1) +
-                    0.125 * Math.cos(t * 0.05);
-            d = octave(t / r, freq, 0.5);
+            // let d = Math.cos(t * 0.06 + 0.1) +
+            //         0.5 * Math.cos(t * 0.01 + 1.4) +
+            //         0.25 * Math.cos(t * 0.1) +
+            //         0.125 * Math.cos(t * 0.05);
+            let d = octave(t / r, freq, 0.8, 0.9);
 
             d = Math.abs(d);
             let dx = dirX * d;
@@ -431,7 +432,8 @@ document.getElementById('wave').addEventListener('click', (e) => {
     const x = -Math.cos(rad);
     const y = -Math.sin(rad);
     const fade = document.getElementById('wave-fade').checked;
-    wave(x, y, fade);
+    const freq = parseFloat(document.getElementById('freq').value);
+    wave(x, y, fade, freq);
     updateTex(canvas[0]);
 }, false);
 
