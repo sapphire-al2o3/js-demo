@@ -2,7 +2,14 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
 ctx.fillStyle = '#AAA';
-ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+document.getElementById('fill').addEventListener('click', e => {
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+}, false);
+
+document.getElementById('clear').addEventListener('click', e => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}, false);
 
 document.getElementById('load').addEventListener('click', e => {
     canvas.style.backgroundImage = 'none';
