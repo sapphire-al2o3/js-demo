@@ -4,6 +4,7 @@ const ctx = canvas.getContext('2d');
 ctx.fillStyle = '#AAA';
 
 document.getElementById('fill').addEventListener('click', e => {
+    ctx.fillStyle = '#AAA';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }, false);
 
