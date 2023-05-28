@@ -19,7 +19,7 @@ document.getElementById('load').addEventListener('click', e => {
 }, false);
 
 
-document.getElementById('refresh').addEventListener('click', e => {
+document.getElementById('reset').addEventListener('click', e => {
     canvas.width += 1;
     canvas.width += -1;
 }, false);
