@@ -18,7 +18,6 @@ document.getElementById('clear').addEventListener('click', e => {
 }, false);
 
 document.getElementById('load').addEventListener('click', e => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     canvas.style.backgroundImage = 'url(penguin.jpg)';
 }, false);
 
