@@ -13,6 +13,14 @@ document.getElementById('fill-half').addEventListener('click', e => {
     ctx.fillRect(0, 0, canvas.width, canvas.height / 2);
 }, false);
 
+document.getElementById('line').addEventListener('click', e => {
+    ctx.strokeStyle = '#00A';
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(canvas.width, canvas.height);
+    ctx.stroke();
+}, false);
+
 document.getElementById('clear').addEventListener('click', e => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }, false);
