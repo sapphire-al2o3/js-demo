@@ -5,5 +5,6 @@ https://sapphire-al2o3.github.io/js-demo/web/CanvasBackground/
 - Load: backgroundImageでCanvasの背景に画像を読み込む
 - Reset: Canvasのサイズを変更してコンテキストをリセットする
 
-AndroidのChromeでClear、Loadの順に押した場合、Canvasに設定した背景が表示されない。
-Canvasのサイズを変更して設定がリセットされると背景が表示される。
+AndroidのChromeで最初にLoadを押した場合、Canvasに設定した背景は表示される。
+最初にClear、Loadの順に押した場合、Canvasに設定した背景が表示されない。
+Resetを押してCanvasのサイズを変更して設定がリセットされると背景が表示されるようになる。
