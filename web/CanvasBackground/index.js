@@ -29,6 +29,10 @@ document.getElementById('load').addEventListener('click', e => {
     canvas.style.backgroundImage = 'url(penguin.jpg)';
 }, false);
 
+document.getElementById('none').addEventListener('click', e => {
+    canvas.style.backgroundImage = 'none';
+}, false);
+
 
 document.getElementById('reset').addEventListener('click', e => {
     canvas.width += 1;
