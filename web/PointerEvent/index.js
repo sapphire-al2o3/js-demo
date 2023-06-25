@@ -11,7 +11,7 @@ ctx.strokeStyle = strokeColor;
 let down = false;
 let px, py;
 
-canvas.addEventListener('mousedown', (e) => {
+canvas.addEventListener('pointerdown', (e) => {
     const rect = e.target.getBoundingClientRect();
     down = true;
     px = e.clientX - rect.left + 0.5;
@@ -20,7 +20,7 @@ canvas.addEventListener('mousedown', (e) => {
     ctx.moveTo(px, py);
 }, false);
 
-canvas.addEventListener('mousemove', (e) => {
+canvas.addEventListener('pointermove', (e) => {
     if (down) {
         const rect = e.target.getBoundingClientRect();
         const x = e.clientX - rect.left + 0.5;
@@ -34,7 +34,7 @@ canvas.addEventListener('mousemove', (e) => {
     }
 }, false);
 
-canvas.addEventListener('mouseup', (e) => {
+canvas.addEventListener('pointerup', (e) => {
     if (down) {
         down = false;
     }
