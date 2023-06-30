@@ -12,6 +12,10 @@ let down = false;
 let px, py;
 
 canvas.addEventListener('pointerdown', (e) => {
+    console.log('type', e.type);
+    console.log('button', e.button);
+    console.log('pointerId', e.pointerId);
+    console.log('pointerType', e.pointerType);
     const rect = e.target.getBoundingClientRect();
     down = true;
     px = e.clientX - rect.left + 0.5;
