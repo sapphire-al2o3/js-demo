@@ -437,6 +437,56 @@ document.getElementById('wave').addEventListener('click', (e) => {
     updateTex(canvas[0]);
 }, false);
 
+function ripple() {
+    let dst = ctx.createImageData(width, height);
+    let cx = width / 2,
+        cy = height / 2;
+    let dd = dst.data;
+    let f = 0.1;
+    let inv = 1;
+
+    for (let i = 0; i < height; i++) {
+        for (let j = 0; j < width; j++) {
+            let p = (i * width + j) * 4;
+            let x = j + 0.5,
+                y = i + 0.5;
+            
+            let dx = cx - x,
+                dy = cy - y;
+
+            dx *= inv;
+            dy *= inv;
+
+            let l = Math.sqrt(dx * dx + dy * dy);
+            if (l > 0) {
+                let r = Math.cos(l * 0.2) * 0.5 + 1.5 - f;
+                
+                dx /= l;
+                dy /= l;
+
+                dx *= r;
+                dy *= r;
+                
+                dx *= f;
+                dy *= -f;
+            }
+
+            dd[p] = (dx * 127 ^ 0) + 128;
+            dd[p + 1] = (dy * 127 ^ 0) + 128;
+            dd[p + 2] = 0;
+            dd[p + 3] = 255;
+        }
+    }
+
+    ctx.putImageData(dst, 0, 0);
+}
+
+document.getElementById('ripple').addEventListener('click', (e) => {
+    const ccw = document.getElementById('ccw').checked;
+    ripple(ccw);
+    updateTex(canvas[0]);
+}, false);
+
 function blend(src, t) {
     let dst = ctx.getImageData(0, 0, canvas[0].width, canvas[0].height);
 
