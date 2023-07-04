@@ -482,8 +482,7 @@ function ripple() {
 }
 
 document.getElementById('ripple').addEventListener('click', (e) => {
-    const ccw = document.getElementById('ccw').checked;
-    ripple(ccw);
+    ripple();
     updateTex(canvas[0]);
 }, false);
 
