@@ -437,29 +437,26 @@ document.getElementById('wave').addEventListener('click', (e) => {
     updateTex(canvas[0]);
 }, false);
 
-function ripple() {
+function ripple(freq = 0.2) {
     let dst = ctx.createImageData(width, height);
     let cx = width / 2,
         cy = height / 2;
-    let dd = dst.data;
+    let dd = new Uint32Array(dst.data.buffer);
     let f = 0.1;
-    let inv = 1;
+    let k = 0;
 
     for (let i = 0; i < height; i++) {
         for (let j = 0; j < width; j++) {
-            let p = (i * width + j) * 4;
+            // let p = (i * width + j) * 4;
             let x = j + 0.5,
                 y = i + 0.5;
             
             let dx = cx - x,
                 dy = cy - y;
 
-            dx *= inv;
-            dy *= inv;
-
             let l = Math.sqrt(dx * dx + dy * dy);
             if (l > 0) {
-                let r = Math.cos(l * 0.2) * 0.5 + 1.5 - f;
+                let r = Math.cos(l * freq) * 0.5 + 1.5 - f;
                 
                 dx /= l;
                 dy /= l;
@@ -467,14 +464,16 @@ function ripple() {
                 dx *= r;
                 dy *= r;
                 
-                dx *= f;
-                dy *= -f;
+                dx *= f * r;
+                dy *= -f * r;
             }
 
-            dd[p] = (dx * 127 ^ 0) + 128;
-            dd[p + 1] = (dy * 127 ^ 0) + 128;
-            dd[p + 2] = 0;
-            dd[p + 3] = 255;
+            dd[k++] = (255 << 24) | (((dy * 127 ^ 0) + 128) << 8) | ((dx * 127 ^ 0) + 128);
+
+            // dd[p] = (dx * 127 ^ 0) + 128;
+            // dd[p + 1] = (dy * 127 ^ 0) + 128;
+            // dd[p + 2] = 0;
+            // dd[p + 3] = 255;
         }
     }
 
@@ -482,7 +481,8 @@ function ripple() {
 }
 
 document.getElementById('ripple').addEventListener('click', (e) => {
-    ripple();
+    const freq = parseFloat(document.getElementById('ripple-freq').value);
+    ripple(freq);
     updateTex(canvas[0]);
 }, false);
 
