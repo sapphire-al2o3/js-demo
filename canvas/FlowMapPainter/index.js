@@ -437,6 +437,16 @@ document.getElementById('wave').addEventListener('click', (e) => {
     updateTex(canvas[0]);
 }, false);
 
+const PI = Math.PI;
+const PI2 = Math.PI * 2;
+
+function cos(x) {
+    x = x - (((x + PI) / PI2) ^ 0) * PI2;
+    const x2 = x * x;
+    const x4 = x2 * x2;
+    return 1 - 0.5 * x2 + (1 / 24 * x4) - (1 / 720 * x4 * x2)
+}
+
 function ripple(freq = 0.2) {
     let dst = ctx.createImageData(width, height);
     let cx = width / 2,
