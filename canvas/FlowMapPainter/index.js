@@ -447,7 +447,7 @@ function cos(x) {
     return 1 - 0.5 * x2 + (1 / 24 * x4) - (1 / 720 * x4 * x2)
 }
 
-function ripple(freq = 0.2) {
+function ripple(freq = 0.2, amp = 1.0) {
     let dst = ctx.createImageData(width, height);
     let cx = width / 2,
         cy = height / 2;
@@ -466,7 +466,7 @@ function ripple(freq = 0.2) {
 
             let l = Math.sqrt(dx * dx + dy * dy);
             if (l > 0) {
-                let r = Math.cos(l * freq) * 0.5 + 1.5 - f;
+                let r = amp * Math.cos(l * freq) * 0.5 + 1.5 - f;
                 
                 dx /= l;
                 dy /= l;
@@ -492,7 +492,8 @@ function ripple(freq = 0.2) {
 
 document.getElementById('ripple').addEventListener('click', (e) => {
     const freq = parseFloat(document.getElementById('ripple-freq').value);
-    ripple(freq);
+    const amp = parseFloat(document.getElementById('ripple-amp').value);
+    ripple(freq, amp);
     updateTex(canvas[0]);
 }, false);
 
