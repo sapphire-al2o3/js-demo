@@ -1,0 +1,10 @@
+body { background-color: #DDDDDD; font: 30px sans-serif; }
+canvas {
+  border: 1px solid #AAA;
+  background-color: #FFF;
+}
+
+textarea {
+  width: 400px;
+  height: 100px;
+}
