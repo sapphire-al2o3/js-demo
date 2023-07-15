@@ -10,7 +10,7 @@ async function load(file) {
 target.addEventListener('paste', e => {
     const files = e.clipboardData.files;
     if (files.length > 0) {
-        if (files[0].type == 'image/png') {
+        if (files[0].type === 'image/png') {
             load(files[0]);
         }
     }
