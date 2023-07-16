@@ -15,3 +15,20 @@ target.addEventListener('paste', e => {
         }
     }
 });
+
+async function getClipboadImage() {
+    const items = await navigator.clipboard.read();
+    for (let item of items) {
+        for (let type of item.types) {
+            if (type === 'image/png') {
+                const blob = await item.getType(type);
+                load(blob);
+                break;
+            }
+        }
+    }
+}
+
+document.getElementById('paste-button').addEventListener('click', e => {
+    getClipboadImage();
+});
