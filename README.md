@@ -133,6 +133,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [Perlin Noise](https://sapphire-al2o3.github.io/js-demo/canvas/Perlin-Noise/)
 - [Value Noise](https://sapphire-al2o3.github.io/js-demo/canvas/Value-Noise/)
 - [FlowMapPainter](https://sapphire-al2o3.github.io/js-demo/canvas/FlowMapPainter/)
+- [クリップボードから画像を貼り付ける](https://sapphire-al2o3.github.io/js-demo/canvas/Paste/)
 
 # Image Processing
 
