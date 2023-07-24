@@ -76,7 +76,7 @@ function draw() {
     
     // SSD
     colors.cache = {};
-    colors.forEach((e) => {
+    colors.forEach(function(e) {
         let dr = e.r - base.r;
         let dg = e.g - base.g;
         let db = e.b - base.b;
@@ -98,7 +98,7 @@ function draw() {
     }
     
     // SAD
-    colors.forEach((e) => {
+    colors.forEach(function(e) {
         let dr = Math.abs(e.r - base.r);
         let dg = Math.abs(e.g - base.g);
         let db = Math.abs(e.b - base.b);
