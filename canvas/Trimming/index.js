@@ -12,7 +12,7 @@ let corner = [
     { x: 220, y: 220 }
 ];
 
-ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+// ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
 // ctx.fillRect(rect.x, rect.y, rect.w, rect.h);
 
 ctx.strokeStyle = '#000';
@@ -52,13 +52,20 @@ function distance2(a, b) {
     return dx * dx + dy * dy;
 }
 
+const min = 50;
+
+function clamp(a, b) {
+    let d = Math.abs(a - b);
+    if (d < 50) 
+    return 
+}
+
 canvas.addEventListener('mousedown', e => {
     const r = e.target.getBoundingClientRect();
     p.x = e.clientX - r.left;
     p.y = e.clientY - r.top;
     for (let i = 0; i < 4; i++) {
         if (distance2(corner[i], p) < 16 * 16) {
-            console.log('hit');
             selectedIndex = i;
             down = true;
             break;
@@ -75,18 +82,26 @@ canvas.addEventListener('mousemove', e => {
         
         switch (selectedIndex) {
             case 0:
+                if (min > corner[1].x - corner[0].x) corner[0].x = corner[1].x - min;
+                if (min > corner[2].y - corner[0].y) corner[0].y = corner[2].y - min;
                 corner[1].y = corner[0].y;
                 corner[2].x = corner[0].x;
                 break;
             case 1:
+                if (min > corner[1].x - corner[0].x) corner[1].x = corner[0].x + min;
+                if (min > corner[3].y - corner[1].y) corner[1].y = corner[3].y - min;
                 corner[0].y = corner[1].y;
                 corner[3].x = corner[1].x;
                 break;
             case 2:
-                corner[0].x = corner[2].y;
+                if (min > corner[3].x - corner[2].x) corner[2].x = corner[3].x - min;
+                if (min > corner[2].y - corner[0].y) corner[2].y = corner[0].y + min; 
+                corner[0].x = corner[2].x;
                 corner[3].y = corner[2].y;
                 break;
             case 3:
+                if (min > corner[3].x - corner[2].x) corner[3].x = corner[2].x + min;
+                if (min > corner[3].y - corner[1].y) corner[3].y = corner[1].y + min; 
                 corner[1].x = corner[3].x;
                 corner[2].y = corner[3].y;
                 break;
