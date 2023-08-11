@@ -65,7 +65,7 @@ canvas.addEventListener('mousedown', e => {
     p.x = e.clientX - r.left;
     p.y = e.clientY - r.top;
     for (let i = 0; i < 4; i++) {
-        if (distance2(corner[i], p) < 16 * 16) {
+        if (distance2(corner[i], p) < 24 * 24) {
             selectedIndex = i;
             down = true;
             break;
