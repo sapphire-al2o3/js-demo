@@ -23,7 +23,7 @@ const drawRect = () => {
     ctx.lineWidth = 1.0;
     ctx.beginPath();
     
-    ctx.rect(rect.x, rect.y, rect.w, rect.h);
+    ctx.rect(rect.x + 0.5, rect.y + 0.5, rect.w, rect.h);
     ctx.stroke();
 
     ctx.lineWidth = 4.0;
@@ -107,10 +107,10 @@ canvas.addEventListener('mousemove', e => {
                 break;
         }
 
-        rect.x = corner[0].x;
-        rect.y = corner[0].y;
-        rect.w = corner[3].x - corner[0].x;
-        rect.h = corner[3].y - corner[0].y;
+        rect.x = corner[0].x ^ 0;
+        rect.y = corner[0].y ^ 0;
+        rect.w = corner[3].x - corner[0].x ^ 0;
+        rect.h = corner[3].y - corner[0].y ^ 0;
 
         drawRect();
     }
