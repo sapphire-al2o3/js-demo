@@ -9,16 +9,26 @@ let corner = [
     { x: 20, y: 20 },
     { x: 220, y: 20 },
     { x: 20, y: 220 },
-    { x: 220, y: 220 }
+    { x: 220, y: 220 },
+    { x: 120, y: 120 }
 ];
+
+const image = document.getElementById('image');
 
 // ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
 // ctx.fillRect(rect.x, rect.y, rect.w, rect.h);
 
 ctx.strokeStyle = '#000';
+ctx.fillStyle = 'rgba(0,0,0,0.4)';
 
 const drawRect = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.drawImage(image, 0, 0);
+    ctx.fillRect(0, 0, canvas.width, rect.y);
+    ctx.fillRect(0, corner[0].y, corner[0].x, rect.h);
+    ctx.fillRect(corner[1].x, corner[1].y, canvas.width - corner[1].x, rect.h);
+    ctx.fillRect(0, corner[2].y, canvas.width, canvas.height - corner[2].y);
 
     ctx.lineWidth = 1.0;
     ctx.beginPath();
@@ -43,6 +53,13 @@ const drawRect = () => {
     ctx.moveTo(rect.x + rect.w - 20, rect.y + rect.h);
     ctx.lineTo(rect.x + rect.w, rect.y + rect.h);
     ctx.lineTo(rect.x + rect.w, rect.y + rect.h - 20);
+
+    let mx = (rect.x + rect.w / 2) ^ 0;
+    let my = (rect.y + rect.h / 2) ^ 0;
+    ctx.moveTo(mx - 20, my);
+    ctx.lineTo(mx + 20, my);
+    ctx.moveTo(mx, my - 20);
+    ctx.lineTo(mx, my + 20);
     ctx.stroke();
 };
 
@@ -104,6 +121,8 @@ canvas.addEventListener('mousemove', e => {
                 if (min > corner[3].y - corner[1].y) corner[3].y = corner[1].y + min; 
                 corner[1].x = corner[3].x;
                 corner[2].y = corner[3].y;
+                break;
+            case 4:
                 break;
         }
 
