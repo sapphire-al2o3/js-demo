@@ -81,7 +81,7 @@ canvas.addEventListener('mousedown', e => {
     const r = e.target.getBoundingClientRect();
     p.x = e.clientX - r.left;
     p.y = e.clientY - r.top;
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < corner.length; i++) {
         if (distance2(corner[i], p) < 24 * 24) {
             selectedIndex = i;
             down = true;
@@ -123,6 +123,12 @@ canvas.addEventListener('mousemove', e => {
                 corner[2].y = corner[3].y;
                 break;
             case 4:
+                let w2 = rect.w / 2 ^ 0;
+                let h2 = rect.h / 2 ^ 0;
+                corner[0].x = corner[2].x = corner[4].x - w2;
+                corner[1].x = corner[3].x = corner[4].x + w2;
+                corner[0].y = corner[1].y = corner[4].y - h2;
+                corner[2].y = corner[3].y = corner[4].y + h2;
                 break;
         }
 
@@ -130,6 +136,9 @@ canvas.addEventListener('mousemove', e => {
         rect.y = corner[0].y ^ 0;
         rect.w = corner[3].x - corner[0].x ^ 0;
         rect.h = corner[3].y - corner[0].y ^ 0;
+
+        corner[4].x = corner[0].x + (rect.w / 2 ^ 0);
+        corner[4].y = corner[0].y + (rect.h / 2 ^ 0);
 
         drawRect();
     }
