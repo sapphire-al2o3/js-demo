@@ -148,4 +148,11 @@ canvas.addEventListener('mouseup', e => {
     down = false;
 }, false);
 
+document.getElementById('trimming').addEventListener('click', e => {
+    const result = document.getElementById('result');
+    result.width = rect.w;
+    result.height = rect.h;
+    result.getContext('2d').drawImage(image, rect.x, rect.y, rect.w, rect.h, 0, 0, rect.w, rect.h);
+}, false);
+
 drawRect();
