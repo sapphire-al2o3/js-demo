@@ -176,11 +176,11 @@ window.onload = () => {
     document.body.appendChild(createCheckbox('average', v => {
         average = v;
         render(data, b);
-    }, 3));
+    }));
 
     document.body.appendChild(createCheckbox('fix', v => {
         fix = v;
-    }, 3));
+    }));
 
     function dropImage(img, cb) {
         document.body.addEventListener('dragover', e => {
