@@ -86,11 +86,13 @@ window.onload = () => {
                 let d = dist2(cx, cy, x, y);
                 if (d < distance) {
                     distance = d;
+                    cx = clamp(cx, 0, w - 1);
+                    cy = clamp(cy, 0, h - 1);
                     c = (cy ^ 0) * w + (cx ^ 0);
                 }
             }
         }
-        return clamp(c, 0, w * h);
+        return clamp(c, 0, w * h - 1);
     }
 
     function accum(x, y) {
