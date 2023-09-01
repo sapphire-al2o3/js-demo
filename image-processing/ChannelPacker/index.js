@@ -9,6 +9,39 @@ const ctxResult = canvasResult.getContext('2d');
 const w = canvasR.width;
 const h = canvasR.height;
 
+async function load(ctx, file) {
+    const image = await createImageBitmap(file);
+    ctx.drawImage(image, 0, 0);
+    render();
+}
+
+canvasR.addEventListener('drop', e => {
+    load(ctxR, e.dataTransfer.files[0]);
+    e.preventDefault();
+});
+
+canvasR.addEventListener('dragover', e => {
+    e.preventDefault();
+});
+
+canvasG.addEventListener('drop', e => {
+    load(ctxG, e.dataTransfer.files[0]);
+    e.preventDefault();
+});
+
+canvasG.addEventListener('dragover', e => {
+    e.preventDefault();
+});
+
+canvasB.addEventListener('drop', e => {
+    load(ctxB, e.dataTransfer.files[0]);
+    e.preventDefault();
+});
+
+canvasB.addEventListener('dragover', e => {
+    e.preventDefault();
+});
+
 ctxR.fillStyle = '#FFF';
 ctxR.fillRect(0, 0, w, h);
 ctxR.fillStyle = '#000';
