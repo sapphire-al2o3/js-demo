@@ -25,31 +25,31 @@ canvasR.addEventListener('drop', e => {
     load(ctxR, e.dataTransfer.files[0]);
     e.preventDefault();
 });
-canvasR.addEventListener(dragover);
+canvasR.addEventListener('dragover', dragover);
 
 canvasG.addEventListener('drop', e => {
     load(ctxG, e.dataTransfer.files[0]);
     e.preventDefault();
 });
-canvasG.addEventListener(dragover);
+canvasG.addEventListener('dragover', dragover);
 
 canvasB.addEventListener('drop', e => {
     load(ctxB, e.dataTransfer.files[0]);
     e.preventDefault();
 });
-canvasB.addEventListener(dragover);
+canvasB.addEventListener('dragover', dragover);
 
 canvasB.addEventListener('drop', e => {
     load(ctxB, e.dataTransfer.files[0]);
     e.preventDefault();
 });
-canvasB.addEventListener(dragover);
+canvasB.addEventListener('dragover', dragover);
 
 canvasA.addEventListener('drop', e => {
     load(ctxB, e.dataTransfer.files[0]);
     e.preventDefault();
 });
-canvasA.addEventListener(dragover);
+canvasA.addEventListener('dragover', dragover);
 
 ctxR.fillStyle = '#FFF';
 ctxR.fillRect(0, 0, w, h);
