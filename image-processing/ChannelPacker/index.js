@@ -1,10 +1,12 @@
 const canvasR = document.getElementById('channel-r');
 const canvasG = document.getElementById('channel-g');
 const canvasB = document.getElementById('channel-b');
+const canvasA = document.getElementById('channel-a');
 const canvasResult = document.getElementById('result');
 const ctxR = canvasR.getContext('2d');
 const ctxG = canvasG.getContext('2d');
 const ctxB = canvasB.getContext('2d');
+const ctxA = canvasB.getContext('2d');
 const ctxResult = canvasResult.getContext('2d');
 const w = canvasR.width;
 const h = canvasR.height;
@@ -15,32 +17,39 @@ async function load(ctx, file) {
     render();
 }
 
+function dragover(e) {
+    e.preventDefault();
+}
+
 canvasR.addEventListener('drop', e => {
     load(ctxR, e.dataTransfer.files[0]);
     e.preventDefault();
 });
-
-canvasR.addEventListener('dragover', e => {
-    e.preventDefault();
-});
+canvasR.addEventListener(dragover);
 
 canvasG.addEventListener('drop', e => {
     load(ctxG, e.dataTransfer.files[0]);
     e.preventDefault();
 });
-
-canvasG.addEventListener('dragover', e => {
-    e.preventDefault();
-});
+canvasG.addEventListener(dragover);
 
 canvasB.addEventListener('drop', e => {
     load(ctxB, e.dataTransfer.files[0]);
     e.preventDefault();
 });
+canvasB.addEventListener(dragover);
 
-canvasB.addEventListener('dragover', e => {
+canvasB.addEventListener('drop', e => {
+    load(ctxB, e.dataTransfer.files[0]);
     e.preventDefault();
 });
+canvasB.addEventListener(dragover);
+
+canvasA.addEventListener('drop', e => {
+    load(ctxB, e.dataTransfer.files[0]);
+    e.preventDefault();
+});
+canvasA.addEventListener(dragover);
 
 ctxR.fillStyle = '#FFF';
 ctxR.fillRect(0, 0, w, h);
@@ -57,11 +66,15 @@ ctxB.fillRect(0, 0, w, h);
 ctxB.fillStyle = '#000';
 ctxB.fillRect(50, 50, 200, 200);
 
+ctxA.fillStyle = '#FFF';
+ctxA.fillRect(0, 0, w, h);
+
 function render() {
     const ret = ctxResult.getImageData(0, 0, w, h);
     const sr = ctxR.getImageData(0, 0, w, h).data;
     const sg = ctxG.getImageData(0, 0, w, h).data;
     const sb = ctxB.getImageData(0, 0, w, h).data;
+    const sa = ctxA.getImageData(0, 0, w, h).data;
 
     const dst = ret.data;
 
@@ -71,7 +84,7 @@ function render() {
             dst[k] = sr[k];
             dst[k + 1] = sg[k];
             dst[k + 2] = sb[k];
-            dst[k + 3] = 255;
+            dst[k + 3] = sa[k];
         }
     }
 
