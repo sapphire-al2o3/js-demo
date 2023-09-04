@@ -6,7 +6,7 @@ const canvasResult = document.getElementById('result');
 const ctxR = canvasR.getContext('2d');
 const ctxG = canvasG.getContext('2d');
 const ctxB = canvasB.getContext('2d');
-const ctxA = canvasB.getContext('2d');
+const ctxA = canvasA.getContext('2d');
 const ctxResult = canvasResult.getContext('2d');
 const w = canvasR.width;
 const h = canvasR.height;
@@ -68,6 +68,8 @@ ctxB.fillRect(50, 50, 200, 200);
 
 ctxA.fillStyle = '#FFF';
 ctxA.fillRect(0, 0, w, h);
+ctxA.fillStyle = '#000';
+ctxA.fillRect(200, 200, 50, 50);
 
 function render() {
     const ret = ctxResult.getImageData(0, 0, w, h);

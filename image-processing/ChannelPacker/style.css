@@ -1,3 +1,7 @@
 canvas {
     border: 1px solid #AAA;
 }
+
+#result {
+    background-image: url("background.png");
+}
