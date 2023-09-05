@@ -46,7 +46,7 @@ canvasB.addEventListener('drop', e => {
 canvasB.addEventListener('dragover', dragover);
 
 canvasA.addEventListener('drop', e => {
-    load(ctxB, e.dataTransfer.files[0]);
+    load(ctxA, e.dataTransfer.files[0]);
     e.preventDefault();
 });
 canvasA.addEventListener('dragover', dragover);
