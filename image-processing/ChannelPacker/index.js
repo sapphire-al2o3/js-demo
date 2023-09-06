@@ -8,11 +8,22 @@ const ctxG = canvasG.getContext('2d');
 const ctxB = canvasB.getContext('2d');
 const ctxA = canvasA.getContext('2d');
 const ctxResult = canvasResult.getContext('2d');
-const w = canvasR.width;
-const h = canvasR.height;
+let w = canvasR.width;
+let h = canvasR.height;
+
+function resize(width, height) {
+    if (width === w && height === h) {
+        return;
+    }
+    w = width;
+    h = height;
+    canvasR.width = canvasG.width = canvasB.width = canvasA.width = canvasResult.width = w;
+    canvasR.height = canvasG.height = canvasB.height = canvasA.height = canvasResult.height = h;
+}
 
 async function load(ctx, file) {
     const image = await createImageBitmap(file);
+    resize(image.width, image.height);
     ctx.drawImage(image, 0, 0);
     render();
 }
