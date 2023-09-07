@@ -139,6 +139,7 @@ https://sapphire-al2o3.github.io/js-demo/
 
 - [16bit Color](https://sapphire-al2o3.github.io/js-demo/image-processing/16bit-Color/)
 - [Bilateral Filter](https://sapphire-al2o3.github.io/js-demo/image-processing/BilateralFilter/)
+- [Channel Packer](https://sapphire-al2o3.github.io/js-demo/image-processing/ChannelPacker/)
 - [Color Matrix](https://sapphire-al2o3.github.io/js-demo/image-processing/ColorMatrix/)
 - [Kuwahara Filter](https://sapphire-al2o3.github.io/js-demo/image-processing/KuwaharaFilter/)
 - [Laplacian](https://sapphire-al2o3.github.io/js-demo/image-processing/Laplacian/)
