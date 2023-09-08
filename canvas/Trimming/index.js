@@ -125,6 +125,10 @@ canvas.addEventListener('mousemove', e => {
             case 4:
                 let w2 = rect.w / 2 ^ 0;
                 let h2 = rect.h / 2 ^ 0;
+                if (0 > corner[4].x - w2) corner[4].x = w2;
+                if (0 > corner[4].y - h2) corner[4].y = h2;
+                if (canvas.width < corner[4].x + w2) corner[4].x = canvas.width - w2;
+                if (canvas.height < corner[4].y + h2) corner[4].y = canvas.height - h2;
                 corner[0].x = corner[2].x = corner[4].x - w2;
                 corner[1].x = corner[3].x = corner[4].x + w2;
                 corner[0].y = corner[1].y = corner[4].y - h2;
