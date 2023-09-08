@@ -104,6 +104,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [モアレ](https://sapphire-al2o3.github.io/js-demo/canvas/moire/)
 - [toDataURLの速度](https://sapphire-al2o3.github.io/js-demo/canvas/toDataURLの速度/)
 - [transformでの回転](https://sapphire-al2o3.github.io/js-demo/canvas/transformでの回転/)
+- [画像のトリミング](https://sapphire-al2o3.github.io/js-demo/canvas/Trimming/)
 - [WebフォントでCavansに文字を描く](https://sapphire-al2o3.github.io/js-demo/canvas/WebフォントでCavansに文字を描く/)
 - [♥](https://sapphire-al2o3.github.io/js-demo/canvas/♥/)
 - [あの花のEDっぽいもの](https://sapphire-al2o3.github.io/js-demo/canvas/あの花のEDっぽいもの/)
