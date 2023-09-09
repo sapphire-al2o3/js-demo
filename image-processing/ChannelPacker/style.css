@@ -1,7 +1,19 @@
 canvas {
     border: 1px solid #AAA;
+    margin-left: 8px;
 }
 
 #result {
     background-image: url("background.png");
+}
+
+#wrapper {
+    display: flex;
+    margin-bottom: 16px;
+}
+
+p {
+    margin: 0;
+    text-align: center;
+    font-weight: bold;
 }

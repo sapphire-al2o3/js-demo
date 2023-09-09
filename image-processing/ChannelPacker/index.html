@@ -9,10 +9,20 @@
 <link rel="stylesheet" type="text/css" media="screen,print" href="style.css" />
 </head>
 <body>
-<canvas id="channel-r" width="256" height="256"></canvas>
-<canvas id="channel-g" width="256" height="256"></canvas>
-<canvas id="channel-b" width="256" height="256"></canvas>
-<canvas id="channel-a" width="256" height="256"></canvas>
+<div id="wrapper">
+    <div>
+    <canvas id="channel-r" width="256" height="256"></canvas><p>R</p>
+    </div>
+    <div>
+    <canvas id="channel-g" width="256" height="256"></canvas><p>G</p>
+    </div>
+    <div>
+    <canvas id="channel-b" width="256" height="256"></canvas><p>B</p>
+    </div>
+    <div>
+    <canvas id="channel-a" width="256" height="256"></canvas><p>A</p>
+    </div>
+</div>
 <canvas id="result" width="256" height="256"></canvas>
 <script type="text/javascript" src="../../lib/webglutil.js"></script>
 <script type="text/javascript" src="index.js"></script>
