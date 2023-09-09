@@ -144,5 +144,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [Color Matrix](https://sapphire-al2o3.github.io/js-demo/image-processing/ColorMatrix/)
 - [Kuwahara Filter](https://sapphire-al2o3.github.io/js-demo/image-processing/KuwaharaFilter/)
 - [Laplacian](https://sapphire-al2o3.github.io/js-demo/image-processing/Laplacian/)
+- [ノイズテクスチャ](https://sapphire-al2o3.github.io/js-demo/image-processing/Noise-Texture/)
 - [SNN](https://sapphire-al2o3.github.io/js-demo/image-processing/SNN/)
+- [Tiling](https://sapphire-al2o3.github.io/js-demo/image-processing/Tiling/)
 - [Voronoi](https://sapphire-al2o3.github.io/js-demo/image-processing/Voronoi/)
