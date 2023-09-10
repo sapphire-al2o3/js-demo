@@ -62,6 +62,25 @@ canvasA.addEventListener('drop', e => {
 });
 canvasA.addEventListener('dragover', dragover);
 
+function fill0(ctx) {
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, w, h);
+}
+
+function fill255(ctx) {
+    ctx.fillStyle = '#FFF';
+    ctx.fillRect(0, 0, w, h);
+}
+
+document.getElementById('fill-r-255').addEventListener('click', e => {
+    fill255(ctxR);
+    render();
+});
+document.getElementById('fill-r-0').addEventListener('click', e => {
+    fill0(ctxR);
+    render();
+});
+
 ctxR.fillStyle = '#FFF';
 ctxR.fillRect(0, 0, w, h);
 ctxR.fillStyle = '#000';
