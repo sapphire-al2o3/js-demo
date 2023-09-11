@@ -81,6 +81,33 @@ document.getElementById('fill-r-0').addEventListener('click', e => {
     render();
 });
 
+document.getElementById('fill-g-255').addEventListener('click', e => {
+    fill255(ctxG);
+    render();
+});
+document.getElementById('fill-g-0').addEventListener('click', e => {
+    fill0(ctxG);
+    render();
+});
+
+document.getElementById('fill-b-255').addEventListener('click', e => {
+    fill255(ctxB);
+    render();
+});
+document.getElementById('fill-b-0').addEventListener('click', e => {
+    fill0(ctxB);
+    render();
+});
+
+document.getElementById('fill-a-255').addEventListener('click', e => {
+    fill255(ctxA);
+    render();
+});
+document.getElementById('fill-a-0').addEventListener('click', e => {
+    fill0(ctxA);
+    render();
+});
+
 ctxR.fillStyle = '#FFF';
 ctxR.fillRect(0, 0, w, h);
 ctxR.fillStyle = '#000';
