@@ -108,6 +108,14 @@ document.getElementById('fill-a-0').addEventListener('click', e => {
     render();
 });
 
+function swap(ctx0, ctx1) {
+    const img0 = ctx0.getImageData(0, 0, w, h);
+    const img1 = ctx1.getImageData(0, 0, w, h);
+
+    ctx0.drawImage(img1, 0, 0);
+    ctx1.drawImage(img0, 0, 0);
+}
+
 ctxR.fillStyle = '#FFF';
 ctxR.fillRect(0, 0, w, h);
 ctxR.fillStyle = '#000';
