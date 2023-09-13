@@ -19,6 +19,15 @@ function resize(width, height) {
     h = height;
     canvasR.width = canvasG.width = canvasB.width = canvasA.width = canvasResult.width = w;
     canvasR.height = canvasG.height = canvasB.height = canvasA.height = canvasResult.height = h;
+
+    ctxR.fillStyle = '#FFF';
+    ctxR.fillRect(0, 0, w, h);
+    ctxG.fillStyle = '#FFF';
+    ctxG.fillRect(0, 0, w, h);
+    ctxB.fillStyle = '#FFF';
+    ctxB.fillRect(0, 0, w, h);
+    ctxA.fillStyle = '#FFF';
+    ctxA.fillRect(0, 0, w, h);
 }
 
 async function load(ctx, file) {
@@ -26,6 +35,13 @@ async function load(ctx, file) {
     resize(image.width, image.height);
     ctx.drawImage(image, 0, 0);
     render();
+}
+
+async function loadResult(ctx, file) {
+    const image = await createImageBitmap(file);
+    resize(image.width, image.height);
+    ctx.drawImage(image, 0, 0);
+    split();
 }
 
 function dragover(e) {
@@ -61,6 +77,12 @@ canvasA.addEventListener('drop', e => {
     e.preventDefault();
 });
 canvasA.addEventListener('dragover', dragover);
+
+canvasResult.addEventListener('drop', e => {
+    loadResult(ctxResult, e.dataTransfer.files[0]);
+    e.preventDefault();
+});
+canvasResult.addEventListener('dragover', dragover);
 
 function fill0(ctx) {
     ctx.fillStyle = '#000';
@@ -150,6 +172,36 @@ ctxA.fillStyle = '#FFF';
 ctxA.fillRect(0, 0, w, h);
 ctxA.fillStyle = '#000';
 ctxA.fillRect(200, 200, 50, 50);
+
+function split() {
+    const ret = ctxResult.getImageData(0, 0, w, h);
+    const ir = ctxR.getImageData(0, 0, w, h);
+    const ig = ctxG.getImageData(0, 0, w, h);
+    const ib = ctxB.getImageData(0, 0, w, h);
+    const ia = ctxA.getImageData(0, 0, w, h);
+
+    const dst = ret.data;
+    const sr = ir.data;
+    const sg = ig.data;
+    const sb = ib.data;
+    const sa = ia.data;
+
+    for (let i = 0; i < h; i++) {
+        for (let j = 0; j < w; j++) {
+            const k = (i * w + j) * 4;
+            sr[k] = sr[k + 1] = sr[k + 2] = dst[k];
+            sg[k] = sg[k + 1] = sg[k + 2] = dst[k + 1];
+            sb[k] = sb[k + 1] = sb[k + 2] = dst[k + 2];
+            sa[k] = sa[k + 1] = sa[k + 2] = dst[k + 3];
+            sr[k + 3] = sg[k + 3] = sb[k + 3] = sa[k + 3] = 255;
+        }
+    }
+
+    ctxR.putImageData(ir, 0, 0);
+    ctxG.putImageData(ig, 0, 0);
+    ctxB.putImageData(ib, 0, 0);
+    ctxA.putImageData(ia, 0, 0);
+}
 
 function render() {
     const ret = ctxResult.getImageData(0, 0, w, h);
