@@ -10,6 +10,11 @@ canvas {
 #wrapper {
     display: flex;
     margin-bottom: 16px;
+    align-items: center;
+}
+
+.swap button {
+    margin-left: 8px;
 }
 
 p {

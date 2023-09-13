@@ -3,11 +3,11 @@ const canvasG = document.getElementById('channel-g');
 const canvasB = document.getElementById('channel-b');
 const canvasA = document.getElementById('channel-a');
 const canvasResult = document.getElementById('result');
-const ctxR = canvasR.getContext('2d');
-const ctxG = canvasG.getContext('2d');
-const ctxB = canvasB.getContext('2d');
-const ctxA = canvasA.getContext('2d');
-const ctxResult = canvasResult.getContext('2d');
+const ctxR = canvasR.getContext('2d', { willReadFrequently: true });
+const ctxG = canvasG.getContext('2d', { willReadFrequently: true });
+const ctxB = canvasB.getContext('2d', { willReadFrequently: true });
+const ctxA = canvasA.getContext('2d', { willReadFrequently: true });
+const ctxResult = canvasResult.getContext('2d', { willReadFrequently: true });
 let w = canvasR.width;
 let h = canvasR.height;
 
@@ -112,9 +112,24 @@ function swap(ctx0, ctx1) {
     const img0 = ctx0.getImageData(0, 0, w, h);
     const img1 = ctx1.getImageData(0, 0, w, h);
 
-    ctx0.drawImage(img1, 0, 0);
-    ctx1.drawImage(img0, 0, 0);
+    ctx0.putImageData(img1, 0, 0);
+    ctx1.putImageData(img0, 0, 0);
 }
+
+document.getElementById('swap-rg').addEventListener('click', e => {
+    swap(ctxR, ctxG);
+    render();
+});
+
+document.getElementById('swap-gb').addEventListener('click', e => {
+    swap(ctxG, ctxB);
+    render();
+});
+
+document.getElementById('swap-ba').addEventListener('click', e => {
+    swap(ctxB, ctxA);
+    render();
+});
 
 ctxR.fillStyle = '#FFF';
 ctxR.fillRect(0, 0, w, h);
