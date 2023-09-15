@@ -30,10 +30,28 @@ function resize(width, height) {
     ctxA.fillRect(0, 0, w, h);
 }
 
+function grayFilter(ctx) {
+    const ret = ctx.getImageData(0, 0, w, h);
+    const dst = ret.data;
+
+    for (let i = 0; i < h; i++) {
+        for (let j = 0; j < w; j++) {
+            const k = (i * w + j) * 4;
+            y = dst[k];
+            dst[k + 1] = y;
+            dst[k + 2] = y;
+            dst[k + 3] = 255;
+        }
+    }
+
+    ctx.putImageData(ret, 0, 0);
+}
+
 async function load(ctx, file) {
     const image = await createImageBitmap(file);
     resize(image.width, image.height);
     ctx.drawImage(image, 0, 0);
+    grayFilter(ctx);
     render();
 }
 
