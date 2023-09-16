@@ -10,6 +10,7 @@ const ctxA = canvasA.getContext('2d', { willReadFrequently: true });
 const ctxResult = canvasResult.getContext('2d', { willReadFrequently: true });
 let w = canvasR.width;
 let h = canvasR.height;
+let fixSize = false;
 
 function resize(width, height) {
     if (width === w && height === h) {
@@ -169,6 +170,10 @@ document.getElementById('swap-gb').addEventListener('click', e => {
 document.getElementById('swap-ba').addEventListener('click', e => {
     swap(ctxB, ctxA);
     render();
+});
+
+document.getElementById('fix-size').addEventListener('change', e => {
+    console.log(e);
 });
 
 ctxR.fillStyle = '#FFF';
