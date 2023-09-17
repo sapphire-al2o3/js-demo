@@ -50,8 +50,10 @@ function grayFilter(ctx) {
 
 async function load(ctx, file) {
     const image = await createImageBitmap(file);
-    resize(image.width, image.height);
-    ctx.drawImage(image, 0, 0);
+    if (!fixSize) {
+        resize(image.width, image.height);
+    }
+    ctx.drawImage(image, 0, 0, image.width, image.height, 0, 0, w, h);
     grayFilter(ctx);
     render();
 }
@@ -173,7 +175,7 @@ document.getElementById('swap-ba').addEventListener('click', e => {
 });
 
 document.getElementById('fix-size').addEventListener('change', e => {
-    console.log(e);
+    fixSize = e.target.checked;
 });
 
 ctxR.fillStyle = '#FFF';
