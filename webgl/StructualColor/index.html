@@ -9,6 +9,22 @@
 <link rel="stylesheet" type="text/css" media="screen,print" href="style.css" />
 </head>
 <body>
+<script id="shader-vs" type="x-shader/x-vertex">
+attribute vec3 position;
+attribute vec3 normal;
+
+uniform mat4 mvMatrix;
+uniform mat4 pMatrix;
+uniform mat3 nMatrix;
+    
+varying vec3 vNormal;
+
+void main() {
+    vec3 pos = position;
+    vNormal = nMatrix * normal;
+    gl_Position = pMatrix * mvMatrix * vec4(pos, 1.0);
+}
+</script>
 <script id="shader-fs" type="x-shader/x-fragment">
 precision highp float;
 
@@ -28,22 +44,6 @@ void main() {
     float s = (mod(floor(p.x * size.x) + floor(p.y * size.y), size.z));
     //s *= mod(gl_FragCoord.y, 4.0);
     gl_FragColor = vec4(d0 * s + d1, 1.0);
-}
-</script>
-<script id="shader-vs" type="x-shader/x-vertex">
-attribute vec3 position;
-attribute vec3 normal;
-
-uniform mat4 mvMatrix;
-uniform mat4 pMatrix;
-uniform mat3 nMatrix;
-    
-varying vec3 vNormal;
-
-void main() {
-    vec3 pos = position;
-    vNormal = nMatrix * normal;
-    gl_Position = pMatrix * mvMatrix * vec4(pos, 1.0);
 }
 </script>
 <canvas id="canvas" width="300" height="300"></canvas>

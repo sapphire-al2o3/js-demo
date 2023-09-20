@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    let gl = initContext('canvas');
+    let gl = initContext2('canvas');
     let scaling = new Scaling(gl, 4);
     let outline = new Outline(gl);
 
