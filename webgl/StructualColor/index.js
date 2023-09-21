@@ -18,9 +18,9 @@ let index = 0;
 model[0].meshes[0].vertexStream.position = model[0].meshes[0].vertexStream.position.map(x => x * 0.5);
 
 // 頂点バッファを作成
-initVAO(gl, model[0]);
-initVAO(gl, model[1]);
-initVAO(gl, model[2]);
+initVAO(gl, program[0], model[0]);
+initVAO(gl, program[0], model[1]);
+initVAO(gl, program[0], model[2]);
 
 let camera = {},
     matrix = {};
@@ -40,12 +40,30 @@ let light = [0.0, 0.7, 4.0],
 Matrix4.perspective(45.0 * Math.PI / 180.0, gl.canvas.width / gl.canvas.height, 0.1, 1000.0, matrix.pMatrix);
 Matrix4.lookAt(camera.position, camera.target, camera.up, matrix.vMatrix);
 
-function initVAO(gl, model) {
-    for(let i = 0; i < model.meshes.length; i++) {
+function initMeshBuffer(gl, mesh) {
+    mesh.vbo = {};
+    
+    for (let e in mesh.vertexStream) {
+        mesh.vbo[e] = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, mesh.vbo[e]);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(mesh.vertexStream[e]), gl.STATIC_DRAW);
+        gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    }
+    
+    if (mesh.indexStream) {
+        mesh.ibo = gl.createBuffer();
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.ibo);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Int16Array(mesh.indexStream), gl.STATIC_DRAW);
+    }
+}
+
+function initVAO(gl, program, model) {
+    for (let i = 0; i < model.meshes.length; i++) {
         const mesh = model.meshes[i];
         mesh.vao = gl.createVertexArray();
         gl.bindVertexArray(mesh.vao);
-        initBuffer(gl, model);
+        initMeshBuffer(gl, mesh);
+        setupAttribute(program, mesh.vbo);
         gl.bindVertexArray(null);
     }
 }
@@ -54,9 +72,12 @@ function drawMesh(program, mesh) {
     var gl = program.context;
     gl.useProgram(program);
     setupUniform(program);
-    setupAttribute(program, mesh.vbo);
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.ibo);
+    gl.bindVertexArray(mesh.vao);
+    // setupAttribute(program, mesh.vbo);
+    // gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.ibo);
+    
     gl.drawElements(gl.TRIANGLES, mesh.indexStream.length, gl.UNSIGNED_SHORT, 0);
+    gl.bindVertexArray(null);
 }
 
 let frame = 0,
