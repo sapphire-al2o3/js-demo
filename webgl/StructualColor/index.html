@@ -9,15 +9,15 @@
 <link rel="stylesheet" type="text/css" media="screen,print" href="style.css" />
 </head>
 <body>
-<script id="shader-vs" type="x-shader/x-vertex">
-attribute vec3 position;
-attribute vec3 normal;
+<script id="shader-vs" type="x-shader/x-vertex">#version 300 es
+in vec3 position;
+in vec3 normal;
 
 uniform mat4 mvMatrix;
 uniform mat4 pMatrix;
 uniform mat3 nMatrix;
     
-varying vec3 vNormal;
+out vec3 vNormal;
 
 void main() {
     vec3 pos = position;
@@ -25,10 +25,12 @@ void main() {
     gl_Position = pMatrix * mvMatrix * vec4(pos, 1.0);
 }
 </script>
-<script id="shader-fs" type="x-shader/x-fragment">
+<script id="shader-fs" type="x-shader/x-fragment">#version 300 es
 precision highp float;
 
-varying vec3 vNormal;
+in vec3 vNormal;
+
+out vec4 color;
 
 uniform vec3 light;
 uniform vec2 screen;
@@ -43,7 +45,7 @@ void main() {
     vec2 p = gl_FragCoord.xy;
     float s = (mod(floor(p.x * size.x) + floor(p.y * size.y), size.z));
     //s *= mod(gl_FragCoord.y, 4.0);
-    gl_FragColor = vec4(d0 * s + d1, 1.0);
+    color = vec4(d0 * s + d1, 1.0);
 }
 </script>
 <canvas id="canvas" width="300" height="300"></canvas>
