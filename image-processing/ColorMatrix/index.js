@@ -87,6 +87,31 @@ window.onload = () => {
         render();
     });
 
+    function str2rgb(str) {
+        if (str[0] === '#') {
+            if (str.length === 7) {
+                return [parseInt(str.slice(1, 3), 16), parseInt(str.slice(3, 5), 16), parseInt(str.slice(5), 16)];
+            } else if (str.length === 4) {
+                return [parseInt(str[1] + str[1], 16), parseInt(str[2] + str[2], 16), parseInt(str[3] + str[3], 16)];
+            }
+        } else {
+            var c = str.match(/(\d+)/g);
+            return [parseInt(c[0], 10), parseInt(c[1], 10), parseInt(c[2], 10)];
+        }
+    }
+
+    document.getElementById('blend').addEventListener('click', () => {
+        const a = parseFloat(document.getElementById('alpha').value);
+        const color = str2rgb(document.getElementById('color').value);
+        matrix = [
+            1 - a, 0, 0, a * color[0],
+            0, 1 - a, 0, a * color[1],
+            0, 0, 1 - a, a * color[2],
+        ];
+        setValue();
+        render();
+    });
+
     function setValue() {
         for(let i = 0; i < matrix.length; i++) {
             inputMatrix[i].value = matrix[i];
