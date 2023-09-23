@@ -2,17 +2,20 @@
 
 window.onload = () => {
 
-    const canvas = document.getElementById('canvas');
+    const canvas = document.getElementById('result');
     const ctx = canvas.getContext('2d');
+
+    const src = document.getElementById('source');
+    const srcCtx = src.getContext('2d');
 
     const img = document.getElementById('image');
 
-    canvas.width = img.width;
-    canvas.height = img.height;
+    src.width = canvas.width = img.width;
+    src.height = canvas.height = img.height;
 
-    ctx.drawImage(img, 0, 0, img.width, img.height);
+    srcCtx.drawImage(img, 0, 0, img.width, img.height);
 
-    const image = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const image = srcCtx.getImageData(0, 0, canvas.width, canvas.height);
     const result = ctx.createImageData(canvas.width, canvas.height);
     const data = image.data;
     const ret = result.data;

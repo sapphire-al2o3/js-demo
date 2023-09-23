@@ -2,6 +2,10 @@ input {
     width: 64px;
 }
 
+img {
+    display: none;
+}
+
 #color-blend {
     margin-top: 16px;
 }
