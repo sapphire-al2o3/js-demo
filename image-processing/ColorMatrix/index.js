@@ -10,15 +10,18 @@ window.onload = () => {
 
     const img = document.getElementById('image');
 
-    src.width = canvas.width = img.width;
-    src.height = canvas.height = img.height;
+    let width = img.width;
+    let height = img.height;
 
-    srcCtx.drawImage(img, 0, 0, img.width, img.height);
+    src.width = canvas.width = width;
+    src.height = canvas.height = height;
 
-    const image = srcCtx.getImageData(0, 0, canvas.width, canvas.height);
-    const result = ctx.createImageData(canvas.width, canvas.height);
-    const data = image.data;
-    const ret = result.data;
+    srcCtx.drawImage(img, 0, 0, width, height);
+
+    let srcImage = srcCtx.getImageData(0, 0, width, height);
+    let data = srcImage.data;
+    let result = ctx.createImageData(width, height);
+    let ret = result.data;
 
     let matrix = [
         0, 0, 0, 0,
@@ -40,6 +43,33 @@ window.onload = () => {
         document.getElementById('m22'),
         document.getElementById('m23'),
     ];
+
+    async function load(file) {
+        const image = await createImageBitmap(file);
+        if (width !== image.width || height !== image.height) {
+            width = src.width = canvas.width = image.width;
+            height = src.height = canvas.height = image.height;
+            result = ctx.createImageData(width, height);
+            ret = result.data;
+        }
+        srcCtx.drawImage(image, 0, 0);
+        srcImage = srcCtx.getImageData(0, 0, width, height);
+        data = srcImage.data;
+
+        render();
+    }
+    
+    src.addEventListener('drop', e => {
+        let file = e.dataTransfer.files[0];
+    
+        load(file);
+        e.preventDefault();
+    });
+    
+    src.addEventListener('dragover', e => {
+        e.preventDefault();
+    });
+    
 
     const changeInput = (v) => {
         getValue();
@@ -139,9 +169,6 @@ window.onload = () => {
     }
 
     function render() {
-        let width = image.width,
-            height = image.height;
-
         for(let i = 0; i < height; i++) {
             for(let j = 0; j < width; j++) {
                 let index = (i * width + j) * 4;
