@@ -13,7 +13,7 @@ let models = [
     createCube(),
 ];
 
-models[1].meshes[0].vertexStream.position = models[1].meshes[0].vertexStream.position.map(x => x * 0.5);
+models[1].meshes[0].vertexStream.position = models[1].meshes[0].vertexStream.position.map(x => x * 0.4);
 
 for (let i = 1; i < models.length; i++) {
     const t = models[i].meshes[0].indexStream;
