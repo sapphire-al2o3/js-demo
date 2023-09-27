@@ -15,6 +15,21 @@ let models = [
 
 models[1].meshes[0].vertexStream.position = models[1].meshes[0].vertexStream.position.map(x => x * 0.5);
 
+for (let i = 1; i < models.length; i++) {
+    const t = models[i].meshes[0].indexStream;
+    const n = t.length / 3 * 2;
+    const lines = [];
+    for (let j = 0; j < t.length; j += 3) {
+        lines.push(t[j]);
+        lines.push(t[j + 1]);
+        lines.push(t[j + 1]);
+        lines.push(t[j + 2]);
+        lines.push(t[j + 2]);
+        lines.push(t[j]);
+    }
+    models[i].meshes[0].indexStream = lines;
+}
+
 let index = 0;
 
 for (let model of models) {
