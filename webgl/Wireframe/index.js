@@ -43,7 +43,6 @@ for (let i = 1; i < models.length; i++) {
         // lines.push(t[j + 2]);
         // lines.push(t[j]);
     }
-    console.log(lines.length);
     models[i].meshes[0].indexStream = lines;
 }
 
