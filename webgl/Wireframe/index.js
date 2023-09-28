@@ -15,18 +15,35 @@ let models = [
 
 models[1].meshes[0].vertexStream.position = models[1].meshes[0].vertexStream.position.map(x => x * 0.4);
 
+function pushIndex(lines, pair, a, b) {
+    if (a > b) {
+        let t = a;
+        a = b;
+        b = t;
+    }
+    if (pair[(a << 16) + b] === undefined) {
+        lines.push(a);
+        lines.push(b);
+        pair[(a << 16) + b] = 1;
+    }
+}
+
 for (let i = 1; i < models.length; i++) {
     const t = models[i].meshes[0].indexStream;
-    const n = t.length / 3 * 2;
     const lines = [];
+    const pair = {};
     for (let j = 0; j < t.length; j += 3) {
-        lines.push(t[j]);
-        lines.push(t[j + 1]);
-        lines.push(t[j + 1]);
-        lines.push(t[j + 2]);
-        lines.push(t[j + 2]);
-        lines.push(t[j]);
+        pushIndex(lines, pair, t[j], t[j + 1]);
+        pushIndex(lines, pair, t[j + 1], t[j + 2]);
+        pushIndex(lines, pair, t[j + 2], t[j]);
+        // lines.push(t[j]);
+        // lines.push(t[j + 1]);
+        // lines.push(t[j + 1]);
+        // lines.push(t[j + 2]);
+        // lines.push(t[j + 2]);
+        // lines.push(t[j]);
     }
+    console.log(lines.length);
     models[i].meshes[0].indexStream = lines;
 }
 
