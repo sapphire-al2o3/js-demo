@@ -7,9 +7,9 @@ let gl = initContext2('canvas', {antialias: true}),
 let program = initShader(gl, 'shader-fs', 'shader-vs');
 
 let models = [
-    createIco(),
+    createIco(1.5),
     createTorus(16, 16),
-    createSphere(8),
+    createSphere(8, 1.5),
     createCube(),
 ];
 
@@ -95,17 +95,22 @@ function render() {
     gl.drawElements(gl.LINES, models[index].meshes[0].indexStream.length, gl.UNSIGNED_SHORT, 0);
     gl.flush();
 }
-function createIco() {
+function createIco(s = 1.0) {
     let m = {},
         a = 1 / Math.sqrt(5),
         b = (1 - a) * 0.5,
         c = (1 + a) * 0.5,
         d = Math.sqrt(b),
         e = Math.sqrt(c);
+    a *= s;
+    b *= s;
+    c *= s;
+    d *= s;
+    e *= s;
     m.meshes = [{}];
     m.meshes[0].vertexStream = {};
     m.meshes[0].vertexStream.position = [
-        0, 1, 0,
+        0, s, 0,
         0, a, a * 2,
         e, a, b,
         d, a, -c,
@@ -116,7 +121,7 @@ function createIco() {
         0, -a, -a * 2,
         -e, -a, -b,
         -d, -a, c,
-        0, -1, 0
+        0, -s, 0
     ];
     m.meshes[0].indexStream = [
         0, 1, 1, 2,
