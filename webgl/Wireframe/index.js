@@ -8,12 +8,10 @@ let program = initShader(gl, 'shader-fs', 'shader-vs');
 
 let models = [
     createIco(1.5),
-    createTorus(16, 16),
+    createTorus(16, 16, 1.2, 0.4),
     createSphere(8, 1.5),
     createCube(),
 ];
-
-models[1].meshes[0].vertexStream.position = models[1].meshes[0].vertexStream.position.map(x => x * 0.4);
 
 function pushIndex(lines, pair, a, b) {
     if (a > b) {
