@@ -40,6 +40,9 @@ let light = [0.0, 0.7, 4.0],
 Matrix4.perspective(45.0 * Math.PI / 180.0, gl.canvas.width / gl.canvas.height, 0.1, 1000.0, matrix.pMatrix);
 Matrix4.lookAt(camera.position, camera.target, camera.up, matrix.vMatrix);
 
+const img = document.getElementById('tex');
+// const tex = initTexture(gl, img);
+
 function initMeshBuffer(gl, mesh) {
     mesh.vbo = {};
     
