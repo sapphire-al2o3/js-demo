@@ -7,9 +7,9 @@ const F = 32;
 let pr = 0;
 let pg = Math.PI * 2 / 3;
 let pb = Math.PI * 4 / 3;
-let fr = 1;
-let fg = 1;
-let fb = 1;
+let fr = 6;
+let fg = 6;
+let fb = 6;
 
 function clamp(x, min, max) {
     return x < min ? min : x > max ? max : x;
@@ -33,6 +33,8 @@ function render() {
         ctx.fillStyle = `rgb(${r},${g},${b})`;
         ctx.fillRect(i, 0, i + 1, h);
     }
+
+    plot();
 }
 
 const sliderr = createSlider('pr', pr / PI2, v => {
@@ -72,5 +74,33 @@ const sliderfb = createSlider('fb', fb / F, v => {
 document.body.appendChild(sliderfr);
 document.body.appendChild(sliderfg);
 document.body.appendChild(sliderfb);
+
+const graph = document.getElementById('graph');
+const graphCtx = graph.getContext('2d');
+
+function plot2D(ctx, f, w, h, itr) {
+    itr = itr === undefined ? 100 : itr;
+    ctx.beginPath();
+    let x = -1;
+    let y = f(x);
+    ctx.moveTo(x * w, h - y * h);
+    
+    for (var i = 1 - itr; i <= itr; i++) {
+        x = i / itr;
+        y = f(x);
+        ctx.lineTo(x * w, h - y * h);
+    }
+    ctx.stroke();
+}
+
+function plot() {
+    graphCtx.clearRect(0, 0, graph.width, graph.height);
+    graphCtx.strokeStyle = '#F00';
+    plot2D(graphCtx, x => cos(x * fr + pr), graph.width, graph.height, 100);
+    graphCtx.strokeStyle = '#0F0';
+    plot2D(graphCtx, x => cos(x * fg + pg), graph.width, graph.height, 100);
+    graphCtx.strokeStyle = '#00F';
+    plot2D(graphCtx, x => cos(x * fb + pb), graph.width, graph.height, 100);
+}
 
 render();
