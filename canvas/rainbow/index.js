@@ -10,6 +10,8 @@ let pb = Math.PI * 4 / 3;
 let fr = 6;
 let fg = 6;
 let fb = 6;
+let linkp = false;
+let linkf = false;
 
 function clamp(x, min, max) {
     return x < min ? min : x > max ? max : x;
@@ -38,16 +40,37 @@ function render() {
 }
 
 const sliderr = createSlider('pr', pr / PI2, v => {
+    if (linkp) {
+        const d = v * PI2 - pr;
+        pg = clamp(pg + d, 0, PI2);
+        pb = clamp(pb + d, 0, PI2);
+        setThumb(thumbg, pg / PI2);
+        setThumb(thumbb, pb / PI2);
+    }
     pr = v * PI2;
     render();
 });
 
 const sliderg = createSlider('pg', pg / PI2, v => {
+    if (linkp) {
+        const d = v * PI2 - pg;
+        pr = clamp(pr + d, 0, PI2);
+        pb = clamp(pb + d, 0, PI2);
+        setThumb(thumbr, pr / PI2);
+        setThumb(thumbb, pb / PI2);
+    }
     pg = v * PI2;
     render();
 });
 
 const sliderb = createSlider('pb', pb / PI2, v => {
+    if (linkp) {
+        const d = v * PI2 - pb;
+        pr = clamp(pr + d, 0, PI2);
+        pg = clamp(pg + d, 0, PI2);
+        setThumb(thumbr, pr / PI2);
+        setThumb(thumbg, pg / PI2);
+    }
     pb = v * PI2;
     render();
 });
@@ -55,6 +78,19 @@ const sliderb = createSlider('pb', pb / PI2, v => {
 document.body.appendChild(sliderr);
 document.body.appendChild(sliderg);
 document.body.appendChild(sliderb);
+
+const thumbr = sliderr.querySelector('span');
+const thumbg = sliderg.querySelector('span');
+const thumbb = sliderb.querySelector('span');
+
+const checkbox = createCheckbox('linkphase', v => {
+    linkp = v;
+});
+document.body.appendChild(checkbox);
+
+function setThumb(t, v) {
+    t.style.left = v * (120 - 12) + 'px';
+}
 
 const sliderfr = createSlider('fr', fr / F, v => {
     fr = v * F;
