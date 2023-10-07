@@ -83,26 +83,47 @@ const thumbr = sliderr.querySelector('span');
 const thumbg = sliderg.querySelector('span');
 const thumbb = sliderb.querySelector('span');
 
-const checkbox = createCheckbox('linkphase', v => {
+const checkboxp = createCheckbox('linkphase', v => {
     linkp = v;
 });
-document.body.appendChild(checkbox);
+document.body.appendChild(checkboxp);
 
 function setThumb(t, v) {
     t.style.left = v * (120 - 12) + 'px';
 }
 
 const sliderfr = createSlider('fr', fr / F, v => {
+    if (linkf) {
+        const d = v * F - fr;
+        fg = clamp(fg + d, 0, F);
+        fb = clamp(fb + d, 0, F);
+        setThumb(thumbfg, fg / F);
+        setThumb(thumbfb, fb / F);
+    }
     fr = v * F;
     render();
 });
 
 const sliderfg = createSlider('fg', fg / F, v => {
+    if (linkf) {
+        const d = v * F - fg;
+        fr = clamp(fr + d, 0, F);
+        fb = clamp(fb + d, 0, F);
+        setThumb(thumbfr, fr / F);
+        setThumb(thumbfb, fb / F);
+    }
     fg = v * F;
     render();
 });
 
 const sliderfb = createSlider('fb', fb / F, v => {
+    if (linkf) {
+        const d = v * F - fb;
+        fr = clamp(fr + d, 0, F);
+        fg = clamp(fg + d, 0, F);
+        setThumb(thumbfr, fr / F);
+        setThumb(thumbfg, fg / F);
+    }
     fb = v * F;
     render();
 });
@@ -110,6 +131,15 @@ const sliderfb = createSlider('fb', fb / F, v => {
 document.body.appendChild(sliderfr);
 document.body.appendChild(sliderfg);
 document.body.appendChild(sliderfb);
+
+const thumbfr = sliderfr.querySelector('span');
+const thumbfg = sliderfg.querySelector('span');
+const thumbfb = sliderfb.querySelector('span');
+
+const checkboxf = createCheckbox('linkfreq', v => {
+    linkf = v;
+});
+document.body.appendChild(checkboxf);
 
 const graph = document.getElementById('graph');
 const graphCtx = graph.getContext('2d');
