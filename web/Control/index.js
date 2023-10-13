@@ -80,8 +80,45 @@ function createCheckbox(id, callback, initial = false) {
     return wrapper;
 }
 
+function createRadio(ids, callback, initial = 0) {
+    let wrapper = document.createElement('div');
+    
+    for(let i = 0; i < ids.length; i++) {
+        let button = document.createElement('div'),
+            label = document.createElement('label'),
+            input = document.createElement('input'),
+            id = ids[i];
+
+        wrapper.classList.add('checkbox');
+        label.setAttribute('for', id);
+        label.textContent = id;
+        input.setAttribute('type', 'radio');
+        input.setAttribute('name', 'radio-' + ids[0]);
+        input.setAttribute('id', id);
+
+        if(i === initial) {
+            input.checked = true;
+        }
+        
+        input.addEventListener('click', e => {
+            if(callback) {
+                callback(e.target.checked, e.target.id, i);
+            }
+        }, false);
+
+        button.appendChild(input);
+        button.appendChild(label);
+        wrapper.appendChild(button);
+    }
+    
+    return wrapper;
+}
+
 document.body.appendChild(createSlider('slider', v => {
 }, 0));
 
 document.body.appendChild(createCheckbox('checkbox', v => {
 }, false));
+
+document.body.appendChild(createRadio(['a', 'b', 'c'], v => {
+}));

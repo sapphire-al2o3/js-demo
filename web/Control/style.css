@@ -37,6 +37,10 @@ input[type="checkbox"] + label:before, input[type="radio"] + label:before {
 	transition-duration: 0.4s;
 }
 
+input[type="radio"] + label:before {
+    border-radius: 8px;
+}
+
 input[type="checkbox"]:checked + label:before, input[type="radio"]:checked + label:before {
 	background-color: #34c0f4;
 }
