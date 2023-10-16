@@ -94,4 +94,4 @@ render();
 const slider = createSlider('n', 1, v => {
 });
 
-document.body.appendChild(slider);
+// document.body.appendChild(slider);
