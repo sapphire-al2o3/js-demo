@@ -7,7 +7,8 @@ const TO_RAD = Math.PI / 180;
 const ROT_60 = TO_RAD * 60;
 
 const maze = [];
-let n = 15; 
+let n = 31;
+let b = 8;
 
 for (let i = 0; i < n; i++) {
     for (let j = 0; j < n; j++) {
@@ -39,8 +40,8 @@ function dir4(d) {
     switch(d) {
         case 0: return 1;
         case 1: return n;
-        case 2: return -1;
-        case 3: return -n;
+        case 2: return -n;
+        case 3: return -1;
     }
     return 0;
 }
@@ -48,12 +49,13 @@ function dir4(d) {
 for (let i = 2; i < n - 2; i += 2) {
     let k = 2 * n + i;
     let d = Math.random() * 4 ^ 0;
-    for (let x = 0; x < 4; x++) {
-        let w = k + dir4((d + x) % 4);
-        if (maze[w] === 0) {
-            maze[w] = 1;
-            break;
-        }
+    let w = k + dir4(d);
+    if (maze[w] === 0) {
+        maze[w] = 1;
+    } else {
+        d = Math.random() * 3 ^ 0;
+        w = k + dir4(d);
+        maze[w] = 1;
     }
 }
 
@@ -61,12 +63,13 @@ for (let i = 4; i < n - 2; i += 2) {
     for (let j = 2; j < n - 2; j += 2) {
         let k = i * n + j;
         let d = Math.random() * 3 ^ 0;
-        for (let x = 0; x < 3; x++) {
-            let w = k + dir3((d + x) % 3);
-            if (maze[w] === 0) {
-                maze[w] = 1;
-                break;
-            }
+        let w = k + dir3(d);
+        if (maze[w] === 0) {
+            maze[w] = 1;
+        } else {
+            d = Math.random() * 2 ^ 0;
+            w = k + dir3(d);
+            maze[w] = 1;
         }
     }
 }
@@ -80,7 +83,7 @@ function render() {
         for (let j = 0; j < n; j++) {
             let k = i * n + j;
             if (maze[k] === 1) {
-                ctx.fillRect(j * 10, i * 10, 10, 10);
+                ctx.fillRect(j * b, i * b, b, b);
             }
         }
     }
