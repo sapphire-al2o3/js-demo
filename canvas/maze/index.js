@@ -143,8 +143,6 @@ function anahori() {
     }
 }
 
-anahori();
-
 function render() {
     ctx.fillStyle = '#FFF';
     ctx.fillRect(0, 0, w, h);
@@ -160,13 +158,26 @@ function render() {
     }
 }
 
-// boutaoshi();
+boutaoshi();
 render();
 
 document.getElementById('generate').addEventListener('click', e => {
     boutaoshi();
     render();
 });
+
+const radio = createRadio(['boutaoshi', 'anahori'], (v, id, i) => {
+    switch (i) {
+        case 0:
+            boutaoshi();
+            break;
+        case 1:
+            anahori();
+            break;
+    }
+    render();
+});
+document.body.appendChild(radio);
 
 const slider = createSlider('n', 1, v => {
 });
