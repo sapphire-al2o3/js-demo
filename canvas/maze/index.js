@@ -158,15 +158,7 @@ function render() {
     }
 }
 
-boutaoshi();
-render();
-
-document.getElementById('generate').addEventListener('click', e => {
-    boutaoshi();
-    render();
-});
-
-const radio = createRadio(['boutaoshi', 'anahori'], (v, id, i) => {
+function generate(i) {
     switch (i) {
         case 0:
             boutaoshi();
@@ -175,6 +167,21 @@ const radio = createRadio(['boutaoshi', 'anahori'], (v, id, i) => {
             anahori();
             break;
     }
+}
+
+generate(0);
+render();
+
+let selected = 0;
+
+document.getElementById('generate').addEventListener('click', e => {
+    boutaoshi(selected);
+    render();
+});
+
+const radio = createRadio(['boutaoshi', 'anahori'], (v, id, i) => {
+    selected = i;
+    generate(i);
     render();
 });
 document.body.appendChild(radio);
