@@ -143,6 +143,69 @@ function anahori() {
     }
 }
 
+function kabenobashi() {
+    maze = [];
+
+    const wall = [];
+
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            if (j === 0 || i === 0 || j === n - 1 || i === n - 1) {
+                maze.push(1);
+
+                if (i % 2 === 0 && j % 2 === 0) {
+                    wall.push(i * n + j);
+                }
+            } else {
+                maze.push(0);
+            }
+        }
+    }
+
+    for (let i = 0; i < wall.length; i++) {
+        let p = Math.random() * wall.length ^ 0;
+        let t = wall[p];
+    }
+
+    let p = Math.random() * wall.length ^ 0;
+        k = wall[p];
+    
+    wall[p] = wall[wall.length - 1];
+    wall.pop();
+
+    while (true) {
+        while (true) {
+
+            let dir = [];
+
+            for (let i = 0; i < 4; i++) {
+                let d = dir4(i);
+                if (maze[k + d] === 0 && maze[k + d * 2] === 0) {
+                    dir.push(d);
+                }
+            }
+
+            if (dir.length === 0) {
+                break;
+            }
+            let r = Math.random() * dir.length ^ 0;
+            maze[k + dir[r]] = 1;
+            maze[k + dir[r] * 2] = 1;
+
+            wall.push(k);
+        }
+
+        if (wall.length === 0) {
+            break;
+        }
+
+        let p = Math.random() * wall.length ^ 0;
+        k = wall[p];
+        wall[p] = wall[wall.length - 1];
+        wall.pop();
+    }
+}
+
 function render() {
     ctx.fillStyle = '#FFF';
     ctx.fillRect(0, 0, w, h);
@@ -166,10 +229,13 @@ function generate(i) {
         case 1:
             anahori();
             break;
+        case 2:
+            kabenobashi();
+            break;
     }
 }
 
-generate(0);
+generate(2);
 render();
 
 let selected = 0;
