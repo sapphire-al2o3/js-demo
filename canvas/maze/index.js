@@ -165,13 +165,11 @@ function kabenobashi() {
     for (let i = 0; i < wall.length; i++) {
         let p = Math.random() * wall.length ^ 0;
         let t = wall[p];
+        wall[p] = wall[i];
+        wall[i] = t;
     }
 
-    let p = Math.random() * wall.length ^ 0;
-        k = wall[p];
-    
-    wall[p] = wall[wall.length - 1];
-    wall.pop();
+    let k = wall.pop();
 
     while (true) {
         while (true) {
@@ -191,7 +189,7 @@ function kabenobashi() {
             let r = Math.random() * dir.length ^ 0;
             maze[k + dir[r]] = 1;
             maze[k + dir[r] * 2] = 1;
-
+            k = k + dir[r] * 2;
             wall.push(k);
         }
 
@@ -199,10 +197,7 @@ function kabenobashi() {
             break;
         }
 
-        let p = Math.random() * wall.length ^ 0;
-        k = wall[p];
-        wall[p] = wall[wall.length - 1];
-        wall.pop();
+        k = wall.pop();
     }
 }
 
