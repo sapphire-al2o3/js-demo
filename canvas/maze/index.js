@@ -230,7 +230,7 @@ function generate(i) {
     }
 }
 
-generate(2);
+generate(0);
 render();
 
 let selected = 0;
@@ -240,7 +240,7 @@ document.getElementById('generate').addEventListener('click', e => {
     render();
 });
 
-const radio = createRadio(['boutaoshi', 'anahori'], (v, id, i) => {
+const radio = createRadio(['boutaoshi', 'anahori', 'kabenobashi'], (v, id, i) => {
     selected = i;
     generate(i);
     render();
