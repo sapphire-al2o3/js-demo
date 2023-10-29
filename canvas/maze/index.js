@@ -190,7 +190,7 @@ function kabenobashi() {
             maze[k + dir[r]] = 1;
             maze[k + dir[r] * 2] = 1;
             k = k + dir[r] * 2;
-            wall.push(k);
+            wall.unshift(k);
         }
 
         if (wall.length === 0) {
