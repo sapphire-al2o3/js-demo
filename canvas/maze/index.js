@@ -209,7 +209,7 @@ function render() {
     ctx.fillStyle = '#FFF';
     ctx.fillRect(0, 0, w, h);
 
-    ctx.fillStyle = '#000'
+    ctx.fillStyle = '#000';
     for (let i = 0; i < n; i++) {
         for (let j = 0; j < n; j++) {
             let k = i * n + j;
