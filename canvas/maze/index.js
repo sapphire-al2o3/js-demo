@@ -1,14 +1,18 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-const w = canvas.width;
-const h = canvas.height;
 const TO_RAD = Math.PI / 180;
 const ROT_60 = TO_RAD * 60;
 
 let maze = [];
-let n = 31;
+let n = 41;
 let b = 8;
+
+canvas.width = n * b;
+canvas.height = n * b;
+
+let w = canvas.width;
+let h = canvas.height;
 
 function dir3(d) {
     switch(d) {
