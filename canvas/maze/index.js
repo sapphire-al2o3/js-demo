@@ -7,6 +7,8 @@ const ROT_60 = TO_RAD * 60;
 let maze = [];
 let n = 41;
 let b = 8;
+let pb = 12;
+let wb = 4;
 
 canvas.width = n * b;
 canvas.height = n * b;
@@ -209,14 +211,23 @@ function render() {
     ctx.fillStyle = '#FFF';
     ctx.fillRect(0, 0, w, h);
 
+    let x = 0;
+    let y = 0;
+
     ctx.fillStyle = '#000';
+    y = 0;
     for (let i = 0; i < n; i++) {
+        let yb = i % 2 === 0 ? wb : pb;
+        x = 0;
         for (let j = 0; j < n; j++) {
+            let xb = j % 2 === 0 ? wb : pb;
             let k = i * n + j;
             if (maze[k] === 1) {
-                ctx.fillRect(j * b, i * b, b, b);
+                ctx.fillRect(x, y, xb, yb);
             }
+            x += xb;
         }
+        y += yb;
     }
 }
 
@@ -251,7 +262,10 @@ const radio = createRadio(['boutaoshi', 'anahori', 'kabenobashi'], (v, id, i) =>
 });
 document.body.appendChild(radio);
 
-const slider = createSlider('n', 1, v => {
+const slider = createSlider('size', 0.5, v => {
+    pb = 16 * v ^ 0;
+    wb = 16 - pb;
+    render();
 });
 
-// document.body.appendChild(slider);
+document.body.appendChild(slider);
