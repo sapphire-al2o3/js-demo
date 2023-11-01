@@ -9,6 +9,7 @@ let n = 41;
 let b = 8;
 let pb = 12;
 let wb = 4;
+let wh = 8;
 
 canvas.width = n * b;
 canvas.height = n * b;
@@ -214,6 +215,24 @@ function render() {
     let x = 0;
     let y = 0;
 
+    ctx.fillStyle = '#DDD';
+    y = 0;
+    for (let i = 0; i < n - 1; i++) {
+        let yb = i % 2 === 0 ? wb : pb;
+        if (i % 2 === 0) {
+            x = 0;
+            for (let j = 0; j < n; j++) {
+                let xb = j % 2 === 0 ? wb : pb;
+                let k = i * n + j;
+                if (maze[k] === 1) {
+                    ctx.fillRect(x, y, xb, yb + wh);
+                }
+                x += xb;
+            }
+        }
+        y += yb;
+    }
+
     ctx.fillStyle = '#000';
     y = 0;
     for (let i = 0; i < n; i++) {
@@ -269,3 +288,8 @@ const slider = createSlider('size', 0.5, v => {
 });
 
 document.body.appendChild(slider);
+
+document.body.appendChild(createSlider('kabe', 0.5, v => {
+    wh = v * 16 ^ 0;
+    render();
+}));
