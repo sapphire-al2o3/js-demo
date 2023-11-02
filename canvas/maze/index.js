@@ -270,7 +270,7 @@ render();
 let selected = 0;
 
 document.getElementById('generate').addEventListener('click', e => {
-    boutaoshi(selected);
+    generate(selected);
     render();
 });
 
