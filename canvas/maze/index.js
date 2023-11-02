@@ -1,9 +1,6 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-const TO_RAD = Math.PI / 180;
-const ROT_60 = TO_RAD * 60;
-
 let maze = [];
 let n = 41;
 let b = 8;
