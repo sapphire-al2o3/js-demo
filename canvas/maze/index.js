@@ -278,7 +278,7 @@ const radio = createRadio(['boutaoshi', 'anahori', 'kabenobashi'], (v, id, i) =>
 });
 document.body.appendChild(radio);
 
-const slider = createSlider('size', 0.5, v => {
+const slider = createSlider('tickness', 0.5, v => {
     pb = 16 * v ^ 0;
     wb = 16 - pb;
     render();
