@@ -4,6 +4,7 @@ const ctx = canvas.getContext('2d');
 let maze = [];
 let n = 41;
 let b = 8;
+let blockSize = 16;
 let pb = 12;
 let wb = 4;
 let wh = 8;
@@ -278,15 +279,13 @@ const radio = createRadio(['boutaoshi', 'anahori', 'kabenobashi'], (v, id, i) =>
 });
 document.body.appendChild(radio);
 
-const slider = createSlider('tickness', 0.5, v => {
-    pb = 16 * v ^ 0;
-    wb = 16 - pb;
+document.body.appendChild(createSlider('tickness', 0.5, v => {
+    pb = blockSize * v ^ 0;
+    wb = blockSize - pb;
     render();
-});
-
-document.body.appendChild(slider);
+}));
 
 document.body.appendChild(createSlider('kabe', 0.5, v => {
-    wh = v * 16 ^ 0;
+    wh = v * blockSize ^ 0;
     render();
 }));
