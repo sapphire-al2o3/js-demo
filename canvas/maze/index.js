@@ -6,7 +6,7 @@ let n = 41;
 let b = 8;
 let blockSize = 16;
 let pb = 12;
-let wb = 4;
+let wb = blockSize - pb;
 let wh = 8;
 
 canvas.width = n * b;
