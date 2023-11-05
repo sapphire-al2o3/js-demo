@@ -279,13 +279,34 @@ const radio = createRadio(['boutaoshi', 'anahori', 'kabenobashi'], (v, id, i) =>
 });
 document.body.appendChild(radio);
 
+// document.body.appendChild(createSlider('block', 1, v => {
+//     let t = (v * 14 ^ 0) + 2;
+//     if (t === blockSize) {
+//         return;
+//     }
+//     let r = blockSize / pb;
+//     blockSize = t;
+//     pb = blockSize * r ^ 0;
+//     wb = blockSize - pb;
+//     render();
+// }));
+
 document.body.appendChild(createSlider('tickness', 0.5, v => {
-    pb = blockSize * v ^ 0;
+    let t = blockSize * v ^ 0;
+    if (t === pb) {
+        return;
+    }
+    pb = t;
     wb = blockSize - pb;
     render();
+    console.log('t');
 }));
 
 document.body.appendChild(createSlider('kabe', 0.5, v => {
-    wh = v * blockSize ^ 0;
+    let t = blockSize * v ^ 0;
+    if (t === wh) {
+        return;
+    }
+    wh = t;
     render();
 }));
