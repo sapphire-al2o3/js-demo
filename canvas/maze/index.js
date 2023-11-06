@@ -266,8 +266,14 @@ generate(0);
 render();
 
 let selected = 0;
+const sizeElement = document.getElementById('size');
+const sizeValues = sizeElement.options;
 
 document.getElementById('generate').addEventListener('click', e => {
+    n = parseInt(sizeValues[sizeElement.selectedIndex].value);
+    w = canvas.width = n * b;
+    h = canvas.height = n * b;
+
     generate(selected);
     render();
 });
