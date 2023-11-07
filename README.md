@@ -136,6 +136,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [Value Noise](https://sapphire-al2o3.github.io/js-demo/canvas/Value-Noise/)
 - [FlowMapPainter](https://sapphire-al2o3.github.io/js-demo/canvas/FlowMapPainter/)
 - [クリップボードから画像を貼り付ける](https://sapphire-al2o3.github.io/js-demo/canvas/Paste/)
+- [迷路生成](https://sapphire-al2o3.github.io/js-demo/canvas/maze/)
 
 # Image Processing
 
