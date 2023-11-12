@@ -19,6 +19,9 @@ window.onload = () => {
     let ret = result.data;
     let buffer = new Uint8Array(w * h);
 
+    let block = 8;
+    let radius = 4;
+
     const PI2 = Math.PI * 2;
 
     function drawCircle(x, y, r) {
@@ -44,11 +47,11 @@ window.onload = () => {
         ctx.fillStyle = '#FFF';
         ctx.fillRect(0, 0, w, h);
         ctx.fillStyle = '#444';
-        const b = 8;
+        const b = block;
         for (let i = b / 2; i < h; i += b) {
             for (let j = b / 2; j < w; j += b) {
                 let k = i * w + j;
-                let r = ((255 - buffer[k]) / 255) * 4;
+                let r = ((255 - buffer[k]) / 255) * radius;
                 drawCircle(j, i, r);
             }
         }
