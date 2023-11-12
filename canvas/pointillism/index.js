@@ -36,7 +36,7 @@ window.onload = () => {
                 let r = data[k];
                 let g = data[k + 1];
                 let b = data[k + 2];
-                let y = (r + g + b) / 3 ^ 0;
+                let y = (r * 0.299 + g * 0.587 + b * 0.114) ^ 0;
                 buffer[l] = y;
             }
         }
