@@ -14,9 +14,7 @@ window.onload = () => {
     ctx.drawImage(img, 0, 0, w, h);
 
     let image = ctx.getImageData(0, 0, w, h);
-    let result = ctx.createImageData(w, h);
     let data = image.data;
-    let ret = result.data;
     let buffer = new Uint8Array(w * h);
 
     let block = 8;
@@ -80,6 +78,6 @@ window.onload = () => {
         w = canvas.width = img.width;
         h = canvas.height = img.height;
         ctx.drawImage(img, 0, 0, w, h);
-        render(data, b);
+        render();
     });
 };
