@@ -78,6 +78,9 @@ window.onload = () => {
         w = canvas.width = img.width;
         h = canvas.height = img.height;
         ctx.drawImage(img, 0, 0, w, h);
+        image = ctx.getImageData(0, 0, w, h);
+        data = image.data;
+        buffer = new Uint8Array(w * h);
         render();
     });
 };
