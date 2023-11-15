@@ -57,6 +57,11 @@ window.onload = () => {
 
     render();
 
+    document.body.appendChild(createSlider('radius', radius / 8, v => {
+        radius = v * 8;
+        render();
+    }));
+
     function dropImage(img, cb) {
         document.body.addEventListener('dragover', e => {
             e.preventDefault();
