@@ -13,8 +13,8 @@ window.onload = () => {
 
     ctx.drawImage(img, 0, 0, w, h);
 
-    let block = 4;
-    let radius = 4;
+    let block = 8;
+    let radius = 4.5;
 
     let image = ctx.getImageData(0, 0, w, h);
     let data = image.data;
@@ -67,8 +67,8 @@ window.onload = () => {
     accum();
     render();
 
-    document.body.appendChild(createSlider('radius', radius / 8, v => {
-        radius = v * 8;
+    document.body.appendChild(createSlider('radius', radius / block, v => {
+        radius = v * block;
         render();
     }));
 
