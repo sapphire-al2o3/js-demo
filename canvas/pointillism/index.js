@@ -13,12 +13,12 @@ window.onload = () => {
 
     ctx.drawImage(img, 0, 0, w, h);
 
+    let block = 4;
+    let radius = 4;
+
     let image = ctx.getImageData(0, 0, w, h);
     let data = image.data;
-    let buffer = new Uint8Array(w * h);
-
-    let block = 8;
-    let radius = 4;
+    let buffer = new Uint8Array(w * h / (block * block));
 
     const PI2 = Math.PI * 2;
 
@@ -28,33 +28,43 @@ window.onload = () => {
         ctx.fill();
     }
 
-    function render() {
-
-        for (let i = 0; i < h; i++) {
-            for (let j = 0; j < w; j++) {
-                let k = (i * w + j) * 4;
-                let l = i * w + j;
-                let r = data[k];
-                let g = data[k + 1];
-                let b = data[k + 2];
-                let y = (r * 0.299 + g * 0.587 + b * 0.114) ^ 0;
-                buffer[l] = y;
+    function accum() {
+        let l = 0;
+        for (let i = 0; i < h; i += block) {
+            for (let j = 0; j < w; j += block) {
+                let ave = 0;
+                for (let y = 0; y < block; y++) {
+                    for (let x = 0; x < block; x++) {
+                        let k = ((i + y) * w + (j + x)) * 4;
+                        let r = data[k];
+                        let g = data[k + 1];
+                        let b = data[k + 2];
+                        ave += (r * 0.299 + g * 0.587 + b * 0.114) ^ 0;
+                    }
+                }
+                
+                buffer[l] = ave / (block * block);
+                l++;
             }
         }
+    }
 
+    function render() {
         ctx.fillStyle = '#FFF';
         ctx.fillRect(0, 0, w, h);
         ctx.fillStyle = '#444';
         const b = block;
+        let l = 0;
         for (let i = b / 2; i < h; i += b) {
             for (let j = b / 2; j < w; j += b) {
-                let k = i * w + j;
-                let r = ((255 - buffer[k]) / 255) * radius;
+                let r = ((255 - buffer[l]) / 255) * radius;
+                l++;
                 drawCircle(j, i, r);
             }
         }
     }
 
+    accum();
     render();
 
     document.body.appendChild(createSlider('radius', radius / 8, v => {
@@ -86,6 +96,7 @@ window.onload = () => {
         image = ctx.getImageData(0, 0, w, h);
         data = image.data;
         buffer = new Uint8Array(w * h);
+        accum();
         render();
     });
 };
