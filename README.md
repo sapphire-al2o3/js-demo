@@ -137,6 +137,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [FlowMapPainter](https://sapphire-al2o3.github.io/js-demo/canvas/FlowMapPainter/)
 - [クリップボードから画像を貼り付ける](https://sapphire-al2o3.github.io/js-demo/canvas/Paste/)
 - [迷路生成](https://sapphire-al2o3.github.io/js-demo/canvas/maze/)
+- [点描](https://sapphire-al2o3.github.io/js-demo/canvas/pointillism)
 
 # Image Processing
 
