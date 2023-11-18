@@ -95,7 +95,7 @@ window.onload = () => {
         ctx.drawImage(img, 0, 0, w, h);
         image = ctx.getImageData(0, 0, w, h);
         data = image.data;
-        buffer = new Uint8Array(w * h);
+        buffer = new Uint8Array(w * h / (block * block));
         accum();
         render();
     });
