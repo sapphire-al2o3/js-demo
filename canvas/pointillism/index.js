@@ -18,7 +18,7 @@ window.onload = () => {
 
     let image = ctx.getImageData(0, 0, w, h);
     let data = image.data;
-    let buffer = new Uint8Array(w * h / (block * block));
+    let buffer = new Uint8Array(w * h / (block * block) ^ 0);
 
     const PI2 = Math.PI * 2;
 
@@ -72,6 +72,13 @@ window.onload = () => {
         render();
     }));
 
+    document.body.appendChild(createRadio(['4', '8', '12'], (v, id, i) => {
+        block = parseInt(id);
+        buffer = new Uint8Array(w * h / (block * block));
+        accum();
+        render();
+    }, 1));
+
     function dropImage(img, cb) {
         document.body.addEventListener('dragover', e => {
             e.preventDefault();
@@ -95,7 +102,7 @@ window.onload = () => {
         ctx.drawImage(img, 0, 0, w, h);
         image = ctx.getImageData(0, 0, w, h);
         data = image.data;
-        buffer = new Uint8Array(w * h / (block * block));
+        buffer = new Uint8Array(w * h / (block * block) ^ 0);
         accum();
         render();
     });
