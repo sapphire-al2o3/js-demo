@@ -72,7 +72,7 @@ window.onload = () => {
         render();
     }));
 
-    document.body.appendChild(createRadio(['4', '8', '12'], (v, id, i) => {
+    document.body.appendChild(createRadio(['4', '8', '10'], (v, id, i) => {
         block = parseInt(id);
         buffer = new Uint8Array(w * h / (block * block));
         accum();
