@@ -36,6 +36,9 @@ program.uniform['mvMatrix'].value = mvm.data;
 program.uniform['pMatrix'].value = pm.data;
 program.uniform['color'].value = [0.2, 0.2, 0.7, 1];
 
+const img = document.getElementById('tex');
+const tex = initTexture(gl, img);
+
 gl.clearColor(1.0, 1.0, 1.0, 1.0);
 gl.viewport(0, 0, width, height);
 
