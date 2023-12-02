@@ -30,10 +30,12 @@ let frame = 0;
 let pm = Matrix4.perspective(45.0 * Math.PI / 180.0, width / height, 0.1, 1000.0),
     vm = Matrix4.lookAt(camera.position, camera.target, camera.up),
     mm = Matrix4.rotateXYZ(frame * 0.02, 0.0, frame * 0.02),
-    mvm = mm.mul(vm);
+    mvm = mm.mul(vm),
+    nm = mm.toMatrix3().transpose().inverse();
 
 program.uniform['mvMatrix'].value = mvm.data;
 program.uniform['pMatrix'].value = pm.data;
+program.uniform['nMatrix'].value = nm.data;
 program.uniform['color'].value = [0.2, 0.2, 0.7, 1];
 
 gl.clearColor(1.0, 1.0, 1.0, 1.0);
