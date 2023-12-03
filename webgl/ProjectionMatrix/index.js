@@ -27,7 +27,7 @@ camera.up = new Vector3(0, 1, 0);
 
 let frame = 0;
 
-let pm = Matrix4.perspective(45.0 * Math.PI / 180.0, width / height, 0.1, 1000.0),
+let pm = Matrix4.orthographic(4, width / height, 0.1, 1000.0),
     vm = Matrix4.lookAt(camera.position, camera.target, camera.up),
     mm = Matrix4.rotateXYZ(frame * 0.02, 0.0, frame * 0.02),
     mvm = mm.mul(vm),
@@ -64,8 +64,8 @@ function render() {
     gl.flush();
 }
 
-document.body.appendChild(createRadio(['perspective', 'orthographic'], (v, id, i) => {
-    if (i === 0) {
+document.body.appendChild(createRadio(['orthographic', 'perspective'], (v, id, i) => {
+    if (i === 1) {
         Matrix4.perspective(45.0 * Math.PI / 180.0, width / height, 0.1, 1000.0, pm)
     } else {
         Matrix4.orthographic(4, width / height, 0.1, 1000.0, pm);
