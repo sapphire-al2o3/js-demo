@@ -12,7 +12,8 @@ let models = [
     createSphere(8, 1.5),
 ];
 
-let index = 0;
+let index = 0,
+    proj = 0;
 
 for (let model of models) {
     initBuffer(gl, model);
@@ -70,9 +71,13 @@ document.body.appendChild(createRadio(['orthographic', 'perspective'], (v, id, i
     } else {
         Matrix4.orthographic(4, width / height, 0.1, 1000.0, pm);
     }
+    render();
 }));
 
 
 document.body.appendChild(createRadio(['plane', 'cube', 'sphere'], (v, id, i) => {
-    index = i;
+    if (index !== i) {
+        index = i;
+        render();
+    }
 }));
