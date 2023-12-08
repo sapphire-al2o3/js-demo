@@ -142,5 +142,8 @@ function createIco(s = 1.0) {
 }
 
 document.body.appendChild(createRadio(['ico', 'torus', 'sphere', 'cube'], (v, id, i) => {
-    index = i;
+    if (index !== i) {
+        index = i
+        render();
+    }
 }));
