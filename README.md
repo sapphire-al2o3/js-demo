@@ -9,7 +9,6 @@ https://sapphire-al2o3.github.io/js-demo/
 - [Distance-Field](https://sapphire-al2o3.github.io/js-demo/webgl/Distance-Field/)
 - [facing](https://sapphire-al2o3.github.io/js-demo/webgl/facing/)
 - [forked_-WebGLでリサージュ曲線](https://sapphire-al2o3.github.io/js-demo/webgl/forked_-WebGLでリサージュ曲線/)
-- [facing](https://sapphire-al2o3.github.io/js-demo/webgl/fractal/)
 - [FXAA](https://sapphire-al2o3.github.io/js-demo/webgl/FXAA/)
 - [Lambert](https://sapphire-al2o3.github.io/js-demo/webgl/Lambert/)
 - [lineWidthのテスト](https://sapphire-al2o3.github.io/js-demo/webgl/lineWidthのテスト/)
