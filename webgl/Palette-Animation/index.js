@@ -105,7 +105,7 @@
     document.body.appendChild(createSlider('zoom', scale / 2, function(v, id) {
         scale = v * 2.0;
         if(scale <= 0.0) scale = 0.01;
-        render();
+        render(0);
     }));
 
     // パレットのイベント
