@@ -32,7 +32,7 @@ let pm = Matrix4.perspective(45.0 * Math.PI / 180.0, width / height, 0.1, 1000.0
     mm = Matrix4.rotateXYZ(frame * 0.02, 0.0, frame * 0.02),
     mvm = mm.mul(vm);
 
-let tvm = Matrix4.lookAt(new Vector3(0, 10, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 1)),
+let tvm = Matrix4.lookAt(new Vector3(0, 10, 0), new Vector3(0, 0, 0), new Vector3(0, 1, 0)),
     tm = Matrix4.identity();
 
 program.uniform['mvMatrix'].value = mvm.data;
