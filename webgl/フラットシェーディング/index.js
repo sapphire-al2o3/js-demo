@@ -1,4 +1,4 @@
-var gl,
+let gl,
 	program,
 	material = {},
 	camera = {},
@@ -22,77 +22,76 @@ matrix.mvMatrix = new Matrix4();
 matrix.pMatrix = new Matrix4();
 
 function initBuffer(model) {
-	var createVertexBuffer = function(gl, vertices) {
-		if(!vertices) return null;
-		var b = gl.createBuffer();
-		gl.bindBuffer(gl.ARRAY_BUFFER, b);
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    const createVertexBuffer = (gl, vertices) => {
+        if(!vertices) return null;
+        var b = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, b);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
         return b;
-	};
-	
-	for(var i = 0; i < model.meshes.length; i++) {
-		var mesh = model.meshes[i],
-			vbo = {};
-		mesh.vbo = vbo;
-		vbo.position = createVertexBuffer(gl, mesh.vertexStream.position);
-		vbo.normal = createVertexBuffer(gl, mesh.vertexStream.normal);
-		
-		mesh.ibo = gl.createBuffer();
-		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.ibo);
-		gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Int16Array(mesh.indexStream), gl.STATIC_DRAW);
-		
-		getError(gl);
-	}
+    };
+
+    for(var i = 0; i < model.meshes.length; i++) {
+        var mesh = model.meshes[i],
+            vbo = {};
+        mesh.vbo = vbo;
+        vbo.position = createVertexBuffer(gl, mesh.vertexStream.position);
+        vbo.normal = createVertexBuffer(gl, mesh.vertexStream.normal);
+        
+        mesh.ibo = gl.createBuffer();
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.ibo);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Int16Array(mesh.indexStream), gl.STATIC_DRAW);
+        
+        getError(gl);
+    }
 }
 
 // 描画
 function render(model) {
-	light.direction[0] = 2.0 * Math.sin(frame * 0.02);
-	light.direction[2] = 2.0 * Math.cos(frame * 0.02);
-	
-    // バッファクリア
-	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    
-	// 行列設定
-	Matrix4.identity(matrix.mMatrix);
-    Matrix4.perspective(45.0 * Math.PI / 180.0, gl.viewportWidth / gl.viewportHeight, 0.1, 1000.0, matrix.pMatrix);
-	Matrix4.lookAt(camera.position, camera.target, camera.up, matrix.vMatrix);
-	matrix.mMatrix.mul(matrix.vMatrix, matrix.mvMatrix);
-	matrix.nMatrix = matrix.mvMatrix.toMatrix3().inverse();
-    
-	// ユニフォーム設定
-	gl.uniformMatrix4fv(program.uniform.mvMatrix.location, false, matrix.mvMatrix.data);
-	gl.uniformMatrix4fv(program.uniform.pMatrix.location, false, matrix.pMatrix.data);
-	// gl.uniformMatrix3fv(program.uniform.nMatrix.location, false, matrix.nMatrix.data);
-	gl.uniform3fv(program.uniform.lightDirection.location, light.direction);
-	gl.uniform4fv(program.uniform.diffuse.location, material.diffuse);
-	
-	// 頂点バッファ
-	for(var i = 0; i < model.meshes.length; i++) {
-		var mesh = model.meshes[i];
-		
-		gl.bindBuffer(gl.ARRAY_BUFFER, mesh.vbo.position);
-		gl.vertexAttribPointer(program.attribute['aVertexPosition'].location, 3, gl.FLOAT, false, 0, 0);
-		//gl.bindBuffer(gl.ARRAY_BUFFER, mesh.vbo.normal);
-		//gl.vertexAttribPointer(program.attribute[1].location, program.attribute[1].size, gl.FLOAT, false, 0, 0);
+    light.direction[0] = 2.0 * Math.sin(frame * 0.02);
+    light.direction[2] = 2.0 * Math.cos(frame * 0.02);
 
-		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.ibo);
-		var size = mesh.indexStream.length;
-		gl.drawElements(gl.TRIANGLES, size, gl.UNSIGNED_SHORT, 0);
+    // バッファクリア
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    // 行列設定
+    Matrix4.identity(matrix.mMatrix);
+    Matrix4.perspective(45.0 * Math.PI / 180.0, gl.viewportWidth / gl.viewportHeight, 0.1, 1000.0, matrix.pMatrix);
+    Matrix4.lookAt(camera.position, camera.target, camera.up, matrix.vMatrix);
+    matrix.mMatrix.mul(matrix.vMatrix, matrix.mvMatrix);
+    matrix.nMatrix = matrix.mvMatrix.toMatrix3().inverse();
+
+    // ユニフォーム設定
+    gl.uniformMatrix4fv(program.uniform.mvMatrix.location, false, matrix.mvMatrix.data);
+    gl.uniformMatrix4fv(program.uniform.pMatrix.location, false, matrix.pMatrix.data);
+    // gl.uniformMatrix3fv(program.uniform.nMatrix.location, false, matrix.nMatrix.data);
+    gl.uniform3fv(program.uniform.lightDirection.location, light.direction);
+    gl.uniform4fv(program.uniform.diffuse.location, material.diffuse);
+
+    // 頂点バッファ
+    for(var i = 0; i < model.meshes.length; i++) {
+        var mesh = model.meshes[i];
         
-	}
-	
-	frame++;
-	
-	gl.flush();
-	getError(gl);
+        gl.bindBuffer(gl.ARRAY_BUFFER, mesh.vbo.position);
+        gl.vertexAttribPointer(program.attribute['aVertexPosition'].location, 3, gl.FLOAT, false, 0, 0);
+        //gl.bindBuffer(gl.ARRAY_BUFFER, mesh.vbo.normal);
+        //gl.vertexAttribPointer(program.attribute[1].location, program.attribute[1].size, gl.FLOAT, false, 0, 0);
+
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.ibo);
+        var size = mesh.indexStream.length;
+        gl.drawElements(gl.TRIANGLES, size, gl.UNSIGNED_SHORT, 0);
+    }
+
+    frame++;
+
+    gl.flush();
+    getError(gl);
 }
 
 var m = createSphere(32);
 
 gl = initContext('canvas');
 if(!gl.getExtension('OES_standard_derivatives')) {
-	throw 'extension not support';
+    throw 'extension not support';
 }
 gl.clearColor(0.2, 0.2, 0.2, 1.0);
 initBuffer(m);
