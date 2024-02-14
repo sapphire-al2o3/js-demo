@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Bit Pattern</title>
+        <meta name="Description" content="" />
+        <meta name="Keywords"  content="" />
+        <link rel="stylesheet" type="text/css" media="screen,print" href="../../lib/webglutil.css" />
+        <link rel="stylesheet" type="text/css" media="screen,print" href="style.css" />
+    </head>
+<body>
+<script id="shader-fs" type="x-shader/x-fragment">#version 300 es
+precision highp float;
+in vec2 uv;
+out vec4 outColor;
+
+void main() {
+    vec4 c = vec4(uv.x, uv.y, 1.0, 1.0);
+    outColor = c;
+}
+</script>
+<script id="shader-vs" type="x-shader/x-vertex">#version 300 es
+in vec3 position;
+out vec2 uv;
+
+void main() {
+    vec3 pos = position;
+    uv = pos.xy * 0.5 + 0.5;
+    gl_Position = vec4(pos, 1.0);
+}
+</script>
+<canvas id="canvas" width="256" height="256"></canvas>
+<script type="text/javascript" src="../../lib/webglutil.js"></script>
+<script type="text/javascript" src="index.js"></script>
+</body>
+</html>
