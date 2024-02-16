@@ -29,7 +29,7 @@ void main() {
     );
 
     float c = uv.x;
-    int y = int(iuv.y);
+    int y = int(mod(iuv.y - 16.0, 8.0));
     if (y < rows.length()) {
         uint b = rows[y];
         b = (b << uint(iuv.x)) >> 31;
