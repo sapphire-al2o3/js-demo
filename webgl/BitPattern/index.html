@@ -29,13 +29,14 @@ void main() {
     );
 
     float c = uv.x;
-    if (int(iuv.y) < rows.length()) {
-        uint b = rows[int(iuv.y)];
+    int y = int(iuv.y);
+    if (y < rows.length()) {
+        uint b = rows[y];
         b = (b << uint(iuv.x)) >> 31;
-        c = float(b);
+        c = min(float(b) + c, 1.0);
     }
 
-    vec4 col = vec4(c, uv.y, 1.0, 1.0);
+    vec4 col = vec4(c, 0, 1.0, 1.0);
     outColor = col;
 }
 </script>
