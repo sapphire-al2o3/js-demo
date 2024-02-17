@@ -14,6 +14,8 @@ precision highp float;
 in vec2 uv;
 out vec4 outColor;
 
+uniform vec4 t;
+
 void main() {
     vec2 iuv = floor(uv * 32.0);
 
@@ -32,7 +34,8 @@ void main() {
     int y = int(mod(iuv.y - 16.0, 8.0));
     if (y < rows.length()) {
         uint b = rows[y];
-        b = (b << uint(iuv.x)) >> 31;
+        uint x = uint(iuv.x + t.x);
+        b = (b << x) >> 31;
         c = min(float(b) + c, 1.0);
     }
 
