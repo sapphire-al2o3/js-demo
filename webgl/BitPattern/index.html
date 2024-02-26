@@ -16,6 +16,17 @@ out vec4 outColor;
 
 uniform vec4 t;
 
+const float PI = 3.14159265;
+
+vec4 huecolor(float x) {
+    return vec4(
+        cos(x) * 0.5 + 0.5,
+        cos(x + PI * 2.0 / 3.0) * 0.5 + 0.5,
+        cos(x + PI * 4.0 / 3.0) * 0.5 + 0.5,
+        1.0
+    );
+}
+
 void main() {
     vec2 iuv = floor(uv * 32.0);
 
@@ -31,15 +42,16 @@ void main() {
     );
 
     float c = uv.x;
+    vec4 col = vec4(c, 0, 1.0, 1.0);
     int y = int(mod(iuv.y - 16.0, 8.0));
     if (y < rows.length()) {
         uint b = rows[y];
         uint x = uint(mod(iuv.x + t.x + floor(iuv.y / 8.0) * 8.0, 32.0));
         b = (b << x) >> 31;
-        c = min(float(b) + c, 1.0);
+        //c = min(float(b) + c, 1.0);
+        col = mix(col, huecolor(t.x + c), float(b));
     }
 
-    vec4 col = vec4(c, 0, 1.0, 1.0);
     outColor = col;
 }
 </script>
