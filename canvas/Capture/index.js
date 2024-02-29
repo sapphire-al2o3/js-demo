@@ -59,3 +59,18 @@ document.getElementById('capture').addEventListener('click', e => {
 document.getElementById('stop').addEventListener('click', e => {
     stop();
 }, false);
+
+const types = [
+    "video/webm",
+    "audio/webm",
+    "video/webm;codecs=vp8",
+    "video/webm;codecs=daala",
+    "video/webm;codecs=h264",
+    "audio/webm;codecs=opus",
+    "video/mpeg",
+    "video/mp4"
+  ];
+  
+for (const type of types) {
+    console.log(`${type}:${MediaRecorder.isTypeSupported(type)}`);
+}
