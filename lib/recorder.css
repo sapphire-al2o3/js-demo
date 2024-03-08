@@ -1,0 +1,9 @@
+.recorder {
+    font-family: consolas;
+    font-size: 10pt;
+    color: #777;
+}
+
+.recorder button {
+    margin-right: 4px;
+}
