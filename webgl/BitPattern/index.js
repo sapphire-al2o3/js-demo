@@ -44,3 +44,5 @@ let timer = setAnimationFrame(render, 1000 / 30);
 gl.canvas.addEventListener('click', () => {
     timer.toggle();
 });
+
+document.body.appendChild(createRecorder(gl.canvas, 1000));
