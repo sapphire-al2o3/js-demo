@@ -6,4 +6,9 @@
 
 .recorder button {
     margin-right: 4px;
+    background-color: #DDD;
+}
+
+.recorder button.recording {
+    background-color: #DAA;
 }
