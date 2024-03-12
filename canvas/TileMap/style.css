@@ -1,0 +1,10 @@
+canvas {
+    border: 1px solid #DDD;
+}
+
+#cursor {
+    display: block;
+    position: relative;
+    width: 16px;
+    height: 16px;
+}

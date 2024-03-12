@@ -1,0 +1,45 @@
+window.onload = () => {
+
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    const palette = document.getElementById('palette');
+
+    let w = canvas.width;
+    let h = canvas.height;
+
+    let block = 16;
+
+    let sizeX = 16;
+    let sizeY = 16;
+
+    let image = ctx.getImageData(0, 0, w, h);
+    let data = image.data;
+    let buffer = new Uint8Array(w * h / (block * block) ^ 0);
+
+    const PI2 = Math.PI * 2;
+
+    let map = [];
+
+    function render() {
+        ctx.fillStyle = '#AAA';
+        ctx.fillRect(0, 0, w, h);
+        ctx.fillStyle = '#444';
+        const b = block;
+        for (let i = 0; i < sizeY; i++) {
+            for (let j = 0; j < sizeX; j++) {
+                let k = i + j;
+                let x = j * block;
+                let y = i * block;
+                if (k % 2 === 0) {
+                    ctx.fillStyle = '#AAA';
+                } else {
+                    ctx.fillStyle = '#444';
+                }
+                ctx.fillRect(x, y, block, block);
+            }
+        }
+    }
+
+    render();
+};
