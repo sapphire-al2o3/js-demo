@@ -17,9 +17,8 @@ window.onload = () => {
     let data = image.data;
     let buffer = new Uint8Array(w * h / (block * block) ^ 0);
 
-    const PI2 = Math.PI * 2;
-
     let map = [];
+    let selectedMaptip = 0;
 
     function render() {
         ctx.fillStyle = '#AAA';
@@ -32,14 +31,23 @@ window.onload = () => {
                 let x = j * block;
                 let y = i * block;
                 if (k % 2 === 0) {
-                    ctx.fillStyle = '#AAA';
+                    ctx.fillStyle = '#DDD';
                 } else {
-                    ctx.fillStyle = '#444';
+                    ctx.fillStyle = '#AAA';
                 }
                 ctx.fillRect(x, y, block, block);
             }
         }
     }
+
+    canvas.addEventListener('click', e => {
+        const x = (e.offsetX / block ^ 0);
+        const y = (e.offsetY / block ^ 0);
+        const k = y * sizeX + x;
+        map[k] = 1;
+        ctx.fillStyle = '#0EE';
+        ctx.fillRect(x * block, y * block, block, block);
+    });
 
     render();
 };
