@@ -5,6 +5,8 @@ window.onload = () => {
 
     const palette = document.getElementById('palette');
 
+    const output = document.getElementById('output');
+
     let w = canvas.width;
     let h = canvas.height;
 
@@ -19,6 +21,10 @@ window.onload = () => {
 
     let map = [];
     let selectedMaptip = 0;
+
+    for (let i = 0; i < sizeY * sizeX; i++) {
+        map.push(0);
+    }
 
     function render() {
         ctx.fillStyle = '#AAA';
@@ -40,6 +46,19 @@ window.onload = () => {
         }
     }
 
+    function dump() {
+        const text = [];
+        for (let i = 0; i < sizeY; i++) {
+            let line = [];
+            for (let j = 0; j < sizeX; j++) {
+                let k = i * block + j;
+                line.push(map[k]);
+            }
+            text.push(line.join(','));
+        }
+        output.value = text.join('\n');
+    }
+
     canvas.addEventListener('click', e => {
         const x = (e.offsetX / block ^ 0);
         const y = (e.offsetY / block ^ 0);
@@ -50,4 +69,5 @@ window.onload = () => {
     });
 
     render();
+    dump();
 };
