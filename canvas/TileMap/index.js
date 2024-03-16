@@ -4,6 +4,7 @@ window.onload = () => {
     const ctx = canvas.getContext('2d');
 
     const palette = document.getElementById('palette');
+    const maptip = document.getElementById('maptip');
 
     const output = document.getElementById('output');
 
@@ -63,9 +64,10 @@ window.onload = () => {
         const x = (e.offsetX / block ^ 0);
         const y = (e.offsetY / block ^ 0);
         const k = y * sizeX + x;
-        map[k] = 1;
+        map[k] = selectedMaptip;
         ctx.fillStyle = '#0EE';
-        ctx.fillRect(x * block, y * block, block, block);
+        ctx.drawImage(maptip, 0, 0, block, block, x * block, y * block, block, block);
+        // ctx.fillRect(x * block, y * block, block, block);
     });
 
     render();
