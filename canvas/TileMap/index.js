@@ -66,8 +66,19 @@ window.onload = () => {
         const k = y * sizeX + x;
         map[k] = selectedMaptip;
         ctx.fillStyle = '#0EE';
-        ctx.drawImage(maptip, 0, 0, block, block, x * block, y * block, block, block);
+        ctx.drawImage(maptip, maptipX * block, maptipY * block, block, block, x * block, y * block, block, block);
         // ctx.fillRect(x * block, y * block, block, block);
+    });
+
+    let maptipX = 0;
+    let maptipY = 0;
+    maptip.addEventListener('click', e => {
+        const x = (e.offsetX / block ^ 0);
+        const y = (e.offsetY / block ^ 0);
+        const k = y * sizeX + x;
+        selectedMaptip = k;
+        maptipX = x;
+        maptipY = y;
     });
 
     render();
