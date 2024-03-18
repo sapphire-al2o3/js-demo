@@ -5,8 +5,10 @@ window.onload = () => {
 
     const palette = document.getElementById('palette');
     const maptip = document.getElementById('maptip');
+    const maptipCursor = document.getElementById('maptip-cursor');
 
     const output = document.getElementById('output');
+
 
     let w = canvas.width;
     let h = canvas.height;
@@ -79,6 +81,8 @@ window.onload = () => {
         selectedMaptip = k;
         maptipX = x;
         maptipY = y;
+        maptipCursor.style.left = (x * block) + 'px';
+        maptipCursor.style.top = (y * block) + 'px';
     });
 
     render();

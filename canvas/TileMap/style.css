@@ -4,9 +4,24 @@ canvas {
 
 #cursor {
     display: block;
-    position: relative;
+    position: absolute;
     width: 16px;
     height: 16px;
+}
+
+#maptip-cursor {
+    display: block;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    /* border: 2px solid #A00; */
+    outline: 2px solid #A00;
+    left: 0px;
+    top: 0px;
+}
+
+#maptip-container {
+    position: relative;
 }
 
 textarea {
