@@ -87,4 +87,31 @@ window.onload = () => {
 
     render();
     dump();
+
+    document.getElementById('load').addEventListener('click', e => {
+        const text = output.value;
+        const lines = text.split('\n');
+        let k = 0;
+        for (let i = 0; i < lines.length; i++) {
+            const values = lines[i].split(',');
+            for (let i = 0; i < values.length; i++) {
+                map[k] = parseInt(values[i], 10);
+                k++;
+            }
+        }
+        render();
+
+        const b = block;
+        for (let i = 0; i < sizeY; i++) {
+            for (let j = 0; j < sizeX; j++) {
+                let k = i * sizeX + j;
+                let m = map[k];
+                if (m > 0) {
+                    let x = (m - 1);
+                    let y = 0;
+                    ctx.drawImage(maptip, x * block, y * block, block, block, j * block, i * block, block, block);
+                }
+            }
+        }
+    });
 };
