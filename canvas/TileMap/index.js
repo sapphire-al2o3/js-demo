@@ -23,7 +23,9 @@ window.onload = () => {
     let buffer = new Uint8Array(w * h / (block * block) ^ 0);
 
     let map = [];
-    let selectedMaptip = 0;
+    let selectedMaptip = 1;
+    let maptipSizeX = 4;
+    let maptipSizeY = 4;
 
     for (let i = 0; i < sizeY * sizeX; i++) {
         map.push(0);
@@ -70,6 +72,7 @@ window.onload = () => {
         ctx.fillStyle = '#0EE';
         ctx.drawImage(maptip, maptipX * block, maptipY * block, block, block, x * block, y * block, block, block);
         // ctx.fillRect(x * block, y * block, block, block);
+        dump();
     });
 
     let maptipX = 0;
@@ -77,7 +80,7 @@ window.onload = () => {
     maptip.addEventListener('click', e => {
         const x = (e.offsetX / block ^ 0);
         const y = (e.offsetY / block ^ 0);
-        const k = y * sizeX + x;
+        const k = y * maptipSizeX + x;
         selectedMaptip = k;
         maptipX = x;
         maptipY = y;
@@ -107,8 +110,8 @@ window.onload = () => {
                 let k = i * sizeX + j;
                 let m = map[k];
                 if (m > 0) {
-                    let x = (m - 1);
-                    let y = 0;
+                    let x = (m - 1) % maptipSizeX;
+                    let y = (m - 1) / maptipSizeX ^ 0;
                     ctx.drawImage(maptip, x * block, y * block, block, block, j * block, i * block, block, block);
                 }
             }
