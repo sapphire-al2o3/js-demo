@@ -25,6 +25,10 @@ canvas {
 }
 
 textarea {
-    width: 400px;
-    height: 300px;
+    width: 360px;
+    height: 240px;
+}
+
+#map-width, #map-height {
+    width: 60px;
 }
