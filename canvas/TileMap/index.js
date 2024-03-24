@@ -18,10 +18,6 @@ window.onload = () => {
     let sizeX = 16;
     let sizeY = 16;
 
-    let image = ctx.getImageData(0, 0, w, h);
-    let data = image.data;
-    let buffer = new Uint8Array(w * h / (block * block) ^ 0);
-
     let map = [];
     let selectedMaptip = 1;
     let maptipSizeX = 4;
@@ -115,6 +111,22 @@ window.onload = () => {
                     ctx.drawImage(maptip, x * block, y * block, block, block, j * block, i * block, block, block);
                 }
             }
+        }
+    });
+
+    document.getElementById('resize').addEventListener('click', e => {
+        const resizeX = parseInt(document.getElementById('map-width').value, 10);
+        const resizeY = parseInt(document.getElementById('map-height').value, 10);
+        if (resizeX !== sizeX || resizeY !== sizeY) {
+            sizeX = resizeX;
+            sizeY = resizeY;
+            canvas.width = sizeX * block;
+            canvas.height = sizeY * block;
+
+            for (let i = 0; i < sizeY * sizeX; i++) {
+                map.push(0);
+            }
+            render();
         }
     });
 };
