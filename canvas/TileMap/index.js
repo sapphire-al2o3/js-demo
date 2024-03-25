@@ -45,6 +45,17 @@ window.onload = () => {
                 ctx.fillRect(x, y, block, block);
             }
         }
+        for (let i = 0; i < sizeY; i++) {
+            for (let j = 0; j < sizeX; j++) {
+                let k = i * sizeX + j;
+                let m = map[k];
+                if (m > 0) {
+                    let x = (m - 1) % maptipSizeX;
+                    let y = (m - 1) / maptipSizeX ^ 0;
+                    ctx.drawImage(maptip, x * block, y * block, block, block, j * block, i * block, block, block);
+                }
+            }
+        }
     }
 
     function dump() {
@@ -99,34 +110,28 @@ window.onload = () => {
             }
         }
         render();
-
-        const b = block;
-        for (let i = 0; i < sizeY; i++) {
-            for (let j = 0; j < sizeX; j++) {
-                let k = i * sizeX + j;
-                let m = map[k];
-                if (m > 0) {
-                    let x = (m - 1) % maptipSizeX;
-                    let y = (m - 1) / maptipSizeX ^ 0;
-                    ctx.drawImage(maptip, x * block, y * block, block, block, j * block, i * block, block, block);
-                }
-            }
-        }
     });
 
     document.getElementById('resize').addEventListener('click', e => {
         const resizeX = parseInt(document.getElementById('map-width').value, 10);
         const resizeY = parseInt(document.getElementById('map-height').value, 10);
         if (resizeX !== sizeX || resizeY !== sizeY) {
+            const resizeMap = [];
+            for (let i = 0; i < resizeX * resizeX; i++) {
+                resizeMap.push(0);
+            }
+            for (let i = 0; i < sizeY && i < resizeY; i++) {
+                for (let j = 0; j < sizeX && j < resizeX; j++) {
+                    resizeMap[i * resizeX + j] = map[i * sizeX + j];
+                }
+            }
+            map = resizeMap;
             sizeX = resizeX;
             sizeY = resizeY;
             canvas.width = sizeX * block;
             canvas.height = sizeY * block;
-
-            for (let i = 0; i < sizeY * sizeX; i++) {
-                map.push(0);
-            }
             render();
+            dump();
         }
     });
 };
