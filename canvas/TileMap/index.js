@@ -63,7 +63,7 @@ window.onload = () => {
         for (let i = 0; i < sizeY; i++) {
             let line = [];
             for (let j = 0; j < sizeX; j++) {
-                let k = i * block + j;
+                let k = i * sizeX + j;
                 line.push(map[k]);
             }
             text.push(line.join(','));
