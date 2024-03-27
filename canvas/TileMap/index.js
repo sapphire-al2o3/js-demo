@@ -88,7 +88,7 @@ window.onload = () => {
         const x = (e.offsetX / block ^ 0);
         const y = (e.offsetY / block ^ 0);
         const k = y * maptipSizeX + x;
-        selectedMaptip = k;
+        selectedMaptip = k + 1;
         maptipX = x;
         maptipY = y;
         maptipCursor.style.left = (x * block) + 'px';
