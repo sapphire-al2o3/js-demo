@@ -58,6 +58,12 @@ window.onload = () => {
         }
     }
 
+    const comma = document.getElementById('comma');
+
+    comma.addEventListener('change', e => {
+        dump();
+    });
+
     function dump() {
         const text = [];
         for (let i = 0; i < sizeY; i++) {
@@ -66,7 +72,11 @@ window.onload = () => {
                 let k = i * sizeX + j;
                 line.push(map[k]);
             }
-            text.push(line.join(','));
+            if (comma.checked) {
+                text.push(line.join(',') + ',');
+            } else {
+                text.push(line.join(','));
+            }
         }
         output.value = text.join('\n');
     }
