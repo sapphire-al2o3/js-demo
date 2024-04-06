@@ -133,10 +133,10 @@ Hsv.lerp = function(a, b, t) {
     function render() {
         ctx.clearRect(0, 0, 400, 400);
         
-        var hit = false;
+        let hit = false;
         
-        shapes.forEach(function(e) {
-            var r = 8;
+        shapes.forEach(e => {
+            const r = 8;
             
             if(e === p0) {
                 ctx.lineWidth = 2.0;
@@ -150,8 +150,8 @@ Hsv.lerp = function(a, b, t) {
 
         canvas.style['cursor'] = p0.hit || active ? 'pointer' : 'default';
         
-        for(var i = 1; i < shapes.length; i++) {
-            var e = shapes[i],
+        for(let i = 1; i < shapes.length; i++) {
+            let e = shapes[i],
                 s = shapes[i - 1];
             ctx.lineWidth = 1.0;
             ctx.strokeStyle = 'rgba(200, 100, 0, 1)';
@@ -169,11 +169,8 @@ Hsv.lerp = function(a, b, t) {
             startEffect();
         }
     }, false);
-        
     
-    var rect = canvas.getBoundingClientRect();
-    
-    canvas.addEventListener('mousedown', function(e) {
+    canvas.addEventListener('mousedown', e => {
         var rect = e.target.getBoundingClientRect();
         p.x = e.clientX - rect.left;
         p.y = e.clientY - rect.top;
