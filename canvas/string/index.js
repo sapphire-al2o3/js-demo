@@ -20,7 +20,7 @@ function rgba(r, g, b, a) {
 }
 
 function hsva(h, s, v, a) {
-    var f=h/60,i=f^0,m=v-v*s,k=v*s*(f-i),p=v-k,q=k+m,c=255;
+    let f=h/60,i=f^0,m=v-v*s,k=v*s*(f-i),p=v-k,q=k+m,c=255;
     return rgba([v,p,m,m,q,v][i]*255^0,[q,v,v,p,m,m][i]*255^0,[m,m,q,v,v,p][i]*255^0,a);
 }
 
@@ -60,7 +60,7 @@ Color.prototype = {
     }
 };
 
-var Hsv = function(h, s, v, a) {
+let Hsv = function(h, s, v, a) {
     this.h = h;
     this.s = s;
     this.v = v;
@@ -75,7 +75,7 @@ Hsv.lerp = function(a, b, t) {
 };
 
 (function() {
-    var canvas = document.getElementById('canvas'),
+    let canvas = document.getElementById('canvas'),
         ctx = canvas.getContext('2d'),
         width = canvas.width,
         height = canvas.height,
@@ -108,10 +108,8 @@ Hsv.lerp = function(a, b, t) {
             }
         }
         
-        var e = p1;
-//					if(e) {
-        for(var i = 1; i < shapes.length; i++) {
-            var dx = shapes[i].x - shapes[i - 1].x,
+        for(let i = 1; i < shapes.length; i++) {
+            let dx = shapes[i].x - shapes[i - 1].x,
                 dy = shapes[i].y - shapes[i - 1].y,
                 l = Math.sqrt(dx * dx + dy * dy),
                 d = l - x,
@@ -121,14 +119,6 @@ Hsv.lerp = function(a, b, t) {
             shapes[i].y -= dy / l * f;
         }
     }
-    
-    var mouseMoveHandler = function(e) {
-    };
-    
-    var mouseOutHandler = function(e) {
-        down = false;
-        active = null;
-    };
     
     function render() {
         ctx.clearRect(0, 0, 400, 400);
@@ -159,19 +149,19 @@ Hsv.lerp = function(a, b, t) {
         }
     }
     
-    setInterval(function() {
+    setInterval(() => {
         update();
         render();
     }, 1000 / 30);
     
-    canvas.addEventListener('click', function() {
+    canvas.addEventListener('click', () => {
         if(path.length > 0) {
             startEffect();
         }
     }, false);
     
-    canvas.addEventListener('mousedown', e => {
-        var rect = e.target.getBoundingClientRect();
+    canvas.addEventListener('mousedown', (e) => {
+        const rect = e.target.getBoundingClientRect();
         p.x = e.clientX - rect.left;
         p.y = e.clientY - rect.top;
         down = true;
@@ -179,19 +169,19 @@ Hsv.lerp = function(a, b, t) {
     
         
         
-    canvas.addEventListener('mousemove', function(e) {
-        var rect = e.target.getBoundingClientRect();
+    canvas.addEventListener('mousemove', (e) => {
+        const rect = e.target.getBoundingClientRect();
         p.x = e.clientX - rect.left;
         p.y = e.clientY - rect.top;
         e.stopPropagation();
     }, false);
         
-    canvas.addEventListener('mouseup', function(e) {
+    canvas.addEventListener('mouseup', (e) => {
         down = false;
         active = false;
     }, false);
         
-    canvas.addEventListener('mouseout', function(e) {
+    canvas.addEventListener('mouseout', (e) => {
         down = false;
         active = false;
     }, false);
