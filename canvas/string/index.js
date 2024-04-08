@@ -186,4 +186,7 @@ Hsv.lerp = function(a, b, t) {
         active = false;
     }, false);
     
+    document.body.appendChild(createSlider('k', k, v => {
+        k = v;
+    }));
 })();
