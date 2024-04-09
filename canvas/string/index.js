@@ -189,4 +189,8 @@ Hsv.lerp = function(a, b, t) {
     document.body.appendChild(createSlider('k', k, v => {
         k = v;
     }));
+
+    document.body.appendChild(createSlider('x', x / 8.0, v => {
+        x = v * 8.0 + 0.1;
+    }));
 })();
