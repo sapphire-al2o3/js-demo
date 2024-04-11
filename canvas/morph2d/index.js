@@ -47,24 +47,91 @@ window.onload = () => {
         return d;
     }
 
+    let max = 0;
+    const distMap = [];
     for (let i = 0; i < h; i++) {
         for (let j = 0; j < w; j++) {
             let k = (i * w + j) * 4;
-            let d = 255;
-            if (dataFrom[k] === 0) {
-                d = Math.sqrt(dist(dataTo, j, i)) * 20 ^ 0;
-                // console.log(d);
+            let d = -1;
+            if (dataTo[k] === 0) {
+                d = Math.sqrt(dist(dataFrom, j, i));
+                if (d > max) {
+                    max = d;
+                }
             }
-            dataResult[k] = d;//dataFrom[k];
-            dataResult[k + 1] = d;//dataFrom[k];
-            dataResult[k + 2] = d;//dataFrom[k];
+            distMap.push(d);
+        }
+    }
+
+    let maxR = 0;
+    const distMapR = [];
+    for (let i = 0; i < h; i++) {
+        for (let j = 0; j < w; j++) {
+            let k = (i * w + j) * 4;
+            let d = -1;
+            if (dataFrom[k] === 0) {
+                d = Math.sqrt(dist(dataTo, j, i));
+                if (d > maxR) {
+                    maxR = d;
+                }
+            }
+            distMapR.push(d);
+        }
+    }
+
+    for (let i = 0; i < h; i++) {
+        for (let j = 0; j < w; j++) {
+            let k = (i * w + j) * 4;
+            let d = distMap[i * w + j];
+            let y = 255;
+            if (d !== -1) {
+                y = (d / max) * 255 ^ 0;
+            }
+            dataResult[k] = y;
+            dataResult[k + 1] = y;
+            dataResult[k + 2] = y;
             dataResult[k + 3] = 255;
         }
     }
 
     ctx.putImageData(imgResult, 0, 0);
 
-    document.body.appendChild(createSlider('th', 0, v => {
+    function render(th) {
+        for (let i = 0; i < h; i++) {
+            for (let j = 0; j < w; j++) {
+                let k = (i * w + j) * 4;
+                let d = distMap[i * w + j];
+                let y = 255;
+                if (d !== -1) {
+                    y = (d / max) * 255 ^ 0;
+                    if (y > th) {
+                        y = 255;
+                    } else {
+                        y = 0;
+                    }
+                }
+                d = distMapR[i * w + j];
+                let yy = 255;
+                if (d !== -1) {
+                    yy = 255 - (d / maxR) * 255 ^ 0;
+                    if (yy < th) {
+                        yy = 255;
+                    } else {
+                        yy = 0;
+                    }
+                }
+                dataResult[k] = yy && y;
+                dataResult[k + 1] = 0;
+                dataResult[k + 2] = 0;
+                dataResult[k + 3] = 255;
+            }
+        }
+    
+        ctx.putImageData(imgResult, 0, 0);
+    }
 
+    document.body.appendChild(createSlider('th', 0, v => {
+        let th = v * 255 ^ 0;
+        render(th);
     }));
 };
