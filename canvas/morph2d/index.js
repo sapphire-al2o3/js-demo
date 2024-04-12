@@ -48,6 +48,8 @@ window.onload = () => {
     }
 
     let max = 0;
+    // 背景を255にしているので最大値を255にしない
+    const valueMax = 255 - 15;
     const distMap = [];
     for (let i = 0; i < h; i++) {
         for (let j = 0; j < w; j++) {
@@ -85,7 +87,14 @@ window.onload = () => {
             let d = distMap[i * w + j];
             let y = 255;
             if (d !== -1) {
-                y = (d / max) * 255 ^ 0;
+                y = (d / max) * valueMax ^ 0;
+            }
+            dataResult[k] = y;
+
+            d = distMapR[i * w + j];
+            y = 255;
+            if (d !== -1) {
+                y = (d / maxR) * valueMax ^ 0;
             }
             dataResult[k] = y;
             dataResult[k + 1] = y;
@@ -120,9 +129,10 @@ window.onload = () => {
                         yy = 0;
                     }
                 }
-                dataResult[k] = yy && y;
-                dataResult[k + 1] = 0;
-                dataResult[k + 2] = 0;
+                y = yy && y;
+                dataResult[k] = y;
+                dataResult[k + 1] = y;
+                dataResult[k + 2] = y;
                 dataResult[k + 3] = 255;
             }
         }
