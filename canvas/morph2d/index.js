@@ -140,6 +140,26 @@ window.onload = () => {
         ctx.putImageData(imgResult, 0, 0);
     }
 
+    function dropImage(img, cb) {
+        img.addEventListener('dragover', e => {
+            e.preventDefault();
+        }, false);
+
+        img.addEventListener('drop', e => {
+            const file = e.dataTransfer.files[0];
+            const reader = new FileReader();
+            reader.onload = e => {
+                img.src = reader.result;
+                img.onload = cb;
+            };
+            reader.readAsDataURL(file);
+            e.preventDefault();
+        }, false);
+    }
+
+    dropImage(imgFrom);
+    dropImage(imgTo);
+
     document.body.appendChild(createSlider('th', 0, v => {
         let th = v * 255 ^ 0;
         render(th);
