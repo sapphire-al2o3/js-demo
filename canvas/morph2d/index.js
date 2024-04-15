@@ -10,11 +10,11 @@ window.onload = () => {
     let h = canvas.height = imgFrom.height;
 
     ctx.drawImage(imgFrom, 0, 0);
-    let imgDataFrom = ctx.getImageData(0, 0, w, h);
+    const imgDataFrom = ctx.getImageData(0, 0, w, h);
     let dataFrom = imgDataFrom.data;
 
     ctx.drawImage(imgTo, 0, 0);
-    let imgDataTo = ctx.getImageData(0, 0, w, h);
+    const imgDataTo = ctx.getImageData(0, 0, w, h);
     let dataTo = imgDataTo.data;
 
     let imgResult = ctx.createImageData(w, h);
@@ -47,40 +47,31 @@ window.onload = () => {
         return d;
     }
 
-    let max = 0;
+    function genDistMap(dataFrom, dataTo, distMap) {
+        let max = 0;
+        for (let i = 0; i < h; i++) {
+            for (let j = 0; j < w; j++) {
+                let k = (i * w + j) * 4;
+                let d = -1;
+                if (dataTo[k] === 0) {
+                    d = Math.sqrt(dist(dataFrom, j, i));
+                    if (d > max) {
+                        max = d;
+                    }
+                }
+                distMap[i * w + j] = d;
+            }
+        }
+        return max;
+    }
+
+    const distMap = [];
+    const distMapR = [];
+    let max = genDistMap(dataFrom, dataTo, distMap);
+    let maxR = genDistMap(dataTo, dataFrom, distMapR);
+
     // 背景を255にしているので最大値を255にしない
     const valueMax = 255 - 15;
-    const distMap = [];
-    for (let i = 0; i < h; i++) {
-        for (let j = 0; j < w; j++) {
-            let k = (i * w + j) * 4;
-            let d = -1;
-            if (dataTo[k] === 0) {
-                d = Math.sqrt(dist(dataFrom, j, i));
-                if (d > max) {
-                    max = d;
-                }
-            }
-            distMap.push(d);
-        }
-    }
-
-    let maxR = 0;
-    const distMapR = [];
-    for (let i = 0; i < h; i++) {
-        for (let j = 0; j < w; j++) {
-            let k = (i * w + j) * 4;
-            let d = -1;
-            if (dataFrom[k] === 0) {
-                d = Math.sqrt(dist(dataTo, j, i));
-                if (d > maxR) {
-                    maxR = d;
-                }
-            }
-            distMapR.push(d);
-        }
-    }
-
     for (let i = 0; i < h; i++) {
         for (let j = 0; j < w; j++) {
             let k = (i * w + j) * 4;
@@ -159,6 +150,19 @@ window.onload = () => {
 
     dropImage(imgFrom);
     dropImage(imgTo);
+
+    document.getElementById('convert').addEventListener('click', e => {
+        ctx.drawImage(imgFrom, 0, 0);
+        const imgDataFrom = ctx.getImageData(0, 0, w, h);
+        const dataFrom = imgDataFrom.data;
+
+        ctx.drawImage(imgTo, 0, 0);
+        const imgDataTo = ctx.getImageData(0, 0, w, h);
+        const dataTo = imgDataTo.data;
+
+        max = genDistMap(dataFrom, dataTo, distMap);
+        maxR = genDistMap(dataTo, dataFrom, distMapR);
+    });
 
     document.body.appendChild(createSlider('th', 0, v => {
         let th = v * 255 ^ 0;
