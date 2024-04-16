@@ -152,6 +152,14 @@ window.onload = () => {
     dropImage(imgTo);
 
     document.getElementById('convert').addEventListener('click', e => {
+        if (w != imgFrom.width || h != imgFrom.height) {
+            w = canvas.width = imgFrom.width;
+            h = canvas.height = imgFrom.height;
+
+            imgResult = ctx.createImageData(w, h);
+            dataResult = imgResult.data;
+        }
+
         ctx.drawImage(imgFrom, 0, 0);
         const imgDataFrom = ctx.getImageData(0, 0, w, h);
         const dataFrom = imgDataFrom.data;
