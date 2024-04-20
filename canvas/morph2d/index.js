@@ -70,31 +70,43 @@ window.onload = () => {
     let max = genDistMap(dataFrom, dataTo, distMap);
     let maxR = genDistMap(dataTo, dataFrom, distMapR);
 
-    // 背景を255にしているので最大値を255にしない
-    const valueMax = 255 - 15;
-    for (let i = 0; i < h; i++) {
-        for (let j = 0; j < w; j++) {
-            let k = (i * w + j) * 4;
-            let d = distMap[i * w + j];
-            let y = 255;
-            if (d !== -1) {
-                y = (d / max) * valueMax ^ 0;
-            }
-            dataResult[k] = y;
+    let nega = false;
+    previewMap();
 
-            d = distMapR[i * w + j];
-            y = 255;
-            if (d !== -1) {
-                y = (d / maxR) * valueMax ^ 0;
+    function previewMap() {
+        // 背景を255にしているので最大値を255にしない
+        const valueMax = 255 - 15;
+        for (let i = 0; i < h; i++) {
+            for (let j = 0; j < w; j++) {
+                let k = (i * w + j) * 4;
+                let d = distMap[i * w + j];
+                let y = nega ? 0 : 255;
+                if (d !== -1) {
+                    if (nega) {
+                        y = 255 - (d / max) * valueMax ^ 0;
+                    } else {
+                        y = (d / max) * valueMax ^ 0;
+                    }
+                }
+                dataResult[k] = y;
+
+                d = distMapR[i * w + j];
+                y = nega ? 0 : 255;
+                if (d !== -1) {
+                    if (nega) {
+                        y = 255 - (d / maxR) * valueMax ^ 0;
+                    } else {
+                        y = (d / maxR) * valueMax ^ 0;
+                    }
+                }
+                dataResult[k] = y;
+                dataResult[k + 1] = y;
+                dataResult[k + 2] = y;
+                dataResult[k + 3] = 255;
             }
-            dataResult[k] = y;
-            dataResult[k + 1] = y;
-            dataResult[k + 2] = y;
-            dataResult[k + 3] = 255;
         }
+        ctx.putImageData(imgResult, 0, 0);
     }
-
-    ctx.putImageData(imgResult, 0, 0);
 
     function render(th) {
         for (let i = 0; i < h; i++) {
@@ -170,7 +182,13 @@ window.onload = () => {
 
         max = genDistMap(dataFrom, dataTo, distMap);
         maxR = genDistMap(dataTo, dataFrom, distMapR);
+
+        previewMap();
     });
+
+    document.body.appendChild(createCheckbox('nega', v => {
+        nega = v;
+    }));
 
     document.body.appendChild(createSlider('th', 0, v => {
         let th = v * 255 ^ 0;
