@@ -71,6 +71,7 @@ window.onload = () => {
     let maxR = genDistMap(dataTo, dataFrom, distMapR);
 
     let nega = false;
+    let reverse = true;
     previewMap();
 
     function previewMap() {
@@ -79,24 +80,24 @@ window.onload = () => {
         for (let i = 0; i < h; i++) {
             for (let j = 0; j < w; j++) {
                 let k = (i * w + j) * 4;
-                let d = distMap[i * w + j];
                 let y = nega ? 0 : 255;
-                if (d !== -1) {
-                    if (nega) {
-                        y = 255 - (d / max) * valueMax ^ 0;
-                    } else {
-                        y = (d / max) * valueMax ^ 0;
+                if (reverse) {
+                    let d = distMap[i * w + j];
+                    if (d !== -1) {
+                        if (nega) {
+                            y = 255 - (d / max) * valueMax ^ 0;
+                        } else {
+                            y = (d / max) * valueMax ^ 0;
+                        }
                     }
-                }
-                dataResult[k] = y;
-
-                d = distMapR[i * w + j];
-                y = nega ? 0 : 255;
-                if (d !== -1) {
-                    if (nega) {
-                        y = 255 - (d / maxR) * valueMax ^ 0;
-                    } else {
-                        y = (d / maxR) * valueMax ^ 0;
+                } else {
+                    let d = distMapR[i * w + j];
+                    if (d !== -1) {
+                        if (nega) {
+                            y = 255 - (d / maxR) * valueMax ^ 0;
+                        } else {
+                            y = (d / maxR) * valueMax ^ 0;
+                        }
                     }
                 }
                 dataResult[k] = y;
