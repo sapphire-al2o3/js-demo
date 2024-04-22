@@ -81,23 +81,20 @@ window.onload = () => {
             for (let j = 0; j < w; j++) {
                 let k = (i * w + j) * 4;
                 let y = nega ? 0 : 255;
+                let d = 0;
+                let m = 1;
                 if (reverse) {
-                    let d = distMap[i * w + j];
-                    if (d !== -1) {
-                        if (nega) {
-                            y = 255 - (d / max) * valueMax ^ 0;
-                        } else {
-                            y = (d / max) * valueMax ^ 0;
-                        }
-                    }
+                    d = distMap[i * w + j];
+                    m = max;
                 } else {
-                    let d = distMapR[i * w + j];
-                    if (d !== -1) {
-                        if (nega) {
-                            y = 255 - (d / maxR) * valueMax ^ 0;
-                        } else {
-                            y = (d / maxR) * valueMax ^ 0;
-                        }
+                    d = distMapR[i * w + j];
+                    m = maxR;
+                }
+                if (d !== -1) {
+                    if (nega) {
+                        y = 255 - (d / m) * valueMax ^ 0;
+                    } else {
+                        y = (d / m) * valueMax ^ 0;
                     }
                 }
                 dataResult[k] = y;
