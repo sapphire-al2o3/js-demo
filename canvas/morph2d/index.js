@@ -1,13 +1,16 @@
 window.onload = () => {
 
     const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d', {willReadFrequently:true});
+    const ctx = canvas.getContext('2d', {willReadFrequently: true});
 
     const imgFrom = document.getElementById('img_from');
     const imgTo = document.getElementById('img_to');
 
-    let w = canvas.width = imgFrom.width;
-    let h = canvas.height = imgFrom.height;
+    const map = document.getElementById('map');
+    const mapCtx = map.getContext('2d', {willReadFrequently: true});
+
+    let w = canvas.width = map.width = imgFrom.width;
+    let h = canvas.height = map.height = imgFrom.height;
 
     ctx.drawImage(imgFrom, 0, 0);
     const imgDataFrom = ctx.getImageData(0, 0, w, h);
@@ -103,7 +106,7 @@ window.onload = () => {
                 dataResult[k + 3] = 255;
             }
         }
-        ctx.putImageData(imgResult, 0, 0);
+        mapCtx.putImageData(imgResult, 0, 0);
     }
 
     function render(th) {
