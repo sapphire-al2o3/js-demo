@@ -72,9 +72,9 @@ window.onload = () => {
 
     let nega = false;
     let reverse = true;
-    previewMap();
+    createMap();
 
-    function previewMap() {
+    function createMap() {
         // 背景を255にしているので最大値を255にしない
         const valueMax = 255 - 15;
         for (let i = 0; i < h; i++) {
@@ -181,7 +181,7 @@ window.onload = () => {
         max = genDistMap(dataFrom, dataTo, distMap);
         maxR = genDistMap(dataTo, dataFrom, distMapR);
 
-        previewMap();
+        createMap();
     });
 
     document.body.appendChild(createCheckbox('nega', v => {
