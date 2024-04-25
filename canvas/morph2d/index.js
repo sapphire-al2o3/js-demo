@@ -74,7 +74,7 @@ window.onload = () => {
     let maxR = genDistMap(dataTo, dataFrom, distMapR);
 
     let nega = false;
-    let reverse = true;
+    let reverse = false;
     createMap();
 
     function createMap() {
@@ -189,6 +189,10 @@ window.onload = () => {
 
     document.body.appendChild(createCheckbox('nega', v => {
         nega = v;
+    }));
+
+    document.body.appendChild(createCheckbox('BtoA', v => {
+        reverse = v;
     }));
 
     document.body.appendChild(createSlider('th', 0, v => {
