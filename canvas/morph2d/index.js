@@ -78,6 +78,7 @@ window.onload = () => {
     createMap();
 
     function getMapValue(k, r) {
+        // 背景を255にしているので最大値を255にしない
         const valueMax = 255 - 15;
         let y = nega ? 0 : 255;
         let d = 0;
@@ -100,7 +101,6 @@ window.onload = () => {
     }
 
     function createMap() {
-        // 背景を255にしているので最大値を255にしない
         for (let i = 0; i < h; i++) {
             for (let j = 0; j < w; j++) {
                 let y = getMapValue(i * w + j, reverse);
