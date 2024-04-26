@@ -77,29 +77,34 @@ window.onload = () => {
     let reverse = false;
     createMap();
 
+    function getMapValue(k, r) {
+        const valueMax = 255 - 15;
+        let y = nega ? 0 : 255;
+        let d = 0;
+        let m = 1;
+        if (r) {
+            d = distMap[k];
+            m = max;
+        } else {
+            d = distMapR[k];
+            m = maxR;
+        }
+        if (d !== -1) {
+            if (nega) {
+                y = 255 - (d / m) * valueMax ^ 0;
+            } else {
+                y = (d / m) * valueMax ^ 0;
+            }
+        }
+        return y;
+    }
+
     function createMap() {
         // 背景を255にしているので最大値を255にしない
-        const valueMax = 255 - 15;
         for (let i = 0; i < h; i++) {
             for (let j = 0; j < w; j++) {
+                let y = getMapValue(i * w + j, reverse);
                 let k = (i * w + j) * 4;
-                let y = nega ? 0 : 255;
-                let d = 0;
-                let m = 1;
-                if (reverse) {
-                    d = distMap[i * w + j];
-                    m = max;
-                } else {
-                    d = distMapR[i * w + j];
-                    m = maxR;
-                }
-                if (d !== -1) {
-                    if (nega) {
-                        y = 255 - (d / m) * valueMax ^ 0;
-                    } else {
-                        y = (d / m) * valueMax ^ 0;
-                    }
-                }
                 dataResult[k] = y;
                 dataResult[k + 1] = y;
                 dataResult[k + 2] = y;
