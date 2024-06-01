@@ -29,13 +29,17 @@ keyState['ArrowUp'] = 0;
 keyState['ArrowDown'] = 0;
 keyState[JumpKey] = 0;
 document.addEventListener('keydown', e => {
-    keyState[e.code] = 1;
-    e.preventDefault();
+    if (e.code in keyState) {
+        keyState[e.code] = 1;
+        e.preventDefault();
+    }
 }, false);
 
 document.addEventListener('keyup', e => {
-    keyState[e.code] = 0;
-    e.preventDefault();
+    if (e.code in keyState) {
+        keyState[e.code] = 0;
+        e.preventDefault();
+    }
 }, false);
 
 const W = canvas.width;
