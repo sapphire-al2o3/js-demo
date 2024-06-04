@@ -47,29 +47,35 @@ const H = canvas.height;
 let isGround = true;
 let vy = 0;
 const g = 1;
+const size = 32;
 
 let map = [];
 map.push(30);
 map.push(80);
 map.push(40);
 map.push(50);
+map.push(60);
+map.push(100);
+map.push(20);
+const max = map.length;
 let sx = 0;
-let svx = 4;
+let speed = 2;
 
 function render() {
     ctx.clearRect(0, 0, W, H);
     ctx.fillStyle = '#000';
-    let k = sx / 40 ^ 0;
-    for (let i = 0; i < 4; i++) {
-        let y = map[(k + i) % 4];
-        let x = i * 40;
-        ctx.fillRect(x, y, 40, H - y);
+    let k = sx / size ^ 0;
+    let o = sx % size;
+    for (let i = 0; i < max; i++) {
+        let y = map[(k + i) % max];
+        let x = i * size - o;
+        ctx.fillRect(x, y, size, H - y);
     }
 }
 
 loop((dt) => {
 
-    sx += svx;
+    sx += speed;
 
     render();
 
