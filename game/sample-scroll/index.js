@@ -21,32 +21,8 @@ function loop(callback, interval) {
     update();
 };
 
-const JumpKey = 'Space';
-let keyState = [];
-keyState['ArrowRight'] = 0;
-keyState['ArrowLeft'] = 0;
-keyState['ArrowUp'] = 0;
-keyState['ArrowDown'] = 0;
-keyState[JumpKey] = 0;
-document.addEventListener('keydown', e => {
-    if (e.code in keyState) {
-        keyState[e.code] = 1;
-        e.preventDefault();
-    }
-}, false);
-
-document.addEventListener('keyup', e => {
-    if (e.code in keyState) {
-        keyState[e.code] = 0;
-        e.preventDefault();
-    }
-}, false);
-
 const W = canvas.width;
 const H = canvas.height;
-let isGround = true;
-let vy = 0;
-const g = 1;
 const size = 32;
 
 let map = [];
