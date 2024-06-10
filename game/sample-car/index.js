@@ -42,8 +42,8 @@ document.addEventListener('keyup', e => {
 
 const W = canvas.width;
 const H = canvas.height;
-let x = 4;
-let y = 4;
+let x = 80;
+let y = 60;
 let dir = Math.PI * 0.5;
 let speed = 4;
 
