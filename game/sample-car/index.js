@@ -46,16 +46,18 @@ let x = 80;
 let y = 60;
 let dir = Math.PI * 0.5;
 let speed = 4;
+let rotSpeed = 0.2;
 
 loop((dt) => {
 
     const keyX = keyState['ArrowRight'] - keyState['ArrowLeft'];
     const keyY = keyState['ArrowDown'] - keyState['ArrowUp'];
 
-    let d = keyX * 0.2;
+    let d = keyX * rotSpeed;
     dir += d;
-    let vx = keyY * speed * Math.cos(dir);
-    let vy = keyY * speed * Math.sin(dir);
+    let v = keyY * speed;
+    let vx = v * Math.cos(dir);
+    let vy = v * Math.sin(dir);
     x += vx;
     y += vy;
 
