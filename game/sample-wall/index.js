@@ -44,19 +44,19 @@ const W = canvas.width;
 const H = canvas.height;
 let x = 80;
 let y = 60;
-
+const size = 10;
 let map = [
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1,
     1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1,
     1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1,
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,
-    1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,
-    1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,
-    1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1,
-    1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1,
+    1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,
+    1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1,
+    1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1,
+    1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1,
+    1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 ];
 
@@ -70,7 +70,7 @@ function render() {
     for (let i = 0; i < mapH; i++) {
         for (let j = 0; j < mapW; j++) {
             if (map[i * mapW + j] === 1) {
-                ctx.fillRect(j * 10, i * 10, 10, 10);
+                ctx.fillRect(j * size, i * size, size, size);
             }
         }
     }
@@ -79,6 +79,8 @@ function render() {
     ctx.fillRect(x - 4, y - 4, 8, 8);
 }
 
+const speed = 4;
+
 loop((dt) => {
 
     const keyX = keyState['ArrowRight'] - keyState['ArrowLeft'];
@@ -86,15 +88,15 @@ loop((dt) => {
 
     let px = x;
     let py = y;
-    x += keyX * 4;
-    y += keyY * 4;
+    x += keyX * speed;
+    y += keyY * speed;
 
-    let mx = x / 10 ^ 0;
-    let my = y / 10 ^ 0;
+    let mx = x / size ^ 0;
+    let my = y / size ^ 0;
     if (map[my * mapW + mx] === 1) {
-        if (map[my * mapW + (px / 10 ^ 0)] === 0) {
+        if (map[my * mapW + (px / size ^ 0)] === 0) {
             x = px;
-        } else if (map[(py / 10 ^ 0) * mapW + mx] === 0) {
+        } else if (map[(py / size ^ 0) * mapW + mx] === 0) {
             y = py;
         } else {
             x = px;
