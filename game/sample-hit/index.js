@@ -48,16 +48,21 @@ let dir = Math.PI * 0.5;
 let speed = 4;
 let rotSpeed = 0.2;
 
-let tx = 0;
-let ty = 0;
-let feed = false;
+let feed = [];
+for (let i = 0; i < 4; i++) {
+    feed.push({
+        x: 0,
+        y: 0,
+        alive: false
+    });
+}
 
 function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    if (feed) {
+    for (let i = 0; i < feed.length; i++) {
         ctx.fillStyle = '#444';
-        ctx.fillRect(tx - 3, ty - 3, 6, 6);
+        ctx.fillRect(feed[i].x - 3, feed[i].y - 3, 6, 6);
     }
     
     ctx.strokeStyle = '#000';
@@ -76,11 +81,12 @@ function render() {
 }
 
 loop((dt) => {
-
-    if (!feed) {
-        tx = Math.random() * 140 + 10 ^ 0;
-        ty = Math.random() * 100 + 10 ^ 0;
-        feed = true;
+    for (let i = 0; i < feed.length; i++) {
+        if (!feed[i].alive) {
+            feed[i].x = Math.random() * 140 + 10 ^ 0;
+            feed[i].y = Math.random() * 100 + 10 ^ 0;
+            feed[i].alive = true;
+        }
     }
 
     const keyX = keyState['ArrowRight'] - keyState['ArrowLeft'];
@@ -100,10 +106,12 @@ loop((dt) => {
     if (x >= W - 4) x = W - 4;
     if (y >= H - 4) y = H - 4;
 
-    let dx = x - tx;
-    let dy = y - ty;
-    if (dx * dx + dy * dy < 8 * 8) {
-        feed = false;
+    for (let i = 0; i < feed.length; i++) {
+        let dx = x - feed[i].x;
+        let dy = y - feed[i].y;
+        if (dx * dx + dy * dy < 8 * 8) {
+            feed[i].alive = false;
+        }
     }
 
     render();
