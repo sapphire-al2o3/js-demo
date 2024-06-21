@@ -67,7 +67,7 @@ function fillNum(n, x, y, size) {
     let d = n;
     let charSize = size * 5;
     let k = 0;
-    while (d > 0) {
+    do {
         let p = numPatterns[d % 10];
         let b = 23;
         for (let i = 0; i < 6; i++) {
@@ -80,7 +80,7 @@ function fillNum(n, x, y, size) {
         }
         d = d / 10 ^ 0;
         k++;
-    }
+    } while (d > 0)
 }
 
 loop((dt) => {
@@ -116,6 +116,6 @@ loop((dt) => {
     ctx.textAlign = 'center';
     ctx.fillText(mtime / 1000 ^ 0, W / 2, H / 2);
 
-    fillNum(1234567890, 100, 10, 2);
+    fillNum(mtime / 1000 ^ 0, 100, 10, 2);
 
 }, 1000 / 30);
