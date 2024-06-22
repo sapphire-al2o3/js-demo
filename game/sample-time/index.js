@@ -50,7 +50,7 @@ let rotSpeed = 0.2;
 
 const start = Date.now();
 
-const numPatterns = [
+const numPatterns4x6 = [
     0x699996,
     0x622222,
     0x69124F,
@@ -68,7 +68,7 @@ function fillNum(n, x, y, size) {
     let charSize = size * 5;
     let k = 0;
     do {
-        let p = numPatterns[d % 10];
+        let p = numPatterns4x6[d % 10];
         let b = 23;
         for (let i = 0; i < 6; i++) {
             for (let j = 0; j < 4; j++) {
