@@ -83,8 +83,8 @@ function render() {
 loop((dt) => {
     for (let i = 0; i < feed.length; i++) {
         if (!feed[i].alive) {
-            feed[i].x = Math.random() * 140 + 10 ^ 0;
-            feed[i].y = Math.random() * 100 + 10 ^ 0;
+            feed[i].x = Math.random() * (W - 20) + 10 ^ 0;
+            feed[i].y = Math.random() * (H - 20) + 10 ^ 0;
             feed[i].alive = true;
         }
     }
