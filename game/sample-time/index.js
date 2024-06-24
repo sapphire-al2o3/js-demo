@@ -112,10 +112,10 @@ loop((dt) => {
     // ctx.stroke();
 
     let mtime = Date.now() - start;
-    ctx.font = '12px serif';
-    ctx.textAlign = 'center';
-    ctx.fillText(mtime / 1000 ^ 0, W / 2, H / 2);
+    // ctx.font = '12px serif';
+    // ctx.textAlign = 'center';
+    // ctx.fillText(mtime / 1000 ^ 0, W / 2, H / 2);
 
-    fillNum(mtime / 1000 ^ 0, 100, 10, 2);
+    fillNum(mtime / 1000 ^ 0, W / 2, H / 2 - 8, 2);
 
 }, 1000 / 30);
