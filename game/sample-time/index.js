@@ -83,6 +83,24 @@ function fillNum(n, x, y, size) {
     } while (d > 0)
 }
 
+function fillText(s, x, y, size) {
+    let charSize = size * 5;
+
+    for (let k = 0; k < s.length; k++) {
+        let d = s[k].charCodeAt(0) - '0'.charCodeAt(0);
+        let p = numPatterns4x6[d];
+        let b = 23;
+        for (let i = 0; i < 6; i++) {
+            for (let j = 0; j < 4; j++) {
+                if ((p >> b) & 1) {
+                    ctx.fillRect(j * size + x + charSize * k, i * size + y, size, size);
+                }
+                b--;
+            }
+        }
+    }
+}
+
 loop((dt) => {
 
     const keyX = keyState['ArrowRight'] - keyState['ArrowLeft'];
@@ -117,5 +135,6 @@ loop((dt) => {
     // ctx.fillText(mtime / 1000 ^ 0, W / 2, H / 2);
 
     fillNum(mtime / 1000 ^ 0, W / 2, H / 2 - 8, 2);
+    fillText(mtime.toString(), 100, 100, 1);
 
 }, 1000 / 30);
