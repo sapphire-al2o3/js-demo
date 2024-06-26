@@ -50,7 +50,7 @@ let rotSpeed = 0.2;
 let count = 0;
 
 let feed = [];
-for (let i = 0; i < 12; i++) {
+for (let i = 0; i < 4; i++) {
     feed.push({
         x: 0,
         y: 0,
