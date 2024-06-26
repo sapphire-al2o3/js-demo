@@ -47,14 +47,46 @@ let y = 60;
 let dir = Math.PI * 0.5;
 let speed = 4;
 let rotSpeed = 0.2;
+let count = 0;
 
 let feed = [];
-for (let i = 0; i < 4; i++) {
+for (let i = 0; i < 12; i++) {
     feed.push({
         x: 0,
         y: 0,
         alive: false
     });
+}
+
+const numPatterns4x6 = [
+    0x699996,
+    0x622222,
+    0x69124F,
+    0xE16196,
+    0x6AAAF2,
+    0xF8E11E,
+    0x68E996,
+    0xF12244,
+    0x696996,
+    0x699716
+];
+
+function fillText(s, x, y, size) {
+    let charSize = size * 5;
+
+    for (let k = 0; k < s.length; k++) {
+        let d = s[k].charCodeAt(0) - '0'.charCodeAt(0);
+        let p = numPatterns4x6[d];
+        let b = 23;
+        for (let i = 0; i < 6; i++) {
+            for (let j = 0; j < 4; j++) {
+                if ((p >> b) & 1) {
+                    ctx.fillRect(j * size + x + charSize * k, i * size + y, size, size);
+                }
+                b--;
+            }
+        }
+    }
 }
 
 function render() {
@@ -78,6 +110,8 @@ function render() {
     ctx.moveTo(x + dx, y + dy);
     ctx.lineTo(x - 12 * dx, y - 12 * dy);
     ctx.stroke();
+
+    fillText(count.toString(), 10, 4, 2);
 }
 
 loop((dt) => {
@@ -111,6 +145,7 @@ loop((dt) => {
         let dy = y - feed[i].y;
         if (dx * dx + dy * dy < 8 * 8) {
             feed[i].alive = false;
+            count++;
         }
     }
 
