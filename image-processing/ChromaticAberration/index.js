@@ -19,20 +19,44 @@ window.onload = () => {
         h = image.height;
 
     let offset = 4;
+    let selected = 1;
+    let f = false;
 
     function render() {
+
+        let offsetR = 0;
+        let offsetG = 0;
+        let offsetB = 0;
+        
+        if (selected === 0) {
+            offsetR = -offset;
+            offsetG = offset;
+        } else if (selected === 1) {
+            offsetR = -offset;
+            offsetB = offset;
+        } else if (selected === 2) {
+            offsetG = -offset;
+            offsetB = offset;
+        }
+
         for(let i = 0; i < h; i++) {
             for(let j = 0; j < w; j++) {
                 let index = (i * w + j) * 4;
 
-                let or = j - offset;
-                if (or < 0) or = 0;
-                let ob = j + offset;
-                if (ob >= w) ob = w - 1;
+                let or = offsetR;
+                let og = offsetG;
+                let ob = offsetB;
 
-                let r = data[(i * w + or) * 4];
-                let g = data[index + 1];
-                let b = data[(i * w + ob) * 4 + 2];
+                let xr = j + or;
+                if (xr < 0) xr = 0; else if (xr >= w) xr = w - 1;
+                let xg = j + og;
+                if (xg < 0) xg = 0; else if (xg >= w) xg = w - 1;
+                let xb = j + ob;
+                if (xb < 0) xb = 0; else if (xb >= w) xb = w - 1;
+
+                let r = data[(i * w + xr) * 4];
+                let g = data[(i * w + xg) * 4 + 1];
+                let b = data[(i * w + xb) * 4 + 2];
                 
                 
                 ret[index] = r;
@@ -51,4 +75,9 @@ window.onload = () => {
         offset = v * 8 ^ 0;
         render();
     }));
+
+    document.body.appendChild(createRadio(['RG', 'RB', 'GB'], (v, id, i) => {
+        selected = i;
+        render();
+    }, 1));
 };
