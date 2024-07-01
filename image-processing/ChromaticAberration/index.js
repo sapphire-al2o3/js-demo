@@ -27,7 +27,7 @@ window.onload = () => {
         let offsetR = 0;
         let offsetG = 0;
         let offsetB = 0;
-        
+
         if (selected === 0) {
             offsetR = -offset;
             offsetG = offset;
@@ -47,6 +47,18 @@ window.onload = () => {
                 let og = offsetG;
                 let ob = offsetB;
 
+                if (f > 0) {
+                    let dx = w / 2 - j;
+                    let dy = h / 2 - i;
+                    let l = Math.sqrt(dx * dx + dy * dy);
+                    let s = l / (w / 2);
+                    s = s > 1 ? 1 : s;
+                    
+                    or = or * s ^ 0;
+                    og = og * s ^ 0;
+                    ob = ob * s ^ 0;
+                }
+
                 let xr = j + or;
                 if (xr < 0) xr = 0; else if (xr >= w) xr = w - 1;
                 let xg = j + og;
@@ -57,7 +69,6 @@ window.onload = () => {
                 let r = data[(i * w + xr) * 4];
                 let g = data[(i * w + xg) * 4 + 1];
                 let b = data[(i * w + xb) * 4 + 2];
-                
                 
                 ret[index] = r;
                 ret[index + 1] = g;
@@ -80,4 +91,9 @@ window.onload = () => {
         selected = i;
         render();
     }, 1));
+
+    document.body.appendChild(createSlider('f', 0.0, v => {
+        f = v;
+        render();
+    }));
 };
