@@ -39,8 +39,8 @@ window.onload = () => {
             offsetB = offset;
         }
 
-        for(let i = 0; i < h; i++) {
-            for(let j = 0; j < w; j++) {
+        for (let i = 0; i < h; i++) {
+            for (let j = 0; j < w; j++) {
                 let index = (i * w + j) * 4;
 
                 let or = offsetR;
