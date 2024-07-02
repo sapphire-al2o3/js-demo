@@ -47,7 +47,7 @@ function render() {
     ctx.strokeStyle = '#000';
     ctx.lineWidth = 1.5;
     plot2D(ctx, gauss.bind(null, sigma), w, h, rangeX, 1, 200);
-    
+    ctx.fillText(`σ=${sigma.toFixed(3)}`, 10, 20);
 }
 
 document.body.appendChild(createSlider('sigma', 1, v => {
