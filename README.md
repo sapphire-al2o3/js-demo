@@ -144,6 +144,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [16bit Color](https://sapphire-al2o3.github.io/js-demo/image-processing/16bit-Color/)
 - [Bilateral Filter](https://sapphire-al2o3.github.io/js-demo/image-processing/BilateralFilter/)
 - [Channel Packer](https://sapphire-al2o3.github.io/js-demo/image-processing/ChannelPacker/)
+- [色収差](https://sapphire-al2o3.github.io/js-demo/image-processing/ChromaticAberration/)
 - [Color Matrix](https://sapphire-al2o3.github.io/js-demo/image-processing/ColorMatrix/)
 - [ヒストグラム](https://sapphire-al2o3.github.io/js-demo/image-processing/Histogram/)
 - [Kuwahara Filter](https://sapphire-al2o3.github.io/js-demo/image-processing/KuwaharaFilter/)
