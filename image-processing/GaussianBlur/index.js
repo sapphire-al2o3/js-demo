@@ -115,7 +115,7 @@ window.onload = () => {
     render();
 
     const max = 8;
-    document.body.appendChild(createSlider('s', s / max, v => {
+    document.body.appendChild(createSlider('sigma', s / max, v => {
         s = v * max;
         render();
     }));
