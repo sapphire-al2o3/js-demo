@@ -20,7 +20,7 @@ window.onload = () => {
     let w = image.width,
         h = image.height;
     
-    let s = 0.4;
+    let s = 2;
 
     function gauss(sigma, x) {
         return Math.exp(-(x * x) / (2 * sigma * sigma)) / (Math.sqrt(2 * Math.PI) * sigma);
