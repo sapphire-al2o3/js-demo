@@ -20,7 +20,7 @@ window.onload = () => {
     let w = image.width,
         h = image.height;
     
-    let s = 2;
+    let s = 0.4;
 
     function gauss(sigma, x) {
         return Math.exp(-(x * x) / (2 * sigma * sigma)) / (Math.sqrt(2 * Math.PI) * sigma);
@@ -34,7 +34,7 @@ window.onload = () => {
 
         console.log(`sigma ${s} range ${range}`);
 
-        if (range === 0) {
+        if (s < 0.4) {
             ctx.putImageData(image, 0, 0);
             return;
         }
@@ -114,7 +114,7 @@ window.onload = () => {
 
     render();
 
-    const max = 4;
+    const max = 8;
     document.body.appendChild(createSlider('s', s / max, v => {
         s = v * max;
         render();
