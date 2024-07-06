@@ -21,6 +21,7 @@ window.onload = () => {
         h = image.height;
     
     let s = 2;
+    let type = 0;
 
     function gauss(sigma, x) {
         return Math.exp(-(x * x) / (2 * sigma * sigma)) / (Math.sqrt(2 * Math.PI) * sigma);
@@ -54,62 +55,77 @@ window.onload = () => {
         let src = data;
         let dst = tempData;
 
-        for(let i = 0; i < h; i++) {
-            for(let j = 0; j < w; j++) {
-                let index = (i * w + j) * 4;
+        if (type !== 2) {
+            for(let i = 0; i < h; i++) {
+                for(let j = 0; j < w; j++) {
+                    let index = (i * w + j) * 4;
 
-                let r = 0;
-                let g = 0;
-                let b = 0;
-                let sum = 0;
-                let min = j - range < 0 ? -j : -range;
-                let max = j + range >= w ? w - j - 1 : range;
-                for (let x = min; x <= max; x++) {
-                    let gw = gf[x + range]
-                    let k = (i * w + j + x) * 4;
-                    r += src[k] * gw;
-                    g += src[k + 1] * gw;
-                    b += src[k + 2] * gw;
-                    sum += gw;
+                    let r = 0;
+                    let g = 0;
+                    let b = 0;
+                    let sum = 0;
+                    let min = j - range < 0 ? -j : -range;
+                    let max = j + range >= w ? w - j - 1 : range;
+                    for (let x = min; x <= max; x++) {
+                        let gw = gf[x + range]
+                        let k = (i * w + j + x) * 4;
+                        r += src[k] * gw;
+                        g += src[k + 1] * gw;
+                        b += src[k + 2] * gw;
+                        sum += gw;
+                    }
+                    let n = t / sum;
+                    dst[index] = r * n ^ 0;
+                    dst[index + 1] = g * n ^ 0;
+                    dst[index + 2] = b * n ^ 0;
+                    dst[index + 3] = 255
                 }
-                let n = t / sum;
-                dst[index] = r * n ^ 0;
-                dst[index + 1] = g * n ^ 0;
-                dst[index + 2] = b * n ^ 0;
-                dst[index + 3] = 255
+            }
+
+            if (type === 1) {
+                ctx.putImageData(temp, 0, 0);
+                return;
             }
         }
 
-        src = tempData;
-        dst = ret;
+        if (type !== 1) {
+            if (type === 0) {
+                src = tempData;
+                dst = ret;
+            }
 
-        for(let i = 0; i < h; i++) {
-            let min = i - range < 0 ? -i : -range;
-            let max = i + range >= h ? h - i - 1 : range;
-            for(let j = 0; j < w; j++) {
-                let index = (i * w + j) * 4;
+            for(let i = 0; i < h; i++) {
+                let min = i - range < 0 ? -i : -range;
+                let max = i + range >= h ? h - i - 1 : range;
+                for(let j = 0; j < w; j++) {
+                    let index = (i * w + j) * 4;
 
-                let r = 0;
-                let g = 0;
-                let b = 0;
-                let sum = 0;
-                for (let y = min; y <= max; y++) {
-                    let gw = gf[y + range]
-                    let k = ((i + y) * w + j) * 4;
-                    r += src[k] * gw;
-                    g += src[k + 1] * gw;
-                    b += src[k + 2] * gw;
-                    sum += gw;
+                    let r = 0;
+                    let g = 0;
+                    let b = 0;
+                    let sum = 0;
+                    for (let y = min; y <= max; y++) {
+                        let gw = gf[y + range]
+                        let k = ((i + y) * w + j) * 4;
+                        r += src[k] * gw;
+                        g += src[k + 1] * gw;
+                        b += src[k + 2] * gw;
+                        sum += gw;
+                    }
+                    let n = t / sum;
+                    dst[index] = r * n ^ 0;
+                    dst[index + 1] = g * n ^ 0;
+                    dst[index + 2] = b * n ^ 0;
+                    dst[index + 3] = 255
                 }
-                let n = t / sum;
-                dst[index] = r * n ^ 0;
-                dst[index + 1] = g * n ^ 0;
-                dst[index + 2] = b * n ^ 0;
-                dst[index + 3] = 255
+            }
+
+            if (type === 0) {
+                ctx.putImageData(result, 0, 0);
+            } else {
+                ctx.putImageData(temp, 0, 0);
             }
         }
-
-        ctx.putImageData(result, 0, 0);
     }
 
     render();
@@ -119,4 +135,9 @@ window.onload = () => {
         s = v * max;
         render();
     }));
+
+    document.body.appendChild(createRadio(['normal', 'horz', 'vert'], (v, id, i) => {
+        type = i;
+        render();
+    }, 0));
 };
