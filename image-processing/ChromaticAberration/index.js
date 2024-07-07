@@ -47,11 +47,12 @@ window.onload = () => {
                 let og = offsetG;
                 let ob = offsetB;
 
-                if (f > 0) {
+                if (f) {
                     let dx = w / 2 - j;
                     let dy = h / 2 - i;
                     let l = Math.sqrt(dx * dx + dy * dy);
                     let s = l / (w / 2);
+                    // s = s + (1 - f);
                     s = s > 1 ? 1 : s;
                     
                     or = or * s ^ 0;
@@ -92,7 +93,7 @@ window.onload = () => {
         render();
     }, 1));
 
-    document.body.appendChild(createSlider('f', 0.0, v => {
+    document.body.appendChild(createCheckbox('f', v => {
         f = v;
         render();
     }));
