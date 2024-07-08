@@ -148,7 +148,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [Color Matrix](https://sapphire-al2o3.github.io/js-demo/image-processing/ColorMatrix/)
 - [Gaussian Blur](https://sapphire-al2o3.github.io/js-demo/image-processing/GaussianBlur/)
 - [ヒストグラム](https://sapphire-al2o3.github.io/js-demo/image-processing/Histogram/)
-- [HSV色調補正](https://sapphire-al2o3.github.io/js-demo/image-processing/GaussianBlur/)
+- [HSV色調補正](https://sapphire-al2o3.github.io/js-demo/image-processing/HSV/)
 - [Kuwahara Filter](https://sapphire-al2o3.github.io/js-demo/image-processing/KuwaharaFilter/)
 - [Laplacian](https://sapphire-al2o3.github.io/js-demo/image-processing/Laplacian/)
 - [ノイズテクスチャ](https://sapphire-al2o3.github.io/js-demo/image-processing/Noise-Texture/)
