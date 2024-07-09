@@ -11,10 +11,8 @@ window.onload = () => {
     ctx.drawImage(img, 0, 0, img.width, img.height);
 
     const image = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const temp = ctx.createImageData(canvas.width, canvas.height);
     const result = ctx.createImageData(canvas.width, canvas.height);
     const data = image.data;
-    const tempData = temp.data;
     const ret = result.data;
 
     let width = image.width,
