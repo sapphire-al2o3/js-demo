@@ -89,7 +89,7 @@ window.onload = () => {
         render();
     }));
 
-    document.body.appendChild(createSlider('saturation', ov * 0.5 + 0.5, v => {
+    document.body.appendChild(createSlider('value', ov * 0.5 + 0.5, v => {
         ov = v * 2.0 - 1.0;
         render();
     }));
