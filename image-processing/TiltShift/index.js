@@ -20,8 +20,8 @@ window.onload = () => {
     let w = image.width,
         h = image.height;
     
-    let s = 2;
-    let type = 0;
+    let s = 3;
+    let os = 0.2;
 
     function gauss(sigma, x) {
         return Math.exp(-(x * x) / (2 * sigma * sigma)) / (Math.sqrt(2 * Math.PI) * sigma);
@@ -142,8 +142,6 @@ window.onload = () => {
         src = data;
         dst = ret;
 
-        let os = 0.15;
-
         for(let i = 0; i < h; i++) {
             for(let j = 0; j < w; j++) {
                 let index = (i * w + j) * 4;
@@ -179,6 +177,11 @@ window.onload = () => {
     const max = 8;
     document.body.appendChild(createSlider('sigma', s / max, v => {
         s = v * max;
+        render();
+    }));
+
+    document.body.appendChild(createSlider('saturation', os * 0.5 + 0.5, v => {
+        os = v * 2.0 - 1.0;
         render();
     }));
 };
