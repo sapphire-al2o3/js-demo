@@ -20,6 +20,7 @@ window.onload = () => {
         for (let i = 0; i < d; i++) {
             for (let j = 0; j < d; j++) {
                 ctx.fillStyle = (i + j) & 1 ? '#CCC' : '#555';
+                // ctx.fillStyle = (i + j) & 1 ? '#FFF' : '#000';
                 ctx.fillRect(i * s, j * s, s, s);
             }
         }
@@ -44,10 +45,10 @@ window.onload = () => {
         let w00 = (1 - fx) * (1 - fy);
         let w10 = fx * (1 - fy);
         let w01 = (1 - fx) * fy;
-        let w11 = 1 * fy;
-        let r = w00 * d[k00] + w10 * d[k10] + w01 * d[k01] + w11 + d[k11];
-        let g = w00 * d[k00 + 1] + w10 * d[k10 + 1] + w01 * d[k01 + 1] + w11 + d[k11 + 1];
-        let b = w00 * d[k00 + 2] + w10 * d[k10 + 2] + w01 * d[k01 + 2] + w11 + d[k11 + 2];
+        let w11 = fx * fy;
+        let r = w00 * d[k00    ] + w01 * d[k10    ] + w10 * d[k01    ] + w11 * d[k11];
+        let g = w00 * d[k00 + 1] + w01 * d[k10 + 1] + w10 * d[k01 + 1] + w11 * d[k11 + 1];
+        let b = w00 * d[k00 + 2] + w01 * d[k10 + 2] + w10 * d[k01 + 2] + w11 * d[k11 + 2];
         return [r ^ 0, g ^ 0, b ^ 0];
     }
 
@@ -79,15 +80,15 @@ window.onload = () => {
                 }
                 y = Math.sqrt(dx * dx + dy * dy) / m * height;
 
-                // let [r, g, b] = bilinear(src, x, y, width, height);
+                let [r, g, b] = bilinear(src, x, y, width, height);
 
-                x = x ^ 0;
-                y = y ^ 0;
-                let k = (y * width + x) * 4;
+                // x = x ^ 0;
+                // y = y ^ 0;
+                // let k = (y * width + x) * 4;
 
-                let r = src[k];
-                let g = src[k + 1];
-                let b = src[k + 2];
+                // let r = src[k];
+                // let g = src[k + 1];
+                // let b = src[k + 2];
 
                 dst[index] = r;
                 dst[index + 1] = g;
