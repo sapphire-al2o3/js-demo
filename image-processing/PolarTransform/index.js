@@ -20,7 +20,6 @@ window.onload = () => {
         for (let i = 0; i < d; i++) {
             for (let j = 0; j < d; j++) {
                 ctx.fillStyle = (i + j) & 1 ? '#CCC' : '#555';
-                // ctx.fillStyle = (i + j) & 1 ? '#FFF' : '#000';
                 ctx.fillRect(i * s, j * s, s, s);
             }
         }
@@ -30,6 +29,7 @@ window.onload = () => {
     const result = ctx.createImageData(width, height);
     const data = image.data;
     const ret = result.data;
+    let interporation = true;
 
     function bilinear(d, x, y, w, h) {
         let ix = x ^ 0;
@@ -80,15 +80,19 @@ window.onload = () => {
                 }
                 y = Math.sqrt(dx * dx + dy * dy) / m * height;
 
-                let [r, g, b] = bilinear(src, x, y, width, height);
+                let r, g, b;
+                if (interporation) {
+                    [r, g, b] = bilinear(src, x, y, width, height);
 
-                // x = x ^ 0;
-                // y = y ^ 0;
-                // let k = (y * width + x) * 4;
+                } else {
+                    x = x ^ 0;
+                    y = y ^ 0;
+                    let k = (y * width + x) * 4;
 
-                // let r = src[k];
-                // let g = src[k + 1];
-                // let b = src[k + 2];
+                    r = src[k];
+                    g = src[k + 1];
+                    b = src[k + 2];
+                }
 
                 dst[index] = r;
                 dst[index + 1] = g;
@@ -101,4 +105,9 @@ window.onload = () => {
     }
 
     render();
+
+    document.body.appendChild(createCheckbox('interporation', v => {
+        interporation = v;
+        render();
+    }, true));
 };
