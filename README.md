@@ -155,4 +155,5 @@ https://sapphire-al2o3.github.io/js-demo/
 - [極座標変換](https://sapphire-al2o3.github.io/js-demo/image-processing/PolarTransform/)
 - [SNN](https://sapphire-al2o3.github.io/js-demo/image-processing/SNN/)
 - [Tiling](https://sapphire-al2o3.github.io/js-demo/image-processing/Tiling/)
+- [ミニチュア風](ttps://sapphire-al2o3.github.io/js-demo/image-processing/TiltShift/)
 - [Voronoi](https://sapphire-al2o3.github.io/js-demo/image-processing/Voronoi/)
