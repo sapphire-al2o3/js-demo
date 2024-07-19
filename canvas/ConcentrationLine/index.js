@@ -13,7 +13,10 @@ let cy = h / 2;
 let minR = 100;
 let maxR = 300;
 
-ctx.fillStyle = '#FFF';
+let thickness = 6;
+let count = 200;
+
+ctx.fillStyle = '#000';
 ctx.strokeStyle = '#000';
 ctx.lineWidth = 1;
 
@@ -22,7 +25,7 @@ function render(delta) {
 
     ctx.clearRect(0, 0, w, h);
 
-    let count = 200;
+    
     for (let i = 0; i < count; i++) {
         
         let th = Math.random() * Math.PI * 2;
@@ -33,10 +36,23 @@ function render(delta) {
         let x1 = Math.cos(th) * maxR + cx;
         let y1 = Math.sin(th) * maxR + cy;
 
-        ctx.beginPath();
-        ctx.moveTo(x0, y0);
-        ctx.lineTo(x1, y1);
-        ctx.stroke();
+        if (thickness === 0) {
+            ctx.beginPath();
+            ctx.moveTo(x0, y0);
+            ctx.lineTo(x1, y1);
+            ctx.stroke();
+        } else {
+            let x1r = x1 + Math.sin(th) * thickness;
+            let x1l = x1 - Math.sin(th) * thickness;
+            let y1r = y1 + Math.cos(th) * thickness;
+            let y1l = y1 - Math.cos(th) * thickness;
+
+            ctx.beginPath();
+            ctx.moveTo(x0, y0);
+            ctx.lineTo(x1r, y1r);
+            ctx.lineTo(x1l, y1l);
+            ctx.fill();
+        }
     }
 }
 
@@ -47,3 +63,14 @@ let timer = setAnimationFrame(render, 1000 / 10);
 canvas.addEventListener('click', () => {
     timer.toggle();
 });
+
+document.body.appendChild(createSlider('thickness', 1, v => {
+    thickness = v * 20 ^ 0;
+    render();
+}));
+
+const maxCount = 500;
+document.body.appendChild(createSlider('count', count / maxCount, v => {
+    count = v * maxCount ^ 0;
+    render();
+}));
