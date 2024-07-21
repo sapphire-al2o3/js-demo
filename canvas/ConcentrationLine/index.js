@@ -31,10 +31,12 @@ function render(delta) {
         let th = Math.random() * Math.PI * 2;
         let r = minR + Math.random() * 100;
 
-        let x0 = Math.cos(th) * r + cx;
-        let y0 = Math.sin(th) * r + cy;
-        let x1 = Math.cos(th) * maxR + cx;
-        let y1 = Math.sin(th) * maxR + cy;
+        let dx = Math.cos(th);
+        let dy = Math.sin(th);
+        let x0 = dx * r + cx;
+        let y0 = dy * r + cy;
+        let x1 = dx * (r + maxR) + cx;
+        let y1 = dy * (r + maxR) + cy;
 
         if (thickness === 0) {
             ctx.beginPath();
@@ -42,10 +44,10 @@ function render(delta) {
             ctx.lineTo(x1, y1);
             ctx.stroke();
         } else {
-            let x1r = x1 + Math.sin(th) * thickness;
-            let x1l = x1 - Math.sin(th) * thickness;
-            let y1r = y1 + Math.cos(th) * thickness;
-            let y1l = y1 - Math.cos(th) * thickness;
+            let x1r = x1 + dy * thickness;
+            let y1r = y1 - dx * thickness;
+            let x1l = x1 - dy * thickness;
+            let y1l = y1 + dx * thickness;
 
             ctx.beginPath();
             ctx.moveTo(x0, y0);
