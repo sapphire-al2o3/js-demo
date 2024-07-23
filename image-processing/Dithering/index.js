@@ -18,6 +18,8 @@ window.onload = () => {
     let w = image.width,
         h = image.height;
 
+    let colored = false;
+
     let bayer = [
         0, 8, 2, 10,
         12, 4, 14, 6,
@@ -39,21 +41,34 @@ window.onload = () => {
                 let r = src[index];
                 let g = src[index + 1];
                 let b = src[index + 2];
-                let y = (r + g + b) / 3 ^ 0;
 
-                if (bayer[(i % 4) * 4 + (j % 4)] <= y) {
-                    y = 255;
+                if (colored) {
+                    let th = bayer[(i % 4) * 4 + (j % 4)];
+                    dst[index] = th <= r ? 255 : 0;
+                    dst[index + 1] = th <= g ? 255 : 0;
+                    dst[index + 2] = th <= b ? 255 : 0;
+                    dst[index + 3] = 255
                 } else {
-                    y = 0;
+                    let y = (r + g + b) / 3 ^ 0;
+                    if (bayer[(i % 4) * 4 + (j % 4)] <= y) {
+                        y = 255;
+                    } else {
+                        y = 0;
+                    }
+                    dst[index] = y;
+                    dst[index + 1] = y;
+                    dst[index + 2] = y;
+                    dst[index + 3] = 255
                 }
-                dst[index] = y;
-                dst[index + 1] = y;
-                dst[index + 2] = y;
-                dst[index + 3] = 255
             }
         }
         ctx.putImageData(result, 0, 0);
     }
 
     render();
+
+    document.body.appendChild(createCheckbox('colored', v => {
+        colored = v;
+        render();
+    }));
 };
