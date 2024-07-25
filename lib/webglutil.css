@@ -54,18 +54,22 @@ label {
 	width: 16px;
 	height: 16px;
 	background-color: #FFF;
+	position: relative;
+	top: 3px;
+	box-shadow: outside 0 2px 2px #EEE;
 }
 
 .color {
-	padding: 2px;
+	padding-left: 4px;
 	border: 1px solid #DDD;
 	width: 80px;
 	margin-right: 4px;
+
 }
 
 .color input {
 	border: none;
-	width: 50px;
+	width: 56px;
 	font-family: consolas;
 	padding-left: 6px;
 	color: #777;
