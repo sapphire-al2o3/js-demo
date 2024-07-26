@@ -15,9 +15,10 @@ let maxR = 300;
 
 let thickness = 6;
 let count = 200;
+let lineColor = '#000';
 
-ctx.fillStyle = '#000';
-ctx.strokeStyle = '#000';
+ctx.fillStyle = lineColor;
+ctx.strokeStyle = lineColor;
 ctx.lineWidth = 1;
 
 function render(delta) {
@@ -66,7 +67,7 @@ canvas.addEventListener('click', () => {
     timer.toggle();
 });
 
-document.body.appendChild(createSlider('thickness', 1, v => {
+document.body.appendChild(createSlider('thickness', thickness / 20, v => {
     thickness = v * 20 ^ 0;
     render();
 }));
@@ -74,5 +75,17 @@ document.body.appendChild(createSlider('thickness', 1, v => {
 const maxCount = 500;
 document.body.appendChild(createSlider('count', count / maxCount, v => {
     count = v * maxCount ^ 0;
+    render();
+}));
+
+document.body.appendChild(createSlider('radius', minR / 200, v => {
+    minR = v * 200 ^ 0;
+    render();
+}));
+
+document.body.appendChild(createColor('color', '#000', (v, id, text) => {
+    lineColor = text;
+    ctx.fillStyle = lineColor;
+    ctx.strokeStyle = lineColor;
     render();
 }));
