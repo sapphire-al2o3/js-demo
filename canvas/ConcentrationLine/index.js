@@ -16,6 +16,7 @@ let maxR = 300;
 let thickness = 6;
 let count = 200;
 let lineColor = '#000';
+let backgroundColor = '#FFF';
 
 ctx.fillStyle = lineColor;
 ctx.strokeStyle = lineColor;
@@ -24,9 +25,12 @@ ctx.lineWidth = 1;
 function render(delta) {
     // time += delta;
 
-    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = backgroundColor;
+    // ctx.clearRect(0, 0, w, h);
+    ctx.fillRect(0, 0, w, h);
 
-    
+    ctx.fillStyle = lineColor;
+    ctx.strokeStyle = lineColor;
     for (let i = 0; i < count; i++) {
         
         let th = Math.random() * Math.PI * 2;
@@ -85,7 +89,10 @@ document.body.appendChild(createSlider('radius', minR / 200, v => {
 
 document.body.appendChild(createColor('color', '#000', (v, id, text) => {
     lineColor = text;
-    ctx.fillStyle = lineColor;
-    ctx.strokeStyle = lineColor;
+    render();
+}));
+
+document.body.appendChild(createColor('background', '#FFF', (v, id, text) => {
+    backgroundColor = text;
     render();
 }));
