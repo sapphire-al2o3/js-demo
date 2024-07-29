@@ -25,11 +25,12 @@ window.onload = () => {
         }
     }
 
-    const image = ctx.getImageData(0, 0, width, height);
+    let image = ctx.getImageData(0, 0, width, height);
     const result = ctx.createImageData(width, height);
-    const data = image.data;
+    let data = image.data;
     const ret = result.data;
     let interporation = true;
+    let checkerboard = false;
 
     function bilinear(d, x, y, w, h) {
         let ix = x ^ 0;
@@ -110,4 +111,16 @@ window.onload = () => {
         interporation = v;
         render();
     }, true));
+
+    document.body.appendChild(createCheckbox('checkerboard', v => {
+        checkerboard = v;
+        if (checkerboard) {
+            createChecker();
+        } else {
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+        }
+        image = ctx.getImageData(0, 0, width, height);
+        data = image.data;
+        render();
+    }, false));
 };
