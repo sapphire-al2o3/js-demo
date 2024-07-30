@@ -123,4 +123,29 @@ window.onload = () => {
         data = image.data;
         render();
     }, false));
+
+    function createButton(id, callback) {
+        const wrapper = document.createElement('div'),
+            button = document.createElement('button');
+        
+        wrapper.classList.add('button');
+        button.setAttribute('for', id);
+        button.textContent = id;button
+    
+        button.addEventListener('click', e => {
+            if(callback) {
+                callback();
+            }
+        }, false);
+        
+        wrapper.appendChild(button);
+        
+        return wrapper;
+    }
+
+    document.body.appendChild(createButton('apply', () => {
+        image = ctx.getImageData(0, 0, width, height);
+        data = image.data;
+        render();
+    }, false));
 };
