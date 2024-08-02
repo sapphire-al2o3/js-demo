@@ -18,6 +18,9 @@ window.onload = () => {
     let w = image.width,
         h = image.height;
 
+    let level = 4;
+    let step = 256 / level ^ 0;
+
     function render() {
 
         for (let i = 0; i < h; i++) {
@@ -28,7 +31,6 @@ window.onload = () => {
                 let g = data[index + 1];
                 let b = data[index + 2];
                 
-                const step = 64;
                 r = (r / step ^ 0) * step;
                 g = (g / step ^ 0) * step;
                 b = (b / step ^ 0) * step;
@@ -44,4 +46,10 @@ window.onload = () => {
     }
 
     render();
+
+    document.body.appendChild(createSlider('level', level / 8, v => {
+        level = (v * 8 ^ 0) + 2;
+        step = 256 / level ^ 0;
+        render();
+    }));
 };
