@@ -155,6 +155,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [Laplacian](https://sapphire-al2o3.github.io/js-demo/image-processing/Laplacian/)
 - [ノイズテクスチャ](https://sapphire-al2o3.github.io/js-demo/image-processing/Noise-Texture/)
 - [極座標変換](https://sapphire-al2o3.github.io/js-demo/image-processing/PolarTransform/)
+- [Posterization](https://sapphire-al2o3.github.io/js-demo/image-processing/Posterization/)
 - [SNN](https://sapphire-al2o3.github.io/js-demo/image-processing/SNN/)
 - [Tiling](https://sapphire-al2o3.github.io/js-demo/image-processing/Tiling/)
 - [ミニチュア風](https://sapphire-al2o3.github.io/js-demo/image-processing/TiltShift/)
