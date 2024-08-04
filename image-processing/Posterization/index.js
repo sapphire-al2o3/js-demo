@@ -35,6 +35,10 @@ window.onload = () => {
                 g = (g / step ^ 0) * step;
                 b = (b / step ^ 0) * step;
 
+                r = r > 255 ? 255 : r;
+                g = g > 255 ? 255 : g;
+                b = b > 255 ? 255 : b;
+
                 ret[index] = r;
                 ret[index + 1] = g;
                 ret[index + 2] = b;
@@ -49,7 +53,7 @@ window.onload = () => {
 
     document.body.appendChild(createSlider('level', level / 8, v => {
         level = (v * 8 ^ 0) + 2;
-        step = 256 / level ^ 0;
+        step = 255 / level ^ 0;
         render();
     }));
 };
