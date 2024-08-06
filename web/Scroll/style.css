@@ -1,11 +1,25 @@
 #container {
+    display: flex;
     overflow: scroll;
-    width: 500px;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    width: 400px;
+    height: 120px;
+    background-color: #AAA;
+    padding: 4px;
 }
 
 .item {
-    width: 200px;
+    padding: 0;
+    margin: 0;
+    min-width: 120px;
+    width: 120px;
     height: 120px;
+    border: 1px solid #444;
     display: inline-block;
     background-color: #4392d6;
+}
+
+.active {
+    background-color: #ff30f1;
 }
