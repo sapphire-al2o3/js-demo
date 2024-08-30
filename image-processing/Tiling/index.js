@@ -17,9 +17,25 @@ console.log(w, h);
 
 let offsetX = ((cw - w) / 2 ^ 0) % w - w;
 let offsetY = ((ch - h) / 2 ^ 0) % h - h;
+let shiftX = false;
 
 const src = new Uint32Array(imageData.data.buffer);
 const dst = new Uint32Array(result.data.buffer);
+
+function render() {
+    ctx.clearRect(0, 0, cw, ch);
+    let y = 0;
+    for (let i = offsetY; i < ch; i += h) {
+        let ox = 0;
+        if (shiftX) {
+            ox = (y & 1) * w / 2 ^ 0;
+        }
+        for (let j = offsetX; j < cw + ox; j += w) {
+            ctx.drawImage(parrot, j - ox, i);
+        }
+        y++;
+    }
+}
 
 const check = createCheckbox('center', v => {
     if (v) {
@@ -29,17 +45,17 @@ const check = createCheckbox('center', v => {
         offsetX = 0;
         offsetY = 0;
     }
-    ctx.clearRect(0, 0, cw, ch);
-    for (let i = offsetY; i < ch; i += h) {
-        for (let j = offsetX; j < cw; j += w) {
-            ctx.drawImage(parrot, j, i);
-        }
-    }
+    render();
 });
 
 check.querySelector('input').checked = true;
 document.body.appendChild(check);
 
+const checkShiftX = createCheckbox('shiftX', v => {
+    shiftX = v;
+    render();
+});
+document.body.appendChild(checkShiftX);
 
 // ctx.putImageData(result, 0, 0);
 
