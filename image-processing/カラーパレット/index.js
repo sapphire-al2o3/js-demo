@@ -27,6 +27,7 @@ $(function() {
         }
         table.append(tr);
     }
+    $('#front-color').css('background-color', '#000');
     cell = $('tr:first-child td:first-child', table).addClass('selected');
     
     rbar = slider('r-bar', 150, function(e) {
