@@ -29,9 +29,9 @@ function transition() {
     ctx.drawImage(image0, 0, 0, 400, 400);
     f += d;
     if(f > 1.0) {
-	d = -0.01;
+        d = -0.01;
     } else if(f < 0.0) {
-	d = 0.01;
+        d = 0.01;
     }
     setTimeout(arguments.callee, 1000.0 / 10.0);
 }
