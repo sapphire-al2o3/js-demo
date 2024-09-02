@@ -160,3 +160,4 @@ https://sapphire-al2o3.github.io/js-demo/
 - [Tiling](https://sapphire-al2o3.github.io/js-demo/image-processing/Tiling/)
 - [ミニチュア風](https://sapphire-al2o3.github.io/js-demo/image-processing/TiltShift/)
 - [Voronoi](https://sapphire-al2o3.github.io/js-demo/image-processing/Voronoi/)
+- [RGBAチャンネル表示](https://sapphire-al2o3.github.io/js-demo/image-processing/画像のRGBAチャンネル表示/)
