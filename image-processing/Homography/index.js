@@ -1,16 +1,16 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-const rect = { x: 20, y: 20, w: 200, h: 200 };
+const rect = { x: 56, y: 56, w: 400, h: 400 };
 let down = false;
 let selectedIndex = 0;
 let p = { x: 0, y: 0 };
 let corner = [
-    { x: 20, y: 20 },
-    { x: 220, y: 20 },
-    { x: 20, y: 220 },
-    { x: 220, y: 220 },
-    { x: 120, y: 120 }
+    { x: 56, y: 56 },
+    { x: 456, y: 56 },
+    { x: 56, y: 456 },
+    { x: 456, y: 456 },
+    { x: 256, y: 256 }
 ];
 
 const image = document.getElementById('image');
@@ -18,17 +18,32 @@ const image = document.getElementById('image');
 // ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
 // ctx.fillRect(rect.x, rect.y, rect.w, rect.h);
 
+const w = canvas.width;
+const h = canvas.height;
+ctx.drawImage(image, 0, 0);
+const input = ctx.getImageData(0, 0, image.width, image.height);
+const result = ctx.createImageData(canvas.width, canvas.height);
+
 ctx.strokeStyle = '#000';
 ctx.fillStyle = '#000';
 
 function transform() {
+    const src = input.data;
+    const dst = result.data;
 
+    for (let i = 0; i < h; i++) {
+        for (let j = 0; j < w; j++) {
+            
+        }
+    }
 }
 
 const drawRect = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // ctx.drawImage(image, 0, 0);
+    ctx.globalAlpha = 0.5;
+    ctx.drawImage(image, 56, 56);
+    ctx.globalAlpha = 1.0;
     // ctx.fillRect(0, 0, canvas.width, rect.y);
     // ctx.fillRect(0, corner[0].y, corner[0].x, rect.h);
     // ctx.fillRect(corner[1].x, corner[1].y, canvas.width - corner[1].x, rect.h);
