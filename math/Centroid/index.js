@@ -7,9 +7,9 @@ let down = false;
 let p0 = {x: 100, y: 100, label: 'P0'},
     p1 = {x: 300, y: 300, label: 'P1'},
     p2 = {x: 300, y: 100, label: 'P2'},
-    p4 = {x: 100, y: 300, label: 'P4'};
+    p3 = {x: 240, y: 80, label: 'P3'};
 let active = {};
-let shapes = [p0, p1, p2, p4];
+let shapes = [p0, p1, p2, p3];
 let count = 3;
 
 ctx.lineWidth = 2.0;
@@ -76,10 +76,12 @@ function draw() {
     ctx.clearRect(0, 0, 400, 400);
     ctx.strokeStyle = '#999';
     ctx.beginPath();
-    ctx.moveTo(p0.x, p0.y);
-    ctx.lineTo(p1.x, p1.y);
-    ctx.lineTo(p2.x, p2.y);
-    ctx.lineTo(p0.x, p0.y);
+    
+    ctx.moveTo(shapes[0].x, shapes[0].y);
+    for (let i = 1; i < count; i++) {
+        ctx.lineTo(shapes[i].x, shapes[i].y);
+    }
+    ctx.lineTo(shapes[0].x, shapes[0].y);
     ctx.stroke();
     ctx.strokeStyle = '#000';
     for (let i = 0; i < count; i++) {
