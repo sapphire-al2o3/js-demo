@@ -99,3 +99,12 @@ function draw() {
     ctx.strokeCircle(x, y, 3);
 }
 draw();
+
+document.body.appendChild(createRadio(['tri', 'quad'], (v, id, i) => {
+    if (i === 0) {
+        count = 3;
+    } else {
+        count = 4;
+    }
+    draw();
+}));
