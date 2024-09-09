@@ -60,6 +60,16 @@ function center() {
     return [x, y];
 }
 
+function centerTri(q0, q1, q2) {
+    let x = (q0.x + q1.x + q2.x) / 3;
+    let y = (q0.y + q1.x + q2.y) / 3;
+    return [x, y];
+}
+
+function centerOfGravity() {
+    
+}
+
 function draw() {
     let d = new Vector2(mouse.x, mouse.y);
     if (down) {
@@ -103,8 +113,19 @@ draw();
 document.body.appendChild(createRadio(['tri', 'quad'], (v, id, i) => {
     if (i === 0) {
         count = 3;
+        checkbox.style.display = 'none';
     } else {
         count = 4;
+        checkbox.style.display = 'block';
     }
     draw();
 }));
+
+let gravity = false;
+
+const checkbox = createCheckbox('gravity', (v) => {
+    gravity = v;
+    draw();
+});
+checkbox.style.display = 'none';
+document.body.appendChild(checkbox);
