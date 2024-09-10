@@ -56,6 +56,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [3次ベジェ曲面](https://sapphire-al2o3.github.io/js-demo/math/3次ベジェ曲面/)
 - [atan](https://sapphire-al2o3.github.io/js-demo/math/atan/)
 - [Catmull-Rom曲線](https://sapphire-al2o3.github.io/js-demo/math/Catmull-Rom曲線/)
+- [図形の重心](https://sapphire-al2o3.github.io/js-demo/math/Centroid/)
 - [float](https://sapphire-al2o3.github.io/js-demo/math/float/)
 - [Hermite曲線](https://sapphire-al2o3.github.io/js-demo/math/Hermite曲線/)
 - [ラメ曲線](https://sapphire-al2o3.github.io/js-demo/math/ラメ曲線/)
