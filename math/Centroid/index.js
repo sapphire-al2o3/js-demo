@@ -62,12 +62,13 @@ function center() {
 
 function centerTri(q0, q1, q2) {
     let x = (q0.x + q1.x + q2.x) / 3;
-    let y = (q0.y + q1.x + q2.y) / 3;
+    let y = (q0.y + q1.y + q2.y) / 3;
     return [x, y];
 }
 
 function centerOfGravity() {
-    
+    centerTri(p0, p1, p2);
+    centerTri(p0, p2, p3);
 }
 
 function draw() {
@@ -93,6 +94,33 @@ function draw() {
     }
     ctx.lineTo(shapes[0].x, shapes[0].y);
     ctx.stroke();
+
+    let x, y, z, w;
+    if (count === 4 && gravity) {
+        ctx.strokeStyle = '#DDD';
+        ctx.strokeLine(p0.x, p0.y, p2.x, p2.y);
+        ctx.strokeLine(p1.x, p1.y, p3.x, p3.y);
+
+        ctx.strokeLine(p0.x, p0.y, p2.x, p2.y);
+        ctx.strokeLine(p1.x, p1.y, p3.x, p3.y);
+
+        ctx.strokeStyle = '#7BF';
+        [x, y] = centerTri(p0, p1, p2);
+        ctx.strokeCircle(x, y, 2);
+        [z, w] = centerTri(p0, p2, p3);
+        ctx.strokeCircle(z, w, 2);
+
+        ctx.strokeLine(x, y, z, w);
+
+        ctx.strokeStyle = '#FB7';
+        [x, y] = centerTri(p0, p1, p3);
+        ctx.strokeCircle(x, y, 2);
+        [z, w] = centerTri(p1, p2, p3);
+        ctx.strokeCircle(z, w, 2);
+
+        ctx.strokeLine(x, y, z, w);
+    }
+
     ctx.strokeStyle = '#000';
     for (let i = 0; i < count; i++) {
         const e = shapes[i];
@@ -104,7 +132,7 @@ function draw() {
         ctx.fillText(e.label, e.x, e.y - 8);
     }
 
-    let [x, y] = center();
+    [x, y] = center();
     ctx.strokeStyle = '#37E';
     ctx.strokeCircle(x, y, 3);
 }
