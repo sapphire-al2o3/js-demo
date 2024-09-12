@@ -66,9 +66,25 @@ function centerTri(q0, q1, q2) {
     return [x, y];
 }
 
+function interSeg(p0x, p0y, v0x, v0y, p1x, p1y, v1x, v1y) {
+    let d = v0x * v1y - v0y * v1x;
+    if (d === 0) {
+        return -1;
+    }
+
+    d = 1 / d;
+
+    let t = (v1y * (p1x - p0x) - v1x * (p1y - p0y)) * d;
+    return [p0x + v0x * t, p0y + v0y * t];
+}
+
 function centerOfGravity() {
-    centerTri(p0, p1, p2);
-    centerTri(p0, p2, p3);
+    let [x0, y0] = centerTri(p0, p1, p2);
+    let [x1, y1] = centerTri(p0, p2, p3);
+    let [x2, y2] = centerTri(p0, p1, p3);
+    let [x3, y3] = centerTri(p1, p2, p3);
+
+    return interSeg(x0, y0, x1 - x0, y1 - y0, x2, y2, x3 - x2, y3 - y2)
 }
 
 function draw() {
@@ -119,6 +135,10 @@ function draw() {
         ctx.strokeCircle(z, w, 2);
 
         ctx.strokeLine(x, y, z, w);
+
+        [x, y] = centerOfGravity();
+        ctx.strokeStyle = '#E7E';
+        ctx.strokeCircle(x, y, 3);
     }
 
     ctx.strokeStyle = '#000';
