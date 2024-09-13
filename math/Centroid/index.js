@@ -171,7 +171,7 @@ document.body.appendChild(createRadio(['tri', 'quad'], (v, id, i) => {
 
 let gravity = false;
 
-const checkbox = createCheckbox('gravity', (v) => {
+const checkbox = createCheckbox('centroid', (v) => {
     gravity = v;
     draw();
 });
