@@ -11,6 +11,7 @@ let p0 = {x: 100, y: 100, label: 'P0'},
 let active = {};
 let shapes = [p0, p1, p2, p3];
 let count = 3;
+let lines = false;
 
 ctx.lineWidth = 2.0;
 ctx.font = '9pt consolas';
@@ -112,6 +113,22 @@ function draw() {
     ctx.stroke();
 
     let x, y, z, w;
+
+    if (count === 3 && lines) {
+        let hx = (p1.x + p2.x) / 2;
+        let hy = (p1.y + p2.y) / 2;
+        ctx.strokeStyle = '#DDD';
+        ctx.strokeLine(p0.x, p0.y, hx, hy);
+
+        hx = (p0.x + p2.x) / 2;
+        hy = (p0.y + p2.y) / 2;
+        ctx.strokeLine(p1.x, p1.y, hx, hy);
+
+        hx = (p0.x + p1.x) / 2;
+        hy = (p0.y + p1.y) / 2;
+        ctx.strokeLine(p2.x, p2.y, hx, hy);
+    }
+
     if (count === 4 && gravity) {
         ctx.strokeStyle = '#DDD';
         ctx.strokeLine(p0.x, p0.y, p2.x, p2.y);
@@ -157,6 +174,11 @@ function draw() {
     ctx.strokeCircle(x, y, 3);
 }
 draw();
+
+document.body.appendChild(createCheckbox('lines', (v) => {
+    lines = v;
+    draw();
+}, false, '補助線'));
 
 document.body.appendChild(createRadio(['tri', 'quad'], (v, id, i) => {
     if (i === 0) {
