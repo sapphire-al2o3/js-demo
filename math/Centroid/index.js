@@ -70,7 +70,7 @@ function centerTri(q0, q1, q2) {
 function interSeg(p0x, p0y, v0x, v0y, p1x, p1y, v1x, v1y) {
     let d = v0x * v1y - v0y * v1x;
     if (d === 0) {
-        return -1;
+        return [0, 0];
     }
 
     d = 1 / d;
