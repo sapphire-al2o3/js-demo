@@ -23,41 +23,29 @@ function loop(callback, interval) {
 
 const W = canvas.width;
 const H = canvas.height;
-const size = 32;
 
 let map = [];
-map.push(30);
-map.push(80);
-map.push(40);
-map.push(50);
-map.push(60);
-map.push(100);
-map.push(20);
-
-const sizef = 16;
-let mapf = [];
-let maxf = 16;
-for (let i = 0; i < maxf; i++) {
-    mapf.push(Math.random() * 100 + 10 ^ 0);
+map.push([]);
+for (let i = 0; i < 16; i++) {
+    map[0].push(Math.random() * 100 + 10 ^ 0);
 }
-const max = map.length;
-let sx = 0;
-let speed = 2;
 
-let sxf = 0;
-let speedf = 1;
+map.push([]);
+map[1].push(30);
+map[1].push(80);
+map[1].push(40);
+map[1].push(50);
+map[1].push(60);
+map[1].push(100);
+map[1].push(20);
 
-function render() {
-    ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = '#777';
-    let kf = sxf / sizef ^ 0;
-    let of = sxf % sizef;
-    for (let i = 0; i < maxf; i++) {
-        let y = mapf[(kf + i) % maxf];
-        let x = i * sizef - of;
-        ctx.fillRect(x, y, sizef, H - y);
-    }
-    ctx.fillStyle = '#444';
+const size = [16, 32];
+
+const max = [map[0].length, map[1].length];
+let sx = [0, 0];
+let speed = [1, 2];
+
+function renderBG(map, sx, size, max) {
     let k = sx / size ^ 0;
     let o = sx % size;
     for (let i = 0; i < max; i++) {
@@ -67,10 +55,20 @@ function render() {
     }
 }
 
+function render() {
+    ctx.clearRect(0, 0, W, H);
+    // far
+    ctx.fillStyle = '#777';
+    renderBG(map[0], sx[0], size[0], max[0]);
+    // near
+    ctx.fillStyle = '#444';
+    renderBG(map[1], sx[1], size[1], max[1]);
+}
+
 loop((dt) => {
 
-    sx += speed;
-    sxf += speedf;
+    sx[0] += speed[0];
+    sx[1] += speed[1];
 
     render();
 
