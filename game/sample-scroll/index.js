@@ -30,17 +30,17 @@ for (let i = 0; i < 16; i++) {
     map[0].push(Math.random() * 100 + 10 ^ 0);
 }
 
-map.push([]);
-map[1].push(30);
-map[1].push(80);
-map[1].push(40);
-map[1].push(50);
-map[1].push(60);
-map[1].push(100);
-map[1].push(20);
+map.push([
+    30,
+    80,
+    40,
+    50,
+    60,
+    100,
+    20
+]);
 
 const size = [16, 32];
-
 const max = [map[0].length, map[1].length];
 let sx = [0, 0];
 let speed = [1, 2];
