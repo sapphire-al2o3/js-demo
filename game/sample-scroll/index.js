@@ -41,13 +41,13 @@ map.push([
 ]);
 
 const size = [16, 32];
-const max = [map[0].length, map[1].length];
 let sx = [0, 0];
 let speed = [1, 2];
 
-function renderBG(map, sx, size, max) {
+function renderBG(map, sx, size) {
     let k = sx / size ^ 0;
     let o = sx % size;
+    const max = map.length;
     for (let i = 0; i < max; i++) {
         let y = map[(k + i) % max];
         let x = i * size - o;
@@ -59,10 +59,10 @@ function render() {
     ctx.clearRect(0, 0, W, H);
     // far
     ctx.fillStyle = '#777';
-    renderBG(map[0], sx[0], size[0], max[0]);
+    renderBG(map[0], sx[0], size[0]);
     // near
     ctx.fillStyle = '#444';
-    renderBG(map[1], sx[1], size[1], max[1]);
+    renderBG(map[1], sx[1], size[1]);
 }
 
 loop((dt) => {
