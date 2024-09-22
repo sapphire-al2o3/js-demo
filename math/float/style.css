@@ -1,0 +1,13 @@
+body {
+    font-family: consolas;
+    font-size: 14px;
+}
+
+input {
+    font-family: consolas;
+}
+
+button {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
