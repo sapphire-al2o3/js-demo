@@ -28,6 +28,10 @@ function convertI2F() {
     $f.value = floatArray[0];
 }
 
+$f.addEventListener('change', e => {
+    convertF2I();
+}, false);
+
 document.getElementById('f2i').addEventListener('click', e => {
     convertF2I();
 }, false);
