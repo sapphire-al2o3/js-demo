@@ -22,7 +22,14 @@ function koch(n, p1, p2) {
     const ux = (tx - sx) * Math.cos(ROT_60) - (ty - sy) * Math.sin(ROT_60) + sx;
     const uy = (tx - sx) * Math.sin(ROT_60) + (ty - sy) * Math.cos(ROT_60) + sy;
 
-
+    if (fill) {
+        ctx.beginPath();
+        ctx.moveTo(sx, sy);
+        ctx.lineTo(ux, uy);
+        ctx.lineTo(tx, ty);
+        ctx.closePath();
+        ctx.fill();
+    }
 
     koch(n - 1, p1, [sx, sy]);
     koch(n - 1, [sx, sy], [ux, uy]);
@@ -36,6 +43,15 @@ const p2 = [w / 2 - r / 2, h / 2 + r / 4 / Math.sin(ROT_60)];
 const p3 = [w / 2 + r / 2, h / 2 + r / 4 / Math.sin(ROT_60)];
 
 let n = 5;
+let fill = false;
+
+if (fill) {
+    ctx.beginPath();
+    ctx.moveTo(p1[0], p1[1]);
+    ctx.lineTo(p2[0], p2[1]);
+    ctx.lineTo(p3[0], p3[1]);
+    ctx.fill();
+}
 
 koch(n, p1, p2);
 koch(n, p2, p3);
@@ -52,6 +68,14 @@ const slider = createSlider('n', 1, v => {
     koch(n, p1, p2);
     koch(n, p2, p3);
     koch(n, p3, p1);
+
+    if (fill) {
+        ctx.beginPath();
+        ctx.moveTo(p1[0], p1[1]);
+        ctx.lineTo(p2[0], p2[1]);
+        ctx.lineTo(p3[0], p3[1]);
+        ctx.fill();
+    }
     console.timeEnd('koch');
 });
 
