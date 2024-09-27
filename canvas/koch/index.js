@@ -8,10 +8,12 @@ const ROT_60 = TO_RAD * 60;
 
 function koch(n, p1, p2) {
     if (n === 0) {
-        ctx.beginPath();
-        ctx.moveTo(p1[0], p1[1]);
-        ctx.lineTo(p2[0], p2[1]);
-        ctx.stroke();
+        if (!fill) {
+            ctx.beginPath();
+            ctx.moveTo(p1[0], p1[1]);
+            ctx.lineTo(p2[0], p2[1]);
+            ctx.stroke();
+        }
         return;
     }
 
@@ -23,6 +25,8 @@ function koch(n, p1, p2) {
     const uy = (tx - sx) * Math.sin(ROT_60) + (ty - sy) * Math.cos(ROT_60) + sy;
 
     if (fill) {
+        let c = (mn - n + 1) / 5 * 255 ^ 0;
+        ctx.fillStyle = `rgba(${c},${c},${c},255)`;
         ctx.beginPath();
         ctx.moveTo(sx, sy);
         ctx.lineTo(ux, uy);
@@ -42,7 +46,7 @@ const p1 = [w / 2, h / 2 - r / 2 / Math.sin(ROT_60)];
 const p2 = [w / 2 - r / 2, h / 2 + r / 4 / Math.sin(ROT_60)];
 const p3 = [w / 2 + r / 2, h / 2 + r / 4 / Math.sin(ROT_60)];
 
-let n = 5;
+let mn = 5;
 let fill = false;
 
 if (fill) {
@@ -53,23 +57,20 @@ if (fill) {
     ctx.fill();
 }
 
-koch(n, p1, p2);
-koch(n, p2, p3);
-koch(n, p3, p1);
+koch(mn, p1, p2);
+koch(mn, p2, p3);
+koch(mn, p3, p1);
 
-const slider = createSlider('n', 1, v => {
-    let nn = v * 5 ^ 0;
-    if (nn === n) {
-        return;
-    }
-    n = nn;
+function render() {
     ctx.clearRect(0, 0, w, h);
     console.time('koch');
-    koch(n, p1, p2);
-    koch(n, p2, p3);
-    koch(n, p3, p1);
+    koch(mn, p1, p2);
+    koch(mn, p2, p3);
+    koch(mn, p3, p1);
 
     if (fill) {
+        let c = 0;
+        ctx.fillStyle = `rgba(${c},${c},${c},255)`;
         ctx.beginPath();
         ctx.moveTo(p1[0], p1[1]);
         ctx.lineTo(p2[0], p2[1]);
@@ -77,6 +78,20 @@ const slider = createSlider('n', 1, v => {
         ctx.fill();
     }
     console.timeEnd('koch');
+}
+
+const slider = createSlider('n', 1, v => {
+    let nn = v * 5 ^ 0;
+    if (nn === n) {
+        return;
+    }
+    mn = nn;
+    render();
 });
 
 document.body.appendChild(slider);
+
+document.body.appendChild(createCheckbox('fill', v => {
+    fill = v;
+    render();
+}));
