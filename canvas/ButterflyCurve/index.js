@@ -30,23 +30,10 @@ const setAnimFrame = (callback, interval) => {
     update();
     
     return {
-        play: function() {
-            stop = false;
-            update();
-        },
-        pause: function() {
-            stop = true;
-        },
-        step: function() {
-            stop = true;
-            elapsed = interval;
-            update();
-        },
         toggle: function() {
-            if(stop) {
-                this.play();
-            } else {
-                this.pause();
+            stop = !stop;
+            if (!stop) {
+                update();
             }
         }
     };
@@ -95,7 +82,9 @@ canvas.addEventListener('click', () => {
     hook.toggle();
 }, false);
 
-
+document.body.appendChild(createSlider('s', 0, (v) => {
+    s = 0.01 + v * 0.04;
+}));
 document.body.appendChild(createSlider('n', n / 32, (v) => {
     n = v * 32 ^ 0 + 1;
 }));
