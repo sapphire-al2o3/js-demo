@@ -56,15 +56,16 @@ function render() {
         let z = Math.exp(Math.cos(th)) - 2 * Math.cos(4 * th) - Math.pow(Math.sin(th / 12), 5);
         let x = centerX - Math.sin(th) * 50 * z,
             y = centerY - Math.cos(th) * 50 * z;
-        th = th - s;
-        let pz = Math.exp(Math.cos(th)) - 2 * Math.cos(4 * th) - Math.pow(Math.sin(th / 12), 5);
-        let px = centerX - Math.sin(th) * 50 * pz,
-            py = centerY - Math.cos(th) * 50 * pz;
-        
+
         if (dot) {
             ctx.fillStyle = hsl(t * 100 ^ 0, 100, 50);
             ctx.fillRect(x, y, 2, 2);
         } else {
+            th = th - s;
+            let pz = Math.exp(Math.cos(th)) - 2 * Math.cos(4 * th) - Math.pow(Math.sin(th / 12), 5);
+            let px = centerX - Math.sin(th) * 50 * pz,
+                py = centerY - Math.cos(th) * 50 * pz;
+            
             ctx.strokeStyle = hsl(t * 100 ^ 0, 100, 50);
             ctx.beginPath();
             ctx.moveTo(x, y);
