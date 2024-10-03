@@ -89,9 +89,12 @@ render(data);
 let octaves = 5,
     persistence = 0.5;
 
-document.body.appendChild(createSlider('octaves', 5 / 8, v => {
-    octaves = (v * 8 ^ 0) + 1;
-    render(data, octaves);
+document.body.appendChild(createSlider('octaves', 5 / 7, v => {
+    let o = (v * 7 ^ 0) + 1;
+    if (o !== octaves) {
+        octaves = o;
+        render(data, octaves);
+    }
 }));
 
 document.body.appendChild(createSlider('persistence', 0.5, v => {
