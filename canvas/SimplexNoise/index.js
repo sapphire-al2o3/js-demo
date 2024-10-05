@@ -72,20 +72,37 @@ function noise(x, y) {
     let x2 = x0 + C1 * 2 - 1;
     let y2 = x0 + C1 * 2 - 1;
 
+    let n0 = 0;
+    let n1 = 0;
+    let n2 = 0;
     let t0 = 0.5 - x0 * x0 - y0 * y0;
     if (t0 >= 0) {
         const gi = xi + p[yi];
+        const gx = grad2x[gi];
+        const gy = grad2y[gi];
+        t0 *= t0;
+        n0 = t0 * t0 * (gx * x0 + gy * y0);
     }
 
-    let u = fade(xf);
-    let v = fade(yf);
+    let t1 = 0.5 - x1 * x1 - y1 * y1;
+    if (t1 >= 0) {
+        const gi = xi + ix + p[yi + iy];
+        const gx = grad2x[gi];
+        const gy = grad2y[gi];
+        t1 *= t1;
+        n1 = t1 * t1 * (gx * x1 + gy * y1);
+    }
 
-    let a = p[p[xi] + yi];
-    let b = p[p[inc(xi)] + yi];
-    let c = p[p[xi] + inc(yi)];
-    let d = p[p[inc(xi)] + inc(yi)];
+    let t2 = 0.5 - x2 * x2 - y2 * y2;
+    if (t2 >= 0) {
+        const gi = xi + 1 + p[yi + 1];
+        const gx = grad2x[gi];
+        const gy = grad2y[gi];
+        t2 *= t2;
+        n2 = t2 * t2 * (gx * x2 + gy * y2);
+    }
     
-    return lerp(a, b, u) + (c - a) * v * (1 - u) + (d - b) * u * v;
+    return 70 * (n0 + n1 + n2);
 }
 
 function octave(x, y, octaves, persistence, frequency = 5) {
@@ -112,7 +129,7 @@ function render(data, octaves = 5, persistence = 0.5) {
             let k = (i * w + j) * 4;
             let y = octave(j / w, i / h, octaves, persistence);
             // let y = noise(i / w * 32, j / h * 32, 0);
-            data[k] = data[k + 1] = data[k + 2] = y ^ 0;
+            data[k] = data[k + 1] = data[k + 2] = y * 255 ^ 0;
             data[k + 3] = 255;
         }
     }
