@@ -122,13 +122,12 @@ function octave(x, y, octaves, persistence, frequency = 5) {
     return total / maxValue;
 }
 
-function render(data, octaves = 5, persistence = 0.5) {
+function render(data, octaves, persistence) {
     console.time('noise');
     for (let i = 0; i < h; i++) {
         for (let j = 0; j < w; j++) {
             let k = (i * w + j) * 4;
             let y = octave(j / w, i / h, octaves, persistence);
-            // let y = noise(i / w * 32, j / h * 32, 0);
             data[k] = data[k + 1] = data[k + 2] = y * 255 ^ 0;
             data[k + 3] = 255;
         }
@@ -141,17 +140,17 @@ function render(data, octaves = 5, persistence = 0.5) {
 const image = ctx.createImageData(w, h);
 const data = image.data;
 
-render(data);
-
 let octaves = 5,
     persistence = 0.5;
 
-document.body.appendChild(createSlider('octaves', 5 / 8, v => {
+    render(data, octaves, persistence);
+
+document.body.appendChild(createSlider('octaves', octaves / 8, v => {
     octaves = (v * 8 ^ 0) + 1;
-    render(data, octaves);
+    render(data, octaves, persistence);
 }));
 
-document.body.appendChild(createSlider('persistence', 0.5, v => {
+document.body.appendChild(createSlider('persistence', persistence, v => {
     persistence = v;
     render(data, octaves, persistence);
 }));
