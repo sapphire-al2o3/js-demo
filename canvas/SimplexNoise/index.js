@@ -70,7 +70,7 @@ function noise(x, y) {
     let x1 = x0 + C1 - ix;
     let y1 = y0 + C1 - iy;
     let x2 = x0 + C1 * 2 - 1;
-    let y2 = x0 + C1 * 2 - 1;
+    let y2 = y0 + C1 * 2 - 1;
 
     let n0 = 0;
     let n1 = 0;
