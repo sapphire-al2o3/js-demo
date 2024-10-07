@@ -128,7 +128,7 @@ function render(data, octaves, persistence) {
         for (let j = 0; j < w; j++) {
             let k = (i * w + j) * 4;
             let y = octave(j / w, i / h, octaves, persistence);
-            data[k] = data[k + 1] = data[k + 2] = y * 255 ^ 0;
+            data[k] = data[k + 1] = data[k + 2] = (y * 0.5 + 0.5) * 255 ^ 0;
             data[k + 3] = 255;
         }
     }
