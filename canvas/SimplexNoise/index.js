@@ -105,7 +105,7 @@ function noise(x, y) {
     return 70 * (n0 + n1 + n2);
 }
 
-function octave(x, y, octaves, persistence, frequency = 5) {
+function octave(x, y, octaves, persistence, frequency = 4) {
     let total = 0,
         amplitude = 1,
         maxValue = 0;
@@ -146,8 +146,11 @@ let octaves = 5,
     render(data, octaves, persistence);
 
 document.body.appendChild(createSlider('octaves', octaves / 8, v => {
-    octaves = (v * 8 ^ 0) + 1;
-    render(data, octaves, persistence);
+    let o = (v * 8 ^ 0) + 1;
+    if (o !== octaves) {
+        octaves = o;
+        render(data, octaves, persistence);
+    }
 }));
 
 document.body.appendChild(createSlider('persistence', persistence, v => {
