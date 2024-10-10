@@ -28,3 +28,10 @@ p span {
 p span.selected {
     background-color: #77AAFF;
 }
+
+button {
+    color: #444;
+    padding: 4px 12px;
+    border: 1px solid #DDD;
+    margin-bottom: 4px;
+}

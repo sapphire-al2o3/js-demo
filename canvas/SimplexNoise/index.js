@@ -23,14 +23,6 @@ function fade(t) {
 const p = [];
 const permutation = [];
 
-for (let x = 0; x < 256; x++) {
-    permutation[x] = Math.random() * 256 ^ 0;
-}
-
-for (let x = 0; x < 512; x++) {
-    p[x] = permutation[x & 255];
-}
-
 const grad2 = [
     1, 1,
     -1, 1,
@@ -48,8 +40,21 @@ const grad2 = [
     0, 1,
     0, -1
 ];
-const grad2x = p.map(v => grad2[(v % 12) * 2]);
-const grad2y = p.map(v => grad2[(v % 12) * 2 + 1]);
+let grad2x;
+let grad2y;
+
+function createTable() {
+    for (let x = 0; x < 256; x++) {
+        permutation[x] = Math.random() * 256 ^ 0;
+    }
+    
+    for (let x = 0; x < 512; x++) {
+        p[x] = permutation[x & 255];
+    }
+    
+    grad2x = p.map(v => grad2[(v % 12) * 2]);
+    grad2y = p.map(v => grad2[(v % 12) * 2 + 1]);
+}
 
 const C1 = (3 - Math.sqrt(3)) / 6;
 const C2 = (Math.sqrt(3) - 1) / 2;
@@ -143,7 +148,13 @@ const data = image.data;
 let octaves = 5,
     persistence = 0.5;
 
+createTable();
+render(data, octaves, persistence);
+
+document.getElementById('generate').addEventListener('click', e => {
+    createTable();
     render(data, octaves, persistence);
+}, false);
 
 document.body.appendChild(createSlider('octaves', octaves / 8, v => {
     let o = (v * 8 ^ 0) + 1;
