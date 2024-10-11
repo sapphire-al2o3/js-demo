@@ -136,6 +136,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [Cellular Noise](https://sapphire-al2o3.github.io/js-demo/canvas/Cellular-Noise/)
 - [Perlin Noise](https://sapphire-al2o3.github.io/js-demo/canvas/Perlin-Noise/)
 - [Value Noise](https://sapphire-al2o3.github.io/js-demo/canvas/Value-Noise/)
+- [Simplex Noise](https://sapphire-al2o3.github.io/js-demo/canvas/SimplexNoise/)
 - [FlowMapPainter](https://sapphire-al2o3.github.io/js-demo/canvas/FlowMapPainter/)
 - [クリップボードから画像を貼り付ける](https://sapphire-al2o3.github.io/js-demo/canvas/Paste/)
 - [迷路生成](https://sapphire-al2o3.github.io/js-demo/canvas/maze/)
