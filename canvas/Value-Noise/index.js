@@ -93,7 +93,7 @@ document.body.appendChild(createSlider('octaves', 5 / 7, v => {
     let o = (v * 7 ^ 0) + 1;
     if (o !== octaves) {
         octaves = o;
-        render(data, octaves);
+        render(data, octaves, persistence);
     }
 }));
 
