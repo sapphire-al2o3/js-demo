@@ -122,6 +122,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [ジュリア集合](https://sapphire-al2o3.github.io/js-demo/canvas/julia/)
 - [コッホ曲線](https://sapphire-al2o3.github.io/js-demo/canvas/koch/)
 - [リサージュ曲線](https://sapphire-al2o3.github.io/js-demo/canvas/Lissajous/)
+- [バタフライ曲線](https://sapphire-al2o3.github.io/js-demo/canvas/ButterflyCurve/)
 - [円形グラデーション](https://sapphire-al2o3.github.io/js-demo/canvas/円形グラデーション/)
 - [円錐グラデーション](https://sapphire-al2o3.github.io/js-demo/canvas/円錐グラデーション/)
 - [動く四角](https://sapphire-al2o3.github.io/js-demo/canvas/動く四角/)
@@ -142,6 +143,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [迷路生成](https://sapphire-al2o3.github.io/js-demo/canvas/maze/)
 - [点描](https://sapphire-al2o3.github.io/js-demo/canvas/pointillism)
 - [集中線](https://sapphire-al2o3.github.io/js-demo/canvas/ConcentrationLine)
+- [モーフィング](https://sapphire-al2o3.github.io/js-demo/canvas/morph2d/)
 
 # Image Processing
 
