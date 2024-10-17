@@ -40,29 +40,25 @@ document.getElementById('i2f').addEventListener('click', e => {
     convertI2F();
 }, false);
 
-document.getElementById('inf').addEventListener('click', e => {
-    let v = Infinity;
+function setValue(v) {
     let floatArray = new Float32Array([v]);
     let intArray = new Uint32Array(floatArray.buffer);
     $b.value = intArray[0].toString(16);
     $f.value = v;
     convertF2I();
+}
+
+document.getElementById('inf').addEventListener('click', e => {
+    let v = Infinity;
+    setValue(v);
 }, false);
 
 document.getElementById('ninf').addEventListener('click', e => {
     let v = -Infinity;
-    let floatArray = new Float32Array([v]);
-    let intArray = new Uint32Array(floatArray.buffer);
-    $b.value = intArray[0].toString(16);
-    $f.value = v;
-    convertF2I();
+    setValue(v);
 }, false);
 
 document.getElementById('nan').addEventListener('click', e => {
     let v = NaN;
-    let floatArray = new Float32Array([v]);
-    let intArray = new Uint32Array(floatArray.buffer);
-    $b.value = intArray[0].toString(16);
-    $f.value = v;
-    convertF2I();
+    setValue(v);
 }, false);
