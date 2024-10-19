@@ -6,18 +6,6 @@ const PI2 = Math.PI * 2;
 const F = 32;
 let wave = 0;
 
-function clamp(x, min, max) {
-    return x < min ? min : x > max ? max : x;
-}
-
-function sin(x) {
-    return clamp(Math.sin(x) * 2, 0, 1);
-}
-
-function cos(x) {
-    return clamp(Math.cos(x) * 0.5 + 0.5, 0, 1);
-}
-
 function render() {
     plot();
 }
@@ -55,14 +43,14 @@ const squareWave = (x) => {
 };
 
 function plot() {
-    ctx.clearRect(0, 0, graph.width, graph.height);
+    ctx.clearRect(0, 0, w, h);
     ctx.strokeStyle = '#000';
     if (wave === 0) {
-        plot2D(ctx, sawtoothWave, graph.width, graph.height, 2, 1, 100);
+        plot2D(ctx, sawtoothWave, w, h, 2, 1, 100);
     } else if (wave === 1) {
-        plot2D(ctx, triangleWave, graph.width, graph.height, 2, 1, 100);
+        plot2D(ctx, triangleWave, w, h, 2, 1, 100);
     } else if (wave === 2) {
-        plot2D(ctx, squareWave, graph.width, graph.height, 2, 1, 100);
+        plot2D(ctx, squareWave, w, h, 2, 1, 100);
     }
 }
 
