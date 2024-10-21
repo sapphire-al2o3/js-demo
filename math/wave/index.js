@@ -14,14 +14,15 @@ const offsetY = 0;
 function plot2D(ctx, f, w, h, xr, yr, itr) {
     itr = itr === undefined ? 100 : itr;
     ctx.beginPath();
-    let x = -xr;
+    let x = -xr / 2;
     let y = f(x);
-    ctx.moveTo(x * w / 2 + w / 2, h - y * h + offsetY);
-    
+    let hw = w / 2;
+    ctx.moveTo(x * hw + hw, h - y * h + offsetY);
+    // console.log(x * hw + hw, h - y * h);
     for (let i = 1 - itr; i <= itr; i++) {
         x = i / itr * xr;
         y = f(x);
-        ctx.lineTo(x * w / xr / 2 + w / 2, h * (1 - y) + offsetY);
+        ctx.lineTo(x * hw / xr + hw, h * (1 - y) / yr + offsetY);
         y = f(x + 0.0001);
         // ctx.lineTo(x * w / xr / 2 + w / 2, h * (1 - y) + offsetY);
     }
