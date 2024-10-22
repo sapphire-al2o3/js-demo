@@ -29,15 +29,18 @@ function plot2D(ctx, f, w, h, xr, yr, itr) {
     ctx.stroke();
 }
 
+// 三角波
 const triangleWave = (x) => {
     x = x - Math.floor(x);
     return Math.abs(x - 0.5) * 2;
 };
 
+// ノコギリ波
 const sawtoothWave = (x) => {
     return x - Math.floor(x);
 };
 
+// 矩形波
 const squareWave = (x) => {
     x = x - Math.floor(x) - 0.5;
     return Math.max(x, 0) > 0 ? 1 : 0;
