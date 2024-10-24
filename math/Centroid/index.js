@@ -34,15 +34,15 @@ canvas.addEventListener('mouseout', e => {
 }, false);
 
 canvas.addEventListener('mousemove', e => {
-    var rect = e.target.getBoundingClientRect();
+    let rect = e.target.getBoundingClientRect();
     mouse.x = e.clientX - rect.left;
     mouse.y = e.clientY - rect.top;
-    if(down) {
+    if (down) {
         clickX = mouse.x;
         clickY = mouse.y;
     }
     
-    if(mouse.x !== 0 || mouse.y !== 0) {
+    if (mouse.x !== 0 || mouse.y !== 0) {
         draw();
     }
     
