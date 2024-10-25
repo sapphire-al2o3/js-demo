@@ -65,9 +65,19 @@ function inside() {
 
 function draw() {
     let d = new Vector2(mouse.x, mouse.y);
+    // if (down) {
+    //     p3.x = clickX;
+    //     p3.y = clickY;
+    // }
+
     if (down) {
-        p3.x = clickX;
-        p3.y = clickY;
+        for (let i = 0; i < 4; i++) {
+            if (d.distance(shapes[i]) < 6) {
+                active = shapes[i];
+            }
+        }
+        active.x = clickX;
+        active.y = clickY;
     }
     
     
@@ -96,6 +106,6 @@ function draw() {
     }
     
     ctx.strokeStyle = inside() ? '#37E' : '#E37';
-    ctx.strokeCircle(p3.x, p3.y, 3);
+    ctx.strokeCircle(p3.x, p3.y, d.distance(p3) < 6 ? 6 : 3);
 }
 draw();
