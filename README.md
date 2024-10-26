@@ -81,9 +81,10 @@ https://sapphire-al2o3.github.io/js-demo/
 - [鏡映と回転](https://sapphire-al2o3.github.io/js-demo/math/鏡映と回転/)
 - [斜方投射](https://sapphire-al2o3.github.io/js-demo/math/斜方投射/)
 - [線分同士の当たり判定](https://sapphire-al2o3.github.io/js-demo/math/線分同士の当たり判定/)
-- [正規分布](https://sapphire-al2o3.github.io/js-demo/math/Gaussian)
-- [整数の補間](https://sapphire-al2o3.github.io/js-demo/math/lerp-integer)
-- [波形](https://sapphire-al2o3.github.io/js-demo/math/wave)
+- [正規分布](https://sapphire-al2o3.github.io/js-demo/math/Gaussian/)
+- [整数の補間](https://sapphire-al2o3.github.io/js-demo/math/lerp-integer/)
+- [波形](https://sapphire-al2o3.github.io/js-demo/math/wave/)
+- [三角形の内外判定](https://sapphire-al2o3.github.io/js-demo/math/InsideTriangle)
 
 ## Canvas
 
