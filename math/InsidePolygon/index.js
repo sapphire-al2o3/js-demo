@@ -12,8 +12,8 @@ let p0 = {x: 100, y: 300, label: 'P0'},
     p5 = {x: 200, y: 200, label: 'P5'},
     p6 = {x: 100, y: 240, label: 'P6'};
 let active = {};
-let shapes = [p0, p1, p2, p3, p4, p5];
-let count = shapes.length;
+let shapes = [p0, p1, p2, p3, p4, p5, p6];
+let count = 6;
 let lines = false;
 
 ctx.lineWidth = 2.0;
@@ -58,11 +58,7 @@ function cross(x0, y0, x1, y1) {
 }
 
 function inside() {
-    const d0 = cross(p1.x - p0.x, p1.y - p0.y, p3.x - p0.x, p3.y - p0.y);
-    const d1 = cross(p2.x - p1.x, p2.y - p1.y, p3.x - p1.x, p3.y - p1.y);
-    const d2 = cross(p0.x - p2.x, p0.y - p2.y, p3.x - p2.x, p3.y - p2.y);
-
-    return d0 > 0 && d1 > 0 && d2 > 0 || d0 < 0 && d1 < 0 && d2 < 0;
+    return true;
 }
 
 
@@ -74,7 +70,7 @@ function draw() {
     // }
 
     if (down) {
-        for (let i = 0; i < count; i++) {
+        for (let i = 0; i < shapes.length; i++) {
             if (d.distance(shapes[i]) < 6) {
                 active = shapes[i];
             }
@@ -108,7 +104,7 @@ function draw() {
         ctx.fillText(e.label, e.x, e.y - 8);
     }
     
-    // ctx.strokeStyle = inside() ? '#37E' : '#E37';
-    ctx.strokeCircle(p6.x, p6.y, d.distance(p3) < 6 ? 6 : 3);
+    ctx.strokeStyle = inside() ? '#37E' : '#E37';
+    ctx.strokeCircle(p6.x, p6.y, d.distance(p6) < 6 ? 6 : 3);
 }
 draw();
