@@ -7,9 +7,9 @@
         width = canvas.width,
         height = canvas.height,
         cx = width / 2,
-            cy = height / 2,
-                p0 = { x: 100, y: 100 },
-                    p1 = { x: 0, y: -100 };
+        cy = height / 2,
+        p0 = { x: 100, y: 100 },
+        p1 = { x: 0, y: -100 };
     
     var down = false,
         click = { x: 0, y: 0 },
