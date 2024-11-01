@@ -8,7 +8,7 @@ let p0 = {x: 100, y: 300, label: 'P0'},
     p1 = {x: 300, y: 300, label: 'P1'},
     p2 = {x: 240, y: 100, label: 'P2'},
     p3 = {x: 100, y: 80, label: 'P3'},
-    p4 = {x: 100, y: 200, label: 'P4'},
+    p4 = {x: 120, y: 200, label: 'P4'},
     p5 = {x: 200, y: 200, label: 'P5'},
     p6 = {x: 100, y: 240, label: 'P6'};
 let active = {};
@@ -57,16 +57,55 @@ function cross(x0, y0, x1, y1) {
     return x0 * y1 - x1 * y0;
 }
 
+function angle(p, v0, v1) {
+    let dx0 = v0.x - p.x;
+    let dy0 = v0.y - p.y;
+    let dx1 = v1.x - p.x;
+    let dy1 = v1.y - p.y;
+    let l0 = Math.sqrt(dx0 * dx0 + dy0 * dy0);
+    let l1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);
+    let dot = dx0 * dx1 + dy0 * dy1;
+    let sign = cross(dx0, dy0, dx1, dy1) > 0 ? 1 : -1;
+    // Math.atan2(dx0 * dy1 - dx1 * dy0, dx0 * dx1 + dy0 * dy1);
+    return dot / (l0 * l1) * sign;
+}
+
 function inside() {
-    return true;
+    let s = 0;
+    let wn = 0;
+    for (let i = 0; i < count; i++) {
+        let a = shapes[i];
+        let b = shapes[(i + 1) % count];
+
+        if (a.x === p6.x && a.y === p6.y) {
+            return true;
+        }
+
+        // let cos = angle(p6, a, b);
+        // s += Math.acos(cos);
+
+        if ((a.y <= p6.y) && (b.y > p6.y)) {
+            let t = (p6.y - a.y) / (b.y - a.y);
+            if (p6.x < (a.x + t * (b.x - a.x))) {
+                wn++;
+            }
+        } else if ((a.y > p6.y) && (b.y <= p6.y)) {
+            let t = (p6.y - a.y) / (b.y - a.y);
+            if (p6.x < (a.x + t * (b.x - a.x))) {
+                wn--;
+            }
+        }
+    }
+    // console.log(s / (Math.PI * 2), wn);
+    return wn !== 0;
 }
 
 
 function draw() {
     let d = new Vector2(mouse.x, mouse.y);
     // if (down) {
-    //     p3.x = clickX;
-    //     p3.y = clickY;
+    //     p6.x = clickX;
+    //     p6.y = clickY;
     // }
 
     if (down) {
