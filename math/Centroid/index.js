@@ -11,7 +11,7 @@ let p0 = {x: 100, y: 100, label: 'P0'},
 let active = {};
 let shapes = [p0, p1, p2, p3];
 let count = 3;
-let lines = false;
+let lines = true;
 
 ctx.lineWidth = 2.0;
 ctx.font = '9pt consolas';
@@ -130,29 +130,30 @@ function draw() {
     }
 
     if (count === 4 && gravity) {
-        ctx.strokeStyle = '#DDD';
-        ctx.strokeLine(p0.x, p0.y, p2.x, p2.y);
-        ctx.strokeLine(p1.x, p1.y, p3.x, p3.y);
+        if (lines) {
+            ctx.strokeStyle = '#DDD';
+            ctx.strokeLine(p0.x, p0.y, p2.x, p2.y);
+            ctx.strokeLine(p1.x, p1.y, p3.x, p3.y);
 
-        ctx.strokeLine(p0.x, p0.y, p2.x, p2.y);
-        ctx.strokeLine(p1.x, p1.y, p3.x, p3.y);
+            ctx.strokeLine(p0.x, p0.y, p2.x, p2.y);
+            ctx.strokeLine(p1.x, p1.y, p3.x, p3.y);
 
-        ctx.strokeStyle = '#7BF';
-        [x, y] = centerTri(p0, p1, p2);
-        ctx.strokeCircle(x, y, 2);
-        [z, w] = centerTri(p0, p2, p3);
-        ctx.strokeCircle(z, w, 2);
+            ctx.strokeStyle = '#7BF';
+            [x, y] = centerTri(p0, p1, p2);
+            ctx.strokeCircle(x, y, 2);
+            [z, w] = centerTri(p0, p2, p3);
+            ctx.strokeCircle(z, w, 2);
 
-        ctx.strokeLine(x, y, z, w);
+            ctx.strokeLine(x, y, z, w);
 
-        ctx.strokeStyle = '#FB7';
-        [x, y] = centerTri(p0, p1, p3);
-        ctx.strokeCircle(x, y, 2);
-        [z, w] = centerTri(p1, p2, p3);
-        ctx.strokeCircle(z, w, 2);
+            ctx.strokeStyle = '#FB7';
+            [x, y] = centerTri(p0, p1, p3);
+            ctx.strokeCircle(x, y, 2);
+            [z, w] = centerTri(p1, p2, p3);
+            ctx.strokeCircle(z, w, 2);
 
-        ctx.strokeLine(x, y, z, w);
-
+            ctx.strokeLine(x, y, z, w);
+        }
         [x, y] = centerOfGravity();
         ctx.strokeStyle = '#E7E';
         ctx.strokeCircle(x, y, 3);
@@ -178,7 +179,7 @@ draw();
 document.body.appendChild(createCheckbox('lines', (v) => {
     lines = v;
     draw();
-}, false, '補助線'));
+}, true, '補助線'));
 
 document.body.appendChild(createRadio(['tri', 'quad'], (v, id, i) => {
     if (i === 0) {
