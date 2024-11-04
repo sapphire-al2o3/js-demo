@@ -159,6 +159,23 @@ function draw() {
         ctx.strokeCircle(x, y, 3);
     }
 
+    if (count === 4 && !gravity && lines) {
+        let x0 = (p0.x + p1.x) * 0.5;
+        let y0 = (p0.y + p1.y) * 0.5;
+        let x1 = (p2.x + p3.x) * 0.5;
+        let y1 = (p2.y + p3.y) * 0.5;
+
+        ctx.strokeStyle = '#DDD';
+        ctx.strokeLine(x0, y0, x1, y1);
+
+        x0 = (p0.x + p3.x) * 0.5;
+        y0 = (p0.y + p3.y) * 0.5;
+        x1 = (p1.x + p2.x) * 0.5;
+        y1 = (p1.y + p2.y) * 0.5;
+
+        ctx.strokeLine(x0, y0, x1, y1);
+    }
+
     ctx.strokeStyle = '#000';
     for (let i = 0; i < count; i++) {
         const e = shapes[i];
