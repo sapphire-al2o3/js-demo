@@ -11,7 +11,7 @@ let p0 = {x: 100, y: 300, label: 'P0'},
     p4 = {x: 120, y: 200, label: 'P4'},
     p5 = {x: 200, y: 200, label: 'P5'},
     p6 = {x: 100, y: 240, label: 'P6'};
-let active = {};
+let active = null;
 let shapes = [p0, p1, p2, p3, p4, p5, p6];
 let count = 6;
 let lines = false;
@@ -29,12 +29,12 @@ canvas.addEventListener('mousedown', e => {
 
 canvas.addEventListener('mouseup', e => {
     down = false;
-    active = {};
+    active = null;
 }, false);
 
 canvas.addEventListener('mouseout', e => {
     down = false;
-    active = {};
+    active = null;
 }, false);
 
 canvas.addEventListener('mousemove', e => {
@@ -109,13 +109,17 @@ function draw() {
     // }
 
     if (down) {
-        for (let i = 0; i < shapes.length; i++) {
-            if (d.distance(shapes[i]) < 6) {
-                active = shapes[i];
+        if (active === null) {
+            for (let i = 0; i < shapes.length; i++) {
+                if (d.distance(shapes[i]) < 6) {
+                    active = shapes[i];
+                }
             }
         }
-        active.x = clickX;
-        active.y = clickY;
+        if (active !== null) {
+            active.x = clickX;
+            active.y = clickY;
+        }
     }
     
     
