@@ -34,8 +34,8 @@ window.onload = () => {
         let src = data;
         let dst = ret;
 
-        for(let i = 0; i < h; i++) {
-            for(let j = 0; j < w; j++) {
+        for (let i = 0; i < h; i++) {
+            for (let j = 0; j < w; j++) {
                 let index = (i * w + j) * 4;
 
                 let r = src[index];
@@ -47,7 +47,7 @@ window.onload = () => {
                     dst[index] = th <= r ? 255 : 0;
                     dst[index + 1] = th <= g ? 255 : 0;
                     dst[index + 2] = th <= b ? 255 : 0;
-                    dst[index + 3] = 255
+                    dst[index + 3] = 255;
                 } else {
                     let y = (r + g + b) / 3 ^ 0;
                     if (bayer[(i % 4) * 4 + (j % 4)] <= y) {
@@ -58,7 +58,7 @@ window.onload = () => {
                     dst[index] = y;
                     dst[index + 1] = y;
                     dst[index + 2] = y;
-                    dst[index + 3] = 255
+                    dst[index + 3] = 255;
                 }
             }
         }
