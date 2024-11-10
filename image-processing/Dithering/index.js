@@ -19,6 +19,7 @@ window.onload = () => {
         h = image.height;
 
     let colored = false;
+    let method = 0;
 
     let bayer = [
         0, 8, 2, 10,
@@ -37,7 +38,7 @@ window.onload = () => {
     ];
 
     const error = [];
-    for (let i = 0; i < w * h; i++) {
+    for (let i = 0; i < w * h * 4; i++) {
         error[i] = 0;
     }
 
@@ -48,6 +49,10 @@ window.onload = () => {
 
         const thr = 127;
 
+        for (let i = 0; i < error.length; i++) {
+            error[i] = 0;
+        }
+
         for (let i = 0; i < h; i++) {
             for (let j = 0; j < w; j++) {
                 let index = (i * w + j) * 4;
@@ -57,11 +62,36 @@ window.onload = () => {
                 let b = src[index + 2];
 
                 if (colored) {
-                    let th = bayer[(i % 4) * 4 + (j % 4)];
-                    dst[index] = th <= r ? 255 : 0;
-                    dst[index + 1] = th <= g ? 255 : 0;
-                    dst[index + 2] = th <= b ? 255 : 0;
+                    r += error[index];
+                    g += error[index + 1];
+                    b += error[index + 2];
+                    let rr = r > thr ? 255 : 0;
+                    let gg = g > thr ? 255 : 0;
+                    let bb = b > thr ? 255 : 0;
+                    dst[index] = rr;
+                    dst[index + 1] = gg;
+                    dst[index + 2] = bb;
                     dst[index + 3] = 255;
+                    if (j < w - 1) {
+                        error[index + 4] += (r - rr) * 7 / 16 ^ 0;
+                        error[index + 5] += (g - gg) * 7 / 16 ^ 0;
+                        error[index + 6] += (b - bb) * 7 / 16 ^ 0;
+                    }
+                    if (j > 0 && i < h - 1) {
+                        error[index + w * 4 - 4] += (r - rr) * 3 / 16 ^ 0;
+                        error[index + w * 4 - 3] += (g - gg) * 3 / 16 ^ 0;
+                        error[index + w * 4 - 2] += (b - bb) * 3 / 16 ^ 0;
+                    }
+                    if (i < h - 1) {
+                        error[index + w * 4] += (r - rr) * 5 / 16 ^ 0;
+                        error[index + w * 4 + 1] += (g - gg) * 5 / 16 ^ 0;
+                        error[index + w * 4 + 2] += (b - bb) * 5 / 16 ^ 0;
+                    }
+                    if (j < w - 1 && i < h - 1) {
+                        error[index + w * 4 + 4] += (r - rr) / 16 ^ 0;
+                        error[index + w * 4 + 5] += (g - gg) / 16 ^ 0;
+                        error[index + w * 4 + 6] += (b - bb) / 16 ^ 0;
+                    }
                 } else {
                     let y = (r + g + b) / 3 ^ 0;
                     y += error[i * w + j];
@@ -95,7 +125,7 @@ window.onload = () => {
         ctx.putImageData(result, 0, 0);
     }
 
-    function render() {
+    function ordered() {
 
         let src = data;
         let dst = ret;
@@ -131,10 +161,23 @@ window.onload = () => {
         ctx.putImageData(result, 0, 0);
     }
 
-    diffusion();
+    function render() {
+        if (method === 0) {
+            ordered();
+        } else if (method === 1) {
+            diffusion();
+        }
+    }
+
+    render();
 
     document.body.appendChild(createCheckbox('colored', v => {
         colored = v;
+        render();
+    }));
+
+    document.body.appendChild(createRadio(['ordered', 'dissufion'], (v, id, i) => {
+        method = i;
         render();
     }));
 };
