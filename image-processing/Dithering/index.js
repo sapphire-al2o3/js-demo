@@ -179,5 +179,5 @@ window.onload = () => {
     document.body.appendChild(createRadio(['ordered', 'dissufion'], (v, id, i) => {
         method = i;
         render();
-    }));
+    }, 0, ['配列(Bayer)', '誤差拡散']));
 };
