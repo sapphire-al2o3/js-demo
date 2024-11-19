@@ -10,10 +10,10 @@ window.onload = () => {
 
     ctx.drawImage(img, 0, 0, img.width, img.height);
 
-    const image = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const result = ctx.createImageData(canvas.width, canvas.height);
-    const data = image.data;
-    const ret = result.data;
+    let image = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let result = ctx.createImageData(canvas.width, canvas.height);
+    let data = image.data;
+    let ret = result.data;
 
     let w = image.width,
         h = image.height;
@@ -180,4 +180,26 @@ window.onload = () => {
         method = i;
         render();
     }, 0, ['配列(Bayer)', '誤差拡散']));
+
+    async function load(file) {
+        const bitmap = await createImageBitmap(file);
+        ctx.clearRect(0, 0, w, h);
+        ctx.drawImage(bitmap, 0, 0);
+        image = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        result = ctx.createImageData(canvas.width, canvas.height);
+        data = image.data;
+        ret = result.data;
+        render();
+    }
+    
+    canvas.addEventListener('drop', e => {
+        let file = e.dataTransfer.files[0];
+        load(file);
+        e.preventDefault();
+    });
+    
+    canvas.addEventListener('dragover', e => {
+        e.preventDefault();
+    });
+    
 };
