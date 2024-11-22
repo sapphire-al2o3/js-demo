@@ -181,8 +181,7 @@ window.onload = () => {
         render();
     }, 0, ['配列(Bayer)', '誤差拡散']));
 
-    async function load(file) {
-        const bitmap = await createImageBitmap(file);
+    setDropImage(canvas, (bitmap) => {
         ctx.clearRect(0, 0, w, h);
         ctx.drawImage(bitmap, 0, 0);
         image = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -190,16 +189,5 @@ window.onload = () => {
         data = image.data;
         ret = result.data;
         render();
-    }
-    
-    canvas.addEventListener('drop', e => {
-        let file = e.dataTransfer.files[0];
-        load(file);
-        e.preventDefault();
     });
-    
-    canvas.addEventListener('dragover', e => {
-        e.preventDefault();
-    });
-    
 };
