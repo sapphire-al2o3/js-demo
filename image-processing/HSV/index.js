@@ -12,7 +12,7 @@ window.onload = () => {
 
     const image = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const result = ctx.createImageData(canvas.width, canvas.height);
-    const data = image.data;
+    let data = image.data;
     const ret = result.data;
 
     let width = image.width,
@@ -93,4 +93,12 @@ window.onload = () => {
         ov = v * 2.0 - 1.0;
         render();
     }));
+
+    setDropImage(canvas, (bitmap) => {
+        ctx.clearRect(0, 0, width, height);
+        ctx.drawImage(bitmap, 0, 0);
+        const image = ctx.getImageData(0, 0, width, height);
+        data = image.data;
+        render();
+    });
 };
