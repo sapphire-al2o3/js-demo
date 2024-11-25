@@ -11,8 +11,9 @@
     program.push(initShader(gl, 'shader-vs', 'shader-fs'));
 
     // トーラスを作る
-    // let model = createTorus(32, 32);
-    let model = createSphere(64);
+    let model = createTorus(32, 32);
+
+    model.meshes[0].vertexStream.position = model.meshes[0].vertexStream.position.map(x => x * 0.4);
 
     // 頂点バッファを作成
     initBuffer(gl, model);
@@ -67,8 +68,8 @@
         program[0].uniform['nMatrix'].value = matrix.nMatrix.data;
         // program[0].uniform['color'].value = color ? 1.0 : 0.3;
         program[0].uniform['light'].value = light;
-        program[0].uniform['size'].value = size;
-        program[0].uniform['thr'].value = thr;
+        // program[0].uniform['size'].value = size;
+        // program[0].uniform['thr'].value = thr;
         
         drawMesh(program[0], model.meshes[0]);
         
@@ -80,18 +81,4 @@
     gl.canvas.addEventListener('click', () => {
         timer.toggle();
     });
-
-    document.body.appendChild(createSlider('pattern-size', 0, v => {
-        size[0] = size[1] = v * 8 + 1;
-        render(0);
-    }));
-    document.body.appendChild(createSlider('pattern-mod', 0, v => {
-        size[2] = v * 4 + 1;
-        render(0);
-    }));
-
-    document.body.appendChild(createSlider('pattern-thr', 0, v => {
-        thr[0] = v;
-        render(0);
-    }));
 }());
