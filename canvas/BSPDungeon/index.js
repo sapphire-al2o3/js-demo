@@ -5,12 +5,16 @@ let w = canvas.width;
 let h = canvas.height;
 
 const minSize = 32;
-const minSplit = 0.25;
-const maxSplit = 0.75;
-const aspect = 11.5;
+const minSplit = 0.4;
+const maxSplit = 1 - minSplit;
+const aspect = 1.2;
 
 function rand(min, max) {
     return Math.random() * (max - min + 1) + min ^ 0;
+}
+
+function clamp(x, min, max) {
+    return x < min ? min : x > max ? max : x;
 }
 
 let root = {};
@@ -58,11 +62,19 @@ function room(node) {
 
     // let x = node.x + rand(10, node.w - 10);
     // let y = node.y + rand(10, node.h - 10);
-    let w = rand(node.w / 2 ^ 0, node.w - minSize);
-    let h = rand(node.h / 2 ^ 0, node.h - minSize);
+    let w = rand(minSize, node.w - minSize);
+    let h = rand(minSize, node.h - minSize);
 
-    let x = (node.w - w) / 2 + node.x ^ 0;
-    let y = (node.h - h) / 2 + node.y ^ 0;
+    let x = (node.w - w) / 2 ^ 0;
+    let y = (node.h - h) / 2 ^ 0;
+
+    x += rand(-w, w);
+    x = clamp(x, 10, node.w - w - 10);
+    x += node.x;
+
+    y += rand(-h, h);
+    y = clamp(y, 10, node.h - h - 10);
+    y += node.y;
 
     console.log(w, h);
     ctx.fillStyle = '#F0F';
