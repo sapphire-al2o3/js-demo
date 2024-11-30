@@ -8,6 +8,7 @@ const minSize = 32;
 const minSplit = 0.4;
 const maxSplit = 1 - minSplit;
 const aspect = 1.2;
+const s = 4;
 
 function rand(min, max) {
     return Math.random() * (max - min + 1) + min ^ 0;
@@ -35,7 +36,7 @@ function split(n, x, y, w, h) {
         dir = 1;
     }
 
-    let node = {x, y, w, h};
+    let node = {x, y, w, h, dir};
 
     if (dir === 0) {
         let p = rand(w * minSplit ^ 0, w * maxSplit ^ 0);
@@ -76,23 +77,67 @@ function room(node) {
     y = clamp(y, 10, node.h - h - 10);
     y += node.y;
 
-    console.log(w, h);
+    // console.log(w, h);
     ctx.fillStyle = '#F0F';
     ctx.fillRect(x, y, w, h);
+
+    node.rect = {x, y, w, h};
+
     return;
 }
 
 room(root);
 
-function corridor(node) {
+function corridor(node, dir) {
     if (node.left && node.right) {
-        room(node.left);
-        room(node.right);
+        if (node.dir === 0) {
+            corridor(node.left, 2);
+            corridor(node.right, 4);
+        } else {
+            corridor(node.left, 1);
+            corridor(node.right, 3);
+        }
+        
         return;
+    }
+
+    let x = 0;
+    let y = 0;
+
+    switch (dir) {
+        case 1:
+            x = rand(s, node.rect.w - s);
+            x += node.rect.x;
+            y = node.rect.y + node.rect.h;
+            ctx.fillStyle = '#F0F';
+            ctx.fillRect(x, y, s, node.y + node.h - y);
+            console.log(x, y, node.y);
+            break;
+        case 2:
+            y = rand(s, node.rect.h - s);
+            y += node.rect.y;
+            x = node.rect.x + node.rect.w;
+            ctx.fillStyle = '#F0F';
+            ctx.fillRect(x, y, node.x + node.w - x, s);
+            break;
+        case 3:
+            x = rand(s, node.rect.w - s);
+            x += node.rect.x;
+            ctx.fillStyle = '#F0F';
+            ctx.fillRect(x, node.y, s, node.rect.y - node.y);
+            break;
+        case 4:
+            y = rand(s, node.rect.h - s);
+            y += node.rect.y;
+            ctx.fillStyle = '#F0F';
+            ctx.fillRect(node.x, y, node.rect.x - node.x, s);
+            break;
     }
 
     return;
 }
+
+corridor(root, 0);
 
 function render() {
     ctx.fillStyle = '#FFF';
