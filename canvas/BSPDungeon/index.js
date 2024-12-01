@@ -91,11 +91,29 @@ room(root);
 function corridor(node, dir) {
     if (node.left && node.right) {
         if (node.dir === 0) {
-            corridor(node.left, 2);
-            corridor(node.right, 4);
+            let p0 = corridor(node.left, 2);
+            let p1 = corridor(node.right, 4);
+            if (p0 && p1) {
+                if (p0.y < p1.y) {
+                    ctx.fillStyle = '#F0F';
+                    ctx.fillRect(node.right.x - s / 2, p0.y, s, (p1.y - p0.y) + s);
+                } else {
+                    ctx.fillStyle = '#F0F';
+                    ctx.fillRect(node.right.x - s / 2, p1.y, s, (p0.y - p1.y) + s);
+                }
+            }
         } else {
-            corridor(node.left, 1);
-            corridor(node.right, 3);
+            let p0 = corridor(node.left, 1);
+            let p1 = corridor(node.right, 3);
+            if (p0 && p1) {
+                if (p0.x < p1.x) {
+                    ctx.fillStyle = '#F0F';
+                    ctx.fillRect(p0.x, node.right.y - s / 2, (p1.x - p0.x) + s, s);
+                } else {
+                    ctx.fillStyle = '#F0F';
+                    ctx.fillRect(p1.x, node.right.y - s / 2, (p0.x - p1.x) + s, s);
+                }
+            }
         }
         
         return;
@@ -134,7 +152,7 @@ function corridor(node, dir) {
             break;
     }
 
-    return;
+    return {x, y};
 }
 
 corridor(root, 0);
