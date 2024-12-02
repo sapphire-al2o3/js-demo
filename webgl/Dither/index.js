@@ -1,11 +1,11 @@
 (function () {
     'use strict';
 
-    var gl = initContext2('canvas');
+    const gl = initContext2('canvas');
 
     gl.viewport(0, 0, 300, 300);
 
-    var program = [];
+    const program = [];
 
     // シェーダを初期化
     program.push(initShader(gl, 'shader-vs', 'shader-fs'));
@@ -29,9 +29,7 @@
     matrix.mvMatrix = new Matrix4();
     matrix.pMatrix = new Matrix4();
 
-    let light = [0.0, 0.7, 4.0],
-        size = [1, 1, 2],
-        thr = [0.2, 0.9];
+    let light = [0.0, 0.7, 4.0];
 
     // カメラの行列設定
     Matrix4.perspective(45.0 * Math.PI / 180.0, gl.canvas.width / gl.canvas.height, 0.1, 1000.0, matrix.pMatrix);
