@@ -88,6 +88,24 @@ function room(node) {
 
 room(root);
 
+function getNearestNode(node, dir, v) {
+    if (node.left && node.right) {
+        let left = getNearestNode(node.left, dir, v);
+        let right = getNearestNode(node.right, dir, v);
+
+        if (dir === 0) {
+            let d0 = Math.abs(left.rect.x - v);
+            let d1 = Math.abs(right.rect.x - v);
+            return d0 < d1 ? left : right;
+        } else {
+            let d0 = Math.abs(left.rect.y - v);
+            let d1 = Math.abs(right.rect.y - v);
+            return d0 < d1 ? left : right;
+        }
+    }
+    return node;
+}
+
 function corridor(node, dir) {
     if (node.left && node.right) {
         if (node.dir === 0) {
@@ -115,8 +133,21 @@ function corridor(node, dir) {
                 }
             }
         }
-        
-        return;
+
+        switch (dir) {
+            case 1:
+                node = getNearestNode(node, 1, node.y + node.h);
+                break;
+            case 2:
+                node = getNearestNode(node, 0, node.x + node.w);
+                break;
+            case 3:
+                node = getNearestNode(node, 1, node.y);
+                break;
+            case 4:
+                node = getNearestNode(node, 0, node.x);
+                break;
+        }
     }
 
     let x = 0;
