@@ -4,11 +4,16 @@ const ctx = canvas.getContext('2d');
 let w = canvas.width;
 let h = canvas.height;
 
-const minSize = 32;
+let sizeW = 100;
+let sizeH = 100;
+
+const minSizeRoom = 32;
 const minSplit = 0.4;
 const maxSplit = 1 - minSplit;
 const aspect = 1.2;
 const s = 4;
+
+const area = true;
 
 function rand(min, max) {
     return Math.random() * (max - min + 1) + min ^ 0;
@@ -18,13 +23,18 @@ function clamp(x, min, max) {
     return x < min ? min : x > max ? max : x;
 }
 
+ctx.fillStyle = area ? '#FFF' : '#000';
+ctx.fillRect(0, 0, w, h);
+
 let root = {};
 
 function split(n, x, y, w, h) {
 
     if (n === 0) {
-        ctx.fillStyle = '#000';
-        ctx.fillRect(x + 1, y + 1, w - 1, h - 1);
+        if (area) {
+            ctx.fillStyle = '#000';
+            ctx.fillRect(x + 1, y + 1, w - 1, h - 1);
+        }
         return {x, y, w, h};
     }
 
@@ -63,8 +73,8 @@ function room(node) {
 
     // let x = node.x + rand(10, node.w - 10);
     // let y = node.y + rand(10, node.h - 10);
-    let w = rand(minSize, node.w - minSize);
-    let h = rand(minSize, node.h - minSize);
+    let w = rand(minSizeRoom, node.w - minSizeRoom);
+    let h = rand(minSizeRoom, node.h - minSizeRoom);
 
     let x = (node.w - w) / 2 ^ 0;
     let y = (node.h - h) / 2 ^ 0;
@@ -160,7 +170,6 @@ function corridor(node, dir) {
             y = node.rect.y + node.rect.h;
             ctx.fillStyle = '#F0F';
             ctx.fillRect(x, y, s, node.y + node.h - y);
-            console.log(x, y, node.y);
             break;
         case 2:
             y = rand(s, node.rect.h - s);
@@ -189,10 +198,35 @@ function corridor(node, dir) {
 corridor(root, 0);
 
 function render() {
-    ctx.fillStyle = '#FFF';
-    // ctx.fillRect(0, 0, w, h);
-
-
 }
 
 render();
+
+function createButton(id, callback) {
+    const wrapper = document.createElement('div'),
+        button = document.createElement('button');
+    
+    wrapper.classList.add('button');
+    button.setAttribute('for', id);
+    button.textContent = id;button
+
+    button.addEventListener('click', e => {
+        if(callback) {
+            callback();
+        }
+    }, false);
+    
+    wrapper.appendChild(button);
+    
+    return wrapper;
+}
+
+document.body.appendChild(createButton('generate', () => {
+    ctx.fillStyle = area ? '#FFF' : '#000';
+    ctx.fillRect(0, 0, w, h);
+    
+    root = split(3, 0, 0, w, h);
+    room(root);
+    corridor(root, 0);
+    render();
+}, false));
