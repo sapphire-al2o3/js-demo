@@ -147,5 +147,5 @@ window.onload = () => {
         image = ctx.getImageData(0, 0, width, height);
         data = image.data;
         render();
-    }, false));
+    }), false);
 };
