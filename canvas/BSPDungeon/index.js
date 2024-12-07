@@ -13,7 +13,7 @@ const maxSplit = 1 - minSplit;
 const aspect = 1.2;
 const s = 4;
 
-const area = true;
+let area = true;
 
 function rand(min, max) {
     return Math.random() * (max - min + 1) + min ^ 0;
@@ -221,6 +221,16 @@ function createButton(id, callback) {
     return wrapper;
 }
 
+document.body.appendChild(createCheckbox('Area', v => {
+    area = v;
+    ctx.fillStyle = area ? '#FFF' : '#000';
+    ctx.fillRect(0, 0, w, h);
+    
+    root = split(3, 0, 0, w, h);
+    room(root);
+    corridor(root, 0);
+}, true));
+
 document.body.appendChild(createButton('generate', () => {
     ctx.fillStyle = area ? '#FFF' : '#000';
     ctx.fillRect(0, 0, w, h);
@@ -229,4 +239,4 @@ document.body.appendChild(createButton('generate', () => {
     room(root);
     corridor(root, 0);
     render();
-}, false));
+}), false);
