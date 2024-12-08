@@ -64,10 +64,7 @@
         program[0].uniform['mvMatrix'].value = matrix.mvMatrix.data;
         program[0].uniform['pMatrix'].value = matrix.pMatrix.data;
         program[0].uniform['nMatrix'].value = matrix.nMatrix.data;
-        // program[0].uniform['color'].value = color ? 1.0 : 0.3;
         program[0].uniform['light'].value = light;
-        // program[0].uniform['size'].value = size;
-        // program[0].uniform['thr'].value = thr;
         
         drawMesh(program[0], model.meshes[0]);
         
