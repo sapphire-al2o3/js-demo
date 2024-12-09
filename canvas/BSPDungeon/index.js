@@ -4,8 +4,8 @@ const ctx = canvas.getContext('2d');
 let w = canvas.width;
 let h = canvas.height;
 
-let sizeW = 100;
-let sizeH = 100;
+let sizeW = 400;
+let sizeH = 400;
 
 const minSizeRoom = 32;
 const minSplit = 0.4;
@@ -21,6 +21,23 @@ function rand(min, max) {
 
 function clamp(x, min, max) {
     return x < min ? min : x > max ? max : x;
+}
+
+let map = [];
+for (let i = 0; i < sizeH; i++) {
+    const r = [];
+    for (let j = 0; j < sizeW; j++) {
+        r.push(0);
+    }
+    map.push(r);
+}
+
+function fillMap(x, y, w, h, p) {
+    for (let i = 0; i < h; i++) {
+        for (let j = 0; j < w; j++) {
+            map[i + y][j + x] = p;
+        }
+    }
 }
 
 ctx.fillStyle = area ? '#FFF' : '#000';
@@ -61,7 +78,7 @@ function split(n, x, y, w, h) {
     }
 }
 
-root = split(3, 0, 0, w, h);
+root = split(3, 0, 0, sizeW, sizeH);
 
 function room(node) {
 
@@ -92,6 +109,8 @@ function room(node) {
     ctx.fillRect(x, y, w, h);
 
     node.rect = {x, y, w, h};
+
+    fillMap(x, y, w, h);
 
     return;
 }
@@ -191,16 +210,33 @@ function corridor(node, dir) {
             ctx.fillRect(node.x, y, node.rect.x - node.x, s);
             break;
     }
-
+    node.corridor = {x, y};
     return {x, y};
 }
 
 corridor(root, 0);
 
-function render() {
+function drawArea(node) {
+    if (node.right && node.left) {
+        draw(node.left);
+        draw(node.right);
+        return;
+    }
+
+    if (area) {
+        ctx.fillStyle = '#000';
+        ctx.fillRect(node.x + 1, node.y + 1, node.w - 1, node.h - 1);
+    }
+
+    ctx.fillStyle = '#F0F';
+    ctx.fillRect(node.rect.x, node.rect.y, node.rect.w, node.rect.h);
 }
 
-render();
+function render() {
+    ctx.fillStyle = area ? '#FFF' : '#000';
+    ctx.fillRect(0, 0, w, h);
+    drawArea(root);
+}
 
 function createButton(id, callback) {
     const wrapper = document.createElement('div'),
@@ -229,6 +265,8 @@ document.body.appendChild(createCheckbox('Area', v => {
     root = split(3, 0, 0, w, h);
     room(root);
     corridor(root, 0);
+
+    // render();
 }, true));
 
 document.body.appendChild(createButton('generate', () => {
@@ -238,5 +276,4 @@ document.body.appendChild(createButton('generate', () => {
     root = split(3, 0, 0, w, h);
     room(root);
     corridor(root, 0);
-    render();
 }), false);
