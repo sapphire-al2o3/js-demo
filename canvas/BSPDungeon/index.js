@@ -32,7 +32,7 @@ for (let i = 0; i < sizeH; i++) {
     map.push(r);
 }
 
-function fillMap(x, y, w, h, p) {
+function fillMap(x, y, w, h, p = 1) {
     for (let i = 0; i < h; i++) {
         for (let j = 0; j < w; j++) {
             map[i + y][j + x] = p;
@@ -144,9 +144,11 @@ function corridor(node, dir) {
                 if (p0.y < p1.y) {
                     ctx.fillStyle = '#F0F';
                     ctx.fillRect(node.right.x - s / 2, p0.y, s, (p1.y - p0.y) + s);
+                    fillMap(node.right.x - s / 2, p0.y, s, (p1.y - p0.y) + s);
                 } else {
                     ctx.fillStyle = '#F0F';
                     ctx.fillRect(node.right.x - s / 2, p1.y, s, (p0.y - p1.y) + s);
+                    fillMap(node.right.x - s / 2, p1.y, s, (p0.y - p1.y) + s);
                 }
             }
         } else {
@@ -156,9 +158,11 @@ function corridor(node, dir) {
                 if (p0.x < p1.x) {
                     ctx.fillStyle = '#F0F';
                     ctx.fillRect(p0.x, node.right.y - s / 2, (p1.x - p0.x) + s, s);
+                    fillMap(p0.x, node.right.y - s / 2, (p1.x - p0.x) + s, s);
                 } else {
                     ctx.fillStyle = '#F0F';
                     ctx.fillRect(p1.x, node.right.y - s / 2, (p0.x - p1.x) + s, s);
+                    fillMap(p1.x, node.right.y - s / 2, (p0.x - p1.x) + s, s);
                 }
             }
         }
@@ -181,35 +185,40 @@ function corridor(node, dir) {
 
     let x = 0;
     let y = 0;
+    let w = 0;
+    let h = 0;
 
     switch (dir) {
         case 1:
-            x = rand(s, node.rect.w - s);
-            x += node.rect.x;
+            x = rand(s, node.rect.w - s) + node.rect.x;
             y = node.rect.y + node.rect.h;
-            ctx.fillStyle = '#F0F';
-            ctx.fillRect(x, y, s, node.y + node.h - y);
+            w = s;
+            h = node.y + node.h - y;
             break;
         case 2:
-            y = rand(s, node.rect.h - s);
-            y += node.rect.y;
             x = node.rect.x + node.rect.w;
-            ctx.fillStyle = '#F0F';
-            ctx.fillRect(x, y, node.x + node.w - x, s);
+            y = rand(s, node.rect.h - s) + node.rect.y;
+            w = node.x + node.w - x;
+            h = s;
             break;
         case 3:
-            x = rand(s, node.rect.w - s);
-            x += node.rect.x;
-            ctx.fillStyle = '#F0F';
-            ctx.fillRect(x, node.y, s, node.rect.y - node.y);
+            x = rand(s, node.rect.w - s) + node.rect.x;
+            y = node.y;
+            w = s;
+            h = node.rect.y - node.y;
             break;
         case 4:
-            y = rand(s, node.rect.h - s);
-            y += node.rect.y;
-            ctx.fillStyle = '#F0F';
-            ctx.fillRect(node.x, y, node.rect.x - node.x, s);
+            x = node.x;
+            y = rand(s, node.rect.h - s) + node.rect.y;
+            w = node.rect.x - node.x;
+            h = s;
             break;
     }
+
+    ctx.fillStyle = '#F0F';
+    ctx.fillRect(x, y, w, h);
+    fillMap(x, y, w, h);
+
     node.corridor = {x, y};
     return {x, y};
 }
@@ -218,8 +227,8 @@ corridor(root, 0);
 
 function drawArea(node) {
     if (node.right && node.left) {
-        draw(node.left);
-        draw(node.right);
+        drawArea(node.left);
+        drawArea(node.right);
         return;
     }
 
@@ -228,14 +237,26 @@ function drawArea(node) {
         ctx.fillRect(node.x + 1, node.y + 1, node.w - 1, node.h - 1);
     }
 
+    // ctx.fillStyle = '#F0F';
+    // ctx.fillRect(node.rect.x, node.rect.y, node.rect.w, node.rect.h);
+}
+
+function drawDungeon(scale = 1) {
     ctx.fillStyle = '#F0F';
-    ctx.fillRect(node.rect.x, node.rect.y, node.rect.w, node.rect.h);
+    for (let i = 0; i < sizeH; i++) {
+        for (let j = 0; j < sizeW; j++) {
+            if (map[i][j] === 1) {
+                ctx.fillRect(j * scale, i * scale, scale, scale);
+            }
+        }
+    }
 }
 
 function render() {
     ctx.fillStyle = area ? '#FFF' : '#000';
     ctx.fillRect(0, 0, w, h);
     drawArea(root);
+    drawDungeon();
 }
 
 function createButton(id, callback) {
@@ -259,21 +280,21 @@ function createButton(id, callback) {
 
 document.body.appendChild(createCheckbox('Area', v => {
     area = v;
-    ctx.fillStyle = area ? '#FFF' : '#000';
-    ctx.fillRect(0, 0, w, h);
+    // ctx.fillStyle = area ? '#FFF' : '#000';
+    // ctx.fillRect(0, 0, w, h);
     
-    root = split(3, 0, 0, w, h);
-    room(root);
-    corridor(root, 0);
+    // root = split(3, 0, 0, w, h);
+    // room(root);
+    // corridor(root, 0);
 
-    // render();
+    render();
 }, true));
 
 document.body.appendChild(createButton('generate', () => {
     ctx.fillStyle = area ? '#FFF' : '#000';
     ctx.fillRect(0, 0, w, h);
-    
-    root = split(3, 0, 0, w, h);
+    fillMap(0, 0, sizeW, sizeH, 0)
+    root = split(3, 0, 0, sizeW, sizeH);
     room(root);
     corridor(root, 0);
 }), false);
