@@ -11,6 +11,7 @@ const minSizeRoom = 32;
 const minSplit = 0.4;
 const maxSplit = 1 - minSplit;
 const aspect = 1.2;
+const minMargin =  10;
 const s = 4;
 
 let area = true;
@@ -48,10 +49,6 @@ let root = {};
 function split(n, x, y, w, h) {
 
     if (n === 0) {
-        if (area) {
-            ctx.fillStyle = '#000';
-            ctx.fillRect(x + 1, y + 1, w - 1, h - 1);
-        }
         return {x, y, w, h};
     }
 
@@ -97,16 +94,12 @@ function room(node) {
     let y = (node.h - h) / 2 ^ 0;
 
     x += rand(-w, w);
-    x = clamp(x, 10, node.w - w - 10);
+    x = clamp(x, minMargin, node.w - w - minMargin);
     x += node.x;
 
     y += rand(-h, h);
-    y = clamp(y, 10, node.h - h - 10);
+    y = clamp(y, minMargin, node.h - h - minMargin);
     y += node.y;
-
-    // console.log(w, h);
-    ctx.fillStyle = '#F0F';
-    ctx.fillRect(x, y, w, h);
 
     node.rect = {x, y, w, h};
 
@@ -142,13 +135,9 @@ function corridor(node, dir) {
             let p1 = corridor(node.right, 4);
             if (p0 && p1) {
                 if (p0.y < p1.y) {
-                    ctx.fillStyle = '#F0F';
-                    ctx.fillRect(node.right.x - s / 2, p0.y, s, (p1.y - p0.y) + s);
-                    fillMap(node.right.x - s / 2, p0.y, s, (p1.y - p0.y) + s);
+                    fillMap(node.right.x - s / 2 ^ 0, p0.y, s, (p1.y - p0.y) + s);
                 } else {
-                    ctx.fillStyle = '#F0F';
-                    ctx.fillRect(node.right.x - s / 2, p1.y, s, (p0.y - p1.y) + s);
-                    fillMap(node.right.x - s / 2, p1.y, s, (p0.y - p1.y) + s);
+                    fillMap(node.right.x - s / 2 ^ 0, p1.y, s, (p0.y - p1.y) + s);
                 }
             }
         } else {
@@ -156,13 +145,9 @@ function corridor(node, dir) {
             let p1 = corridor(node.right, 3);
             if (p0 && p1) {
                 if (p0.x < p1.x) {
-                    ctx.fillStyle = '#F0F';
-                    ctx.fillRect(p0.x, node.right.y - s / 2, (p1.x - p0.x) + s, s);
-                    fillMap(p0.x, node.right.y - s / 2, (p1.x - p0.x) + s, s);
+                    fillMap(p0.x, node.right.y - s / 2 ^ 0, (p1.x - p0.x) + s, s);
                 } else {
-                    ctx.fillStyle = '#F0F';
-                    ctx.fillRect(p1.x, node.right.y - s / 2, (p0.x - p1.x) + s, s);
-                    fillMap(p1.x, node.right.y - s / 2, (p0.x - p1.x) + s, s);
+                    fillMap(p1.x, node.right.y - s / 2 ^ 0, (p0.x - p1.x) + s, s);
                 }
             }
         }
@@ -215,8 +200,6 @@ function corridor(node, dir) {
             break;
     }
 
-    ctx.fillStyle = '#F0F';
-    ctx.fillRect(x, y, w, h);
     fillMap(x, y, w, h);
 
     node.corridor = {x, y};
@@ -224,6 +207,8 @@ function corridor(node, dir) {
 }
 
 corridor(root, 0);
+
+render();
 
 function drawArea(node) {
     if (node.right && node.left) {
@@ -297,4 +282,5 @@ document.body.appendChild(createButton('generate', () => {
     root = split(3, 0, 0, sizeW, sizeH);
     room(root);
     corridor(root, 0);
+    render();
 }), false);
