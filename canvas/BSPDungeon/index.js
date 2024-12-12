@@ -221,9 +221,6 @@ function drawArea(node) {
         ctx.fillStyle = '#000';
         ctx.fillRect(node.x + 1, node.y + 1, node.w - 1, node.h - 1);
     }
-
-    // ctx.fillStyle = '#F0F';
-    // ctx.fillRect(node.rect.x, node.rect.y, node.rect.w, node.rect.h);
 }
 
 function drawDungeon(scale = 1) {
@@ -265,19 +262,10 @@ function createButton(id, callback) {
 
 document.body.appendChild(createCheckbox('Area', v => {
     area = v;
-    // ctx.fillStyle = area ? '#FFF' : '#000';
-    // ctx.fillRect(0, 0, w, h);
-    
-    // root = split(3, 0, 0, w, h);
-    // room(root);
-    // corridor(root, 0);
-
     render();
 }, true));
 
 document.body.appendChild(createButton('generate', () => {
-    ctx.fillStyle = area ? '#FFF' : '#000';
-    ctx.fillRect(0, 0, w, h);
     fillMap(0, 0, sizeW, sizeH, 0)
     root = split(3, 0, 0, sizeW, sizeH);
     room(root);
