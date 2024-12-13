@@ -13,6 +13,7 @@ const maxSplit = 1 - minSplit;
 const aspect = 1.2;
 const minMargin =  10;
 const s = 4;
+const scale = 1;
 
 let area = true;
 
@@ -210,17 +211,15 @@ corridor(root, 0);
 
 render();
 
-function drawArea(node) {
+function drawArea(node, scale = 1) {
     if (node.right && node.left) {
-        drawArea(node.left);
-        drawArea(node.right);
+        drawArea(node.left, scale);
+        drawArea(node.right, scale);
         return;
     }
 
-    if (area) {
-        ctx.fillStyle = '#000';
-        ctx.fillRect(node.x + 1, node.y + 1, node.w - 1, node.h - 1);
-    }
+    ctx.fillStyle = '#000';
+    ctx.fillRect(node.x * scale + 1, node.y * scale + 1, node.w * scale - 1, node.h * scale - 1);
 }
 
 function drawDungeon(scale = 1) {
@@ -237,7 +236,9 @@ function drawDungeon(scale = 1) {
 function render() {
     ctx.fillStyle = area ? '#FFF' : '#000';
     ctx.fillRect(0, 0, w, h);
-    drawArea(root);
+    if (area) {
+        drawArea(root);
+    }
     drawDungeon();
 }
 
