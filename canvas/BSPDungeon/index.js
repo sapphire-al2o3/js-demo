@@ -4,16 +4,16 @@ const ctx = canvas.getContext('2d');
 let w = canvas.width;
 let h = canvas.height;
 
-let sizeW = 400;
-let sizeH = 400;
+let sizeW = 100;
+let sizeH = 100;
 
-const minSizeRoom = 32;
+const minSizeRoom = 8;
 const minSplit = 0.4;
 const maxSplit = 1 - minSplit;
 const aspect = 1.2;
-const minMargin =  10;
-const s = 4;
-const scale = 1;
+const minMargin =  2;
+const s = 1;
+const scale = 4;
 
 let area = true;
 
@@ -86,8 +86,6 @@ function room(node) {
         return;
     }
 
-    // let x = node.x + rand(10, node.w - 10);
-    // let y = node.y + rand(10, node.h - 10);
     let w = rand(minSizeRoom, node.w - minSizeRoom);
     let h = rand(minSizeRoom, node.h - minSizeRoom);
 
@@ -237,9 +235,9 @@ function render() {
     ctx.fillStyle = area ? '#FFF' : '#000';
     ctx.fillRect(0, 0, w, h);
     if (area) {
-        drawArea(root);
+        drawArea(root, scale);
     }
-    drawDungeon();
+    drawDungeon(scale);
 }
 
 function createButton(id, callback) {
