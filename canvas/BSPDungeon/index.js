@@ -12,8 +12,10 @@ const minSplit = 0.4;
 const maxSplit = 1 - minSplit;
 const aspect = 1.2;
 const minMargin =  2;
+const minPadding = 0;
 const s = 1;
 const scale = 4;
+const treeDepth = 4;
 
 let area = true;
 
@@ -42,9 +44,6 @@ function fillMap(x, y, w, h, p = 1) {
     }
 }
 
-ctx.fillStyle = area ? '#FFF' : '#000';
-ctx.fillRect(0, 0, w, h);
-
 let root = {};
 
 function split(n, x, y, w, h) {
@@ -53,7 +52,7 @@ function split(n, x, y, w, h) {
         return {x, y, w, h};
     }
 
-    let dir = Math.random() * 2 ^ 0;
+    let dir = rand(0, 1);
 
     if (w / h > aspect) {
         dir = 0;
@@ -76,7 +75,7 @@ function split(n, x, y, w, h) {
     }
 }
 
-root = split(3, 0, 0, sizeW, sizeH);
+root = split(treeDepth, 0, 0, sizeW, sizeH);
 
 function room(node) {
 
@@ -88,6 +87,10 @@ function room(node) {
 
     let w = rand(minSizeRoom, node.w - minSizeRoom);
     let h = rand(minSizeRoom, node.h - minSizeRoom);
+
+    // if (rand(0, 5) === 0) {
+    //     w = h = 1;
+    // }
 
     let x = (node.w - w) / 2 ^ 0;
     let y = (node.h - h) / 2 ^ 0;
@@ -174,26 +177,26 @@ function corridor(node, dir) {
 
     switch (dir) {
         case 1:
-            x = rand(s, node.rect.w - s) + node.rect.x;
+            x = rand(minPadding, node.rect.w - minPadding - s) + node.rect.x;
             y = node.rect.y + node.rect.h;
             w = s;
             h = node.y + node.h - y;
             break;
         case 2:
             x = node.rect.x + node.rect.w;
-            y = rand(s, node.rect.h - s) + node.rect.y;
+            y = rand(minPadding, node.rect.h - minPadding - s) + node.rect.y;
             w = node.x + node.w - x;
             h = s;
             break;
         case 3:
-            x = rand(s, node.rect.w - s) + node.rect.x;
+            x = rand(minPadding, node.rect.w - minPadding - s) + node.rect.x;
             y = node.y;
             w = s;
             h = node.rect.y - node.y;
             break;
         case 4:
             x = node.x;
-            y = rand(s, node.rect.h - s) + node.rect.y;
+            y = rand(minPadding, node.rect.h - minPadding - s) + node.rect.y;
             w = node.rect.x - node.x;
             h = s;
             break;
@@ -266,7 +269,7 @@ document.body.appendChild(createCheckbox('Area', v => {
 
 document.body.appendChild(createButton('generate', () => {
     fillMap(0, 0, sizeW, sizeH, 0)
-    root = split(3, 0, 0, sizeW, sizeH);
+    root = split(treeDepth, 0, 0, sizeW, sizeH);
     room(root);
     corridor(root, 0);
     render();
