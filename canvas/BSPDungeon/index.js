@@ -15,7 +15,7 @@ const minMargin =  2;
 const minPadding = 0;
 const s = 1;
 const scale = 4;
-const treeDepth = 4;
+const treeDepth = 3;
 
 let area = true;
 
@@ -88,10 +88,6 @@ function room(node) {
     let w = rand(minSizeRoom, node.w - minSizeRoom);
     let h = rand(minSizeRoom, node.h - minSizeRoom);
 
-    // if (rand(0, 5) === 0) {
-    //     w = h = 1;
-    // }
-
     let x = (node.w - w) / 2 ^ 0;
     let y = (node.h - h) / 2 ^ 0;
 
@@ -102,6 +98,10 @@ function room(node) {
     y += rand(-h, h);
     y = clamp(y, minMargin, node.h - h - minMargin);
     y += node.y;
+
+    // if (Math.random() < 0.3) {
+    //     w = h = 1;
+    // }
 
     node.rect = {x, y, w, h};
 
@@ -209,6 +209,24 @@ function corridor(node, dir) {
 }
 
 corridor(root, 0);
+
+function stairs(node, n, i) {
+    if (node.right && node.left) {
+        n = stairs(node.left, n, i);
+        n = stairs(node.right, n, i);
+        return;
+    }
+
+    if (n === i) {
+        let x = rand(1, node.rect.w - 2) + node.rect.x;
+        let y = rand(1, node.rect.h - 2) + node.rect.y;
+        map[y][x] = 0;
+    }
+
+    return n + 1;
+}
+
+stairs(root, 0, 1)
 
 render();
 
