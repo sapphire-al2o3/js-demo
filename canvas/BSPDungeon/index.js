@@ -210,23 +210,24 @@ function corridor(node, dir) {
 
 corridor(root, 0);
 
-function stairs(node, n, i) {
+function stairs(node, p, n, i) {
     if (node.right && node.left) {
-        n = stairs(node.left, n, i);
-        n = stairs(node.right, n, i);
-        return;
+        n = stairs(node.left, p, n, i);
+        n = stairs(node.right, p, n, i);
+        return n;
     }
 
     if (n === i) {
         let x = rand(1, node.rect.w - 2) + node.rect.x;
         let y = rand(1, node.rect.h - 2) + node.rect.y;
-        map[y][x] = 0;
+        map[y][x] = p;
     }
 
     return n + 1;
 }
 
-stairs(root, 0, 1)
+stairs(root, 2, 0, 0);
+stairs(root, 3, 0, rand(1, (1 << treeDepth) - 1));
 
 render();
 
@@ -247,6 +248,14 @@ function drawDungeon(scale = 1) {
         for (let j = 0; j < sizeW; j++) {
             if (map[i][j] === 1) {
                 ctx.fillRect(j * scale, i * scale, scale, scale);
+            } else if (map[i][j] === 2) {
+                ctx.fillStyle = '#FF0';
+                ctx.fillRect(j * scale, i * scale, scale, scale);
+                ctx.fillStyle = '#F0F';
+            } else if (map[i][j] === 3) {
+                ctx.fillStyle = '#00F';
+                ctx.fillRect(j * scale, i * scale, scale, scale);
+                ctx.fillStyle = '#F0F';
             }
         }
     }
