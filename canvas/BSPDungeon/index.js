@@ -18,6 +18,7 @@ const scale = 4;
 const treeDepth = 3;
 
 let area = true;
+let stairs = true;
 
 function rand(min, max) {
     return Math.random() * (max - min + 1) + min ^ 0;
@@ -210,10 +211,10 @@ function corridor(node, dir) {
 
 corridor(root, 0);
 
-function stairs(node, p, n, i) {
+function placement(node, p, n, i) {
     if (node.right && node.left) {
-        n = stairs(node.left, p, n, i);
-        n = stairs(node.right, p, n, i);
+        n = placement(node.left, p, n, i);
+        n = placement(node.right, p, n, i);
         return n;
     }
 
@@ -226,8 +227,8 @@ function stairs(node, p, n, i) {
     return n + 1;
 }
 
-stairs(root, 2, 0, 0);
-stairs(root, 3, 0, rand(1, (1 << treeDepth) - 1));
+placement(root, 2, 0, 0);
+placement(root, 3, 0, rand(1, (1 << treeDepth) - 1));
 
 render();
 
@@ -248,12 +249,14 @@ function drawDungeon(scale = 1) {
         for (let j = 0; j < sizeW; j++) {
             if (map[i][j] === 1) {
                 ctx.fillRect(j * scale, i * scale, scale, scale);
-            } else if (map[i][j] === 2) {
-                ctx.fillStyle = '#FF0';
-                ctx.fillRect(j * scale, i * scale, scale, scale);
-                ctx.fillStyle = '#F0F';
-            } else if (map[i][j] === 3) {
-                ctx.fillStyle = '#00F';
+            } else if (map[i][j] !== 0) {
+                if (stairs) {
+                    if (map[i][j] === 2) {
+                        ctx.fillStyle = '#FF0';
+                    } else if (map[i][j] === 3) {
+                        ctx.fillStyle = '#00F';
+                    }
+                }
                 ctx.fillRect(j * scale, i * scale, scale, scale);
                 ctx.fillStyle = '#F0F';
             }
@@ -294,10 +297,17 @@ document.body.appendChild(createCheckbox('Area', v => {
     render();
 }, true));
 
+document.body.appendChild(createCheckbox('Stairs', v => {
+    stairs = v;
+    render();
+}, true));
+
 document.body.appendChild(createButton('generate', () => {
     fillMap(0, 0, sizeW, sizeH, 0)
     root = split(treeDepth, 0, 0, sizeW, sizeH);
     room(root);
     corridor(root, 0);
+    placement(root, 2, 0, 0);
+    placement(root, 3, 0, rand(1, (1 << treeDepth) - 1));
     render();
 }), false);
