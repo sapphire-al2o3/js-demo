@@ -6,7 +6,7 @@
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
     const program = [];
-    const count = 1000;
+    let count = 1000;
 
     // シェーダを初期化
     program.push(initShader(gl, 'shader-vs', 'shader-fs'));
@@ -18,6 +18,7 @@
 
     const trans = [];
 
+    // 位置
     for (let i = 0; i < count; i++) {
         let t = i * Math.PI * 32 / count;
         trans.push(Math.sin(t) * i * 0.002);
@@ -67,7 +68,7 @@
         time += delta;
         // light[0] = Math.cos(time * 0.001);
         // light[2] = Math.sin(time * 0.001);
-        // Matrix4.rotateXYZ(frame * 0.02, 0.0, frame * 0.02, matrix.mMatrix);
+        // Matrix4.rotateXYZ(time * 0.002, 0.0, time * 0.002, matrix.mMatrix);
         // Matrix4.scale(0.5, 0.5, 0.5, matrix.mMatrix);
         Matrix4.identity(matrix.mMatrix);
         matrix.mMatrix.mul(matrix.vMatrix, matrix.mvMatrix);
@@ -92,4 +93,8 @@
     gl.canvas.addEventListener('click', () => {
         timer.toggle();
     });
+
+    document.body.appendChild(createSlider('count', 1, v => {
+        count = v * 1000 ^ 0;
+    }), false);
 })();
