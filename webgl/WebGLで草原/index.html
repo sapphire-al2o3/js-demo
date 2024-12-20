@@ -38,7 +38,7 @@ void main() {
 	vec3 view = normalize(vView);
 	//vec3 amb = ambient.xyz;
 	vec3 h = normalize(light + view);
-	vec3 r = 2.0 * dot(normal, light) * normal - light;
+	//vec3 r = 2.0 * dot(normal, light) * normal - light;
 	vec3 spe = vec3(pow(max(dot(h, normal), 0.0), 10.0)) * 0.6;// * specular.xyz;
 
 	//gl_FragColor = vec4(tex.xyz * vColor + spe, 1.0);
@@ -46,7 +46,7 @@ void main() {
 	float fogDensity = 1.0;
 	float fog = clamp(z * fogDensity * z, 0.0, 1.0);
 	vec4 fogColor = vec4(0.9, 0.9, 0.9, 1.0);
-	vec4 color = vec4(tex.xyz * vColor + spe, 1.0);
+	vec4 color = vec4(tex.xyz * vColor * dif + spe, 1.0);
 	gl_FragColor = color;
 	//gl_FragColor = mix(fogColor// * vec4(dif, 1.0);// + vec4(spe, 1.0);
 	//gl_FragColor = texture2D(uSampler, vTexcoord) + vec4(spe + dif + amb, 1.0);
