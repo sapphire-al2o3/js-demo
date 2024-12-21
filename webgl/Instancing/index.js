@@ -17,16 +17,22 @@
     model.meshes[0].vertexStream.position = model.meshes[0].vertexStream.position.map(x => x * 0.4);
 
     const trans = [];
+    const color = [];
 
-    // 位置
+    // インスタンスごとのパラメータ
     for (let i = 0; i < count; i++) {
         let t = i * Math.PI * 32 / count;
         trans.push(Math.sin(t) * i * 0.002);
         trans.push(0);
         trans.push(Math.cos(t) * i * 0.002);
+
+        color.push(0);
+        color.push(i / count);
+        color.push(0);
     }
 
     model.meshes[0].vertexStream.trans = trans;
+    model.meshes[0].vertexStream.color = color;
 
     // 頂点バッファを作成
     initBuffer(gl, model);
@@ -34,6 +40,7 @@
     gl.vertexAttribDivisor(0, 0);
     gl.vertexAttribDivisor(1, 0);
     gl.vertexAttribDivisor(2, 1);
+    gl.vertexAttribDivisor(3, 1);
 
     let camera = {},
         matrix = {};

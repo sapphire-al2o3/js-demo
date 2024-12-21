@@ -13,6 +13,7 @@
 precision highp float;
 
 in vec3 vNormal;
+in vec3 vColor;
 out vec4 outColor;
 
 uniform vec3 light;
@@ -21,14 +22,16 @@ void main() {
     vec3 n = normalize(vNormal);
     vec3 l = normalize(light);
     vec3 dif = vec3(max(dot(n, l), 0.0));
-    outColor = vec4(dif, 1.0);
+    outColor = vec4(dif * vColor, 1.0);
 }
 </script>
 <script id="shader-vs" type="x-shader/x-vertex">#version 300 es
 in vec3 position;
 in vec3 normal;
 in vec3 trans;
+in vec3 color;
 out vec3 vNormal;
+out vec3 vColor;
 
 uniform mat4 mvMatrix;
 uniform mat4 pMatrix;
@@ -37,6 +40,7 @@ uniform mat3 nMatrix;
 void main() {
     vec3 pos = position + trans;
     vNormal = nMatrix * normal;
+    vColor = color;
     gl_Position = pMatrix * mvMatrix * vec4(pos, 1.0);
 }
 </script>
