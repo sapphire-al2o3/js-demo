@@ -12,7 +12,17 @@ let models = [
     createSphere(8, 1.5),
 ];
 
+// Plane
 models[0].meshes[0].vertexStream.uv = [0, 0, 1, 0, 1, 1, 0, 1];
+// Cube
+models[1].meshes[0].vertexStream.uv = [
+    0, 0, 1, 0, 1, 1, 0, 1,
+    0, 0, 1, 0, 1, 1, 0, 1,
+    0, 0, 1, 0, 1, 1, 0, 1,
+    0, 0, 1, 0, 1, 1, 0, 1,
+    0, 0, 1, 0, 1, 1, 0, 1,
+    0, 0, 1, 0, 1, 1, 0, 1,
+];
 
 let index = 0;
 
