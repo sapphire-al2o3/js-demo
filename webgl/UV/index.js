@@ -9,7 +9,7 @@ let program = initShader(gl, 'shader-fs', 'shader-vs');
 let models = [
     createPlane(1.0, 1.0),
     createCube(),
-    createSphere(8, 1.5),
+    createSphere(16),
 ];
 
 // Plane
@@ -23,6 +23,20 @@ models[1].meshes[0].vertexStream.uv = [
     0, 0, 1, 0, 1, 1, 0, 1,
     0, 0, 1, 0, 1, 1, 0, 1,
 ];
+// Sphere
+const pos = models[2].meshes[0].vertexStream.position;
+const uv = [];
+for (let i = 0; i < pos.length; i += 3) {
+    let x = pos[i];
+    let y = pos[i + 1];
+    let z = pos[i + 2];
+    let u = 0.5 + Math.atan2(z, x) / (2 * Math.PI);
+    let v = 0.5 + Math.asin(y) / Math.PI;
+    uv.push(u);
+    uv.push(v);
+}
+models[2].meshes[0].vertexStream.uv = uv;
+
 
 let index = 0;
 
