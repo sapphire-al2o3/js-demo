@@ -12,12 +12,13 @@ precision highp float;
 
 uniform vec4 color;
 uniform sampler2D tex;
+uniform float showUV;
 
 in vec2 vUv;
 out vec4 outColor;
 
 void main() {
-	outColor = color * texture(tex, vUv.xy);
+	outColor = color * mix(texture(tex, vUv.xy), vec4(vUv.xy, 0.0, 1.0), showUV);
 }
 </script>
 <script id="shader-vs" type="x-shader/x-vertex">#version 300 es

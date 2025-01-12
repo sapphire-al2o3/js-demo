@@ -52,6 +52,7 @@ camera.target = new Vector3(0, 0.0, 0);
 camera.up = new Vector3(0, 1, 0);
 
 let frame = 0;
+let showUV = false;
 
 let pm = Matrix4.perspective(45.0 * Math.PI / 180.0, width / height, 0.1, 1000.0),
     vm = Matrix4.lookAt(camera.position, camera.target, camera.up),
@@ -66,6 +67,7 @@ program.uniform['mvMatrix'].value = mvm.data;
 program.uniform['pMatrix'].value = pm.data;
 // program.uniform['tMatrix'].value = tm.data;
 program.uniform['color'].value = [1, 1, 1, 1];//[0.2, 0.2, 0.7, 1];
+program.uniform['showUV'].value = 0.0;
 
 const img = document.getElementById('tex');
 const tex = initTexture(gl, img);
@@ -97,6 +99,12 @@ function render() {
     gl.drawElements(gl.TRIANGLES, models[index].meshes[0].indexStream.length, gl.UNSIGNED_SHORT, 0);
     gl.flush();
 }
+
+document.body.appendChild(createCheckbox('uv', v => {
+    showUV = v;
+    program.uniform['showUV'].value = showUV ? 1.0 : 0.0;
+    render();
+}));
 
 document.body.appendChild(createRadio(['plane', 'cube', 'sphere'], (v, id, i) => {
     index = i;
