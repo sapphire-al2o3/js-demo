@@ -108,4 +108,5 @@ document.body.appendChild(createCheckbox('uv', v => {
 
 document.body.appendChild(createRadio(['plane', 'cube', 'sphere'], (v, id, i) => {
     index = i;
+    render();
 }));
