@@ -6,10 +6,11 @@ let gl = initContext2('canvas', {antialias: true}),
 
 let program = initShader(gl, 'shader-fs', 'shader-vs');
 
+const div = 16;
 let models = [
     createPlane(1.0, 1.0),
     createCube(),
-    createSphere(16),
+    createSphere(div),
 ];
 
 // Plane
@@ -26,15 +27,16 @@ models[1].meshes[0].vertexStream.uv = [
 // Sphere
 const pos = models[2].meshes[0].vertexStream.position;
 const uv = [];
-for (let i = 0; i < pos.length; i += 3) {
-    let x = pos[i];
-    let y = pos[i + 1];
-    let z = pos[i + 2];
-    let u = 0.5 + Math.atan2(z, x) / (2 * Math.PI);
-    let v = 0.5 + Math.asin(y) / Math.PI;
-    uv.push(u);
-    uv.push(v);
+
+for (let i = 0; i <= div; i++) {
+    let ph = i / div;
+    for (let j = 0; j <= div; j++) {
+        let th = j / div;
+        uv.push(th);
+        uv.push(1 - ph);
+    }
 }
+
 models[2].meshes[0].vertexStream.uv = uv;
 
 
@@ -48,6 +50,7 @@ let camera = {},
     matrix = {};
 
 camera.position = new Vector3(0, 2.0, 4.0);
+// camera.position = new Vector3(0, 3.0, 2.0);
 camera.target = new Vector3(0, 0.0, 0);
 camera.up = new Vector3(0, 1, 0);
 
@@ -87,7 +90,7 @@ gl.canvas.addEventListener('click', (e) => {
 });
 
 function render() {
-    Matrix4.rotateXYZ(0, frame * 0.02, 0, mm);
+    Matrix4.rotateXYZ(0, frame * 0.02, frame * 0.0, mm);
     mm.mul(vm, mvm);
     
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
