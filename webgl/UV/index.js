@@ -49,8 +49,8 @@ for (let model of models) {
 let camera = {},
     matrix = {};
 
-camera.position = new Vector3(0, 2.0, 4.0);
-// camera.position = new Vector3(0, 3.0, 2.0);
+// camera.position = new Vector3(0, 2.0, 4.0);
+camera.position = new Vector3(0, 2.5, 3.0);
 camera.target = new Vector3(0, 0.0, 0);
 camera.up = new Vector3(0, 1, 0);
 
