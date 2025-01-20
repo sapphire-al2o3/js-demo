@@ -11,6 +11,7 @@ let models = [
     createPlane(1.0, 1.0),
     createCube(),
     createSphere(div),
+    createTorus(16, 16, 1.0, 0.3)
 ];
 
 // Plane
@@ -25,7 +26,6 @@ models[1].meshes[0].vertexStream.uv = [
     0, 0, 1, 0, 1, 1, 0, 1,
 ];
 // Sphere
-const pos = models[2].meshes[0].vertexStream.position;
 const uv = [];
 
 for (let i = 0; i <= div; i++) {
@@ -36,9 +36,21 @@ for (let i = 0; i <= div; i++) {
         uv.push(1 - ph);
     }
 }
-
 models[2].meshes[0].vertexStream.uv = uv;
-
+// Torus
+// for (let i = 0; i <= n; i++) {
+//     let ph = i / n,
+//         r = Math.cos(ph) * t,
+//         y = Math.sin(ph) * t;
+//     for (let j = 0; j <= m; j++) {
+//         let th = 2.0 * Math.PI * j / m,
+//             x = Math.cos(th) * (s + r),
+//             z = Math.sin(th) * (s + r);
+//         vertices.push(x, y, z);
+//         normals.push(r * Math.cos(th), y, r * Math.sin(th));
+//     }
+// }
+models[3].meshes[0].vertexStream.uv = uv;
 
 let index = 0;
 
@@ -109,7 +121,7 @@ document.body.appendChild(createCheckbox('uv', v => {
     render();
 }));
 
-document.body.appendChild(createRadio(['plane', 'cube', 'sphere'], (v, id, i) => {
+document.body.appendChild(createRadio(['plane', 'cube', 'sphere', 'torus'], (v, id, i) => {
     index = i;
     render();
 }));
