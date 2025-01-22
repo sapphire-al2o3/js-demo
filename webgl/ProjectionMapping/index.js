@@ -9,7 +9,7 @@ let program = initShader(gl, 'shader-fs', 'shader-vs');
 let models = [
     createPlane(1.0, 1.0),
     createCube(),
-    createSphere(8, 1.5),
+    createSphere(16, 1.5),
 ];
 
 let index = 0;
