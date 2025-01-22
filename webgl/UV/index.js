@@ -7,11 +7,13 @@ let gl = initContext2('canvas', {antialias: true}),
 let program = initShader(gl, 'shader-fs', 'shader-vs');
 
 const div = 16;
+const tdiv0 = 32;
+const tdiv1 = 32;
 let models = [
     createPlane(1.0, 1.0),
     createCube(),
     createSphere(div),
-    createTorus(16, 16, 1.0, 0.3)
+    createTorus(tdiv0, tdiv1, 1.0, 0.3)
 ];
 
 // Plane
@@ -37,20 +39,18 @@ for (let i = 0; i <= div; i++) {
     }
 }
 models[2].meshes[0].vertexStream.uv = uv;
+
 // Torus
-// for (let i = 0; i <= n; i++) {
-//     let ph = i / n,
-//         r = Math.cos(ph) * t,
-//         y = Math.sin(ph) * t;
-//     for (let j = 0; j <= m; j++) {
-//         let th = 2.0 * Math.PI * j / m,
-//             x = Math.cos(th) * (s + r),
-//             z = Math.sin(th) * (s + r);
-//         vertices.push(x, y, z);
-//         normals.push(r * Math.cos(th), y, r * Math.sin(th));
-//     }
-// }
-models[3].meshes[0].vertexStream.uv = uv;
+const tuv = [];
+for (let i = 0; i <= tdiv0; i++) {
+    let ph = i / tdiv0;
+    for (let j = 0; j <= tdiv1; j++) {
+        let th = j / tdiv1;
+        tuv.push(th);
+        tuv.push(1 - ph);
+    }
+}
+models[3].meshes[0].vertexStream.uv = tuv;
 
 let index = 0;
 
@@ -102,7 +102,7 @@ gl.canvas.addEventListener('click', (e) => {
 });
 
 function render() {
-    Matrix4.rotateXYZ(0, frame * 0.02, frame * 0.0, mm);
+    Matrix4.rotateXYZ(0, frame * 0.02, frame * 0.02, mm);
     mm.mul(vm, mvm);
     
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
