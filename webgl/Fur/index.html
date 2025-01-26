@@ -19,6 +19,7 @@ out vec4 outColor;
 uniform vec3 light;
 uniform sampler2D fur_tex;
 uniform sampler2D tex;
+uniform float furFactor;
 
 void main() {
     vec3 n = normalize(vNormal);
@@ -26,9 +27,10 @@ void main() {
     vec3 dif = vec3(max(dot(n, l), 0.0));
     float fur = texture(fur_tex, vUv).r;
     vec4 base = texture(tex, vUv);
-    if (fur < 0.6) {
+    if (fur < 0.6 && furFactor > 0.0) {
         discard;
     }
+    dif += vec3(1.0, 1.0, 1.0) * furFactor;
     outColor = vec4(dif, 1.0) * base;
 }
 </script>
@@ -44,11 +46,12 @@ uniform mat4 mvMatrix;
 uniform mat4 pMatrix;
 uniform mat3 nMatrix;
 uniform float furFactor;
+uniform vec2 texTR;
 
 void main() {
     vec3 pos = position + trans + normal * furFactor;
     vNormal = nMatrix * normal;
-    vUv = uv;
+    vUv = uv * texTR;
     gl_Position = pMatrix * mvMatrix * vec4(pos, 1.0);
 }
 </script>

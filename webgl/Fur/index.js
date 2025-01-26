@@ -66,7 +66,7 @@ matrix.vMatrix = new Matrix4();
 matrix.mvMatrix = new Matrix4();
 matrix.pMatrix = new Matrix4();
 
-let light = [0.0, 0.7, 2.0];
+let light = [0.4, 0.7, 1.0];
 
 // カメラの行列設定
 Matrix4.perspective(45.0 * Math.PI / 180.0, gl.canvas.width / gl.canvas.height, 0.1, 1000.0, matrix.pMatrix);
@@ -93,7 +93,7 @@ function render(delta) {
     matrix.mMatrix.mul(matrix.vMatrix, matrix.mvMatrix);
     matrix.nMatrix = matrix.mvMatrix.toMatrix3().transpose().inverse();
 
-    gl.clearColor(1.0, 1.0, 1.0, 1.0);
+    gl.clearColor(0.8, 0.8, 0.8, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     
     gl.cullFace(gl.BACK);
@@ -102,8 +102,12 @@ function render(delta) {
     program[0].uniform['nMatrix'].value = matrix.nMatrix.data;
     program[0].uniform['light'].value = light;
     
-    for (let i = 0; i < layer; i++) {
-        program[0].uniform['furFactor'].value = i * 0.01;
+    program[0].uniform['furFactor'].value = 0;
+    program[0].uniform['texTR'].value = [2, 2];
+    drawMesh(program[0], model.meshes[0]);
+
+    for (let i = 1; i < layer; i++) {
+        program[0].uniform['furFactor'].value = i * 0.02;
         drawMesh(program[0], model.meshes[0]);
     }
 
