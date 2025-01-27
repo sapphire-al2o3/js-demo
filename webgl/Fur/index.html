@@ -47,9 +47,10 @@ uniform mat4 pMatrix;
 uniform mat3 nMatrix;
 uniform float furFactor;
 uniform vec2 texTR;
+uniform vec3 furDir;
 
 void main() {
-    vec3 pos = position + trans + normal * furFactor;
+    vec3 pos = position + trans + normal * furFactor + furDir * furFactor;
     vNormal = nMatrix * normal;
     vUv = uv * texTR;
     gl_Position = pMatrix * mvMatrix * vec4(pos, 1.0);

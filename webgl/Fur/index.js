@@ -57,7 +57,7 @@ gl.vertexAttribDivisor(2, 1);
 
 let camera = {},
     matrix = {};
-camera.position = new Vector3(0, 4.0, 2.0);
+camera.position = new Vector3(0, 3.0, 3.0);
 camera.target = new Vector3(0, 0.3, 0);
 camera.up = new Vector3(0, 1, 0);
 matrix.mMatrix = new Matrix4();
@@ -84,11 +84,13 @@ function drawMesh(program, mesh) {
 let frame = 0,
     time = 0;
 
+let furDir = -0.2;
+
 function render(delta) {
     time += delta;
     // light[0] = Math.cos(time * 0.001);
     // light[2] = Math.sin(time * 0.001);
-    Matrix4.rotateXYZ(frame * 0.02, 0.0, frame * 0.02, matrix.mMatrix);
+    Matrix4.rotateXYZ(frame * 0.0, frame * 0.01, frame * 0.0, matrix.mMatrix);
     // Matrix4.identity(matrix.mMatrix);
     matrix.mMatrix.mul(matrix.vMatrix, matrix.mvMatrix);
     matrix.nMatrix = matrix.mvMatrix.toMatrix3().transpose().inverse();
@@ -104,6 +106,7 @@ function render(delta) {
     
     program[0].uniform['furFactor'].value = 0;
     program[0].uniform['texTR'].value = [2, 2];
+    program[0].uniform['furDir'].value = [0, furDir, 0];
     drawMesh(program[0], model.meshes[0]);
 
     for (let i = 1; i < layer; i++) {
@@ -121,3 +124,8 @@ let timer = setAnimationFrame(render, 1000 / 30);
 gl.canvas.addEventListener('click', () => {
     timer.toggle();
 });
+
+
+document.body.appendChild(createSlider('fur dir', 0.2, v => {
+    furDir = v * -1.0;
+}), false);
