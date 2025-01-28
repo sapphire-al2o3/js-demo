@@ -6,7 +6,7 @@ gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
 const program = [];
 const count = 1;
-const layer = 16;
+let layer = 16;
 
 // シェーダを初期化
 program.push(initShader(gl, 'shader-vs', 'shader-fs'));
@@ -85,6 +85,7 @@ let frame = 0,
     time = 0;
 
 let furDir = -0.2;
+let layerDist = 0.02;
 
 function render(delta) {
     time += delta;
@@ -110,7 +111,7 @@ function render(delta) {
     drawMesh(program[0], model.meshes[0]);
 
     for (let i = 1; i < layer; i++) {
-        program[0].uniform['furFactor'].value = i * 0.02;
+        program[0].uniform['furFactor'].value = i * layerDist;
         drawMesh(program[0], model.meshes[0]);
     }
 
@@ -125,7 +126,14 @@ gl.canvas.addEventListener('click', () => {
     timer.toggle();
 });
 
+document.body.appendChild(createSlider('layer count', layer / 32, v => {
+    layer = v * 32 ^ 0;
+}), false);
 
-document.body.appendChild(createSlider('fur dir', 0.2, v => {
+document.body.appendChild(createSlider('layer distance', 0.2, v => {
+    layerDist = v * 0.1;
+}), false);
+
+document.body.appendChild(createSlider('fur direction', 0.2, v => {
     furDir = v * -1.0;
 }), false);
