@@ -10,6 +10,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [Dither](https://sapphire-al2o3.github.io/js-demo/webgl/Dither/)
 - [facing](https://sapphire-al2o3.github.io/js-demo/webgl/facing/)
 - [forked_-WebGLでリサージュ曲線](https://sapphire-al2o3.github.io/js-demo/webgl/forked_-WebGLでリサージュ曲線/)
+- [Fur](https://sapphire-al2o3.github.io/js-demo/webgl/Fur/)
 - [FXAA](https://sapphire-al2o3.github.io/js-demo/webgl/FXAA/)
 - [Instancing](https://sapphire-al2o3.github.io/js-demo/webgl/Instancing/)
 - [Lambert](https://sapphire-al2o3.github.io/js-demo/webgl/Lambert/)
