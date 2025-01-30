@@ -85,7 +85,9 @@ let frame = 0,
     time = 0;
 
 let furDir = -0.2;
-let layerDist = 0.02;
+let furLength = 0.2;
+let furThr = 0.6;
+let furShade = 0.6;
 
 function render(delta) {
     time += delta;
@@ -105,13 +107,14 @@ function render(delta) {
     program[0].uniform['nMatrix'].value = matrix.nMatrix.data;
     program[0].uniform['light'].value = light;
     
-    program[0].uniform['furFactor'].value = 0;
+    program[0].uniform['furFactor'].value = [0, furThr, furShade];
     program[0].uniform['texTR'].value = [2, 2];
     program[0].uniform['furDir'].value = [0, furDir, 0];
     drawMesh(program[0], model.meshes[0]);
 
-    for (let i = 1; i < layer; i++) {
-        program[0].uniform['furFactor'].value = i * layerDist;
+    for (let i = 1; i <= layer; i++) {
+        let t = i / layer;
+        program[0].uniform['furFactor'].value = [t * furLength, furThr, furShade];
         drawMesh(program[0], model.meshes[0]);
     }
 
@@ -130,10 +133,18 @@ document.body.appendChild(createSlider('layer count', layer / 32, v => {
     layer = v * 32 ^ 0;
 }), false);
 
-document.body.appendChild(createSlider('layer distance', 0.2, v => {
-    layerDist = v * 0.1;
+document.body.appendChild(createSlider('fur length', 0.2, v => {
+    furLength = v;
 }), false);
 
 document.body.appendChild(createSlider('fur direction', 0.2, v => {
     furDir = v * -1.0;
+}), false);
+
+document.body.appendChild(createSlider('fur shade', 0.6, v => {
+    furShade = v;
+}), false);
+
+document.body.appendChild(createSlider('fur thr', 0.6, v => {
+    furThr = v;
 }), false);
