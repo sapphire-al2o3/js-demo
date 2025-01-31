@@ -1,150 +1,154 @@
 'use strict';
 
-const gl = initContext2('canvas');
+window.onload = () => {
 
-gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+    const gl = initContext2('canvas');
 
-const program = [];
-const count = 1;
-let layer = 16;
+    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
-// シェーダを初期化
-program.push(initShader(gl, 'shader-vs', 'shader-fs'));
+    const program = [];
+    const count = 1;
+    let layer = 16;
 
-gl.activeTexture(gl.TEXTURE0);
-const fur_img = document.getElementById('fur_tex');
-const fur_tex = initTexture(gl, fur_img);
-program[0].uniform['tex'].value = 0;
-gl.bindTexture(gl.TEXTURE_2D, fur_tex);
+    // シェーダを初期化
+    program.push(initShader(gl, 'shader-vs', 'shader-fs'));
 
-gl.activeTexture(gl.TEXTURE1);
-const img = document.getElementById('tex');
-const tex = initTexture(gl, img);
-program[0].uniform['tex'].value = 1;
-gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.activeTexture(gl.TEXTURE0);
+    const fur_img = document.getElementById('fur_tex');
+    const fur_tex = initTexture(gl, fur_img);
+    program[0].uniform['tex'].value = 0;
+    gl.bindTexture(gl.TEXTURE_2D, fur_tex);
 
-const div = 32;
-let model = createSphere(div);
+    gl.activeTexture(gl.TEXTURE1);
+    const img = document.getElementById('tex');
+    const tex = initTexture(gl, img);
+    program[0].uniform['tex'].value = 1;
+    gl.bindTexture(gl.TEXTURE_2D, tex);
 
-const uv = [];
-for (let i = 0; i <= div; i++) {
-    let ph = i / div;
-    for (let j = 0; j <= div; j++) {
-        let th = j / div;
-        uv.push(th);
-        uv.push(1 - ph);
+    const div = 32;
+    let model = createSphere(div);
+
+    const uv = [];
+    for (let i = 0; i <= div; i++) {
+        let ph = i / div;
+        for (let j = 0; j <= div; j++) {
+            let th = j / div;
+            uv.push(th);
+            uv.push(1 - ph);
+        }
     }
-}
-model.meshes[0].vertexStream.uv = uv;
+    model.meshes[0].vertexStream.uv = uv;
 
-const trans = [];
+    const trans = [];
 
-for (let i = 0; i < count; i++) {
-    let t = i * Math.PI * 32 / count;
-    trans.push(Math.sin(t) * i * 0.002);
-    trans.push(0);
-    trans.push(Math.cos(t) * i * 0.002);
-}
+    for (let i = 0; i < count; i++) {
+        let t = i * Math.PI * 32 / count;
+        trans.push(Math.sin(t) * i * 0.002);
+        trans.push(0);
+        trans.push(Math.cos(t) * i * 0.002);
+    }
 
-model.meshes[0].vertexStream.trans = trans;
+    model.meshes[0].vertexStream.trans = trans;
 
-// 頂点バッファを作成
-initBuffer(gl, model);
+    // 頂点バッファを作成
+    initBuffer(gl, model);
 
-gl.vertexAttribDivisor(0, 0);
-gl.vertexAttribDivisor(1, 0);
-gl.vertexAttribDivisor(2, 1);
+    gl.vertexAttribDivisor(0, 0);
+    gl.vertexAttribDivisor(1, 0);
+    gl.vertexAttribDivisor(2, 1);
 
-let camera = {},
-    matrix = {};
-camera.position = new Vector3(0, 3.0, 3.0);
-camera.target = new Vector3(0, 0.3, 0);
-camera.up = new Vector3(0, 1, 0);
-matrix.mMatrix = new Matrix4();
-matrix.nMatrix = new Matrix3();
-matrix.vMatrix = new Matrix4();
-matrix.mvMatrix = new Matrix4();
-matrix.pMatrix = new Matrix4();
+    let camera = {},
+        matrix = {};
+    camera.position = new Vector3(0, 3.0, 3.0);
+    camera.target = new Vector3(0, 0.3, 0);
+    camera.up = new Vector3(0, 1, 0);
+    matrix.mMatrix = new Matrix4();
+    matrix.nMatrix = new Matrix3();
+    matrix.vMatrix = new Matrix4();
+    matrix.mvMatrix = new Matrix4();
+    matrix.pMatrix = new Matrix4();
 
-let light = [0.4, 0.7, 1.0];
+    let light = [0.4, 0.7, 1.0];
 
-// カメラの行列設定
-Matrix4.perspective(45.0 * Math.PI / 180.0, gl.canvas.width / gl.canvas.height, 0.1, 1000.0, matrix.pMatrix);
-Matrix4.lookAt(camera.position, camera.target, camera.up, matrix.vMatrix);
+    // カメラの行列設定
+    Matrix4.perspective(45.0 * Math.PI / 180.0, gl.canvas.width / gl.canvas.height, 0.1, 1000.0, matrix.pMatrix);
+    Matrix4.lookAt(camera.position, camera.target, camera.up, matrix.vMatrix);
 
-function drawMesh(program, mesh) {
-    var gl = program.context;
-    gl.useProgram(program);
-    setupUniform(program);
-    setupAttribute(program, mesh.vbo);
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.ibo);
-    gl.drawElementsInstanced(gl.TRIANGLES, mesh.indexStream.length, gl.UNSIGNED_SHORT, 0, count);
-}
+    function drawMesh(program, mesh) {
+        var gl = program.context;
+        gl.useProgram(program);
+        setupUniform(program);
+        setupAttribute(program, mesh.vbo);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.ibo);
+        gl.drawElementsInstanced(gl.TRIANGLES, mesh.indexStream.length, gl.UNSIGNED_SHORT, 0, count);
+    }
 
-let frame = 0,
-    time = 0;
+    let frame = 0,
+        time = 0;
 
-let furDir = -0.2;
-let furLength = 0.2;
-let furThr = 0.6;
-let furShade = 0.6;
+    let furDir = -0.2;
+    let furLength = 0.2;
+    let furThr = 0.6;
+    let furShade = 0.6;
 
-function render(delta) {
-    time += delta;
-    // light[0] = Math.cos(time * 0.001);
-    // light[2] = Math.sin(time * 0.001);
-    Matrix4.rotateXYZ(frame * 0.0, frame * 0.01, frame * 0.0, matrix.mMatrix);
-    // Matrix4.identity(matrix.mMatrix);
-    matrix.mMatrix.mul(matrix.vMatrix, matrix.mvMatrix);
-    matrix.nMatrix = matrix.mvMatrix.toMatrix3().transpose().inverse();
+    function render(delta) {
+        time += delta;
+        // light[0] = Math.cos(time * 0.001);
+        // light[2] = Math.sin(time * 0.001);
+        Matrix4.rotateXYZ(frame * 0.0, frame * 0.01, frame * 0.0, matrix.mMatrix);
+        // Matrix4.identity(matrix.mMatrix);
+        matrix.mMatrix.mul(matrix.vMatrix, matrix.mvMatrix);
+        matrix.nMatrix = matrix.mvMatrix.toMatrix3().transpose().inverse();
 
-    gl.clearColor(0.8, 0.8, 0.8, 1.0);
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    
-    gl.cullFace(gl.BACK);
-    program[0].uniform['mvMatrix'].value = matrix.mvMatrix.data;
-    program[0].uniform['pMatrix'].value = matrix.pMatrix.data;
-    program[0].uniform['nMatrix'].value = matrix.nMatrix.data;
-    program[0].uniform['light'].value = light;
-    
-    program[0].uniform['furFactor'].value = [0, furThr, furShade];
-    program[0].uniform['texTR'].value = [2, 2];
-    program[0].uniform['furDir'].value = [0, furDir, 0];
-    drawMesh(program[0], model.meshes[0]);
-
-    for (let i = 1; i <= layer; i++) {
-        let t = i / layer;
-        program[0].uniform['furFactor'].value = [t * furLength, furThr, furShade];
+        gl.clearColor(0.8, 0.8, 0.8, 1.0);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        
+        gl.cullFace(gl.BACK);
+        program[0].uniform['mvMatrix'].value = matrix.mvMatrix.data;
+        program[0].uniform['pMatrix'].value = matrix.pMatrix.data;
+        program[0].uniform['nMatrix'].value = matrix.nMatrix.data;
+        program[0].uniform['light'].value = light;
+        
+        program[0].uniform['furFactor'].value = [0, furThr, furShade];
+        program[0].uniform['texTR'].value = [2, 2];
+        program[0].uniform['furDir'].value = [0, furDir, 0];
         drawMesh(program[0], model.meshes[0]);
+
+        for (let i = 1; i <= layer; i++) {
+            let t = i / layer;
+            program[0].uniform['furFactor'].value = [t * furLength, furThr, furShade];
+            drawMesh(program[0], model.meshes[0]);
+        }
+
+        gl.flush();
+
+        frame++;
     }
 
-    gl.flush();
+    let timer = setAnimationFrame(render, 1000 / 30);
 
-    frame++;
-}
+    gl.canvas.addEventListener('click', () => {
+        timer.toggle();
+    });
 
-let timer = setAnimationFrame(render, 1000 / 30);
+    document.body.appendChild(createSlider('layer count', layer / 32, v => {
+        layer = v * 32 ^ 0;
+    }), false);
 
-gl.canvas.addEventListener('click', () => {
-    timer.toggle();
-});
+    document.body.appendChild(createSlider('fur length', 0.2, v => {
+        furLength = v;
+    }), false);
 
-document.body.appendChild(createSlider('layer count', layer / 32, v => {
-    layer = v * 32 ^ 0;
-}), false);
+    document.body.appendChild(createSlider('fur direction', 0.2, v => {
+        furDir = v * -1.0;
+    }), false);
 
-document.body.appendChild(createSlider('fur length', 0.2, v => {
-    furLength = v;
-}), false);
+    document.body.appendChild(createSlider('fur shade', 0.6, v => {
+        furShade = v;
+    }), false);
 
-document.body.appendChild(createSlider('fur direction', 0.2, v => {
-    furDir = v * -1.0;
-}), false);
+    document.body.appendChild(createSlider('fur thr', 0.6, v => {
+        furThr = v;
+    }), false);
 
-document.body.appendChild(createSlider('fur shade', 0.6, v => {
-    furShade = v;
-}), false);
-
-document.body.appendChild(createSlider('fur thr', 0.6, v => {
-    furThr = v;
-}), false);
+};
