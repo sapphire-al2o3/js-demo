@@ -90,6 +90,7 @@ window.onload = () => {
     let furLength = 0.2;
     let furThr = 0.6;
     let furShade = 0.6;
+    let alpha = false;
 
     function render(delta) {
         time += delta;
@@ -109,14 +110,24 @@ window.onload = () => {
         program[0].uniform['nMatrix'].value = matrix.nMatrix.data;
         program[0].uniform['light'].value = light;
         
-        program[0].uniform['furFactor'].value = [0, furThr, furShade];
+        program[0].uniform['furFactor'].value = [0, furThr, furShade, 0];
         program[0].uniform['texTR'].value = [2, 2];
         program[0].uniform['furDir'].value = [0, furDir, 0];
+
+        gl.disable(gl.BLEND);
         drawMesh(program[0], model.meshes[0]);
+
+        if (alpha) {
+            gl.enable(gl.BLEND);
+            gl.blendEquation(gl.FUNC_ADD);
+            gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+        }
 
         for (let i = 1; i <= layer; i++) {
             let t = i / layer;
-            program[0].uniform['furFactor'].value = [t * furLength, furThr, furShade];
+            let a = alpha ? t : 0;
+            program[0].uniform['furFactor'].value = [t * furLength, furThr, furShade, a];
+            
             drawMesh(program[0], model.meshes[0]);
         }
 
@@ -151,4 +162,7 @@ window.onload = () => {
         furThr = v;
     }), false);
 
+    document.body.appendChild(createCheckbox('fur alpha', v => {
+        alpha = v;
+    }), false);
 };
