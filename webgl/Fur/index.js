@@ -125,7 +125,7 @@ window.onload = () => {
 
         for (let i = 1; i <= layer; i++) {
             let t = i / layer;
-            let a = alpha ? t : 0;
+            let a = alpha ? i / (layer + 1) : 0;
             program[0].uniform['furFactor'].value = [t * furLength, furThr, furShade, a];
             
             drawMesh(program[0], model.meshes[0]);
