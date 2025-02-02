@@ -110,7 +110,7 @@ window.onload = () => {
         program[0].uniform['nMatrix'].value = matrix.nMatrix.data;
         program[0].uniform['light'].value = light;
         
-        program[0].uniform['furFactor'].value = [0, furThr, furShade, 0];
+        program[0].uniform['furFactor'].value = [0, furThr, furShade, 1];
         program[0].uniform['texTR'].value = [2, 2];
         program[0].uniform['furDir'].value = [0, furDir, 0];
 
@@ -125,7 +125,7 @@ window.onload = () => {
 
         for (let i = 1; i <= layer; i++) {
             let t = i / layer;
-            let a = alpha ? i / (layer + 1) : 0;
+            let a = alpha ? 1 - i / (layer + 1) : 1;
             program[0].uniform['furFactor'].value = [t * furLength, furThr, furShade, a];
             
             drawMesh(program[0], model.meshes[0]);

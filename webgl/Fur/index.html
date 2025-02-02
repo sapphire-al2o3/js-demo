@@ -35,7 +35,7 @@ void main() {
     float rim = pow(1.0 - max(dot(n, view), 0.0), 2.0) * 0.1;
 	dif += rim;
     dif += vec3(furFactor.x * furFactor.z);
-    outColor = vec4(dif, 1.0 - furFactor.w) * base;
+    outColor = vec4(dif, furFactor.w) * base;
 }
 </script>
 <script id="shader-vs" type="x-shader/x-vertex">#version 300 es
