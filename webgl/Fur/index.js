@@ -90,7 +90,7 @@ window.onload = () => {
     let furLength = 0.2;
     let furThr = 0.6;
     let furShade = 0.6;
-    let alpha = false;
+    let alpha = 1;
 
     function render(delta) {
         time += delta;
@@ -117,7 +117,7 @@ window.onload = () => {
         gl.disable(gl.BLEND);
         drawMesh(program[0], model.meshes[0]);
 
-        if (alpha) {
+        if (alpha < 1) {
             gl.enable(gl.BLEND);
             gl.blendEquation(gl.FUNC_ADD);
             gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
@@ -125,7 +125,7 @@ window.onload = () => {
 
         for (let i = 1; i <= layer; i++) {
             let t = i / layer;
-            let a = alpha ? 1 - i / (layer + 1) : 1;
+            let a = alpha < 1 ? 1 - i / (layer + 1) + alpha : 1;
             program[0].uniform['furFactor'].value = [t * furLength, furThr, furShade, a];
             
             drawMesh(program[0], model.meshes[0]);
@@ -162,7 +162,7 @@ window.onload = () => {
         furThr = v;
     }), false);
 
-    document.body.appendChild(createCheckbox('fur alpha', v => {
+    document.body.appendChild(createSlider('fur alpha', 1, v => {
         alpha = v;
     }), false);
 };
