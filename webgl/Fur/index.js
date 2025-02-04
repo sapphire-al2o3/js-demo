@@ -83,6 +83,10 @@ window.onload = () => {
         gl.drawElementsInstanced(gl.TRIANGLES, mesh.indexStream.length, gl.UNSIGNED_SHORT, 0, count);
     }
 
+    function clamp(x, min, max) {
+        return x < min ? min : x > max ? max : x;
+    }
+
     let frame = 0,
         time = 0;
 
@@ -125,7 +129,10 @@ window.onload = () => {
 
         for (let i = 1; i <= layer; i++) {
             let t = i / layer;
-            let a = alpha < 1 ? 1 - i / (layer + 1) + alpha : 1;
+            let a = 1;
+            if (t > alpha) {
+                a = 1 - (i / (layer + 1) - alpha) / (1 - alpha);
+            }
             program[0].uniform['furFactor'].value = [t * furLength, furThr, furShade, a];
             
             drawMesh(program[0], model.meshes[0]);
