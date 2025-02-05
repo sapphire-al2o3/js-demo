@@ -6,23 +6,22 @@ window.onload = () => {
 
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
-    const program = [];
     const count = 1;
     let layer = 16;
 
     // シェーダを初期化
-    program.push(initShader(gl, 'shader-vs', 'shader-fs'));
+    const program = initShader(gl, 'shader-vs', 'shader-fs');
 
     gl.activeTexture(gl.TEXTURE0);
     const fur_img = document.getElementById('fur_tex');
     const fur_tex = initTexture(gl, fur_img);
-    program[0].uniform['tex'].value = 0;
+    program.uniform['tex'].value = 0;
     gl.bindTexture(gl.TEXTURE_2D, fur_tex);
 
     gl.activeTexture(gl.TEXTURE1);
     const img = document.getElementById('tex');
     const tex = initTexture(gl, img);
-    program[0].uniform['tex'].value = 1;
+    program.uniform['tex'].value = 1;
     gl.bindTexture(gl.TEXTURE_2D, tex);
 
     const div = 32;
@@ -109,17 +108,17 @@ window.onload = () => {
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
         
         gl.cullFace(gl.BACK);
-        program[0].uniform['mvMatrix'].value = matrix.mvMatrix.data;
-        program[0].uniform['pMatrix'].value = matrix.pMatrix.data;
-        program[0].uniform['nMatrix'].value = matrix.nMatrix.data;
-        program[0].uniform['light'].value = light;
+        program.uniform['mvMatrix'].value = matrix.mvMatrix.data;
+        program.uniform['pMatrix'].value = matrix.pMatrix.data;
+        program.uniform['nMatrix'].value = matrix.nMatrix.data;
+        program.uniform['light'].value = light;
         
-        program[0].uniform['furFactor'].value = [0, furThr, furShade, 1];
-        program[0].uniform['texTR'].value = [2, 2];
-        program[0].uniform['furDir'].value = [0, furDir, 0];
+        program.uniform['furFactor'].value = [0, furThr, furShade, 1];
+        program.uniform['texTR'].value = [2, 2];
+        program.uniform['furDir'].value = [0, furDir, 0];
 
         gl.disable(gl.BLEND);
-        drawMesh(program[0], model.meshes[0]);
+        drawMesh(program, model.meshes[0]);
 
         if (alpha < 1) {
             gl.enable(gl.BLEND);
@@ -133,9 +132,9 @@ window.onload = () => {
             if (t > alpha) {
                 a = 1 - (i / (layer + 1) - alpha) / (1 - alpha);
             }
-            program[0].uniform['furFactor'].value = [t * furLength, furThr, furShade, a];
+            program.uniform['furFactor'].value = [t * furLength, furThr, furShade, a];
             
-            drawMesh(program[0], model.meshes[0]);
+            drawMesh(program, model.meshes[0]);
         }
 
         gl.flush();
