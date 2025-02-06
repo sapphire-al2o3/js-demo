@@ -33,7 +33,8 @@ void main() {
         discard;
     }
     float rim = pow(1.0 - max(dot(n, view), 0.0), 2.0) * 0.1;
-	dif += rim;
+    //dif *= 1.0 - pow(max(dot(n, view), 0.0), 32.0) * 0.5;
+    dif += rim;
     dif += vec3(furFactor.x * furFactor.z);
     outColor = vec4(dif, furFactor.w) * base;
 }
