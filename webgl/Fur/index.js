@@ -5,8 +5,6 @@ window.onload = () => {
     const gl = initContext2('canvas');
 
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-
-    const count = 1;
     let layer = 16;
 
     // シェーダを初期化
@@ -38,23 +36,8 @@ window.onload = () => {
     }
     model.meshes[0].vertexStream.uv = uv;
 
-    const trans = [];
-
-    for (let i = 0; i < count; i++) {
-        let t = i * Math.PI * 32 / count;
-        trans.push(Math.sin(t) * i * 0.002);
-        trans.push(0);
-        trans.push(Math.cos(t) * i * 0.002);
-    }
-
-    model.meshes[0].vertexStream.trans = trans;
-
     // 頂点バッファを作成
     initBuffer(gl, model);
-
-    gl.vertexAttribDivisor(0, 0);
-    gl.vertexAttribDivisor(1, 0);
-    gl.vertexAttribDivisor(2, 1);
 
     let camera = {},
         matrix = {};
@@ -79,7 +62,7 @@ window.onload = () => {
         setupUniform(program);
         setupAttribute(program, mesh.vbo);
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.ibo);
-        gl.drawElementsInstanced(gl.TRIANGLES, mesh.indexStream.length, gl.UNSIGNED_SHORT, 0, count);
+        gl.drawElements(gl.TRIANGLES, mesh.indexStream.length, gl.UNSIGNED_SHORT, 0);
     }
 
     function clamp(x, min, max) {
