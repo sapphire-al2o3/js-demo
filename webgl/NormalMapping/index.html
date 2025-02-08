@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Normal Mapping</title>
+<link rel="stylesheet" type="text/css" media="screen,print" href="../../lib/webglutil.css" />
+<link rel="stylesheet" type="text/css" media="screen,print" href="style.css" />
+</head>
+<body>
+<script id="shader-fs" type="x-shader/x-fragment">#version 300 es
+precision highp float;
+
+uniform vec4 color;
+uniform sampler2D tex;
+uniform float showUV;
+
+in vec2 vUv;
+out vec4 outColor;
+
+void main() {
+	outColor = color * mix(texture(tex, vUv.xy), vec4(vUv.xy, 0.0, 1.0), showUV);
+}
+</script>
+<script id="shader-vs" type="x-shader/x-vertex">#version 300 es
+uniform mat4 mvMatrix;
+//uniform mat4 mMatrix;
+uniform mat4 pMatrix;
+//uniform mat4 tMatrix;
+
+in vec3 position;
+in vec2 uv;
+out vec2 vUv;
+
+void main() {
+	vUv = uv;
+	gl_Position = pMatrix * mvMatrix * vec4(position, 1);
+}
+</script>
+<canvas id="canvas" width="256" height="256"></canvas>
+<img src="tex.png" id="tex">
+<script type="text/javascript" src="../../lib/webglutil.js"></script>
+<script type="text/javascript" src="index.js"></script>
+</body>
+</html>
