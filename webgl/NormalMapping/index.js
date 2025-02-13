@@ -85,9 +85,10 @@ program.uniform['color'].value = [1, 1, 1, 1];//[0.2, 0.2, 0.7, 1];
 program.uniform['showUV'].value = 0.0;
 
 const img = document.getElementById('tex');
-const tex = initTexture(gl, img);
+initTexture(gl, img);
 
-gl.bindTexture(gl.TEXTURE_2D, tex);
+const normal = document.getElementById('normal');
+initTexture(gl, normal);
 
 gl.clearColor(1.0, 1.0, 1.0, 1.0);
 gl.viewport(0, 0, width, height);
