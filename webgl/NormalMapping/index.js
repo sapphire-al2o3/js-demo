@@ -66,6 +66,8 @@ camera.position = new Vector3(0, 2.5, 3.0);
 camera.target = new Vector3(0, 0.0, 0);
 camera.up = new Vector3(0, 1, 0);
 
+let light = [0.0, 0.7, 4.0];
+
 let frame = 0;
 let showUV = false;
 
@@ -77,16 +79,22 @@ let pm = Matrix4.perspective(45.0 * Math.PI / 180.0, width / height, 0.1, 1000.0
 let tvm = Matrix4.lookAt(new Vector3(0, 10, 0), new Vector3(0, 0, 0), new Vector3(0, 1, 0)),
     tm = Matrix4.identity();
 
+let nm = vm.toMatrix3().transpose().inverse();
+
 program.uniform['mvMatrix'].value = mvm.data;
 // program.uniform['mMatrix'].value = mm.data;
 program.uniform['pMatrix'].value = pm.data;
 // program.uniform['tMatrix'].value = tm.data;
+program.uniform['nMatrix'].value = nm.data;
 program.uniform['color'].value = [1, 1, 1, 1];//[0.2, 0.2, 0.7, 1];
-program.uniform['showUV'].value = 0.0;
+program.uniform['light'].value = light;
 
 const img = document.getElementById('tex');
-initTexture(gl, img);
+gl.activeTexture(gl.TEXTURE0);
+const tex = initTexture(gl, img);
+gl.bindTexture(gl.TEXTURE_2D, tex);
 
+gl.activeTexture(gl.TEXTURE1);
 const normal = document.getElementById('normal');
 initTexture(gl, normal);
 
@@ -115,12 +123,6 @@ function render() {
     gl.drawElements(gl.TRIANGLES, models[index].meshes[0].indexStream.length, gl.UNSIGNED_SHORT, 0);
     gl.flush();
 }
-
-document.body.appendChild(createCheckbox('uv', v => {
-    showUV = v;
-    program.uniform['showUV'].value = showUV ? 1.0 : 0.0;
-    render();
-}));
 
 document.body.appendChild(createRadio(['plane', 'cube', 'sphere', 'torus'], (v, id, i) => {
     index = i;
