@@ -111,7 +111,7 @@ gl.canvas.addEventListener('click', (e) => {
 });
 
 function render() {
-    Matrix4.rotateXYZ(0, frame * 0.02, frame * 0.02, mm);
+    Matrix4.rotateXYZ(0, frame * 0.02, frame * 0.0, mm);
     mm.mul(vm, mvm);
     
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
