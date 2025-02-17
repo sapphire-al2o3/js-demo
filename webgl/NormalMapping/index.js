@@ -18,6 +18,13 @@ let models = [
 
 // Plane
 models[0].meshes[0].vertexStream.uv = [0, 0, 1, 0, 1, 1, 0, 1];
+models[0].meshes[0].vertexStream.tangent = [
+    1.0, 0.0, 0.0,
+    1.0, 0.0, 0.0,
+    1.0, 0.0, 0.0,
+    1.0, 0.0, 0.0
+];
+
 // Cube
 models[1].meshes[0].vertexStream.uv = [
     0, 0, 1, 0, 1, 1, 0, 1,
@@ -27,6 +34,7 @@ models[1].meshes[0].vertexStream.uv = [
     0, 0, 1, 0, 1, 1, 0, 1,
     0, 0, 1, 0, 1, 1, 0, 1,
 ];
+
 // Sphere
 const uv = [];
 
