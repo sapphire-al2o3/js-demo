@@ -100,10 +100,12 @@ program.uniform['light'].value = light;
 const img = document.getElementById('tex');
 gl.activeTexture(gl.TEXTURE0);
 const tex = initTexture(gl, img);
+program.uniform['tex'].value = 0;
 gl.bindTexture(gl.TEXTURE_2D, tex);
 
 gl.activeTexture(gl.TEXTURE1);
 const normal = document.getElementById('normal');
+program.uniform['normalTex'].value = 1;
 initTexture(gl, normal);
 
 gl.clearColor(1.0, 1.0, 1.0, 1.0);
