@@ -19,10 +19,10 @@ let models = [
 // Plane
 models[0].meshes[0].vertexStream.uv = [0, 0, 1, 0, 1, 1, 0, 1];
 models[0].meshes[0].vertexStream.tangent = [
-    1.0, 0.0, 0.0,
-    1.0, 0.0, 0.0,
-    1.0, 0.0, 0.0,
-    1.0, 0.0, 0.0
+    1, 0, 0,
+    1, 0, 0,
+    1, 0, 0,
+    1, 0, 0
 ];
 
 // Cube
@@ -33,6 +33,15 @@ models[1].meshes[0].vertexStream.uv = [
     0, 0, 1, 0, 1, 1, 0, 1,
     0, 0, 1, 0, 1, 1, 0, 1,
     0, 0, 1, 0, 1, 1, 0, 1,
+];
+
+models[1].meshes[0].vertexStream.tangent = [
+    0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1,
+    0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1,
+    0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1,
+    0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1,
+    1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0,
+    -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0
 ];
 
 // Sphere
@@ -103,10 +112,11 @@ const tex = initTexture(gl, img);
 program.uniform['tex'].value = 0;
 gl.bindTexture(gl.TEXTURE_2D, tex);
 
-gl.activeTexture(gl.TEXTURE1);
 const normal = document.getElementById('normal');
+gl.activeTexture(gl.TEXTURE1);
+const normalTex = initTexture(gl, normal);
 program.uniform['normalTex'].value = 1;
-initTexture(gl, normal);
+gl.bindTexture(gl.TEXTURE_2D, normalTex);
 
 gl.clearColor(1.0, 1.0, 1.0, 1.0);
 gl.viewport(0, 0, width, height);
