@@ -96,7 +96,7 @@ let pm = Matrix4.perspective(45.0 * Math.PI / 180.0, width / height, 0.1, 1000.0
 let tvm = Matrix4.lookAt(new Vector3(0, 10, 0), new Vector3(0, 0, 0), new Vector3(0, 1, 0)),
     tm = Matrix4.identity();
 
-let nm = vm.toMatrix3().transpose().inverse();
+let nm = mvm.toMatrix3().transpose().inverse();
 
 program.uniform['mvMatrix'].value = mvm.data;
 // program.uniform['mMatrix'].value = mm.data;
@@ -134,6 +134,8 @@ function render() {
     Matrix4.rotateXYZ(0, frame * 0.02, frame * 0.0, mm);
     mm.mul(vm, mvm);
     
+    mvm.toMatrix3().transpose().inverse(nm);
+
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     
     gl.useProgram(program);
