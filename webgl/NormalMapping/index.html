@@ -17,9 +17,14 @@ uniform vec3 light;
 
 in vec2 vUv;
 in vec3 vNormal;
+in vec3 vLightDir;
 out vec4 outColor;
 
 void main() {
+    vec3 ntex = texture(normalTex, vUv.xy).xyz * 2.0 - 1.0;
+    ntex.z = sqrt(1.0 - dot(ntex.xy, ntex.xy));
+    //vec3 n = normalize(ntex);
+
     vec3 n = normalize(vNormal);
     vec3 l = normalize(light);
     vec3 dif = vec3(max(dot(n, l), 0.0));
@@ -33,16 +38,24 @@ void main() {
 uniform mat4 mvMatrix;
 uniform mat4 pMatrix;
 uniform mat3 nMatrix;
+uniform vec3 light;
 
 in vec3 position;
 in vec3 normal;
 in vec2 uv;
+in vec3 tangent;
 out vec2 vUv;
 out vec3 vNormal;
+out vec3 vLightDir;
 
 void main() {
+    vec3 n = normalize(normal);
+    vec3 t = normalize(tangent);
+    vec3 b = cross(n, t);
+    mat3 mat = transpose(mat3(t, b, n));
     vUv = uv;
     vNormal = nMatrix * normal;
+    vLightDir = light * mat;
     gl_Position = pMatrix * mvMatrix * vec4(position, 1);
 }
 </script>
