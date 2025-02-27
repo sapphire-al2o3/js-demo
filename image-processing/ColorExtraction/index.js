@@ -19,6 +19,8 @@ window.onload = () => {
         length = 200,
         color = [0, 0, 0];
 
+    const maxLength = Math.sqrt(255 * 255 * 3);
+
     function clamp(v) {
         return v < 0 ? 0 : v > 255 ? 255 : v;
     }
@@ -82,13 +84,13 @@ window.onload = () => {
         }
     }));
 
-    document.body.appendChild(createSlider('angle', 0, v => {
-        angle = v * Math.PI * 2;
+    document.body.appendChild(createSlider('angle', angle, v => {
+        angle = v;
         render();
     }));
 
-    document.body.appendChild(createSlider('length', 0, v => {
-        length = v;
+    document.body.appendChild(createSlider('length', length / maxLength, v => {
+        length = v * maxLength;
         render();
     }));
 };
