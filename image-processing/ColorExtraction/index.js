@@ -25,6 +25,11 @@ window.onload = () => {
         return v < 0 ? 0 : v > 255 ? 255 : v;
     }
 
+    function toColorCode(r, g, b) {
+        const c = '#' + (r > 15 ? '' : '0') + r.toString(16) + (g > 15 ? '' : '0') + g.toString(16) + (b > 15 ? '' : '0') + b.toString(16);
+        return c.toUpperCase();
+    }
+
     function extract(r, g, b, sr, sg, sb) {
         let c = r * sr + g * sg + b * sb;
         if (c === 0) {
@@ -72,17 +77,21 @@ window.onload = () => {
             g = data[index + 1],
             b = data[index + 2];
         color = [r, g, b];
-        console.log(r, g, b);
+
+        const colorCode = toColorCode(r, g, b);
+        colorUI.querySelector('input').value = colorCode;
+        colorUI.querySelector('span').style.backgroundColor = colorCode;
         render();
     }, false);
 
-    document.body.appendChild(createColor('color', '#000000', v => {
+    const colorUI = createColor('color', '#000000', v => {
         if (v[0] !== color[0] || v[1] !== color[1] || v[2] !== color[2]) {
             color = v;
             console.log(v);
             render();
         }
-    }));
+    });
+    document.body.appendChild(colorUI);
 
     document.body.appendChild(createSlider('angle', angle, v => {
         angle = v;
