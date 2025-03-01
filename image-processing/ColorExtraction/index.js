@@ -17,7 +17,7 @@ window.onload = () => {
 
     let angle = 0.98,
         length = 200,
-        color = [0, 0, 0];
+        color = [255, 221, 0];
 
     const maxLength = Math.sqrt(255 * 255 * 3);
 
@@ -84,7 +84,7 @@ window.onload = () => {
         render();
     }, false);
 
-    const colorUI = createColor('color', '#000000', v => {
+    const colorUI = createColor('color', '#FFDD00', v => {
         if (v[0] !== color[0] || v[1] !== color[1] || v[2] !== color[2]) {
             color = v;
             console.log(v);
