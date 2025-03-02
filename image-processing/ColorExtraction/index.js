@@ -21,10 +21,6 @@ window.onload = () => {
 
     const maxLength = Math.sqrt(255 * 255 * 3);
 
-    function clamp(v) {
-        return v < 0 ? 0 : v > 255 ? 255 : v;
-    }
-
     function toColorCode(r, g, b) {
         const c = '#' + (r > 15 ? '' : '0') + r.toString(16) + (g > 15 ? '' : '0') + g.toString(16) + (b > 15 ? '' : '0') + b.toString(16);
         return c.toUpperCase();
@@ -87,7 +83,6 @@ window.onload = () => {
     const colorUI = createColor('color', '#FFDD00', v => {
         if (v[0] !== color[0] || v[1] !== color[1] || v[2] !== color[2]) {
             color = v;
-            console.log(v);
             render();
         }
     });
