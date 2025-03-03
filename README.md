@@ -163,6 +163,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [Channel Packer](https://sapphire-al2o3.github.io/js-demo/image-processing/ChannelPacker/)
 - [色収差](https://sapphire-al2o3.github.io/js-demo/image-processing/ChromaticAberration/)
 - [Color Matrix](https://sapphire-al2o3.github.io/js-demo/image-processing/ColorMatrix/)
+- [色抽出](https://sapphire-al2o3.github.io/js-demo/image-processing/ColorExtraction/)
 - [Dithring](https://sapphire-al2o3.github.io/js-demo/image-processing/Dithering/)
 - [Gaussian Blur](https://sapphire-al2o3.github.io/js-demo/image-processing/GaussianBlur/)
 - [ヒストグラム](https://sapphire-al2o3.github.io/js-demo/image-processing/Histogram/)
