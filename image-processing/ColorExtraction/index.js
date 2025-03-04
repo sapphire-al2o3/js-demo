@@ -93,8 +93,8 @@ window.onload = () => {
         render();
     }));
 
-    document.body.appendChild(createSlider('length', length / maxLength, v => {
-        length = v * maxLength;
+    document.body.appendChild(createSlider('length', 1 - length / maxLength, v => {
+        length = (1 - v) * maxLength;
         render();
     }));
 };
