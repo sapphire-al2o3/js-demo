@@ -68,8 +68,8 @@ function getIndexedImage(src, image, palette) {
             paletteData[p + 1] = g;
             paletteData[p + 2] = b;
             paletteData[p + 3] = 255;
-            if(count > 256) {
-            break;
+            if(count >= 256) {
+                break;
             }
         }
         indexData[j] = index;
