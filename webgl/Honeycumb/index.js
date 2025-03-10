@@ -23,9 +23,10 @@
     // 頂点バッファを作成
     initBuffer(gl, model);
 
-    let screen = createPlane(1, 1);
+    let screen = createScreen();
     initBuffer(gl, screen);
 
+    program[1].uniform['tex'].value = 0;
 
     let camera = {},
         matrix = {};
@@ -55,7 +56,7 @@
 
     let frame = 0,
         time = 0,
-        effect = false;
+        effect = true;
 
     function render(delta) {
         time += delta;
@@ -88,10 +89,23 @@
             gl.activeTexture(gl.TEXTURE0);
             gl.bindTexture(gl.TEXTURE_2D, fbo.tex);
             gl.enable(gl.DEPTH_TEST);
-            drawMesh(program[1], model.meshes[0]);
+            drawMesh(program[1], screen.meshes[0]);
         }
 
         gl.flush();
+    }
+
+    function createScreen() {
+        return {
+            meshes: [
+                {
+                    vertexStream: {
+                        position: [1, 1, -1, 1, 1, -1, -1, -1]
+                    },
+                    indexStream: [0, 1, 2, 1, 3, 2]
+                }
+            ]
+        };
     }
 
     function createTexture(width, height) {
