@@ -27,6 +27,7 @@
     initBuffer(gl, screen);
 
     program[1].uniform['tex'].value = 0;
+    program[1].uniform['size'].value = [32, 28];
 
     let camera = {},
         matrix = {};
