@@ -141,4 +141,9 @@
     gl.canvas.addEventListener('click', () => {
         timer.toggle();
     });
+
+    document.body.appendChild(createCheckbox('effect', v => {
+        effect = v;
+        render(0);
+    }, true), false);
 })();
