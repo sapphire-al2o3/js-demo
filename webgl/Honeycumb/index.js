@@ -26,8 +26,10 @@
     let screen = createScreen();
     initBuffer(gl, screen);
 
+    const size = [32, 28];
+
     program[1].uniform['tex'].value = 0;
-    program[1].uniform['size'].value = [32, 28];
+    program[1].uniform['size'].value = size;
 
     let camera = {},
         matrix = {};
@@ -61,11 +63,11 @@
 
     function render(delta) {
         time += delta;
-        light[0] = Math.cos(time * 0.001);
-        light[2] = Math.sin(time * 0.001);
-        // Matrix4.rotateXYZ(frame * 0.02, 0.0, frame * 0.02, matrix.mMatrix);
+        // light[0] = Math.cos(time * 0.001);
+        // light[2] = Math.sin(time * 0.001);
+        Matrix4.rotateXYZ(time * 0.001, 0.0, time * 0.001, matrix.mMatrix);
         // Matrix4.scale(0.5, 0.5, 0.5, matrix.mMatrix);
-        Matrix4.identity(matrix.mMatrix);
+        // Matrix4.identity(matrix.mMatrix);
         matrix.mMatrix.mul(matrix.vMatrix, matrix.mvMatrix);
         matrix.nMatrix = matrix.mvMatrix.toMatrix3().transpose().inverse();
 
@@ -76,6 +78,7 @@
         gl.clearColor(1.0, 1.0, 0.0, 1.0);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
         
+        gl.enable(gl.DEPTH_TEST);
         gl.cullFace(gl.BACK);
         program[0].uniform['mvMatrix'].value = matrix.mvMatrix.data;
         program[0].uniform['pMatrix'].value = matrix.pMatrix.data;
@@ -89,7 +92,6 @@
             gl.disable(gl.DEPTH_TEST);
             gl.activeTexture(gl.TEXTURE0);
             gl.bindTexture(gl.TEXTURE_2D, fbo.tex);
-            gl.enable(gl.DEPTH_TEST);
             drawMesh(program[1], screen.meshes[0]);
         }
 
@@ -144,6 +146,12 @@
 
     document.body.appendChild(createCheckbox('effect', v => {
         effect = v;
+        render(0);
+    }, true), false);
+
+    document.body.appendChild(createSlider('size', 1, v => {
+        size[0] = v * 32;
+        size[1] = v * 28;
         render(0);
     }, true), false);
 })();
