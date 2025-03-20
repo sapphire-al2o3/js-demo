@@ -12,6 +12,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [forked_-WebGLでリサージュ曲線](https://sapphire-al2o3.github.io/js-demo/webgl/forked_-WebGLでリサージュ曲線/)
 - [Fur](https://sapphire-al2o3.github.io/js-demo/webgl/Fur/)
 - [FXAA](https://sapphire-al2o3.github.io/js-demo/webgl/FXAA/)
+- [六角形](https://sapphire-al2o3.github.io/js-demo/webgl/Honeycumb)
 - [Instancing](https://sapphire-al2o3.github.io/js-demo/webgl/Instancing/)
 - [Lambert](https://sapphire-al2o3.github.io/js-demo/webgl/Lambert/)
 - [lineWidthのテスト](https://sapphire-al2o3.github.io/js-demo/webgl/lineWidthのテスト/)
