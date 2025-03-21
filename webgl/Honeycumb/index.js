@@ -2,9 +2,6 @@
     'use strict';
 
     const gl = initContext2('canvas');
-
-    gl.viewport(0, 0, 300, 300);
-
     const program = [];
 
     // シェーダを初期化
@@ -13,6 +10,9 @@
 
     const width = gl.canvas.width;
     const height = gl.canvas.height;
+
+    gl.viewport(0, 0, width, height);
+
     let fbo = createFBO(width, height);
 
     // トーラスを作る
@@ -27,6 +27,8 @@
     initBuffer(gl, screen);
 
     const size = [32, 28];
+
+    program[0].uniform['color'].value = [1, 1, 0];
 
     program[1].uniform['tex'].value = 0;
     program[1].uniform['size'].value = size;
@@ -57,8 +59,7 @@
         gl.drawElements(gl.TRIANGLES, mesh.indexStream.length, gl.UNSIGNED_SHORT, 0);
     }
 
-    let frame = 0,
-        time = 0,
+    let time = 0,
         effect = true;
 
     function render(delta) {
@@ -75,7 +76,7 @@
             gl.bindFramebuffer(gl.FRAMEBUFFER, fbo.fbo);
         }
 
-        gl.clearColor(1.0, 1.0, 0.0, 1.0);
+        gl.clearColor(1.0, 0.9, 0.0, 1.0);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
         
         gl.enable(gl.DEPTH_TEST);
@@ -138,9 +139,7 @@
         
         return {
             fbo: frameBuffer,
-            tex: tex,
-            width: width,
-            height: height
+            tex: tex
         };
     }
 
