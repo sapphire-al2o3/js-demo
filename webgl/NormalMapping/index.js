@@ -134,6 +134,8 @@ function render() {
     Matrix4.rotateXYZ(0, frame * 0.02, frame * 0.0, mm);
     mm.mul(vm, mvm);
     
+    const imm = mm.inverse();
+
     mvm.toMatrix3().transpose().inverse(nm);
 
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
