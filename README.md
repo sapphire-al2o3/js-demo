@@ -46,6 +46,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [WebGLの初期値](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLの初期値/)
 - [WebGLの演算精度](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLの演算精度/)
 - [WebGLテスト](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLテスト/)
+- [Wireframe](https://sapphire-al2o3.github.io/js-demo/webgl/Wireframe/)
 - [アウトライン](https://sapphire-al2o3.github.io/js-demo/webgl/Outline/)
 - [フィードバックポストエフェクト](https://sapphire-al2o3.github.io/js-demo/webgl/フィードバックポストエフェクト/)
 - [フラットシェーディング](https://sapphire-al2o3.github.io/js-demo/webgl/フラットシェーディング/)
