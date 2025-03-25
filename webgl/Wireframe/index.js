@@ -64,11 +64,13 @@ let pm = Matrix4.perspective(45.0 * Math.PI / 180.0, width / height, 0.1, 1000.0
     mm = Matrix4.rotateXYZ(frame * 0.02, 0.0, frame * 0.02),
     mvm = mm.mul(vm);
 
+const color = [0, 1, 0, 1];
+
 program.uniform['mvMatrix'].value = mvm.data;
 program.uniform['pMatrix'].value = pm.data;
-program.uniform['color'].value = [0, 0, 0, 1];
+program.uniform['color'].value = color;
 
-gl.clearColor(1.0, 1.0, 1.0, 1.0);
+gl.clearColor(0.0, 0.0, 0.0, 1.0);
 gl.viewport(0, 0, width, height);
 
 let timer = setAnimationFrame(() => {
@@ -92,53 +94,6 @@ function render() {
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, models[index].meshes[0].ibo);
     gl.drawElements(gl.LINES, models[index].meshes[0].indexStream.length, gl.UNSIGNED_SHORT, 0);
     gl.flush();
-}
-function createIco(s = 1.0) {
-    let m = {},
-        a = 1 / Math.sqrt(5),
-        b = (1 - a) * 0.5,
-        c = (1 + a) * 0.5,
-        d = Math.sqrt(b),
-        e = Math.sqrt(c);
-    a *= s;
-    b *= s;
-    c *= s;
-    d *= s;
-    e *= s;
-    m.meshes = [{}];
-    m.meshes[0].vertexStream = {};
-    m.meshes[0].vertexStream.position = [
-        0, s, 0,
-        0, a, a * 2,
-        e, a, b,
-        d, a, -c,
-        -d, a, -c,
-        -e, a, b,
-        d, -a, c,
-        e, -a, -b,
-        0, -a, -a * 2,
-        -e, -a, -b,
-        -d, -a, c,
-        0, -s, 0
-    ];
-    m.meshes[0].indexStream = [
-        0, 1, 1, 2,
-        0, 2, 2, 3,
-        0, 3, 3, 4,
-        0, 4, 4, 5,
-        0, 5, 5, 1,
-        2, 6, 6, 1,
-        3, 7, 7, 2,
-        4, 8, 8, 3,
-        5, 9, 9, 4,
-        1, 10, 10, 5,
-        11, 6, 6, 7,
-        11, 7, 7, 8,
-        11, 8, 8, 9,
-        11, 9, 9, 10,
-        11, 10, 10, 6
-    ];
-    return m;
 }
 
 document.body.appendChild(createRadio(['ico', 'torus', 'sphere', 'cube'], (v, id, i) => {
