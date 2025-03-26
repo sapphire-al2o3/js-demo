@@ -102,7 +102,7 @@ function createCone(r, h, n = 8) {
     let vertices = [],
         indices = [],
         normals = [];
-    let b = -0.5;
+    let b = -h * 0.5;
     vertices.push(0, h + b, 0);
     vertices.push(0, b, 0);
     for (let i = 0; i <= n; i++) {
