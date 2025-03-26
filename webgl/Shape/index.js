@@ -110,7 +110,6 @@ function createCone(r, h, n = 8) {
             x = r * Math.cos(t),
             y = r * Math.sin(t);
         vertices.push(x, b, y);
-        normals.push();
     }
 
     for (let i = 0; i <= n; i++) {
