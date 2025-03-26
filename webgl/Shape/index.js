@@ -112,11 +112,11 @@ function createCone(r, h, n = 8) {
         vertices.push(x, b, y);
     }
 
-    for (let i = 0; i <= n; i++) {
-        indices.push(0, i + 1, i + 2);
+    for (let i = 0; i < n; i++) {
+        indices.push(0, i + 2, i + 3);
     }
-    for (let i = 0; i <= n; i++) {
-        indices.push(1, i + 1, i + 2);
+    for (let i = 0; i < n; i++) {
+        indices.push(1, i + 2, i + 3);
     }
     return {
         meshes: [
