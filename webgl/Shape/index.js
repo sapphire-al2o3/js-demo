@@ -12,7 +12,8 @@ let models = [
     createSphere(8, 1.5),
     createCube(),
     createPlane(1, 1),
-    createCone(1, 2, 16)
+    createCone(1, 2, 16),
+    createCylinder(1, 2, 16)
 ];
 
 function pushIndex(lines, pair, a, b) {
@@ -36,12 +37,6 @@ for (let i = 1; i < models.length; i++) {
         pushIndex(lines, pair, t[j], t[j + 1]);
         pushIndex(lines, pair, t[j + 1], t[j + 2]);
         pushIndex(lines, pair, t[j + 2], t[j]);
-        // lines.push(t[j]);
-        // lines.push(t[j + 1]);
-        // lines.push(t[j + 1]);
-        // lines.push(t[j + 2]);
-        // lines.push(t[j + 2]);
-        // lines.push(t[j]);
     }
     models[i].meshes[0].indexStream = lines;
 }
@@ -95,6 +90,7 @@ function render() {
     setupAttribute(program, models[index].meshes[0].vbo);
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, models[index].meshes[0].ibo);
     gl.drawElements(gl.LINES, models[index].meshes[0].indexStream.length, gl.UNSIGNED_SHORT, 0);
+    // gl.drawElements(gl.TRIANGLES, models[index].meshes[0].indexStream.length, gl.UNSIGNED_SHORT, 0);
     gl.flush();
 }
 
@@ -116,7 +112,7 @@ function createCone(r, h, n = 8) {
         indices.push(0, i + 2, i + 3);
     }
     for (let i = 0; i < n; i++) {
-        indices.push(1, i + 2, i + 3);
+        indices.push(1, i + 3, i + 2);
     }
     return {
         meshes: [
@@ -130,7 +126,49 @@ function createCone(r, h, n = 8) {
     };
 }
 
-document.body.appendChild(createRadio(['ico', 'torus', 'sphere', 'cube', 'plane', 'cone'], (v, id, i) => {
+function createCylinder(r, h, n = 8) {
+    let vertices = [],
+        indices = [],
+        normals = [];
+    let b = -h * 0.5;
+    vertices.push(0, h + b, 0);
+    vertices.push(0, b, 0);
+    for (let i = 0; i <= n; i++) {
+        let t = Math.PI * 2 * i / n,
+            x = r * Math.cos(t),
+            y = r * Math.sin(t);
+        vertices.push(x, h + b, y);
+    }
+    for (let i = 0; i <= n; i++) {
+        let t = Math.PI * 2 * i / n,
+            x = r * Math.cos(t),
+            y = r * Math.sin(t);
+        vertices.push(x, b, y);
+    }
+
+    for (let i = 0; i < n; i++) {
+        indices.push(0, i + 2, i + 3);
+    }
+    for (let i = 0; i < n; i++) {
+        indices.push(1, i + n + 3, i + n + 4);
+    }
+    for (let i = 0; i < n; i++) {
+        indices.push(i + 2, i + 3, i + n + 4);
+        // indices.push(i + 2, i + n + 3, i + n + 4);
+    }
+    return {
+        meshes: [
+            {
+                indexStream: indices,
+                vertexStream: {
+                    position: vertices
+                }
+            }
+        ]
+    };
+}
+
+document.body.appendChild(createRadio(['ico', 'torus', 'sphere', 'cube', 'plane', 'cone', 'cylinder'], (v, id, i) => {
     if (index !== i) {
         index = i
         render();
