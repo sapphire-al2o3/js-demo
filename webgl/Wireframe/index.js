@@ -26,7 +26,7 @@ function pushIndex(lines, pair, a, b) {
     }
 }
 
-for (let i = 1; i < models.length; i++) {
+for (let i = 0; i < models.length; i++) {
     const t = models[i].meshes[0].indexStream;
     const lines = [];
     const pair = {};

@@ -6,7 +6,7 @@ let gl = initContext2('canvas', {antialias: true}),
 
 let program = initShader(gl, 'shader-fs', 'shader-vs');
 
-let models = [
+const models = [
     createIco(1.5),
     createTorus(16, 16, 1.2, 0.4),
     createSphere(8, 1.5),
@@ -29,7 +29,7 @@ function pushIndex(lines, pair, a, b) {
     }
 }
 
-for (let i = 1; i < models.length; i++) {
+for (let i = 0; i < models.length; i++) {
     const t = models[i].meshes[0].indexStream;
     const lines = [];
     const pair = {};
