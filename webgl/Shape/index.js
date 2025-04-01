@@ -170,7 +170,6 @@ function createCylinder(r, h, n = 8) {
         // indices.push(i + 2, i + 3, i + n + 4);
         indices.push(i + k, i + k + 1, i + k + 2);
         indices.push(i + k + 1, i + k + 2, i + k + 3);
-        // indices.push();
     }
     return {
         meshes: [
