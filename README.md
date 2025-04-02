@@ -22,6 +22,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [ProjectionMatrix](https://sapphire-al2o3.github.io/js-demo/webgl/ProjectionMatrix/)
 - [Scissor](https://sapphire-al2o3.github.io/js-demo/webgl/Scissor/)
 - [Screen-Tone](https://sapphire-al2o3.github.io/js-demo/webgl/Screen-Tone/)
+- [Shape](https://sapphire-al2o3.github.io/js-demo/webgl/Shape/)
 - [Sphere Mapping](https://sapphire-al2o3.github.io/js-demo/webgl/Sphere-Mapping/)
 - [undefined](https://sapphire-al2o3.github.io/js-demo/webgl/undefined/)
 - [uniform配列のテスト](https://sapphire-al2o3.github.io/js-demo/webgl/uniform-array/)
