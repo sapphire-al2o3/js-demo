@@ -99,7 +99,7 @@ function createCone(r, h, n = 8) {
         indices = [],
         normals = [];
     let b = -h * 0.5;
-    vertices.push(0, h + b, 0);
+    let index = 1;
     vertices.push(0, b, 0);
     for (let i = 0; i <= n; i++) {
         let t = Math.PI * 2 * i / n,
@@ -108,11 +108,21 @@ function createCone(r, h, n = 8) {
         vertices.push(x, b, y);
     }
 
-    for (let i = 0; i < n; i++) {
-        indices.push(0, i + 2, i + 3);
+    for (let i = 0; i <= n; i++) {
+        let t = Math.PI * 2 * i / n,
+            x = r * Math.cos(t),
+            y = r * Math.sin(t);
+        vertices.push(x, b, y);
     }
     for (let i = 0; i < n; i++) {
-        indices.push(1, i + 3, i + 2);
+        vertices.push(0, h + b, 0);
+    }
+
+    for (let i = 0; i < n; i++) {
+        indices.push(0, i + 1, i + 2);
+    }
+    for (let i = 0; i < n; i++) {
+        indices.push((n + 1) * 2 + i + 1, n + i + 2, n + i + 3);
     }
     return {
         meshes: [
@@ -132,8 +142,8 @@ function createCylinder(r, h, n = 8) {
         normals = [];
     let b = -h * 0.5;
     vertices.push(0, h + b, 0);
-    normals.push(0, 1, 0);
     vertices.push(0, b, 0);
+    normals.push(0, 1, 0);
     normals.push(0, -1, 0);
     for (let i = 0; i <= n; i++) {
         let t = Math.PI * 2 * i / n,
@@ -167,7 +177,6 @@ function createCylinder(r, h, n = 8) {
     }
     let k = n * 2 + 2;
     for (let i = 0; i < n * 2; i++) {
-        // indices.push(i + 2, i + 3, i + n + 4);
         indices.push(i + k, i + k + 1, i + k + 2);
         indices.push(i + k + 1, i + k + 2, i + k + 3);
     }
