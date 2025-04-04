@@ -170,14 +170,14 @@ function createCylinder(r, h, n = 8) {
     }
 
     for (let i = 0; i < n; i++) {
-        indices.push(0, i + 2, i + 3);
+        indices.push(0, i + 3, i + 2);
     }
     for (let i = 0; i < n; i++) {
         indices.push(1, i + n + 3, i + n + 4);
     }
-    let k = n * 2 + 2;
-    for (let i = 0; i < n * 2; i++) {
-        indices.push(i + k, i + k + 1, i + k + 2);
+    let k = (n + 1) * 2 + 2;
+    for (let i = 0; i < n * 2; i += 2) {
+        indices.push(i + k, i + k + 2, i + k + 1);
         indices.push(i + k + 1, i + k + 2, i + k + 3);
     }
     return {
