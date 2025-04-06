@@ -122,7 +122,7 @@ function createCone(r, h, n = 8) {
         indices.push(0, i + 1, i + 2);
     }
     for (let i = 0; i < n; i++) {
-        indices.push((n + 1) * 2 + i + 1, n + i + 2, n + i + 3);
+        indices.push((n + 1) * 2 + i + 1, n + i + 3, n + i + 2);
     }
     return {
         meshes: [
