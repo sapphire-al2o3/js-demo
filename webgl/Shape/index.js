@@ -99,7 +99,6 @@ function createCone(r, h, n = 8) {
         indices = [],
         normals = [];
     let b = -h * 0.5;
-    let index = 1;
     vertices.push(0, b, 0);
     for (let i = 0; i <= n; i++) {
         let t = Math.PI * 2 * i / n,
@@ -185,7 +184,8 @@ function createCylinder(r, h, n = 8) {
             {
                 indexStream: indices,
                 vertexStream: {
-                    position: vertices
+                    position: vertices,
+                    normal: normals
                 }
             }
         ]
