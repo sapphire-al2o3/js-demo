@@ -100,21 +100,34 @@ function createCone(r, h, n = 8) {
         normals = [];
     let b = -h * 0.5;
     vertices.push(0, b, 0);
+    normals.push(0, -1, 0);
     for (let i = 0; i <= n; i++) {
         let t = Math.PI * 2 * i / n,
             x = r * Math.cos(t),
             y = r * Math.sin(t);
         vertices.push(x, b, y);
+        normals.push(0, -1, 0);
     }
-
+    let nidx = normals.length;
     for (let i = 0; i <= n; i++) {
         let t = Math.PI * 2 * i / n,
             x = r * Math.cos(t),
             y = r * Math.sin(t);
         vertices.push(x, b, y);
+
+        let v = new Vector3(x, 0, y);
+        let v2 = new Vector3(0, h, 0);
+        let v3 = v2.sub(v);
+        let c0 = v.cross(v2);
+        let nv = c0.cross(v3).normalize();
+        normals.push(nv.x, nv.y, nv.z);
     }
     for (let i = 0; i < n; i++) {
         vertices.push(0, h + b, 0);
+        let nx = normals[nidx + i * 3];
+        let ny = normals[nidx + i * 3 + 1];
+        let nz = normals[nidx + i * 3 + 2];
+        normals.push(nx, ny, nz);
     }
 
     for (let i = 0; i < n; i++) {
@@ -128,7 +141,8 @@ function createCone(r, h, n = 8) {
             {
                 indexStream: indices,
                 vertexStream: {
-                    position: vertices
+                    position: vertices,
+                    normal: normals
                 }
             }
         ]
