@@ -7,17 +7,18 @@
 <link rel="stylesheet" type="text/css" media="screen,print" href="style.css" />
 </head>
 <body>
-<script id="shader-fs" type="x-shader/x-fragment">
+<script id="shader-fs" type="x-shader/x-fragment">#version 300 es
 precision highp float;
 
+out vec4 outColor;
 uniform vec4 color;
 
 void main() {
-    gl_FragColor = color;
+    outColor = color;
 }
 </script>
-<script id="shader-vs" type="x-shader/x-vertex">
-attribute vec3 position;
+<script id="shader-vs" type="x-shader/x-vertex">#version 300 es
+in vec3 position;
 
 uniform mat4 mvMatrix;
 uniform mat4 pMatrix;
