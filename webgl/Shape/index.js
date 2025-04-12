@@ -118,7 +118,7 @@ function createCone(r, h, n = 8) {
         let v = new Vector3(x, 0, y);
         let v2 = new Vector3(0, h, 0);
         let v3 = v2.sub(v);
-        let c0 = v.cross(v2);
+        let c0 = v2.cross(v);
         let nv = c0.cross(v3).normalize();
         normals.push(nv.x, nv.y, nv.z);
     }
