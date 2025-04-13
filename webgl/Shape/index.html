@@ -19,7 +19,8 @@ void main() {
     const vec3 amb = vec3(0.1, 0.1, 0.1);
     vec3 n = normalize(vNormal);
     vec3 dif = vec3(max(dot(n, light), 0.0)) * color.rgb;
-    outColor = vec4(dif + amb, 1.0);
+    n = n * 0.5 + 0.5;
+    outColor = vec4(n, 1.0);
 }
 </script>
 <script id="shader-vs" type="x-shader/x-vertex">#version 300 es

@@ -12,7 +12,7 @@ const models = [
     createSphere(8, 1.5),
     createCube(),
     createPlane(1, 1),
-    createCone(1, 2, 16),
+    createCone(1, 2, 8),
     createCylinder(1, 2, 16)
 ];
 
@@ -38,7 +38,7 @@ for (let i = 0; i < models.length; i++) {
         pushIndex(lines, pair, t[j + 1], t[j + 2]);
         pushIndex(lines, pair, t[j + 2], t[j]);
     }
-    models[i].meshes[0].indexStream = lines;
+    // models[i].meshes[0].indexStream = lines;
 }
 
 let index = 0;
@@ -61,11 +61,11 @@ let pm = Matrix4.perspective(45.0 * Math.PI / 180.0, width / height, 0.1, 1000.0
     mm = Matrix4.rotateXYZ(frame * 0.02, 0.0, frame * 0.02),
     mvm = mm.mul(vm);
 
-const color = [0, 1, 0, 1];
+const color = [1, 1, 1, 1];
 
 program.uniform['mvMatrix'].value = mvm.data;
 program.uniform['pMatrix'].value = pm.data;
-program.uniform['color'].value = color;
+// program.uniform['color'].value = color;
 
 gl.clearColor(0.0, 0.0, 0.0, 1.0);
 gl.viewport(0, 0, width, height);
@@ -89,8 +89,8 @@ function render() {
     setupUniform(program);
     setupAttribute(program, models[index].meshes[0].vbo);
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, models[index].meshes[0].ibo);
-    gl.drawElements(gl.LINES, models[index].meshes[0].indexStream.length, gl.UNSIGNED_SHORT, 0);
-    // gl.drawElements(gl.TRIANGLES, models[index].meshes[0].indexStream.length, gl.UNSIGNED_SHORT, 0);
+    // gl.drawElements(gl.LINES, models[index].meshes[0].indexStream.length, gl.UNSIGNED_SHORT, 0);
+    gl.drawElements(gl.TRIANGLES, models[index].meshes[0].indexStream.length, gl.UNSIGNED_SHORT, 0);
     gl.flush();
 }
 
@@ -124,10 +124,13 @@ function createCone(r, h, n = 8) {
     }
     for (let i = 0; i < n; i++) {
         vertices.push(0, h + b, 0);
-        let nx = normals[nidx + i * 3];
-        let ny = normals[nidx + i * 3 + 1];
-        let nz = normals[nidx + i * 3 + 2];
-        normals.push(nx, ny, nz);
+        let k0 = nidx + i * 3;
+        let k1 = nidx + (i + 1) * 3;
+        let nx = normals[k0] + normals[k1];
+        let ny = normals[k0 + 1] + normals[k1 + 1];
+        let nz = normals[k0 + 2] + normals[k1 + 2];
+        let nv = (new Vector3(nx, ny, nz)).normalize();
+        normals.push(nv.x, nv.y, nv.z);
     }
 
     for (let i = 0; i < n; i++) {
