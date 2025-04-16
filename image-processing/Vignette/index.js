@@ -22,6 +22,7 @@ window.onload = () => {
     
     let s = 3;
     let os = 0.2;
+    let range = 1.2;
 
     function gauss(sigma, x) {
         return Math.exp(-(x * x) / (2 * sigma * sigma)) / (Math.sqrt(2 * Math.PI) * sigma);
@@ -158,8 +159,8 @@ window.onload = () => {
                 // s = clamp(s + os, 0, 1);
                 // [r, g, b] = hsv2rgb(hue, s, v);
 
-                let x = (j / w - 0.5) * 1.2;
-                let y = (i / h - 0.5) * 1.2;
+                let x = (j / w - 0.5) * range;
+                let y = (i / h - 0.5) * range;
                 let t = x * x + y * y;
 
                 r = (r * (1 - t)) ^ 0;
@@ -188,4 +189,9 @@ window.onload = () => {
     //     os = v * 2.0 - 1.0;
     //     render();
     // }));
+
+    document.body.appendChild(createSlider('range', range / 2, v => {
+        range = v * 2;
+        render();
+    }));
 };
