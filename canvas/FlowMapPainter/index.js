@@ -545,6 +545,7 @@ function setJoin(e) {
 }
 
 const gl = initContext('preview', { preserveDrawingBuffer : true });
+const preview = gl.canvas;
 const program = initShader(gl, 'shader-vs', 'shader-fs');
 const vbo = gl.createBuffer();
 
@@ -612,3 +613,7 @@ function render(delta) {
 }
 
 let timer = setAnimationFrame(render, 1000 / 30);
+
+preview.addEventListener('click', () => {
+    timer.toggle();
+});
