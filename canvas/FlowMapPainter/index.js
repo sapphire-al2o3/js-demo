@@ -8,6 +8,7 @@ let img = new Image(),
     pdx = 0,
     pdy = 0,
     weight = 0.2,
+    speed = 1.0,
     width = canvas[0].width,
     height = canvas[0].height,
     lineWidth = 32.0,
@@ -159,6 +160,10 @@ document.getElementById('reset').addEventListener('click', (e) => {
 
     ctx.lineCap = 'round';
     ctx.lineWidth = lineWidth;
+}, false);
+
+document.getElementById('speed').addEventListener('change', (e) => {
+    speed = parseFloat(e.target.value);
 }, false);
 
 function smooth() {
@@ -605,7 +610,7 @@ let time = 0;
 
 function render(delta) {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    gl.uniform1f(locTime, time / 1000);
+    gl.uniform1f(locTime, time * speed / 1000);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     gl.flush();
 
