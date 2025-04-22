@@ -18,7 +18,8 @@ window.onload = () => {
     let w = image.width,
         h = image.height;
     
-    let range = 1.2;
+    let range = 1.0;
+    let color = [0, 0, 0];
 
     function render() {
 
@@ -37,9 +38,9 @@ window.onload = () => {
                 let y = (i / h - 0.5) * range;
                 let t = x * x + y * y;
 
-                r = (r * (1 - t)) ^ 0;
-                g = (g * (1 - t)) ^ 0;
-                b = (b * (1 - t)) ^ 0;
+                r = (r * (1 - t) + color[0] * t) ^ 0;
+                g = (g * (1 - t) + color[1] * t) ^ 0;
+                b = (b * (1 - t) + color[2] * t) ^ 0;
 
                 dst[index] = r;
                 dst[index + 1] = g;
@@ -55,6 +56,11 @@ window.onload = () => {
 
     document.body.appendChild(createSlider('range', range / 2, v => {
         range = v * 2;
+        render();
+    }));
+
+    document.body.appendChild(createColor('color', '#000000', v => {
+        color = v;
         render();
     }));
 };
