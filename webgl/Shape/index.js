@@ -12,7 +12,7 @@ const models = [
     createSphere(8, 1.5),
     createCube(),
     createPlane(1, 1),
-    createCone(1, 2, 8),
+    createCone(1, 2, 16),
     createCylinder(1, 2, 16)
 ];
 
@@ -124,12 +124,13 @@ function createCone(r, h, n = 8) {
     }
     for (let i = 0; i < n; i++) {
         vertices.push(0, h + b, 0);
-        let k0 = nidx + i * 3;
-        let k1 = nidx + (i + 1) * 3;
-        let nx = normals[k0] + normals[k1];
-        let ny = normals[k0 + 1] + normals[k1 + 1];
-        let nz = normals[k0 + 2] + normals[k1 + 2];
-        let nv = (new Vector3(nx, ny, nz)).normalize();
+        // let k0 = nidx + i * 3;
+        // let k1 = nidx + (i + 1) * 3;
+        // let nx = normals[k0] + normals[k1];
+        // let ny = normals[k0 + 1] + normals[k1 + 1];
+        // let nz = normals[k0 + 2] + normals[k1 + 2];
+        // let nv = (new Vector3(nx, ny, nz)).normalize();
+        let nv = new Vector3(0, 1, 0);
         normals.push(nv.x, nv.y, nv.z);
     }
 
