@@ -37,11 +37,13 @@ window.onload = () => {
                 let x = (j / w - 0.5) * range;
                 let y = (i / h - 0.5) * range;
                 let t = x * x + y * y;
-
+                if (t > 1) {
+                    t = 1;
+                }
                 r = (r * (1 - t) + color[0] * t) ^ 0;
                 g = (g * (1 - t) + color[1] * t) ^ 0;
                 b = (b * (1 - t) + color[2] * t) ^ 0;
-
+                
                 dst[index] = r;
                 dst[index + 1] = g;
                 dst[index + 2] = b;
