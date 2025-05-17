@@ -3,3 +3,7 @@ img {
     height: 320px;
     image-rendering: pixelated;
 }
+
+#prefectures {
+    display: none;
+}
