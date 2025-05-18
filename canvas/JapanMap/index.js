@@ -47,3 +47,10 @@ const prefectures = [
     '鹿児島',
     '沖縄'
 ];
+
+window.onload = () => {
+    const images = [];
+    for (let i = 0; i < 47; i++) {
+        images.push(document.getElementById(`p${i + 1}`));
+    }
+};
