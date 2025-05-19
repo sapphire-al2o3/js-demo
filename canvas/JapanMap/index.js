@@ -48,9 +48,14 @@ const prefectures = [
     '沖縄'
 ];
 
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
 window.onload = () => {
     const images = [];
     for (let i = 0; i < 47; i++) {
         images.push(document.getElementById(`p${i + 1}`));
     }
+
+    ctx.drawImage(images[0], 0, 0);
 };
