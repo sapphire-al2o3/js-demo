@@ -48,14 +48,21 @@ const prefectures = [
     '沖縄'
 ];
 
+const pos = [
+    118, 6,
+    119, 36
+];
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+ctx.imageSmoothingEnabled = false;
 
 window.onload = () => {
     const images = [];
-    for (let i = 0; i < 47; i++) {
+    for (let i = 0; i < prefectures.length; i++) {
         images.push(document.getElementById(`p${i + 1}`));
     }
 
-    ctx.drawImage(images[0], 0, 0);
+    ctx.drawImage(images[0], pos[0] * 2, pos[1] * 2, images[0].width * 2, images[0].height * 2);
+    ctx.drawImage(images[1], pos[2] * 2, pos[3] * 2, images[1].width * 2, images[1].height * 2);
 };
