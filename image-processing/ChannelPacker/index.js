@@ -174,9 +174,47 @@ document.getElementById('swap-ba').addEventListener('click', e => {
     render();
 });
 
+function copy(ctx0, ctx1) {
+    const img0 = ctx0.getImageData(0, 0, w, h);
+    ctx1.putImageData(img0, 0, 0);
+}
+
+document.getElementById('copy-rg')?.addEventListener('click', e => {
+    copy(ctxR, ctxG);
+    render();
+});
+
+document.getElementById('copy-gr')?.addEventListener('click', e => {
+    copy(ctxG, ctxR);
+    render();
+});
+
+document.getElementById('copy-gb')?.addEventListener('click', e => {
+    copy(ctxG, ctxB);
+    render();
+});
+
+document.getElementById('copy-bg')?.addEventListener('click', e => {
+    copy(ctxB, ctxG);
+    render();
+});
+
+document.getElementById('copy-ba')?.addEventListener('click', e => {
+    copy(ctxB, ctxA);
+    render();
+});
+
+document.getElementById('copy-ab')?.addEventListener('click', e => {
+    copy(ctxA, ctxB);
+    render();
+});
+
 document.getElementById('fix-size').addEventListener('change', e => {
     fixSize = e.target.checked;
 });
+
+
+
 
 ctxR.fillStyle = '#FFF';
 ctxR.fillRect(0, 0, w, h);
