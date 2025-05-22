@@ -50,7 +50,19 @@ const prefectures = [
 
 const pos = [
     118, 6,
-    119, 36
+    119, 36,
+    124, 46,
+    123, 56,
+    117, 45,
+    116, 55,
+    116, 64,
+    120, 72,
+    118, 69,
+    111, 70,
+    113, 76,
+    121, 79,
+    114, 80,
+    114, 82
 ];
 
 const canvas = document.getElementById('canvas');
@@ -59,10 +71,8 @@ ctx.imageSmoothingEnabled = false;
 
 window.onload = () => {
     const images = [];
-    for (let i = 0; i < prefectures.length; i++) {
+    for (let i = 0; i < pos.length * 2; i++) {
         images.push(document.getElementById(`p${i + 1}`));
+        ctx.drawImage(images[i], pos[i * 2] * 2, pos[i * 2 + 1] * 2, images[i].width * 2, images[i].height * 2);
     }
-
-    ctx.drawImage(images[0], pos[0] * 2, pos[1] * 2, images[0].width * 2, images[0].height * 2);
-    ctx.drawImage(images[1], pos[2] * 2, pos[3] * 2, images[1].width * 2, images[1].height * 2);
 };
