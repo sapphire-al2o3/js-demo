@@ -4,48 +4,69 @@ window.onload = () => {
         return (r0 - r1) * (r0 - r1) + (g0 - g1) * (g0 - g1) + (b0 - b1) * (b0 - b1);
     }
 
+    const src = document.getElementById('src');
+    const srcCtx = src.getContext('2d');
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
 
     const img = document.getElementById('image');
 
+    src.width = img.width;
+    src.height = img.height;
     canvas.width = img.width;
     canvas.height = img.height;
 
+    srcCtx.drawImage(img, 0, 0, img.width, img.height);
     ctx.drawImage(img, 0, 0, img.width, img.height);
 
-    const image = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const result = ctx.createImageData(canvas.width, canvas.height);
-    const data = image.data;
-    const ret = result.data;
+    function laplacian() {
+        const image = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const result = ctx.createImageData(canvas.width, canvas.height);
+        const data = image.data;
+        const ret = result.data;
 
-    let w = 4;
+        let w = 4;
 
-    let width = image.width,
-        height = image.height;
+        let width = image.width,
+            height = image.height;
 
-    const filter = [1, 1, 1, 1, -8, 1, 1, 1, 1]
+        const filter = [1, 1, 1, 1, -8, 1, 1, 1, 1]
 
-    for(let i = 1; i < height - 1; i++) {
-        for(let j = 1; j < width - 1; j++) {
-            let rr, gg, bb;
-            rr = gg = bb = 0;
-            for(let y = -1; y <= 1; y++) {
-                for(let x = -1; x <= 1; x++) {
-                    let k = filter[(y + 1) * 3 + (x + 1)];
-                    let n = ((i + y) * width + (j + x)) * 4; 
-                    rr += data[n] * k;
-                    gg += data[n + 1] * k;
-                    bb += data[n + 2] * k;
+        for(let i = 1; i < height - 1; i++) {
+            for(let j = 1; j < width - 1; j++) {
+                let rr, gg, bb;
+                rr = gg = bb = 0;
+                for(let y = -1; y <= 1; y++) {
+                    for(let x = -1; x <= 1; x++) {
+                        let k = filter[(y + 1) * 3 + (x + 1)];
+                        let n = ((i + y) * width + (j + x)) * 4; 
+                        rr += data[n] * k;
+                        gg += data[n + 1] * k;
+                        bb += data[n + 2] * k;
+                    }
                 }
+                let index = (i * width + j) * 4; 
+                ret[index] = rr;
+                ret[index + 1] = gg;
+                ret[index + 2] = bb;
+                ret[index + 3] = 255
             }
-            let index = (i * width + j) * 4; 
-            ret[index] = rr;
-            ret[index + 1] = gg;
-            ret[index + 2] = bb;
-            ret[index + 3] = 255
         }
+
+        ctx.putImageData(result, 0, 0);
     }
 
-    ctx.putImageData(result, 0, 0);
+    laplacian();
+
+    setDropImage(src, e => {
+        src.width = e.width;
+        src.height = e.height;
+        srcCtx.drawImage(e, 0, 0);
+
+        canvas.width = e.width;
+        canvas.height = e.height;
+        ctx.drawImage(e, 0, 0, e.width, e.height);
+
+        laplacian();
+    });
 };
