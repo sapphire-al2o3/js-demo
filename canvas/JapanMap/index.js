@@ -62,7 +62,11 @@ const pos = [
     113, 76,
     121, 79,
     114, 80,
-    114, 82
+    114, 82,
+    106, 59,
+    99, 69,
+    95, 65,
+    91, 75
 ];
 
 const canvas = document.getElementById('canvas');
