@@ -47,6 +47,7 @@ window.onload = () => {
     let randc = [];
     let average = false;
     let fix = false;
+    let edge = false;
 
     function table(size) {
         let update = b !== size || !fix;
@@ -91,6 +92,11 @@ window.onload = () => {
                     c = (cy ^ 0) * w + (cx ^ 0);
                 }
             }
+        }
+        if (edge) {
+            // if (distance > maxd / 3) {
+                return Math.sqrt(distance) / (b * 4) * 255 ^ 0;
+            // }
         }
         return clamp(c, 0, w * h - 1);
     }
@@ -155,9 +161,16 @@ window.onload = () => {
                     ret[k + 3] = 255;
                 } else {
                     let y = cell(j, i) * 4;
+                    if (edge) {
+                        y = y > 160 ? 255 : 0;
+                    ret[k] = y;
+                    ret[k + 1] = y; 
+                    ret[k + 2] = y;
+                    } else {
                     ret[k] = data[y];
                     ret[k + 1] = data[y + 1]; 
                     ret[k + 2] = data[y + 2];
+                    }
                     ret[k + 3] = 255;
                 }
             }
