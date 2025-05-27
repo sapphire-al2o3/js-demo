@@ -71,17 +71,29 @@ const pos = [
     104, 71,
     97, 74,
     105, 82,
-    98, 82
+    98, 82,
+    92, 82,
+    93, 80,
+
 ];
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+
+
+let scale = 3;
+
+canvas.width = 160 * scale;
+canvas.height = 160 * scale;
+
 ctx.imageSmoothingEnabled = false;
 
 window.onload = () => {
     const images = [];
     for (let i = 0; i < pos.length * 2; i++) {
         images.push(document.getElementById(`p${i + 1}`));
-        ctx.drawImage(images[i], pos[i * 2] * 2, pos[i * 2 + 1] * 2, images[i].width * 2, images[i].height * 2);
+        let x = pos[i * 2] * scale;
+        let y = pos[i * 2 + 1] * scale;
+        ctx.drawImage(images[i], x, y, images[i].width * scale, images[i].height * scale);
     }
 };
