@@ -88,6 +88,14 @@ const pos = [
     77, 87,
     68, 89,
     70, 91,
+    57, 89,
+    55, 92,
+    48, 83,
+    56, 94,
+    61, 91,
+    60, 97,
+    43, 102,
+    14, 139
 ];
 
 const canvas = document.getElementById('canvas');
@@ -109,4 +117,6 @@ window.onload = () => {
         let y = pos[i * 2 + 1] * scale;
         ctx.drawImage(images[i], x, y, images[i].width * scale, images[i].height * scale);
     }
+
+    
 };
