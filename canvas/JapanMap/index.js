@@ -110,6 +110,10 @@ canvas.height = 160 * scale;
 ctx.imageSmoothingEnabled = false;
 
 window.onload = () => {
+    const frame = document.getElementById('map_frame');
+    ctx.drawImage(frame, 0, 0, frame.width * scale, frame.height * scale);
+
+
     const images = [];
     for (let i = 0; i < pos.length * 2; i++) {
         images.push(document.getElementById(`p${i + 1}`));

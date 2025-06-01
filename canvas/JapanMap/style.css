@@ -7,3 +7,7 @@ img {
 #prefectures {
     display: none;
 }
+
+#map_frame {
+    display: none;;
+}
