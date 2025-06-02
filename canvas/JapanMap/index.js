@@ -115,7 +115,7 @@ window.onload = () => {
 
 
     const images = [];
-    for (let i = 0; i < pos.length * 2; i++) {
+    for (let i = 0; i < prefectures.length; i++) {
         images.push(document.getElementById(`p${i + 1}`));
         let x = pos[i * 2] * scale;
         let y = pos[i * 2 + 1] * scale;
