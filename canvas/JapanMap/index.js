@@ -111,16 +111,33 @@ ctx.imageSmoothingEnabled = false;
 
 window.onload = () => {
     const frame = document.getElementById('map_frame');
-    ctx.drawImage(frame, 0, 0, frame.width * scale, frame.height * scale);
-
-
+    
     const images = [];
     for (let i = 0; i < prefectures.length; i++) {
-        images.push(document.getElementById(`p${i + 1}`));
-        let x = pos[i * 2] * scale;
-        let y = pos[i * 2 + 1] * scale;
-        ctx.drawImage(images[i], x, y, images[i].width * scale, images[i].height * scale);
+        images.push(document.getElementById(`p${i + 1}`));;
     }
 
-    
+    function drawMap() {
+        ctx.drawImage(frame, 0, 0, frame.width * scale, frame.height * scale);
+
+        for (let i = 0; i < images.length; i++) {
+            let x = pos[i * 2] * scale;
+            let y = pos[i * 2 + 1] * scale;
+            ctx.drawImage(images[i], x, y, images[i].width * scale, images[i].height * scale)
+        }
+    }
+
+    drawMap();
+
+    let index = 0;
+
+    // setInterval(() => {
+    //     drawMap();
+
+    //     let x = pos[index * 2] * scale;
+    //     let y = pos[index * 2 + 1] * scale;
+    //     ctx.drawImage(images[index], x, y, images[index].width * scale, images[index].height * scale)
+
+    //     index = (index + 1) % images.length;
+    // }, 1000 / 30);
 };

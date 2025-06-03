@@ -8,6 +8,17 @@ img {
     display: none;
 }
 
-#map_frame {
-    display: none;;
+#map_frame, #map {
+    display: none;
+}
+
+#container {
+    width: fit-content;
+}
+
+#start {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bolder;
+    cursor: pointer;
 }
