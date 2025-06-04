@@ -123,21 +123,34 @@ window.onload = () => {
         for (let i = 0; i < images.length; i++) {
             let x = pos[i * 2] * scale;
             let y = pos[i * 2 + 1] * scale;
-            ctx.drawImage(images[i], x, y, images[i].width * scale, images[i].height * scale)
+            // ctx.drawImage(images[i], x, y, images[i].width * scale, images[i].height * scale)
         }
     }
 
     drawMap();
 
     let index = 0;
+    let elapsedTime = 0;
+    let interval = 300;
 
-    // setInterval(() => {
-    //     drawMap();
+    setAnimationFrame((delta) => {
 
-    //     let x = pos[index * 2] * scale;
-    //     let y = pos[index * 2 + 1] * scale;
-    //     ctx.drawImage(images[index], x, y, images[index].width * scale, images[index].height * scale)
+        elapsedTime += delta;
 
-    //     index = (index + 1) % images.length;
-    // }, 1000 / 30);
+        if (elapsedTime > interval) {
+            if (elapsedTime > interval * 2) {
+                elapsedTime = 0;
+            } else {
+                elapsedTime -= interval;
+            }
+            index = (index + 1) % images.length;
+        }
+
+        drawMap();
+
+        let x = pos[index * 2] * scale;
+        let y = pos[index * 2 + 1] * scale;
+        ctx.drawImage(images[index], x, y, images[index].width * scale, images[index].height * scale);
+
+    }, 1000 / 30);
 };
