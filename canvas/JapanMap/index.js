@@ -111,46 +111,65 @@ ctx.imageSmoothingEnabled = false;
 
 window.onload = () => {
     const frame = document.getElementById('map_frame');
-    
     const images = [];
+
     for (let i = 0; i < prefectures.length; i++) {
         images.push(document.getElementById(`p${i + 1}`));;
     }
 
-    function drawMap() {
-        ctx.drawImage(frame, 0, 0, frame.width * scale, frame.height * scale);
-
-        for (let i = 0; i < images.length; i++) {
-            let x = pos[i * 2] * scale;
-            let y = pos[i * 2 + 1] * scale;
-            // ctx.drawImage(images[i], x, y, images[i].width * scale, images[i].height * scale)
-        }
+    for (let i = 0; i < images.length; i++) {
+        let x = pos[i * 2] * scale;
+        let y = pos[i * 2 + 1] * scale;
+        ctx.drawImage(images[i], x, y, images[i].width * scale, images[i].height * scale)
     }
-
-    drawMap();
 
     let index = 0;
     let elapsedTime = 0;
-    let interval = 300;
+    let interval = 10;
+    let state = 0;
+
+    function start() {
+        state = 1;
+        index = Math.random() * images.length ^ 0;
+    }
+
+    function draw() {
+
+        if (state === 0) {
+            ctx.drawImage(frame, 0, 0, frame.width * scale, frame.height * scale);
+            for (let i = 0; i < images.length; i++) {
+                let x = pos[i * 2] * scale;
+                let y = pos[i * 2 + 1] * scale;
+                ctx.drawImage(images[i], x, y, images[i].width * scale, images[i].height * scale)
+            }
+        } else if (state === 1) {
+            ctx.drawImage(frame, 0, 0, frame.width * scale, frame.height * scale);
+            let x = pos[index * 2] * scale;
+            let y = pos[index * 2 + 1] * scale;
+            ctx.drawImage(images[index], x, y, images[index].width * scale, images[index].height * scale);
+        }
+    }
 
     setAnimationFrame((delta) => {
 
-        elapsedTime += delta;
+        if (state === 1) {
+            elapsedTime += delta;
 
-        if (elapsedTime > interval) {
-            if (elapsedTime > interval * 2) {
-                elapsedTime = 0;
-            } else {
-                elapsedTime -= interval;
+            if (elapsedTime > interval) {
+                if (elapsedTime > interval * 2) {
+                    elapsedTime = 0;
+                } else {
+                    elapsedTime -= interval;
+                }
+                index = (index + 1) % images.length;
             }
-            index = (index + 1) % images.length;
         }
 
-        drawMap();
-
-        let x = pos[index * 2] * scale;
-        let y = pos[index * 2 + 1] * scale;
-        ctx.drawImage(images[index], x, y, images[index].width * scale, images[index].height * scale);
+        draw();
 
     }, 1000 / 30);
+
+    document.getElementById('start').addEventListener('click', e => {
+        start();
+    }, false);
 };
