@@ -123,6 +123,8 @@ window.onload = () => {
         ctx.drawImage(images[i], x, y, images[i].width * scale, images[i].height * scale)
     }
 
+    const button = document.getElementById('start');
+
     let index = 0;
     let elapsedTime = 0;
     let interval = 10;
@@ -131,6 +133,12 @@ window.onload = () => {
     function start() {
         state = 1;
         index = Math.random() * images.length ^ 0;
+        button.textContent = 'STOP';
+    }
+
+    function stop() {
+        state = 2;
+        button.textContent = 'START';
     }
 
     function draw() {
@@ -169,7 +177,13 @@ window.onload = () => {
 
     }, 1000 / 30);
 
-    document.getElementById('start').addEventListener('click', e => {
-        start();
+    button.addEventListener('click', e => {
+        if (state === 0) {
+            start();
+        } else if (state === 1) {
+            stop();
+        } else if (state === 2) {
+            start();
+        }
     }, false);
 };
