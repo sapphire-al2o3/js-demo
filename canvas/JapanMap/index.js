@@ -109,6 +109,15 @@ canvas.height = 160 * scale;
 
 ctx.imageSmoothingEnabled = false;
 
+function shuffle(array) {
+    for(var i = 0, l = array.length; i < l; i++) {
+        var j = Math.random() * l ^ 0,
+            t = array[i];
+        array[i] = array[j];
+        array[j] = t;
+    }
+}
+
 window.onload = () => {
     const frame = document.getElementById('map_frame');
     const images = [];
@@ -123,12 +132,26 @@ window.onload = () => {
         ctx.drawImage(images[i], x, y, images[i].width * scale, images[i].height * scale)
     }
 
+    const offscreen = new OffscreenCanvas(128, 64);
+    const offscreenCtx = offscreen.getContext('2d');
+    ctx.font = 'bold 42px Meiryo';
+    offscreenCtx.font = 'bold 14px MS UI Gothic';
+
+
     const button = document.getElementById('start');
+
+    let randIndices = [];
+
+    for (let i = 0; i < images.length; i++) {
+        randIndices.push(i);
+    }
+    shuffle(randIndices);
 
     let index = 0;
     let elapsedTime = 0;
-    let interval = 10;
+    let interval = 60;
     let state = 0;
+    let time = 0;
 
     function start() {
         state = 1;
@@ -138,7 +161,18 @@ window.onload = () => {
 
     function stop() {
         state = 2;
+        time = 10 + Math.random() * 3;
+    }
+
+    function reset() {
         button.textContent = 'START';
+        state = 3;
+    }
+
+    function drawText(text, x, y) {
+        offscreenCtx.clearRect(0, 0, offscreen.width, offscreen.height);
+        offscreenCtx.fillText(text, 0, 14);
+        ctx.drawImage(offscreen, 0, 0, offscreen.width * scale, offscreen.height * scale);
     }
 
     function draw() {
@@ -151,10 +185,24 @@ window.onload = () => {
                 ctx.drawImage(images[i], x, y, images[i].width * scale, images[i].height * scale)
             }
         } else if (state === 1) {
+            // let k = randIndices[index];
+            let k = index;
+
             ctx.drawImage(frame, 0, 0, frame.width * scale, frame.height * scale);
-            let x = pos[index * 2] * scale;
-            let y = pos[index * 2 + 1] * scale;
-            ctx.drawImage(images[index], x, y, images[index].width * scale, images[index].height * scale);
+            let x = pos[k * 2] * scale;
+            let y = pos[k * 2 + 1] * scale;
+            ctx.drawImage(images[k], x, y, images[k].width * scale, images[k].height * scale);
+            // drawText(prefectures[k], 10, 40);
+            ctx.fillText(prefectures[k], 20, 60);
+        } else if (state === 2) {
+            // let k = randIndices[index];
+            let k = index;
+            ctx.drawImage(frame, 0, 0, frame.width * scale, frame.height * scale);
+            let x = pos[k * 2] * scale;
+            let y = pos[k * 2 + 1] * scale;
+            ctx.drawImage(images[k], x, y, images[k].width * scale, images[k].height * scale);
+
+            ctx.fillText(prefectures[k], 20, 60);
         }
     }
 
@@ -171,6 +219,33 @@ window.onload = () => {
                 }
                 index = (index + 1) % images.length;
             }
+        } else if (state === 2) {
+            elapsedTime += delta;
+            let i = interval;
+            
+            if (time < 4) {
+                i = i * 50.0 ^ 0;
+            } else if (time < 6) {
+                i = i * 10.0 ^ 0;
+            } else if (time < 8) {
+                i = i * 5.0 ^ 0;
+            } else if (time < 10) {
+                i = i * 2.0 ^ 0;
+            }
+
+            if (elapsedTime > i) {
+                if (elapsedTime > i * 2) {
+                    elapsedTime = 0;
+                } else {
+                    elapsedTime -= i;
+                }
+                index = (index + 1) % images.length;
+            }
+
+            time -= delta * 0.001;
+            if (time < 0) {
+                reset();
+            }
         }
 
         draw();
@@ -182,7 +257,7 @@ window.onload = () => {
             start();
         } else if (state === 1) {
             stop();
-        } else if (state === 2) {
+        } else if (state === 3) {
             start();
         }
     }, false);
