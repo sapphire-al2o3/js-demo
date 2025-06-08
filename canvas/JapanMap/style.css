@@ -22,3 +22,7 @@ img {
     font-weight: bolder;
     cursor: pointer;
 }
+
+.disable {
+    color: #777;
+}

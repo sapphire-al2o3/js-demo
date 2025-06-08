@@ -162,10 +162,12 @@ window.onload = () => {
     function stop() {
         state = 2;
         time = 10 + Math.random() * 3;
+        button.classList.add('disable');
     }
 
     function reset() {
         button.textContent = 'START';
+        button.classList.remove('disable');
         state = 3;
     }
 
@@ -226,7 +228,7 @@ window.onload = () => {
             if (time < 4) {
                 i = i * 50.0 ^ 0;
             } else if (time < 6) {
-                i = i * 10.0 ^ 0;
+                i = i * 20.0 ^ 0;
             } else if (time < 8) {
                 i = i * 5.0 ^ 0;
             } else if (time < 10) {
