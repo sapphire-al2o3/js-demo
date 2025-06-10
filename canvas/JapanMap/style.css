@@ -21,8 +21,18 @@ img {
     font-size: 32px;
     font-weight: bolder;
     cursor: pointer;
+    height: 48px;
+    background-image: url("./button.png");
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: 0px;
+}
+
+.stop {
+    background-position-y: -48px !important;
 }
 
 .disable {
     color: #777;
+    background-position-y: -96px !important;
 }

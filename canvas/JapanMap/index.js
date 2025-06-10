@@ -156,17 +156,19 @@ window.onload = () => {
     function start() {
         state = 1;
         index = Math.random() * images.length ^ 0;
-        button.textContent = 'STOP';
+        // button.textContent = 'STOP';
+        button.classList.add('stop');
     }
 
     function stop() {
         state = 2;
         time = 10 + Math.random() * 3;
+        button.classList.remove('stop');
         button.classList.add('disable');
     }
 
     function reset() {
-        button.textContent = 'START';
+        // button.textContent = 'START';
         button.classList.remove('disable');
         state = 3;
     }
