@@ -152,6 +152,8 @@ window.onload = () => {
     let interval = 60;
     let state = 0;
     let time = 0;
+    let counter = 0;
+    let blink = false;
 
     function start() {
         state = 1;
@@ -170,7 +172,7 @@ window.onload = () => {
     function reset() {
         // button.textContent = 'START';
         button.classList.remove('disable');
-        state = 3;
+        state = 4;
     }
 
     function drawText(text, x, y) {
@@ -207,6 +209,23 @@ window.onload = () => {
             ctx.drawImage(images[k], x, y, images[k].width * scale, images[k].height * scale);
 
             ctx.fillText(prefectures[k], 20, 60);
+        } else if (state === 3) {
+            let k = index;
+            ctx.drawImage(frame, 0, 0, frame.width * scale, frame.height * scale);
+            if ((counter & 1) > 0) {
+                let x = pos[k * 2] * scale;
+                let y = pos[k * 2 + 1] * scale;
+                ctx.drawImage(images[k], x, y, images[k].width * scale, images[k].height * scale);
+            }
+            ctx.fillText(prefectures[k], 20, 60);
+        } else if (state === 4) {
+            let k = index;
+            ctx.drawImage(frame, 0, 0, frame.width * scale, frame.height * scale);
+            let x = pos[k * 2] * scale;
+            let y = pos[k * 2 + 1] * scale;
+            ctx.drawImage(images[k], x, y, images[k].width * scale, images[k].height * scale);
+
+            ctx.fillText(prefectures[k], 20, 60);
         }
     }
 
@@ -228,9 +247,9 @@ window.onload = () => {
             let i = interval;
             
             if (time < 4) {
-                i = i * 50.0 ^ 0;
+                i = i * 30.0 ^ 0;
             } else if (time < 6) {
-                i = i * 20.0 ^ 0;
+                i = i * 15.0 ^ 0;
             } else if (time < 8) {
                 i = i * 5.0 ^ 0;
             } else if (time < 10) {
@@ -248,6 +267,18 @@ window.onload = () => {
 
             time -= delta * 0.001;
             if (time < 0) {
+                counter = 4;
+                state = 3;
+                time = 0.5;
+                blink = false;
+            }
+        } else if (state === 3) {
+            time -= delta * 0.001;
+            if (time < 0) {
+                time = 0.5;
+                counter--;
+            }
+            if (counter < 0) {
                 reset();
             }
         }
@@ -261,7 +292,7 @@ window.onload = () => {
             start();
         } else if (state === 1) {
             stop();
-        } else if (state === 3) {
+        } else if (state === 4) {
             start();
         }
     }, false);
