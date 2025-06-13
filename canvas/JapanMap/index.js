@@ -267,7 +267,7 @@ window.onload = () => {
 
             time -= delta * 0.001;
             if (time < 0) {
-                counter = 4;
+                counter = 6;
                 state = 3;
                 time = 0.5;
                 blink = false;
@@ -275,7 +275,7 @@ window.onload = () => {
         } else if (state === 3) {
             time -= delta * 0.001;
             if (time < 0) {
-                time = 0.5;
+                time = 0.3;
                 counter--;
             }
             if (counter < 0) {
