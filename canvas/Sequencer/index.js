@@ -9,7 +9,7 @@
     
 
     ctx.strokeStyle = '#000';
-    ctx.fillStyle = '#844';
+    
 
     // nフレーム待つ
     function* waitFrame(n) {
@@ -49,21 +49,27 @@
             yield* waitTime(100);
         }
 
-        for (let i = 0; i < 20; i++) {
-            let x = i * 20 + 0.5;
-            ctx.fillRect(x, 0, 20, 20);
-            yield* waitTime(200);
+        ctx.fillStyle = '#844';
+        for (let j = 0; j < 20; j++) {
+            let y = j * 20 + 0.5;
+            for (let i = 0; i < 20; i++) {
+                let x = i * 20 + 0.5;
+                ctx.fillRect(x, y, 20, 20);
+                yield* waitTime(16);
+            }
         }
     }();
     
     let elapsed = 0,
         time = Date.now(),
-        lastTime = time;
+        lastTime = 0;
 
-    const update = () => {
+    const update = (timestamp) => {
         let now = Date.now(),
             delta = now - time;
         time = now;
+        let d = timestamp - lastTime;
+        lastTime = timestamp;
         elapsed += delta;
         if (i.next().done) {
             
