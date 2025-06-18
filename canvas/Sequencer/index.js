@@ -10,6 +10,29 @@
 
     ctx.strokeStyle = '#000';
     
+    async function waitNextFrame() {
+        return new Promise(resolve => {
+            requestAnimationFrame(timestamp => {
+                resolve();
+            });
+        });
+    }
+
+    async function waitSec(t) {
+        let start = Date.now();
+        while (t > Date.now() - start) {
+            await waitNextFrame();
+        }
+    }
+
+    // async function loop(timestamp) {
+    //     for (let k = 0; k < text.length; k++) {
+    //         box.textContent += text[k];
+    //         await waitSec(100);
+    //     }
+    // }
+
+    // loop();
 
     // nフレーム待つ
     function* waitFrame(n) {
@@ -78,6 +101,6 @@
         }
     };
 
-    requestAnimationFrame(update);
+    // requestAnimationFrame(update);
 
 })();
