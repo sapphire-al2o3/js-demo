@@ -114,6 +114,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [ImageBitmapのテスト](https://sapphire-al2o3.github.io/js-demo/canvas/ImageBitmapのテスト/)
 - [lineCap](https://sapphire-al2o3.github.io/js-demo/canvas/lineCap/)
 - [rainbow](https://sapphire-al2o3.github.io/js-demo/canvas/rainbow/)
+- [Sequencer](https://sapphire-al2o3.github.io/js-demo/canvas/Sequencer/)
 - [split-drawing](https://sapphire-al2o3.github.io/js-demo/canvas/split-drawing)
 - [string](https://sapphire-al2o3.github.io/js-demo/canvas/string/)
 - [モアレ](https://sapphire-al2o3.github.io/js-demo/canvas/moire/)
