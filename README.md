@@ -159,6 +159,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [集中線](https://sapphire-al2o3.github.io/js-demo/canvas/ConcentrationLine)
 - [モーフィング](https://sapphire-al2o3.github.io/js-demo/canvas/morph2d/)
 - [バーンズリーのシダ](https://sapphire-al2o3.github.io/js-demo/canvas/fern/)
+- [日本地図](https://sapphire-al2o3.github.io/js-demo/canvas/JapanMap/)
 
 # Image Processing
 
