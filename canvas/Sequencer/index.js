@@ -8,7 +8,7 @@
     const text = run.toString();
     
 
-    ctx.strokeStyle = '#000';
+    ctx.strokeStyle = '#999';
     
     async function waitNextFrame() {
         return new Promise(resolve => {
@@ -72,7 +72,7 @@
             yield* waitTime(100);
         }
 
-        ctx.fillStyle = '#844';
+        ctx.fillStyle = '#F77';
         for (let j = 0; j < 20; j++) {
             let y = j * 20 + 0.5;
             for (let i = 0; i < 20; i++) {
@@ -81,6 +81,42 @@
                 yield* waitTime(16);
             }
         }
+        ctx.fillStyle = '#448';
+        // for (let j = 5; j < 15; j++) {
+        //     let y = j * 20 + 0.5;
+        //     for (let i = 5; i < 15; i++) {
+        //         let x = i * 20 + 0.5;
+        //         ctx.fillRect(x, y, 20, 20);
+        //         yield* waitTime(16);
+        //     }
+        // }
+        let k1 = 10;
+        let k2 = 9;
+
+        ctx.fillRect(k1 * 20 + 0.5, k2 * 20 + 0.5, 20, 20);
+        yield* waitTime(30);
+
+        for (let i = 0; i < 20; i++) {
+            for (let j = 0; j < i + 1; j++) {
+                if (i % 2 === 0) {
+                    k1--;
+                } else {
+                    k1++;
+                }
+                ctx.fillRect(k1 * 20 + 0.5, k2 * 20 + 0.5, 20, 20);
+                yield* waitTime(30);
+            }
+            for (let j = 0; j < i + 1; j++) {
+                if (i % 2 === 0) {
+                    k2++;
+                } else {
+                    k2--;
+                }
+                ctx.fillRect(k1 * 20 + 0.5, k2 * 20 + 0.5, 20, 20);
+                yield* waitTime(30);
+            }
+        }
+
     }();
     
     let elapsed = 0,
@@ -101,6 +137,6 @@
         }
     };
 
-    // requestAnimationFrame(update);
+    requestAnimationFrame(update);
 
 })();
