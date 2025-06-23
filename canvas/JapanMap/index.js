@@ -136,7 +136,8 @@ window.onload = () => {
     const offscreenCtx = offscreen.getContext('2d');
     ctx.font = 'bold 42px Meiryo';
     offscreenCtx.font = 'bold 14px MS UI Gothic';
-
+    ctx.fillStyle = '#EEE';
+    ctx.lineWidth = 8;
 
     const button = document.getElementById('start');
 
@@ -176,9 +177,12 @@ window.onload = () => {
     }
 
     function drawText(text, x, y) {
-        offscreenCtx.clearRect(0, 0, offscreen.width, offscreen.height);
-        offscreenCtx.fillText(text, 0, 14);
-        ctx.drawImage(offscreen, 0, 0, offscreen.width * scale, offscreen.height * scale);
+        // offscreenCtx.clearRect(0, 0, offscreen.width, offscreen.height);
+        // offscreenCtx.fillText(text, 0, 14);
+        // ctx.drawImage(offscreen, 0, 0, offscreen.width * scale, offscreen.height * scale);
+
+        ctx.strokeText(text, 20, 60);
+        ctx.fillText(text, 20, 60);
     }
 
     function draw() {
@@ -198,8 +202,7 @@ window.onload = () => {
             let x = pos[k * 2] * scale;
             let y = pos[k * 2 + 1] * scale;
             ctx.drawImage(images[k], x, y, images[k].width * scale, images[k].height * scale);
-            // drawText(prefectures[k], 10, 40);
-            ctx.fillText(prefectures[k], 20, 60);
+            drawText(prefectures[k], 20, 60);
         } else if (state === 2) {
             // let k = randIndices[index];
             let k = index;
@@ -208,7 +211,7 @@ window.onload = () => {
             let y = pos[k * 2 + 1] * scale;
             ctx.drawImage(images[k], x, y, images[k].width * scale, images[k].height * scale);
 
-            ctx.fillText(prefectures[k], 20, 60);
+            drawText(prefectures[k], 20, 60);
         } else if (state === 3) {
             let k = index;
             ctx.drawImage(frame, 0, 0, frame.width * scale, frame.height * scale);
@@ -217,7 +220,7 @@ window.onload = () => {
                 let y = pos[k * 2 + 1] * scale;
                 ctx.drawImage(images[k], x, y, images[k].width * scale, images[k].height * scale);
             }
-            ctx.fillText(prefectures[k], 20, 60);
+            drawText(prefectures[k], 20, 60);
         } else if (state === 4) {
             let k = index;
             ctx.drawImage(frame, 0, 0, frame.width * scale, frame.height * scale);
@@ -225,7 +228,7 @@ window.onload = () => {
             let y = pos[k * 2 + 1] * scale;
             ctx.drawImage(images[k], x, y, images[k].width * scale, images[k].height * scale);
 
-            ctx.fillText(prefectures[k], 20, 60);
+            drawText(prefectures[k], 20, 60);
         }
     }
 
