@@ -278,7 +278,7 @@ window.onload = () => {
             let c = text[i].charCodeAt() - 'a'.charCodeAt();
             let imageX = fontOffset[c];
             ctx.drawImage(font, imageX, 0, fontWidth[c], 12, x + offset * scale, y, fontWidth[c] * scale, 12 * scale);
-            offset += fontWidth[c];
+            offset += fontWidth[c] + 1;
         }
     }
 
@@ -299,7 +299,7 @@ window.onload = () => {
             let x = pos[k * 2] * scale;
             let y = pos[k * 2 + 1] * scale;
             ctx.drawImage(images[k], x, y, images[k].width * scale, images[k].height * scale);
-            drawText(k, 20, 60);
+            drawText(k, 40, 60);
         } else if (state === 2) {
             // let k = randIndices[index];
             let k = index;
@@ -308,7 +308,7 @@ window.onload = () => {
             let y = pos[k * 2 + 1] * scale;
             ctx.drawImage(images[k], x, y, images[k].width * scale, images[k].height * scale);
 
-            drawText(k, 20, 60);
+            drawText(k, 40, 60);
         } else if (state === 3) {
             let k = index;
             ctx.drawImage(frame, 0, 0, frame.width * scale, frame.height * scale);
@@ -317,7 +317,7 @@ window.onload = () => {
                 let y = pos[k * 2 + 1] * scale;
                 ctx.drawImage(images[k], x, y, images[k].width * scale, images[k].height * scale);
             }
-            drawText(k, 20, 60);
+            drawText(k, 40, 60);
         } else if (state === 4) {
             let k = index;
             ctx.drawImage(frame, 0, 0, frame.width * scale, frame.height * scale);
@@ -325,7 +325,7 @@ window.onload = () => {
             let y = pos[k * 2 + 1] * scale;
             ctx.drawImage(images[k], x, y, images[k].width * scale, images[k].height * scale);
 
-            drawText(k, 20, 60);
+            drawText(k, 40, 60);
         }
     }
 
