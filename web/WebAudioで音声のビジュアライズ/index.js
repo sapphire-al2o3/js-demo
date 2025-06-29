@@ -34,10 +34,13 @@
     }
     
     function play() {
-        let source = context.createMediaElementSource(audio),
-            filter = context.createBiquadFilter();
+        let source = context.createMediaElementSource(audio);
         source.connect(analyser);
-        analyser.connect(context.destination);
+        // analyser.connect(context.destination);
+        source.connect(context.destination);
+        if (context.state === "suspended") {
+            context.resume();
+        }
         audio.play();
         return source;
     }
@@ -49,8 +52,12 @@
             canvas.style.display = 'block';
             let blob = new Blob([e.target.result], {"type": file.type});
             audio.src = window.URL.createObjectURL(blob);
-            play();
-            audio.play();
+            audio.addEventListener('canplaythrough', e => {
+                // audio.play();
+                play();
+            });
+            // play();
+            // audio.play();
             timer = setInterval(render, 1000 / 30);
         };
         f.readAsArrayBuffer(file);
