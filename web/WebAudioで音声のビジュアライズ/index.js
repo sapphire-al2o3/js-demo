@@ -38,7 +38,7 @@
         source.connect(analyser);
         // analyser.connect(context.destination);
         source.connect(context.destination);
-        if (context.state === "suspended") {
+        if (context.state === 'suspended') {
             context.resume();
         }
         audio.play();
@@ -47,17 +47,14 @@
     
     function load(file) {
         const f = new FileReader();
-        f.onload = function(e) {
+        f.onload = (e) => {
             document.getElementById('text').style.display = 'none';
             canvas.style.display = 'block';
             let blob = new Blob([e.target.result], {"type": file.type});
             audio.src = window.URL.createObjectURL(blob);
-            audio.addEventListener('canplaythrough', e => {
-                // audio.play();
+            audio.addEventListener('canplaythrough', (e) => {
                 play();
             });
-            // play();
-            // audio.play();
             timer = setInterval(render, 1000 / 30);
         };
         f.readAsArrayBuffer(file);
