@@ -23,7 +23,8 @@ function play() {
 
 let playing = false;
 let start = false;
-document.getElementById('play').addEventListener('click', (e) => {
+const button = document.getElementById('play');
+button.addEventListener('click', (e) => {
     if (!start) {
         start = true;
         play();
@@ -31,9 +32,11 @@ document.getElementById('play').addEventListener('click', (e) => {
     
     if (!playing) {
         context.resume();
+        button.textContent = 'Pause'
     } else {
         // source.stop();
         context.suspend();
+        button.textContent = 'Play'
     }
     
     playing = !playing;
