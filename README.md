@@ -187,4 +187,5 @@ https://sapphire-al2o3.github.io/js-demo/
 
 # Misc
 
+- [ツールチップ](https://sapphire-al2o3.github.io/js-demo/web/Tooltip/)
 - [ノイズサウンド](https://sapphire-al2o3.github.io/js-demo/web/NoiseSound/)
