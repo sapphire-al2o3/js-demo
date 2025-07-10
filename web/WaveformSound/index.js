@@ -1,6 +1,6 @@
 const context = new window.AudioContext;
-const time = 0.2;
-const buffer = context.createBuffer(
+let time = 1;
+let buffer = context.createBuffer(
     2,
     context.sampleRate * time,
     context.sampleRate
@@ -32,14 +32,19 @@ function play() {
     source.connect(context.destination);
     // source.loop = true;
     source.start();
+    return source;
 }
 
 let playing = false;
 let start = false;
+let node = null;
 const button = document.getElementById('play');
 button.addEventListener('click', (e) => {
+    if (node !== null) {
+        node.stop();
+    }
     context.suspend();
-    play();
+    node = play();
     context.resume();
     
 });
