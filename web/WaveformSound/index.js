@@ -7,6 +7,7 @@ let buffer = context.createBuffer(
 );
 
 let freq = 3000;
+let amp = 1;
 
 function setup() {
     for (let i = 0; i < buffer.numberOfChannels; i++) {
@@ -16,13 +17,17 @@ function setup() {
             let t = j / l * time;
             let f = t * freq * Math.PI;
             let w = 1 - j / l;
-            b[j] = w * Math.sin(f);
+            b[j] = amp * w * Math.sin(f);
         }
     }
 }
 
 document.body.appendChild(createSlider('freq', (freq + 100) / 10000, v => {
     freq = v * 10000 + 100;
+}));
+
+document.body.appendChild(createSlider('amp', amp, v => {
+    amp = v;
 }));
 
 function play() {
@@ -42,6 +47,7 @@ const button = document.getElementById('play');
 button.addEventListener('click', (e) => {
     if (node !== null) {
         node.stop();
+        node.dis
     }
     context.suspend();
     node = play();
