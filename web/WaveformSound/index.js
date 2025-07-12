@@ -9,6 +9,14 @@ let buffer = context.createBuffer(
 let freq = 3000;
 let amp = 1;
 
+function resize(length) {
+    buffer = context.createBuffer(
+        2,
+        context.sampleRate * length,
+        context.sampleRate
+    );
+}
+
 function setup() {
     for (let i = 0; i < buffer.numberOfChannels; i++) {
         const b = buffer.getChannelData(i);
@@ -31,6 +39,11 @@ document.body.appendChild(createSlider('amp', amp, v => {
 }));
 
 function play() {
+    const length = parseFloat(document.getElementById('length').value);
+    if (time !== length) {
+        time = length;
+        resize(time);
+    }
     setup();
     const source = context.createBufferSource();
     source.buffer = buffer;
