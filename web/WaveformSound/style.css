@@ -2,3 +2,12 @@
     color: #444;
 }
 
+.checkbox {
+    border-left: 4px solid #DDD;
+    padding-left: 8px;
+    margin-bottom: 4px;
+}
+
+.checkbox:hover {
+    border-left: 4px solid #CCC;
+}
