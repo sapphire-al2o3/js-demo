@@ -6,10 +6,11 @@ let buffer = context.createBuffer(
     context.sampleRate
 );
 
-let freq = 3000;
-let amp = 1;
+let freq = 2000;
+let amp = 0.1;
 let fade = true;
 let ease = 0;
+let wave = 0;
 
 function resize(length) {
     buffer = context.createBuffer(
@@ -52,6 +53,29 @@ function wind(x) {
             return bounce(x);
         case 3:
             return 1;
+        default:
+            return 1;
+    }
+}
+
+function saw(t) {
+    return (t - Math.floor(t)) * 2 - 1;
+}
+
+function square(t) {
+    return t - Math.floor(t) > 0.5 ? 1 : -1;
+}
+
+function waveform(t) {
+    switch (wave) {
+        case 0:
+            return Math.sin(t * Math.PI);
+        case 1:
+            return saw(t);
+        case 2:
+            return square(t);
+        default:
+            return 1;
     }
 }
 
@@ -61,9 +85,11 @@ function setup() {
         const l = buffer.length;
         for (let j = 0; j < buffer.length; j++) {
             let t = j / l * time;
-            let f = t * freq * Math.PI;
+            // let f = t * freq * Math.PI;
+            let f = waveform(t * freq);
             let w = wind(j / l);
-            b[j] = amp * w * Math.sin(f);
+            b[j] = amp * w * f;
+            // b[j] = amp * w * Math.sin(f);
         }
     }
 }
@@ -78,6 +104,10 @@ document.body.appendChild(createSlider('amp', amp, v => {
 
 document.body.appendChild(createRadio(['linear', 'quad', 'bounce', 'none'], (v, id, i) => {
     ease = i;
+}));
+
+document.body.appendChild(createRadio(['sine', 'saw', 'square'], (v, id, i) => {
+    wave = i;
 }));
 
 function play() {
