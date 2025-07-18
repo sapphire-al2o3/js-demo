@@ -8,7 +8,6 @@ let buffer = context.createBuffer(
 
 let freq = 2000;
 let amp = 0.1;
-let fade = true;
 let ease = 0;
 let wave = 0;
 
@@ -90,12 +89,10 @@ function setup() {
         const b = buffer.getChannelData(i);
         const l = buffer.length;
         for (let j = 0; j < buffer.length; j++) {
-            let t = j / l * time;
-            // let f = t * freq * Math.PI;
-            let f = waveform(t * freq);
+            let t = j / l * time * freq;
+            let f = waveform(t);
             let w = wind(j / l);
             b[j] = amp * w * f;
-            // b[j] = amp * w * Math.sin(f);
         }
     }
 }
@@ -126,7 +123,6 @@ function play() {
     const source = context.createBufferSource();
     source.buffer = buffer;
     source.connect(context.destination);
-    // source.loop = true;
     source.start();
     return source;
 }
