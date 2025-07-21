@@ -3,7 +3,7 @@ async function load(file) {
     const buffer = await file.arrayBuffer();
     const bytes = new Uint8Array(buffer);
 
-    console.log(bytes.length);
+    size.textContent = `${bytes.length} byte`;
 
     let lines = bytes.length / 16 ^ 0;
     let text = '';
@@ -23,6 +23,7 @@ async function load(file) {
 }
 
 const content = document.getElementById('content');
+const size = document.getElementById('size');
 
 
 document.body.addEventListener('drop', (e) => {
