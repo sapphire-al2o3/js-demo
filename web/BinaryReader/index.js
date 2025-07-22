@@ -6,6 +6,7 @@ async function load(file) {
     size.textContent = `${bytes.length} byte`;
 
     let lines = bytes.length / 16 ^ 0;
+    let frac = bytes.length - lines * 16;
     let text = '';
     let index = 0;
 
@@ -17,6 +18,13 @@ async function load(file) {
             if (i == 7) text += ' ';
         }
         text += '\n';
+    }
+
+    for (let i = 0; i < frac; i++) {
+        const b = bytes[index];
+        text += (b >> 4 & 0xF).toString(16) + (b & 0xF).toString(16);
+        index++;
+        if (i == 7) text += ' ';
     }
 
     content.textContent = text;
