@@ -1,9 +1,12 @@
 
+const maxSize = 128 * 1024;
+
 async function load(file) {
     const buffer = await file.arrayBuffer();
-    const bytes = new Uint8Array(buffer);
+    const byteLength = buffer.byteLength > maxSize ? maxSize : buffer.byteLength;
+    const bytes = new Uint8Array(buffer, 0, byteLength);
 
-    size.textContent = `${bytes.length} byte`;
+    size.textContent = `${buffer.byteLength} byte`;
 
     let lines = bytes.length / 16 ^ 0;
     let frac = bytes.length - lines * 16;
