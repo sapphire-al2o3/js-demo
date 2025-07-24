@@ -16,7 +16,7 @@ async function load(file) {
     for (let j = 0; j < lines; j++) {
         for (let i = 0; i < 16; i++) {
             const b = bytes[index];
-            text += (b >> 4 & 0xF).toString(16) + (b & 0xF).toString(16);
+            text += (b >> 4 & 0xF).toString(16).toUpperCase() + (b & 0xF).toString(16).toUpperCase();
             index++;
             if (i == 7) text += ' ';
         }
@@ -25,7 +25,7 @@ async function load(file) {
 
     for (let i = 0; i < frac; i++) {
         const b = bytes[index];
-        text += (b >> 4 & 0xF).toString(16) + (b & 0xF).toString(16);
+        text += (b >> 4 & 0xF).toString(16).toUpperCase() + (b & 0xF).toString(16).toUpperCase();
         index++;
         if (i == 7) text += ' ';
     }
