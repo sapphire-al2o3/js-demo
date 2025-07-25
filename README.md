@@ -187,6 +187,7 @@ https://sapphire-al2o3.github.io/js-demo/
 
 # Misc
 
+- [バイナリ表示](https://sapphire-al2o3.github.io/js-demo/web/BinaryReader/)
 - [ツールチップ](https://sapphire-al2o3.github.io/js-demo/web/Tooltip/)
 - [ノイズサウンド](https://sapphire-al2o3.github.io/js-demo/web/NoiseSound/)
 - [WaveformSound](https://sapphire-al2o3.github.io/js-demo/web/WaveformSound/)
