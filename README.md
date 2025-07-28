@@ -55,6 +55,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [星空](https://sapphire-al2o3.github.io/js-demo/webgl/星空/)
 - [深度テクスチャ](https://sapphire-al2o3.github.io/js-demo/webgl/深度テクスチャ/)
 - [雨と波紋](https://sapphire-al2o3.github.io/js-demo/webgl/雨と波紋/)
+- [WebGPU](https://sapphire-al2o3.github.io/js-demo/webgl/WebGPU/)
 
 ## Math
 
