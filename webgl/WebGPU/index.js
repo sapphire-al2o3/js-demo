@@ -8,11 +8,11 @@ struct VertexOut {
 }
 
 @vertex
-fn vertex_main(@location(0) position: vec4f,
+fn vertex_main(@location(0) position: vec3f,
                @location(1) color: vec4f) -> VertexOut
 {
   var output : VertexOut;
-  output.position = position;
+  output.position = vec4f(position, 1.0);
   output.color = color;
   return output;
 }
@@ -25,9 +25,9 @@ fn fragment_main(fragData: VertexOut) -> @location(0) vec4f
 `;
 
 const vertices = new Float32Array([
-     0.0,  0.6, 0, 1, 1, 0, 0, 1,
-    -0.7, -0.6, 0, 1, 0, 1, 0, 1,
-     0.7, -0.6, 0, 1, 0, 0, 1, 1,
+     0.0,  0.6, 0, 1, 0, 0, 1,
+    -0.7, -0.6, 0, 0, 1, 0, 1,
+     0.7, -0.6, 0, 0, 0, 1, 1,
 ]);
 
 const vertexBuffers = [
@@ -36,15 +36,15 @@ const vertexBuffers = [
             {
                 shaderLocation: 0,
                 offset: 0,
-                format: 'float32x4'
+                format: 'float32x3'
             },
             {
                 shaderLocation: 1,
-                offset: 16,
+                offset: 12,
                 format: 'float32x4'
             }
         ],
-        arrayStride: 32,
+        arrayStride: 28,
         stepMode: 'vertex'
     }
 ];
