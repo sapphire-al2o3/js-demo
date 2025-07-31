@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Bit Pattern</title>
+        <meta name="Description" content="" />
+        <meta name="Keywords"  content="" />
+        <link rel="stylesheet" type="text/css" media="screen,print" href="../../lib/webglutil.css" />
+        <link rel="stylesheet" type="text/css" media="screen,print" href="../../lib/recorder.css" />
+        <link rel="stylesheet" type="text/css" media="screen,print" href="style.css" />
+    </head>
+<body>
+<script id="shader-fs" type="x-shader/x-fragment">#version 300 es
+precision highp float;
+in vec2 uv;
+out vec4 outColor;
+
+uniform vec4 t;
+
+void main() {
+    vec2 p = uv;
+    vec2 point[5];
+    point[0] = vec2(0.83,0.75);
+    point[1] = vec2(0.60,0.07);
+    point[2] = vec2(0.28,0.64);
+    point[3] =  vec2(0.31,0.26);
+
+    float minDist = 1.0;
+    for (int i = 0; i < 4; i++) {
+        float d = distance(p, point[i]);
+        minDist = min(minDist, d);
+    }
+
+    outColor = vec4(minDist, minDist, minDist, 1.0);
+}
+</script>
+<script id="shader-vs" type="x-shader/x-vertex">#version 300 es
+in vec3 position;
+out vec2 uv;
+
+void main() {
+    vec3 pos = position;
+    uv = pos.xy * 0.5 + 0.5;
+    gl_Position = vec4(pos, 1.0);
+}
+</script>
+<canvas id="canvas" width="256" height="256"></canvas>
+<script type="text/javascript" src="../../lib/webglutil.js"></script>
+<script type="text/javascript" src="index.js"></script>
+</body>
+</html>
