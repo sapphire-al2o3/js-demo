@@ -20,7 +20,7 @@ window.onload = () => {
 
     let map = [];
     let selectedMaptip = 1;
-    let maptipSizeX = 4;
+    let maptipSizeX = maptip.width / block ^ 0;
     let maptipSizeY = 4;
 
     for (let i = 0; i < sizeY * sizeX; i++) {
@@ -81,7 +81,26 @@ window.onload = () => {
         output.value = text.join('\n');
     }
 
-    canvas.addEventListener('click', e => {
+    let down = false;
+
+    canvas.addEventListener('mousedown', e => {
+        down = true;
+    });
+
+    canvas.addEventListener('mousemove', e => {
+        if (down) {
+            const x = (e.offsetX / block ^ 0);
+            const y = (e.offsetY / block ^ 0);
+            const k = y * sizeX + x;
+            map[k] = selectedMaptip;
+            ctx.fillStyle = '#0EE';
+            ctx.drawImage(maptip, maptipX * block, maptipY * block, block, block, x * block, y * block, block, block);
+            // ctx.fillRect(x * block, y * block, block, block);
+            dump();
+        }
+    });
+
+    canvas.addEventListener('mouseup', e => {
         const x = (e.offsetX / block ^ 0);
         const y = (e.offsetY / block ^ 0);
         const k = y * sizeX + x;
@@ -90,7 +109,9 @@ window.onload = () => {
         ctx.drawImage(maptip, maptipX * block, maptipY * block, block, block, x * block, y * block, block, block);
         // ctx.fillRect(x * block, y * block, block, block);
         dump();
+        down = false;
     });
+
 
     let maptipX = 0;
     let maptipY = 0;
