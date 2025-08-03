@@ -127,7 +127,7 @@ window.onload = () => {
     });
 
     render();
-    dump();
+    // dump();
 
     document.getElementById('load').addEventListener('click', e => {
         const text = output.value;
