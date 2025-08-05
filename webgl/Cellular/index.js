@@ -16,7 +16,7 @@ const buffer = new Float32Array([
     -s, -s
 ]);
 
-let length = 0.0;
+let strength = 0.0;
 
 gl.bufferData(gl.ARRAY_BUFFER, buffer, gl.STATIC_DRAW);
 
@@ -25,7 +25,7 @@ gl.enableVertexAttribArray(loc);
 gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 
 gl.useProgram(program[0]);
-program[0].uniform['length'].value = length
+program[0].uniform['strength'].value = length
 setupUniform(program[0]);
 gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
@@ -33,7 +33,7 @@ let time = 0;
 function render(delta) {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    program[0].uniform['length'].value = length
+    program[0].uniform['strength'].value = strength
     setupUniform(program[0]);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     gl.flush();
@@ -47,7 +47,7 @@ gl.canvas.addEventListener('click', () => {
     timer.toggle();
 });
 
-document.body.appendChild(createSlider('length', 0, v => {
-    length = v * 2;
+document.body.appendChild(createSlider('strength', 0, v => {
+    strength = v * 4;
 }));
 
