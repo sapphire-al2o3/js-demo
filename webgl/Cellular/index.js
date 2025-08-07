@@ -29,6 +29,8 @@ const buffer = new Float32Array([
 
 let strength = 0.0;
 let p0 = [0.83,0.75];
+let p1 = [0.60,0.07];
+let p2 = [0.28,0.64];
 
 gl.bufferData(gl.ARRAY_BUFFER, buffer, gl.STATIC_DRAW);
 
@@ -44,6 +46,8 @@ gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 gl.useProgram(program[0]);
 program[0].uniform['strength'].value = strength;
 program[0].uniform['p0'].value = p0;
+program[0].uniform['p1'].value = p1;
+program[0].uniform['p2'].value = p2;
 setupUniform(program[0]);
 gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
@@ -53,6 +57,9 @@ function render(delta) {
 
     program[0].uniform['strength'].value = strength;
     program[0].uniform['p0'].value = p0;
+    program[0].uniform['p1'].value = p1;
+    program[0].uniform['p2'].value = p2;
+
     setupUniform(program[0]);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     gl.flush();
@@ -61,10 +68,6 @@ function render(delta) {
 }
 
 let timer = setAnimationFrame(render, 1000 / 30);
-
-gl.canvas.addEventListener('click', () => {
-    timer.toggle();
-});
 
 document.body.appendChild(createSlider('strength', 0, v => {
     strength = v * 8;
@@ -76,5 +79,21 @@ document.body.appendChild(createSlider('p0.x', p0[0], v => {
 
 document.body.appendChild(createSlider('p0.y', p0[1], v => {
     p0[1] = v;
+}));
+
+document.body.appendChild(createSlider('p1.x', p1[0], v => {
+    p1[0] = v;
+}));
+
+document.body.appendChild(createSlider('p1.y', p1[1], v => {
+    p1[1] = v;
+}));
+
+document.body.appendChild(createSlider('p2.x', p2[0], v => {
+    p2[0] = v;
+}));
+
+document.body.appendChild(createSlider('p2.y', p2[1], v => {
+    p2[1] = v;
 }));
 
