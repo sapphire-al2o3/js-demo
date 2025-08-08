@@ -6,7 +6,6 @@
         <meta name="Description" content="" />
         <meta name="Keywords"  content="" />
         <link rel="stylesheet" type="text/css" media="screen,print" href="../../lib/webglutil.css" />
-        <link rel="stylesheet" type="text/css" media="screen,print" href="../../lib/recorder.css" />
         <link rel="stylesheet" type="text/css" media="screen,print" href="style.css" />
     </head>
 <body>
@@ -21,6 +20,7 @@ uniform sampler2D tex;
 uniform vec2 p0;
 uniform vec2 p1;
 uniform vec2 p2;
+uniform float stripe;
 
 vec2 radialShear(vec2 uv) {
     vec2 p = uv - 0.5;// * 2.0 - 1.0;
@@ -44,8 +44,13 @@ void main() {
         minDist = min(minDist, d);
     }
 
-    vec3 col = texture(tex, vec2((1.0 - minDist), 0)).rgb;
-    outColor = vec4(col, 1.0);
+    vec4 col = vec4(0.0, 0.0, 0.0, 1.0);
+    if (stripe == 1.0) {
+        col.rgb = texture(tex, vec2((1.0 - minDist), 0)).rgb;
+    } else {
+        col.rgb = vec3(minDist, minDist, minDist);
+    }
+    outColor = col;
 }
 </script>
 <script id="shader-vs" type="x-shader/x-vertex">#version 300 es
@@ -59,7 +64,7 @@ void main() {
 }
 </script>
 <canvas id="canvas" width="256" height="256"></canvas>
-<canvas id="stripe" width="128" height="8"></canvas>
+<canvas id="stripeTex" width="128" height="8"></canvas>
 <script type="text/javascript" src="../../lib/webglutil.js"></script>
 <script type="text/javascript" src="index.js"></script>
 </body>
