@@ -17,38 +17,41 @@ out vec4 outColor;
 uniform vec4 t;
 uniform float strength;
 uniform sampler2D tex;
-uniform vec2 p0;
-uniform vec2 p1;
-uniform vec2 p2;
+uniform vec3 p0;
+uniform vec3 p1;
+uniform vec3 p2;
+uniform vec3 p3;
 uniform float stripe;
 
 vec2 radialShear(vec2 uv) {
     vec2 p = uv - 0.5;// * 2.0 - 1.0;
     float delta2 = dot(p.xy, p.xy);
     return uv + vec2(p.y, -p.x) * delta2 * strength;
-
 }
 
 void main() {
     
-    vec2 point[5];
+    vec3 point[4];
     point[0] = p0;//vec2(0.83,0.75);
     point[1] = p1;//vec2(0.60,0.07);
     point[2] = p2;//vec2(0.28,0.64);
-    //point[3] =  vec2(0.31,0.26);
+    point[3] = p3;//vec2(0.31,0.26);
 
     vec2 p = radialShear(uv);
     float minDist = 1.0;
+    float y = 0.0;
     for (int i = 0; i < 3; i++) {
-        float d = distance(p, point[i]);
+        float d = distance(p, point[i].xy);
         minDist = min(minDist, d);
+        y += point[i].z * d;
     }
 
+    y = y * 0.5 + 0.5;
     vec4 col = vec4(0.0, 0.0, 0.0, 1.0);
     if (stripe == 1.0) {
-        col.rgb = texture(tex, vec2((1.0 - minDist), 0)).rgb;
+        col.rgb = texture(tex, vec2((1.0 - y), 0)).rgb;
     } else {
-        col.rgb = vec3(minDist, minDist, minDist);
+        col.rgb = vec3(y, y, y);
     }
     outColor = col;
 }

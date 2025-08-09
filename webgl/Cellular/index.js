@@ -27,9 +27,10 @@ const buffer = new Float32Array([
 ]);
 
 let strength = 0.0;
-let p0 = [0.83,0.75];
-let p1 = [0.60,0.07];
-let p2 = [0.28,0.64];
+let p0 = [0.83, 0.75, 1];
+let p1 = [0.60, 0.07, -1];
+let p2 = [0.28, 0.64, 1];
+let p3 = [0.31, 0.26, -1];
 let stripe = true;
 
 gl.bufferData(gl.ARRAY_BUFFER, buffer, gl.STATIC_DRAW);
@@ -48,6 +49,7 @@ program.uniform['strength'].value = strength;
 program.uniform['p0'].value = p0;
 program.uniform['p1'].value = p1;
 program.uniform['p2'].value = p2;
+program.uniform['p3'].value = p3;
 program.uniform['stripe'].value = stripe ? 1.0 : 0.0;
 setupUniform(program);
 gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -60,6 +62,7 @@ function render(delta) {
     program.uniform['p0'].value = p0;
     program.uniform['p1'].value = p1;
     program.uniform['p2'].value = p2;
+    program.uniform['p3'].value = p3;
     program.uniform['stripe'].value = stripe ? 1.0 : 0.0;
 
     setupUniform(program);
