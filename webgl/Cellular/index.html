@@ -40,7 +40,7 @@ void main() {
     vec2 p = radialShear(uv);
     float minDist = 1.0;
     float y = 0.0;
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 4; i++) {
         float d = distance(p, point[i].xy);
         minDist = min(minDist, d);
         y += point[i].z * d;
