@@ -1,12 +1,13 @@
 'use strict';
 const canvas = document.getElementById('stripeTex');
 const ctx = canvas.getContext('2d');
+const width = canvas.width;
 ctx.fillStyle = '#E00';
-ctx.fillRect(0, 0, 128, 8);
+ctx.fillRect(0, 0, width, 8);
 ctx.fillStyle = '#000';
 for (let i = 0; i < 12; i++) {
-    let x = Math.random() * 128 ^ 0;
-    let w = Math.random() * 16 ^ 0;
+    let x = Math.random() * width ^ 0;
+    let w = Math.random() * 32 ^ 0;
     ctx.fillRect(x, 0, w, 8);
 }
 
