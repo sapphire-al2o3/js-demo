@@ -107,3 +107,11 @@ document.body.appendChild(createSlider('p2.y', p2[1], v => {
     p2[1] = v;
 }));
 
+document.body.appendChild(createSlider('p3.x', p3[0], v => {
+    p3[0] = v;
+}));
+
+document.body.appendChild(createSlider('p3.y', p3[1], v => {
+    p3[1] = v;
+}));
+
