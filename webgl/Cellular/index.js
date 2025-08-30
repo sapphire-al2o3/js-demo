@@ -28,10 +28,10 @@ const buffer = new Float32Array([
 ]);
 
 let strength = 0.0;
-let p0 = [0.83, 0.75, 1];
-let p1 = [0.60, 0.07, -1];
-let p2 = [0.28, 0.64, 1];
-let p3 = [0.31, 0.26, -1];
+let p0 = [0.83, 0.75, 1.5];
+let p1 = [0.60, 0.07, -1.5];
+let p2 = [0.28, 0.24, 1.5];
+let p3 = [0.51, 0.86, -1.5];
 let stripe = true;
 
 gl.bufferData(gl.ARRAY_BUFFER, buffer, gl.STATIC_DRAW);
