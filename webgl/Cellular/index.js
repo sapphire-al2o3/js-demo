@@ -52,6 +52,7 @@ program.uniform['p1'].value = p1;
 program.uniform['p2'].value = p2;
 program.uniform['p3'].value = p3;
 program.uniform['stripe'].value = stripe ? 1.0 : 0.0;
+program.uniform['time'].value = 0;
 setupUniform(program);
 gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
@@ -65,6 +66,7 @@ function render(delta) {
     program.uniform['p2'].value = p2;
     program.uniform['p3'].value = p3;
     program.uniform['stripe'].value = stripe ? 1.0 : 0.0;
+    program.uniform['time'].value = time * 0.0001;
 
     setupUniform(program);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);

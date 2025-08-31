@@ -50,7 +50,7 @@ void main() {
     y = y * 0.5 + 0.5;
     vec4 col = vec4(0.0, 0.0, 0.0, 1.0);
     if (stripe == 1.0) {
-        col.rgb = texture(tex, vec2((1.0 - y), 0)).rgb;
+        col.rgb = texture(tex, vec2((1.0 - y) + fract(time), 0)).rgb;
     } else {
         col.rgb = vec3(y, y, y);
     }
