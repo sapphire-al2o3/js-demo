@@ -33,6 +33,7 @@ let p1 = [0.60, 0.07, -1.5];
 let p2 = [0.28, 0.24, 1.5];
 let p3 = [0.51, 0.86, -1.5];
 let stripe = true;
+let timeScale = 1;
 
 gl.bufferData(gl.ARRAY_BUFFER, buffer, gl.STATIC_DRAW);
 
@@ -66,7 +67,7 @@ function render(delta) {
     program.uniform['p2'].value = p2;
     program.uniform['p3'].value = p3;
     program.uniform['stripe'].value = stripe ? 1.0 : 0.0;
-    program.uniform['time'].value = time * 0.0001;
+    program.uniform['time'].value = time * timeScale * 0.0001;
 
     setupUniform(program);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
@@ -79,6 +80,10 @@ let timer = setAnimationFrame(render, 1000 / 30);
 
 document.body.appendChild(createCheckbox('stripe', v => {
     stripe = v;
+}, stripe));
+
+document.body.appendChild(createCheckbox('time', v => {
+    timeScale = v ? 1 : 0;
 }, stripe));
 
 document.body.appendChild(createSlider('strength', 0, v => {
