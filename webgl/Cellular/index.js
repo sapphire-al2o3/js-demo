@@ -44,7 +44,7 @@ gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 let tex = initTexture(gl, canvas);
 program.uniform['tex'].value = 0;
 gl.bindTexture(gl.TEXTURE_2D, tex);
-gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+// gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
 
 gl.useProgram(program);
 program.uniform['strength'].value = strength;
