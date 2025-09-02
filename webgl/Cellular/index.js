@@ -92,7 +92,7 @@ document.body.appendChild(createSlider('strength', 0, v => {
 
 document.body.appendChild(createSlider('p0.x', p0[0], v => {
     p0[0] = v;
-}));
+})).classList.add('position');
 
 document.body.appendChild(createSlider('p0.y', p0[1], v => {
     p0[1] = v;
@@ -100,7 +100,7 @@ document.body.appendChild(createSlider('p0.y', p0[1], v => {
 
 document.body.appendChild(createSlider('p1.x', p1[0], v => {
     p1[0] = v;
-}));
+})).classList.add('position');
 
 document.body.appendChild(createSlider('p1.y', p1[1], v => {
     p1[1] = v;
@@ -108,7 +108,7 @@ document.body.appendChild(createSlider('p1.y', p1[1], v => {
 
 document.body.appendChild(createSlider('p2.x', p2[0], v => {
     p2[0] = v;
-}));
+})).classList.add('position');
 
 document.body.appendChild(createSlider('p2.y', p2[1], v => {
     p2[1] = v;
@@ -116,7 +116,7 @@ document.body.appendChild(createSlider('p2.y', p2[1], v => {
 
 document.body.appendChild(createSlider('p3.x', p3[0], v => {
     p3[0] = v;
-}));
+})).classList.add('position');
 
 document.body.appendChild(createSlider('p3.y', p3[1], v => {
     p3[1] = v;
