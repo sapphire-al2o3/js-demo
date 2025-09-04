@@ -1,0 +1,21 @@
+#a {
+    width: 64px;
+    height: 32px;
+    border: 1px solid #0F0;
+}
+
+#b {
+    width: 96px;
+    height: 16px;
+    background-color: #F0F;
+    animation: 4s linear 0s infinite alternate rise;
+}
+
+@keyframes rise {
+    from {
+        transform: translateY(110vh);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
