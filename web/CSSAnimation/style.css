@@ -1,7 +1,12 @@
 #a {
     width: 64px;
-    height: 32px;
-    border: 1px solid #0F0;
+    height: 64px;
+    border-top: 16px solid #0AF;
+    border-right: 16px solid #0AF;
+    border-bottom: 16px solid #0AF;
+    border-left: 16px solid #ADF;
+    border-radius: 100%;
+    animation: 2s linear 0s infinite normal rotation;
 }
 
 #b {
@@ -9,6 +14,15 @@
     height: 16px;
     background-color: #F0F;
     animation: 4s linear 0s infinite alternate rise;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes rise {
