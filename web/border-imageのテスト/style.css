@@ -5,11 +5,11 @@ div {
     margin-top: 32px;
 }
 #b0 {
-    -webkit-border-image: url('border.png') 3 repeat;
-    -moz-border-image: url('border.png') 3 repeat;
-    -o-border-image: url('border.png') 3 repeat;
+    -webkit-border-image: url("border.png") 3 / 3px repeat;
+    -moz-border-image: url("border.png") 3 / 3px repeat;
+    -o-border-image: url("border.png") 3 / 3px repeat;
 }
 
 #b1 {
-    border-image: url('border.png') 3 repeat;
+    border-image: url("border.png") 3 / 3px repeat;
 }
