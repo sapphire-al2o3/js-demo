@@ -45,4 +45,4 @@ gl.canvas.addEventListener('click', () => {
     timer.toggle();
 });
 
-document.body.appendChild(createRecorder(gl.canvas, 1000));
+document.body.appendChild(createRecorder(gl.canvas, 10000));
