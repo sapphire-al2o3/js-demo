@@ -122,3 +122,4 @@ document.body.appendChild(createSlider('p3.y', p3[1], v => {
     p3[1] = v;
 }));
 
+document.body.appendChild(createRecorder(gl.canvas));
