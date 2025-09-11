@@ -190,6 +190,7 @@ https://sapphire-al2o3.github.io/js-demo/
 
 # Misc
 
+- [border-image](https://sapphire-al2o3.github.io/js-demo/web/border-image/)
 - [バイナリ表示](https://sapphire-al2o3.github.io/js-demo/web/BinaryReader/)
 - [CSSアニメーション](https://sapphire-al2o3.github.io/js-demo/web/CSSAnimation/)
 - [ツールチップ](https://sapphire-al2o3.github.io/js-demo/web/Tooltip/)
