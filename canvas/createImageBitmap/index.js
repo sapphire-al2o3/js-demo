@@ -6,6 +6,7 @@ let canvas = document.getElementById('canvas'),
 async function load(file) {
     const image = await createImageBitmap(file);
     ctx.drawImage(image, 0, 0);
+    image.close();
 }
 
 canvas.addEventListener('drop', e => {
