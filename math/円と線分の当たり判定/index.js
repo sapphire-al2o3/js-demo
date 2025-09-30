@@ -1,4 +1,4 @@
-var canvas = document.getElementById('canvas'),
+let canvas = document.getElementById('canvas'),
     ctx = canvas.getContext('2d'),
     w = canvas.width,
     h = canvas.height,
@@ -14,14 +14,14 @@ op2.onchange = op.onchange = function(e) {
     render();
 };
 
-canvas.onmousedown = function(e) {
+canvas.onmousedown = (e) => {
     down = true;
     var rect = e.target.getBoundingClientRect();
     start.x = e.clientX - rect.left;
     start.y = e.clientY - rect.top;
 };
 
-canvas.onmousemove = function(e) {
+canvas.onmousemove = (e) => {
     if(down) {
         var rect = e.target.getBoundingClientRect();
         mouse.x = e.clientX - rect.left;
@@ -30,21 +30,21 @@ canvas.onmousemove = function(e) {
     }
 };
 
-canvas.onmouseup = function(e) {
+canvas.onmouseup = (e) => {
     down = false;
 };
 
-var circle = {
+const circle = {
     pos: new Vector2(200, 200),
     r: 60
 };
 
-var Ray = function(x0, y0, x1, y1) {
+const Ray = function(x0, y0, x1, y1) {
     this.start = new Vector2(x0, y0);
     this.end = new Vector2(x1, y1);
 };
 
-var ray = new Ray(100, 100, 200, 200);
+let ray = new Ray(100, 100, 200, 200);
 
 console.log(segToCircle(ray, circle));
 
@@ -60,7 +60,7 @@ function line(s) {
 function line_r(s) {
     ctx.beginPath();
     ctx.moveTo(s.start.x, s.start.y);
-    var p = s.end.sub(s.start).mul(w);
+    const p = s.end.sub(s.start).mul(w);
     ctx.lineTo(p.x, p.y);
     ctx.stroke();
 }
@@ -72,14 +72,14 @@ function render() {
     
     ctx.strokeStyle = '#FFF';
     
-    if(isRay) {
+    if (isRay) {
         line_r(ray);
     } else {
         line(ray);
     }
 
-    var hit = isRay ? rayToCircle(ray, circle) : segToCircle(ray, circle);
-    if(hit) {
+    const hit = isRay ? rayToCircle(ray, circle) : segToCircle(ray, circle);
+    if (hit) {
         ctx.strokeStyle = '#F00';
     }
 
@@ -92,7 +92,7 @@ render();
 
 // 線分と円のあたり判定
 function segToCircle(s, c) {
-    var sd = c.pos.sub(s.start),
+    let sd = c.pos.sub(s.start),
         ed = s.end.sub(c.pos),
         v = s.end.sub(s.start).normalize(),
         da = sd.length(),
@@ -100,7 +100,7 @@ function segToCircle(s, c) {
         // レイから円の中心までの最短距離
         dc = da * da - d * d;
 
-    var f = 0;
+    let f = 0;
     if(sd.length() < c.r) {
         f += 1;
     }
@@ -125,14 +125,14 @@ function segToCircle(s, c) {
 
 // レイと円のあたり判定
 function rayToCircle(s, c) {
-    var sd = c.pos.sub(s.start);	// レイの開始点から円の中心に向かうベクトル
+    let sd = c.pos.sub(s.start);	// レイの開始点から円の中心に向かうベクトル
     
     // 開始点が円の内側なら交差する
     if(sd.length() < c.r) {
         return true;
     }
     
-    var v = s.end.sub(s.start).normalize(),
+    let v = s.end.sub(s.start).normalize(),
         da = sd.length(),
         d = v.dot(sd),
         // レイから円の中心までの最短距離
