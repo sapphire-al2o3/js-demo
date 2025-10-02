@@ -44,6 +44,13 @@ function drawCircle(x, y, r) {
     ctx.stroke();
 }
 
+function drawLine(x0, y0, x1, y1) {
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.lineTo(x1, y1);
+    ctx.stroke();
+}
+
 /// sx, sy: 線分の始点
 /// ex, ey: 線分の終点
 /// px, py: 点
@@ -74,16 +81,10 @@ function distSegToPoint(sx, sy, ex, ey, px, py) {
     let hit = Math.sqrt((qx - px) * (qx - px) + (qy - py) * (qy - py)) < radius + circleRadius;
 
     ctx.strokeStyle = "#9BF";
-    ctx.beginPath();
-    ctx.moveTo(ex, ey);
-    ctx.lineTo(sx, sy);
-    ctx.stroke();
+    drawLine(ex, ey, sx, sy);
 
     ctx.strokeStyle = "#6d8158";
-    ctx.beginPath();
-    ctx.moveTo(qx, qy);
-    ctx.lineTo(px, py);
-    ctx.stroke();
+    drawLine(qx, qy, px, py);
 
     ctx.strokeStyle = "#BF9";
     drawCircle(qx, qy, 4);
