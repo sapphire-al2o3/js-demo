@@ -10,6 +10,16 @@ const cos = Math.cos;
 const sin = Math.sin;
 const atan = Math.atan;
 
+let start = {
+    x: 150,
+    y: 150
+};
+
+let end = {
+    x: 250,
+    y: 250
+};
+
 let t = 0;
 let radius = 32;
 let circleRadius = 24;
@@ -22,7 +32,7 @@ setInterval(function() {
     let px = sin(4 * t * 0.2) * 180 + 200,
         py = sin(3 * t * 0.2) * 180 + 200;
     
-    distSegToPoint(150, 150, 250, 250, px, py);
+    distSegToPoint(start.x, start.y, end.x, end.y, px, py);
 }, 1000 / 30);
 
 function drawCapsule(x0, y0, x1, y1, r) {
