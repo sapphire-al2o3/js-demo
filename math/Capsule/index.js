@@ -20,6 +20,8 @@ let end = {
     y: 250
 };
 
+let selected = null;
+
 let t = 0;
 let radius = 32;
 let circleRadius = 24;
@@ -61,6 +63,12 @@ function drawLine(x0, y0, x1, y1) {
     ctx.stroke();
 }
 
+function distance(x0, y0, x1, y1) {
+    let dx = x1 - x0;
+    let dy = y1 - y0;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
 /// sx, sy: 線分の始点
 /// ex, ey: 線分の終点
 /// px, py: 点
@@ -88,7 +96,7 @@ function distSegToPoint(sx, sy, ex, ey, px, py) {
         qy = t * vy + sy;
     }
 
-    let hit = Math.sqrt((qx - px) * (qx - px) + (qy - py) * (qy - py)) < radius + circleRadius;
+    let hit = distance(px, py, qx, qy) < radius + circleRadius;
 
     ctx.strokeStyle = "#9BF";
     drawLine(ex, ey, sx, sy);
