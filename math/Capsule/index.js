@@ -20,14 +20,34 @@ let end = {
     y: 250
 };
 
-let selected = null;
+let shapes = [start, end];
 
+let active = null;
+let down = false;
+let mouse = {
+    x: 0,
+    y: 0
+};
 let t = 0;
 let radius = 32;
 let circleRadius = 24;
 
 setInterval(function() {
     t += 1 / 30;
+
+    if (down) {
+        if (active === null) {
+            for (let i = 0; i < shapes.length; i++) {
+                if (distance(shapes[i].x, shapes[i].y, mouse.x, mouse.y) < 8) {
+                    active = shapes[i];
+                }
+            }
+        }
+        if (active !== null) {
+            active.x = mouse.x;
+            active.y = mouse.y;
+        }
+    }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -36,6 +56,30 @@ setInterval(function() {
     
     distSegToPoint(start.x, start.y, end.x, end.y, px, py);
 }, 1000 / 30);
+
+
+canvas.addEventListener('mousedown', (e) => {
+    const rect = e.target.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+    down = true;
+}, false);
+canvas.addEventListener('mouseup', (e) => {
+    down = false;
+    active = null;
+}, false);
+canvas.addEventListener('mouseout', (e) => {
+    down = false;
+    active = null;
+}, false);
+canvas.addEventListener('mousemove', (e) => {
+    if (down) {
+        const rect = e.target.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+    }
+    e.stopPropagation();
+}, false);
 
 function drawCapsule(x0, y0, x1, y1, r) {
     let dx = x1 - x0,
