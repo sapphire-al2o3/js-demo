@@ -64,14 +64,17 @@ canvas.addEventListener('mousedown', (e) => {
     mouse.y = e.clientY - rect.top;
     down = true;
 }, false);
+
 canvas.addEventListener('mouseup', (e) => {
     down = false;
     active = null;
 }, false);
+
 canvas.addEventListener('mouseout', (e) => {
     down = false;
     active = null;
 }, false);
+
 canvas.addEventListener('mousemove', (e) => {
     if (down) {
         const rect = e.target.getBoundingClientRect();
@@ -141,6 +144,10 @@ function distSegToPoint(sx, sy, ex, ey, px, py) {
     }
 
     let hit = distance(px, py, qx, qy) < radius + circleRadius;
+
+    ctx.strokeStyle = "#9BF";
+    drawCircle(sx, sy, 4);
+    drawCircle(ex, ey, 4);
 
     ctx.strokeStyle = "#9BF";
     drawLine(ex, ey, sx, sy);
