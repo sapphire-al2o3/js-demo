@@ -88,6 +88,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [点と線分の最近接点](https://sapphire-al2o3.github.io/js-demo/math/点と線分の最近接点/)
 - [矩形と線分の当たり判定](https://sapphire-al2o3.github.io/js-demo/math/矩形と線分の当たり判定/)
 - [矩形同士の当たり判定](https://sapphire-al2o3.github.io/js-demo/math/矩形同士の当たり判定/)
+- [カプセルの当たり判定](https://sapphire-al2o3.github.io/js-demo/math/Capsule/)
 - [立方体](https://sapphire-al2o3.github.io/js-demo/math/立方体/)
 - [鏡映と回転](https://sapphire-al2o3.github.io/js-demo/math/鏡映と回転/)
 - [斜方投射](https://sapphire-al2o3.github.io/js-demo/math/斜方投射/)
