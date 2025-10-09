@@ -19,27 +19,33 @@ canvas.onmousewheel = function(e) {
 };
 
 canvas.onmousedown = function(e) {
-	var x = e.clientX,
-		y = e.clientY;
-	canvas.onmousemove = function(e) {
-		if(e.button === 2) {
-			var dx = x - e.clientX,
-				dy = y - e.clientY,
-				pos = position.rotate(new Vector3(0, 1, 0), dx * 0.01),
-				n = pos.cross(Vector3.up).normalize();
-			position = pos.rotate(n, -dy * 0.01);
-			view = Matrix4.lookAt(position, target, Vector3.up);
-			upv = upMtx.mul(view);
-			render(size.x, size.y, size.z);
-			x = e.clientX;
-			y = e.clientY;
-		}
-	};
-		
-	canvas.onmouseup = function(e) {
-		canvas.oumouseup = null;
-		canvas.onmousemove = null;
-	};
+    var x = e.clientX,
+        y = e.clientY;
+    canvas.onmousemove = function(e) {
+        // if(e.button === 0) {
+            var dx = x - e.clientX,
+                dy = y - e.clientY,
+                pos = position.rotate(new Vector3(0, 1, 0), dx * 0.01),
+                n = pos.cross(Vector3.up).normalize();
+            position = pos.rotate(n, -dy * 0.01);
+            view = Matrix4.lookAt(position, target, Vector3.up);
+            upv = upMtx.mul(view);
+            render(size.x, size.y, size.z);
+            x = e.clientX;
+            y = e.clientY;
+        // }
+    };
+        
+    canvas.onmouseup = (e) => {
+        canvas.oumouseup = null;
+        canvas.onmousemove = null;
+        canvas.onmouseout = null;
+    };
+    canvas.onmouseout = (e) => {
+        canvas.oumouseup = null;
+        canvas.onmousemove = null;
+        canvas.onmouseout = null;
+    };
 };
 	
 canvas.oncontextmenu = function(e) {
