@@ -1,8 +1,9 @@
-var canvas = document.getElementById('canvas'),
-    ctx = canvas.getContext('2d'),
-    size = new Vector3(1, 1, 1);
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
 
-var proj = Matrix4.perspective(degToRad(30), 1, 0.1, 100),
+let size = new Vector3(1, 1, 1);
+
+let proj = Matrix4.perspective(degToRad(30), 1, 0.1, 100),
     target = new Vector3(0, 0, 0),
     position = new Vector3(3, 4, 5),
     view = Matrix4.lookAt(position, target, Vector3.up),
@@ -10,20 +11,20 @@ var proj = Matrix4.perspective(degToRad(30), 1, 0.1, 100),
     upMtx = screen.mul(proj),
     upv = upMtx.mul(view);
 
-canvas.onmousewheel = function(e) {
-    var s = e.wheelDelta > 0 ? 1.0 / 1.1 : 1.1;
+canvas.onmousewheel = (e) => {
+    let s = e.wheelDelta > 0 ? 1.0 / 1.1 : 1.1;
     position = position.mul(s);
     view = Matrix4.lookAt(position, target, Vector3.up);
     upv = upMtx.mul(view);
     render(size.x, size.y, size.z);
 };
 
-canvas.onmousedown = function(e) {
-    var x = e.clientX,
+canvas.onmousedown = (e) => {
+    let x = e.clientX,
         y = e.clientY;
-    canvas.onmousemove = function(e) {
+    canvas.onmousemove = (e) => {
         // if(e.button === 0) {
-            var dx = x - e.clientX,
+            let dx = x - e.clientX,
                 dy = y - e.clientY,
                 pos = position.rotate(new Vector3(0, 1, 0), dx * 0.01),
                 n = pos.cross(Vector3.up).normalize();
@@ -48,19 +49,19 @@ canvas.onmousedown = function(e) {
     };
 };
 	
-canvas.oncontextmenu = function(e) {
+canvas.oncontextmenu = (e) => {
 	e.preventDefault();
 };
 
-slider('x-size', 240, function(e) {
+slider('x-size', 240, (e) => {
     size.x = e + 0.01;
     render(size.x, size.y, size.z);
 });
-slider('y-size', 240, function(e) {
+slider('y-size', 240, (e) => {
     size.y = e + 0.01;
     render(size.x, size.y, size.z);
 });
-slider('z-size', 240, function(e) {
+slider('z-size', 240, (e) => {
     size.z = e + 0.01;
     render(size.x, size.y, size.z);
 });
@@ -74,7 +75,7 @@ render(size.x, size.y, size.z);
 function render(x, y, z) {
     ctx.clearRect(0, 0, 400, 400);
     
-    var p = [
+    let p = [
         new Vector3(-x,  y, -z),
         new Vector3( x,  y, -z),
         new Vector3( x,  y,  z),
@@ -85,7 +86,7 @@ function render(x, y, z) {
         new Vector3(-x, -y,  z)
     ];
   
-    p = p.map(function(e) { return upv.apply(e); });
+    p = p.map(e => upv.apply(e));
     
     line(p[0], p[1]);
     line(p[1], p[2]);
@@ -112,36 +113,36 @@ function line(v0, v1) {
 }
 
 function slider(id, w, func) {
-    var elm = document.getElementById(id);
-	elm.onmousedown = function(e) {
-		var cur = this.firstChild,
-			t = document,
-			r = elm.getBoundingClientRect(),
-			x = e.pageX - r.left,
-			y = e.pageY - r.top,
-			l = r.left;
-		cur.style.left = x - 5 + 'px';
-		
-		elm.value = x / w;
-		
-		t.onselectstart = function() { return false; };
-		
-		t.onmousemove = function(e) {
-			var x = e.clientX - l;
-			if(x < 0) x = 0;
-			if(x > w) x = w;
-			cur.style.left = x - 5 + 'px';
-			elm.value = x / w;
-			if(func) func(elm.value);
-		};
-		t.onmouseup = function(e) {
-			t.onmousemove = null;
-			t.onmouseup = null;
-			t.onselectstart = null;
-		};
-		
-		if(func) func(elm.value);
-	};
-	elm.value = 0;
-	return elm;
+    let elm = document.getElementById(id);
+    elm.onmousedown = (e) => {
+        let cur = elm.firstChild,
+            t = document,
+            r = elm.getBoundingClientRect(),
+            x = e.pageX - r.left,
+            y = e.pageY - r.top,
+            l = r.left;
+        cur.style.left = x - 5 + 'px';
+        
+        elm.value = x / w;
+        
+        t.onselectstart = () => false;
+        
+        t.onmousemove = (e) => {
+            let x = e.clientX - l;
+            if (x < 0) x = 0;
+            if (x > w) x = w;
+            cur.style.left = x - 5 + 'px';
+            elm.value = x / w;
+            if (func) func(elm.value);
+        };
+        t.onmouseup = (e) => {
+            t.onmousemove = null;
+            t.onmouseup = null;
+            t.onselectstart = null;
+        };
+        
+        if (func) func(elm.value);
+    };
+    elm.value = 0;
+    return elm;
 }
