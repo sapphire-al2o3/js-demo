@@ -1,7 +1,7 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-let size = new Vector3(1, 1, 1);
+let size = new Vector3(1.5, 1, 1);
 
 let proj = Matrix4.perspective(degToRad(30), 1, 0.1, 100),
     target = new Vector3(0, 0, 0),
@@ -65,12 +65,8 @@ function render(x, y, z) {
     let p = [
         new Vector3(-x,  y, -z),
         new Vector3( x,  y, -z),
-        new Vector3( x,  y,  z),
-        new Vector3(-x,  y,  z),
         new Vector3(-x, -y, -z),
         new Vector3( x, -y, -z),
-        new Vector3( x, -y,  z),
-        new Vector3(-x, -y,  z),
 
         new Vector3(0, 0, -5),
         new Vector3(0, 0, 5),
@@ -79,21 +75,13 @@ function render(x, y, z) {
     p = p.map(e => upv.apply(e));
     
     line(p[0], p[1]);
-    line(p[1], p[2]);
     line(p[2], p[3]);
-    line(p[3], p[0]);
+    line(p[0], p[2]);
+    line(p[1], p[3]);
+    // line(p[2], p[6]);
+    // line(p[3], p[7]);
 
     line(p[4], p[5]);
-    line(p[5], p[6]);
-    line(p[6], p[7]);
-    line(p[7], p[4]);
-
-    line(p[0], p[4]);
-    line(p[1], p[5]);
-    line(p[2], p[6]);
-    line(p[3], p[7]);
-
-    line(p[8], p[9]);
 }
 
 function line(v0, v1) {
