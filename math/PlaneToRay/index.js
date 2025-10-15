@@ -11,6 +11,11 @@ let proj = Matrix4.perspective(degToRad(30), 1, 0.1, 100),
     upMtx = screen.mul(proj),
     upv = upMtx.mul(view);
 
+let rayPosition = new Vector3(0, 0, 5),
+    rayDirection = new Vector3(0, 0, -10),
+    planePosition = new Vector3(0, 0, -1),
+    planeNormal = new Vector3(0, 0, -1);
+
 canvas.onmousewheel = (e) => {
     let s = e.wheelDelta > 0 ? 1.0 / 1.1 : 1.1;
     position = position.mul(s);
@@ -68,9 +73,12 @@ function render(x, y, z) {
         new Vector3(-x, -y, -z),
         new Vector3( x, -y, -z),
 
-        new Vector3(0, 0, -5),
-        new Vector3(0, 0, 5),
+        rayPosition,
+        rayPosition.add(rayDirection),
     ];
+
+    let c = intersectPlaneToRay(planePosition, planeNormal, rayDirection, rayPosition);
+    c = upv.apply(c);
   
     p = p.map(e => upv.apply(e));
     
@@ -78,10 +86,11 @@ function render(x, y, z) {
     line(p[2], p[3]);
     line(p[0], p[2]);
     line(p[1], p[3]);
-    // line(p[2], p[6]);
-    // line(p[3], p[7]);
 
     line(p[4], p[5]);
+
+    ctx.fillStyle = '#FFF';
+    ctx.fillRect(c.x - 1, c.y - 1, 2, 2);
 }
 
 function line(v0, v1) {
