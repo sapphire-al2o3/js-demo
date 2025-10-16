@@ -28,20 +28,18 @@ canvas.onmousedown = (e) => {
     let x = e.clientX,
         y = e.clientY;
     canvas.onmousemove = (e) => {
-        // if(e.button === 0) {
-            let dx = x - e.clientX,
-                dy = y - e.clientY,
-                pos = position.rotate(new Vector3(0, 1, 0), dx * 0.01),
-                n = pos.cross(Vector3.up).normalize();
-            position = pos.rotate(n, -dy * 0.01);
-            view = Matrix4.lookAt(position, target, Vector3.up);
-            upv = upMtx.mul(view);
-            render(size.x, size.y, size.z);
-            x = e.clientX;
-            y = e.clientY;
-        // }
+        let dx = x - e.clientX,
+            dy = y - e.clientY,
+            pos = position.rotate(new Vector3(0, 1, 0), dx * 0.01),
+            n = pos.cross(Vector3.up).normalize();
+        position = pos.rotate(n, -dy * 0.01);
+        view = Matrix4.lookAt(position, target, Vector3.up);
+        upv = upMtx.mul(view);
+        render(size.x, size.y, size.z);
+        x = e.clientX;
+        y = e.clientY;
     };
-        
+    
     canvas.onmouseup = (e) => {
         canvas.oumouseup = null;
         canvas.onmousemove = null;
