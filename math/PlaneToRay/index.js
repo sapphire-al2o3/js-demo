@@ -21,7 +21,7 @@ canvas.onmousewheel = (e) => {
     position = position.mul(s);
     view = Matrix4.lookAt(position, target, Vector3.up);
     upv = upMtx.mul(view);
-    render(size.x, size.y, size.z);
+    // render();
 };
 
 canvas.onmousedown = (e) => {
@@ -35,7 +35,7 @@ canvas.onmousedown = (e) => {
         position = pos.rotate(n, -dy * 0.01);
         view = Matrix4.lookAt(position, target, Vector3.up);
         upv = upMtx.mul(view);
-        render(size.x, size.y, size.z);
+        // render();
         x = e.clientX;
         y = e.clientY;
     };
@@ -60,16 +60,16 @@ ctx.lineWidth = 0.5;
 ctx.fillStyle = '#000';
 ctx.strokeStyle = "#FFF";
 ctx.clearRect(0, 0, 400, 400);
-render(size.x, size.y, size.z);
+render();
 
 function render(x, y, z) {
     ctx.clearRect(0, 0, 400, 400);
     
     let p = [
-        new Vector3(-x,  y, -z),
-        new Vector3( x,  y, -z),
-        new Vector3(-x, -y, -z),
-        new Vector3( x, -y, -z),
+        new Vector3(-size.x,  size.y, -size.z),
+        new Vector3( size.x,  size.y, -size.z),
+        new Vector3(-size.x, -size.y, -size.z),
+        new Vector3( size.x, -size.y, -size.z),
 
         rayPosition,
         rayPosition.add(rayDirection),
@@ -101,3 +101,14 @@ function line(v0, v1) {
 function intersectPlaneToRay(p, n, o, r) {
     return o.add(r.mul((p.dot(n) - n.dot(o)) / n.dot(r)));
 }
+
+let t = 0;
+function update() {
+    // rayDirection.x = Math.sin(t) * 0.4;
+    // rayDirection.y = Math.cos(t) * 0.4;
+    render();
+    // t += 0.03;
+    requestAnimationFrame(update);
+}
+
+update();
