@@ -144,7 +144,7 @@ Hsv.lerp = function(a, b, t) {
             let e = shapes[i],
                 s = shapes[i - 1];
             ctx.lineWidth = 1.0;
-            ctx.strokeStyle = 'rgba(200, 100, 0, 1)';
+            ctx.strokeStyle = i & 1 ? '#AF0' : '#D50';
             ctx.strokeLine(s.x, s.y, e.x, e.y);
         }
     }
@@ -154,12 +154,6 @@ Hsv.lerp = function(a, b, t) {
         render();
     }, 1000 / 30);
     
-    canvas.addEventListener('click', () => {
-        if(path.length > 0) {
-            startEffect();
-        }
-    }, false);
-    
     canvas.addEventListener('mousedown', (e) => {
         const rect = e.target.getBoundingClientRect();
         p.x = e.clientX - rect.left;
@@ -167,8 +161,7 @@ Hsv.lerp = function(a, b, t) {
         down = true;
     }, false);
     
-        
-        
+    
     canvas.addEventListener('mousemove', (e) => {
         const rect = e.target.getBoundingClientRect();
         p.x = e.clientX - rect.left;
