@@ -12,9 +12,9 @@ let proj = Matrix4.perspective(degToRad(30), 1, 0.1, 100),
     upv = upMtx.mul(view);
 
 let rayPosition = new Vector3(0, 0, 5),
-    rayDirection = new Vector3(0, 0, -10),
+    rayDirection = new Vector3(0, 1, -10),
     planePosition = new Vector3(0, 0, -1),
-    planeNormal = new Vector3(0, 0, -1);
+    planeNormal = new Vector3(0, 0, 1);
 
 canvas.onmousewheel = (e) => {
     let s = e.wheelDelta > 0 ? 1.0 / 1.1 : 1.1;
@@ -51,9 +51,9 @@ canvas.onmousedown = (e) => {
         canvas.onmouseout = null;
     };
 };
-	
+
 canvas.oncontextmenu = (e) => {
-	e.preventDefault();
+    e.preventDefault();
 };
 
 ctx.lineWidth = 0.5;
@@ -75,11 +75,13 @@ function render(x, y, z) {
         rayPosition.add(rayDirection),
     ];
 
-    let c = intersectPlaneToRay(planePosition, planeNormal, rayDirection, rayPosition);
+    let c = intersectPlaneToRay(planePosition, planeNormal, rayPosition, rayDirection);
     c = upv.apply(c);
   
     p = p.map(e => upv.apply(e));
     
+    ctx.strokeStyle = "#FFF";
+
     line(p[0], p[1]);
     line(p[2], p[3]);
     line(p[0], p[2]);
@@ -89,6 +91,15 @@ function render(x, y, z) {
 
     ctx.fillStyle = '#FFF';
     ctx.fillRect(c.x - 1, c.y - 1, 2, 2);
+
+    c = upv.apply(planePosition);
+
+    ctx.fillStyle = '#F40';
+    ctx.fillRect(c.x - 1, c.y - 1, 2, 2);
+
+    let pn = upv.apply(planePosition.add(planeNormal));
+    ctx.strokeStyle = '#77F';
+    line(c, pn);
 }
 
 function line(v0, v1) {
@@ -98,16 +109,17 @@ function line(v0, v1) {
     ctx.stroke();
 }
 
-function intersectPlaneToRay(p, n, o, r) {
-    return o.add(r.mul((p.dot(n) - n.dot(o)) / n.dot(r)));
+function intersectPlaneToRay(p, n, o, m) {
+    let k = (p.dot(n) - n.dot(o)) / n.dot(m);
+    return o.add(m.mul(k));
 }
 
 let t = 0;
 function update() {
-    // rayDirection.x = Math.sin(t) * 0.4;
-    // rayDirection.y = Math.cos(t) * 0.4;
+    // rayDirection.x = Math.sin(t * 2);
+    // rayDirection.y = Math.sin(t * 3);
     render();
-    // t += 0.03;
+    // t += 0.01;
     requestAnimationFrame(update);
 }
 
