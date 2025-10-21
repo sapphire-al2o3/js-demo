@@ -90,7 +90,8 @@ Hsv.lerp = function(a, b, t) {
         shapes = [p0, p1, p2, p3],
         x = 4.0,
         k = 0.9,
-        active = null;
+        active = null,
+        stripe = true;
     
     for(let i = 0; i < 40; i++) {
         shapes.push({x: i * 10, y: i * 10});
@@ -144,7 +145,7 @@ Hsv.lerp = function(a, b, t) {
             let e = shapes[i],
                 s = shapes[i - 1];
             ctx.lineWidth = 1.0;
-            ctx.strokeStyle = i & 1 ? '#AF0' : '#D50';
+            ctx.strokeStyle = stripe && (i & 1) ? '#AF0' : '#D50';
             ctx.strokeLine(s.x, s.y, e.x, e.y);
         }
     }
@@ -186,4 +187,8 @@ Hsv.lerp = function(a, b, t) {
     document.body.appendChild(createSlider('x', x / 8.0, v => {
         x = v * 8.0 + 0.1;
     }));
+
+    document.body.appendChild(createCheckbox('stripe', v => {
+        stripe = v;
+    }, stripe));
 })();
