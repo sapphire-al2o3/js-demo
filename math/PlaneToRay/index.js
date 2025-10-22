@@ -116,10 +116,10 @@ function intersectPlaneToRay(p, n, o, m) {
 
 let t = 0;
 function update() {
-    // rayDirection.x = Math.sin(t * 2);
-    // rayDirection.y = Math.sin(t * 3);
+    rayDirection.x = Math.sin(t * 2);
+    rayDirection.y = Math.sin(t * 3);
     render();
-    // t += 0.01;
+    t += 0.01;
     requestAnimationFrame(update);
 }
 
