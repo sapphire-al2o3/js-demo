@@ -91,11 +91,15 @@ Hsv.lerp = function(a, b, t) {
         x = 4.0,
         k = 0.9,
         active = null,
-        stripe = true;
+        stripe = true,
+        attach = false;
     
     for(let i = 0; i < 40; i++) {
         shapes.push({x: i * 10, y: i * 10});
     }
+
+    let end = shapes[shapes.length - 1];
+    ctx.fillStyle = '#FFF';
     
     function update(frame) {
         p0.hit = distance(p, p0) < 6 * 6;
@@ -119,10 +123,26 @@ Hsv.lerp = function(a, b, t) {
             shapes[i].x -= dx / l * f;
             shapes[i].y -= dy / l * f;
         }
+
+        if (attach) {
+            shapes[shapes.length - 1].x = width / 2;
+            shapes[shapes.length - 1].y = height / 2;
+            for (let i = shapes.length - 2; i >= 1; i--) {
+                let dx = shapes[i].x - shapes[i + 1].x,
+                    dy = shapes[i].y - shapes[i + 1].y,
+                    l = Math.sqrt(dx * dx + dy * dy),
+                    d = l - x,
+                    f = d * k;
+                
+                shapes[i].x -= dx / l * f;
+                shapes[i].y -= dy / l * f;
+            }
+        }
     }
     
     function render() {
-        ctx.clearRect(0, 0, 400, 400);
+        // ctx.clearRect(0, 0, 400, 400);
+        ctx.fillRect(0, 0, width, height);
         
         let hit = false;
         
@@ -138,6 +158,12 @@ Hsv.lerp = function(a, b, t) {
                 hit = true;
             }
         });
+
+        if (attach) {
+            ctx.lineWidth = 2.0;
+            ctx.strokeStyle = '#ADD';
+            ctx.strokeCircle(end.x, end.y, 6);
+        }
 
         canvas.style['cursor'] = p0.hit || active ? 'pointer' : 'default';
         
@@ -191,4 +217,8 @@ Hsv.lerp = function(a, b, t) {
     document.body.appendChild(createCheckbox('stripe', v => {
         stripe = v;
     }, stripe));
+
+    document.body.appendChild(createCheckbox('attach', v => {
+        attach = v;
+    }, attach));
 })();
