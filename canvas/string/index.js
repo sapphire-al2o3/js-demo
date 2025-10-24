@@ -46,20 +46,6 @@ function distance(a, b) {
     return dx * dx + dy * dy;
 }
 
-var Color = function(r, g, b) {
-    this.r = r;
-    this.g = g;
-    this.b = b;
-};
-Color.prototype = {
-    toString: function() {
-        return '#'
-            + ('0' + this.r.toString(16)).slice(-2).toUpperCase()
-            + ('0' + this.g.toString(16)).slice(-2).toUpperCase()
-            + ('0' + this.b.toString(16)).slice(-2).toUpperCase();
-    }
-};
-
 let Hsv = function(h, s, v, a) {
     this.h = h;
     this.s = s;
@@ -79,8 +65,6 @@ Hsv.lerp = function(a, b, t) {
         ctx = canvas.getContext('2d'),
         width = canvas.width,
         height = canvas.height,
-        node = [],
-        path = [],
         down = false,
         p = {x: 0, y: 0},
         p0 = {x: 100, y: 100},
@@ -125,8 +109,8 @@ Hsv.lerp = function(a, b, t) {
         }
 
         if (attach) {
-            shapes[shapes.length - 1].x = width / 2;
-            shapes[shapes.length - 1].y = height / 2;
+            end.x = width / 2;
+            end.y = height / 2;
             for (let i = shapes.length - 2; i >= 1; i--) {
                 let dx = shapes[i].x - shapes[i + 1].x,
                     dy = shapes[i].y - shapes[i + 1].y,
