@@ -72,7 +72,6 @@ let canvas = document.getElementById('canvas'),
     down = false,
     p = {x: 0, y: 0},
     x = 16.0,
-    k = 0.9,
     active = null,
     stripe = true,
     attach = false;
@@ -206,13 +205,9 @@ canvas.addEventListener('mouseout', (e) => {
     active = false;
 }, false);
 
-document.body.appendChild(createSlider('k', k, v => {
-    k = v;
-}));
-
-document.body.appendChild(createSlider('x', x / 32.0, v => {
-    x = v * 32.0 + 0.1;
-}));
+// document.body.appendChild(createSlider('x', x / 32.0, v => {
+//     x = v * 32.0 + 0.1;
+// }));
 
 document.body.appendChild(createCheckbox('stripe', v => {
     stripe = v;
