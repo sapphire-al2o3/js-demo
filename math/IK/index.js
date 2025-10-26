@@ -71,11 +71,6 @@ let canvas = document.getElementById('canvas'),
     height = canvas.height,
     down = false,
     p = {x: 0, y: 0},
-    p0 = {x: 100, y: 100},
-    p1 = {x: 150, y: 100},
-    p2 = {x: 200, y: 200},
-    p3 = {x: 250, y: 250},
-    shapes = [p0, p1, p2, p3],
     x = 16.0,
     k = 0.9,
     active = null,
@@ -108,10 +103,6 @@ for (let i = 0; i < pos.length - 1; i++) {
     len.push(distance(pos[i], pos[i + 1]));
 }
 
-for(let i = 0; i < 40; i++) {
-    shapes.push({x: i * 10, y: i * 10});
-}
-
 ctx.fillStyle = '#FFF';
 
 function update(frame) {
@@ -126,6 +117,7 @@ function update(frame) {
         }
     }
 
+    // FABRIK
     base.x = pos[0].x;
     base.y = pos[0].y;
 
@@ -173,7 +165,7 @@ function render() {
         ctx.strokeCircle(end.x, end.y, 6);
     }
 
-    canvas.style['cursor'] = p0.hit || active ? 'pointer' : 'default';
+    canvas.style['cursor'] = active ? 'pointer' : 'default';
     
     for (let i = 1; i < pos.length; i++) {
         let e = pos[i],
@@ -225,7 +217,3 @@ document.body.appendChild(createSlider('x', x / 32.0, v => {
 document.body.appendChild(createCheckbox('stripe', v => {
     stripe = v;
 }, stripe));
-
-document.body.appendChild(createCheckbox('attach', v => {
-    attach = v;
-}, attach));
