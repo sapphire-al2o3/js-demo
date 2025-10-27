@@ -166,10 +166,10 @@ function render() {
 
     canvas.style['cursor'] = active ? 'pointer' : 'default';
     
+    ctx.lineWidth = 2.0;
     for (let i = 1; i < pos.length; i++) {
         let e = pos[i],
             s = pos[i - 1];
-        ctx.lineWidth = 1.0;
         ctx.strokeStyle = stripe && (i & 1) ? '#AF0' : '#D50';
         ctx.strokeLine(s.x, s.y, e.x, e.y);
     }
