@@ -154,7 +154,7 @@ function render() {
 
     ctx.lineWidth = 2.0;
     ctx.strokeStyle = '#094';
-    ctx.strokeCircle(target.x, target.y, 4);
+    ctx.strokeCircle(target.x, target.y, 6);
 
     // ctx.strokeCircle(base.x, base.y, 4);
 
