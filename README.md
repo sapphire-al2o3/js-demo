@@ -99,6 +99,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [三角形の内外判定](https://sapphire-al2o3.github.io/js-demo/math/InsideTriangle)
 - [多角形の内外判定](https://sapphire-al2o3.github.io/js-demo/math/InsidePolygon)
 - [平面とレイの交点](https://sapphire-al2o3.github.io/js-demo/math/PlaneToRay)
+- [IK](https://sapphire-al2o3.github.io/js-demo/math/IK)
 
 ## Canvas
 
