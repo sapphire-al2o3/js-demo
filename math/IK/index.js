@@ -126,7 +126,7 @@ function update(frame) {
         let change = Math.abs(dist - prevDist);
 
         prevDist = dist;
-        if (distance < 1e-6 || change < 1e-8) {
+        if (dist < 1e-6 || change < 1e-8) {
             break;
         }
 
