@@ -65,6 +65,13 @@ function mul(v, s) {
     return { x: v.x * s, y: v.y * s };
 }
 
+function direction(a, b) {
+    let dx = a.x - b.x;
+    let dy = a.y - b.y;
+    let l = dx * dx + dy * dy;
+    return { x: dx / l, y: dy / l };
+}
+
 let canvas = document.getElementById('canvas'),
     ctx = canvas.getContext('2d'),
     width = canvas.width,
@@ -99,7 +106,7 @@ let target = {
 };
 
 for (let i = 0; i < pos.length - 1; i++) {
-    len.push(distance(pos[i], pos[i + 1]));
+    len.push(x);
 }
 
 ctx.fillStyle = '#FFF';
@@ -205,9 +212,16 @@ canvas.addEventListener('mouseout', (e) => {
     active = false;
 }, false);
 
-// document.body.appendChild(createSlider('x', x / 32.0, v => {
-//     x = v * 32.0 + 0.1;
-// }));
+document.body.appendChild(createSlider('x', x / 32.0, v => {
+    x = v * 32.0 + 0.1;
+    for (let i = 0; i < len.length; i++) {
+        len[i] = x;
+    }
+    
+    let d = direction(pos[pos.length - 1], pos[pos.length - 2]);
+    pos[pos.length - 1].x = pos[pos.length - 2].x + d.x * x;
+    pos[pos.length - 1].y = pos[pos.length - 2].y + d.y * x;
+}));
 
 document.body.appendChild(createCheckbox('stripe', v => {
     stripe = v;
