@@ -112,14 +112,21 @@ for (let i = 0; i < pos.length - 1; i++) {
 ctx.fillStyle = '#FFF';
 
 function update(frame) {
-    target.hit = distance2(p, target) < 6 * 6;
+
+    let forceUpdate = false;
     if (down) {
-        if (target.hit) {
+        if (distance2(p, target) < 6 * 6) {
             active = target;
         }
+
+        if (distance2(p, base) < 6 * 6) {
+            active = pos[0];
+        }
+
         if (active) {
             active.x = p.x;
             active.y = p.y;
+            forceUpdate = active === pos[0];
         }
     }
 
@@ -133,8 +140,10 @@ function update(frame) {
         let change = Math.abs(dist - prevDist);
 
         prevDist = dist;
-        if (dist < 1e-6 || change < 1e-8) {
-            break;
+        if (!forceUpdate) {
+            if (dist < 1e-6 || change < 1e-8) {
+                break;
+            }
         }
 
         pos[pos.length - 1].x = target.x;
@@ -162,8 +171,8 @@ function render() {
     ctx.lineWidth = 2.0;
     ctx.strokeStyle = '#094';
     ctx.strokeCircle(target.x, target.y, 6);
-
-    // ctx.strokeCircle(base.x, base.y, 4);
+    ctx.strokeStyle = '#ADD'
+    ctx.strokeCircle(base.x, base.y, 5);
 
     if (attach) {
         ctx.lineWidth = 2.0;
