@@ -2,21 +2,22 @@
 const canvas = document.getElementById('stripeTex');
 const ctx = canvas.getContext('2d');
 const width = canvas.width;
-ctx.fillStyle = '#E00';
-ctx.fillRect(0, 0, width, 8);
-ctx.fillStyle = '#000';
-for (let i = 0; i < 12; i++) {
-    let x = Math.random() * width ^ 0;
-    let w = Math.random() * 32 ^ 0;
-    ctx.fillRect(x, 0, w, 8);
+
+function createStripeTexture(color = '#E00') {
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, width, 8);
+    ctx.fillStyle = '#000';
+    for (let i = 0; i < 12; i++) {
+        let x = Math.random() * width ^ 0;
+        let w = Math.random() * 32 ^ 0;
+        ctx.fillRect(x, 0, w, 8);
+    }
 }
 
-
 let gl = initContext2('canvas', { preserveDrawingBuffer : true });
-
 let program = initShader(gl, 'shader-vs', 'shader-fs');
 
-var vbo = gl.createBuffer();
+let vbo = gl.createBuffer();
 gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
 
 const s = 1;
@@ -41,6 +42,7 @@ const loc = gl.getAttribLocation(program, 'position');
 gl.enableVertexAttribArray(loc);
 gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 
+createStripeTexture('#E0F');
 let tex = initTexture(gl, canvas);
 program.uniform['tex'].value = 0;
 gl.bindTexture(gl.TEXTURE_2D, tex);
