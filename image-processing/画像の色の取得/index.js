@@ -2,6 +2,9 @@ let canvas = document.getElementById('canvas'),
     ctx = canvas.getContext('2d'),
     img = new Image();
 
+ctx.font = '14px Meiryo';
+ctx.fillText('画像をドロップ', 10, 20);
+
 canvas.addEventListener('drop', (e) => {
     e.preventDefault();
     loadFile(e);
