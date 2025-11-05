@@ -42,7 +42,7 @@ const loc = gl.getAttribLocation(program, 'position');
 gl.enableVertexAttribArray(loc);
 gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 
-createStripeTexture('#E0F');
+createStripeTexture();
 let tex = initTexture(gl, canvas);
 program.uniform['tex'].value = 0;
 gl.bindTexture(gl.TEXTURE_2D, tex);
@@ -58,6 +58,12 @@ program.uniform['stripe'].value = stripe ? 1.0 : 0.0;
 program.uniform['time'].value = 0;
 setupUniform(program);
 gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+function updateTex() {
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, canvas);
+}
 
 let time = 0;
 function render(delta) {
@@ -123,5 +129,12 @@ document.body.appendChild(createSlider('p3.x', p3[0], v => {
 document.body.appendChild(createSlider('p3.y', p3[1], v => {
     p3[1] = v;
 }));
+
+document.body.appendChild(createColor('color', '#FF0000', v => {
+    let code = `rgb(${v[0]},${v[1]},${v[2]})`;
+    createStripeTexture(code);
+    updateTex();
+}));
+
 
 document.body.appendChild(createRecorder(gl.canvas));
