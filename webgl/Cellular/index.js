@@ -3,10 +3,10 @@ const canvas = document.getElementById('stripeTex');
 const ctx = canvas.getContext('2d');
 const width = canvas.width;
 
-function createStripeTexture(color = '#E00') {
-    ctx.fillStyle = color;
+function createStripeTexture(bgcolor = '#F00', color = '#000') {
+    ctx.fillStyle = bgcolor;
     ctx.fillRect(0, 0, width, 8);
-    ctx.fillStyle = '#000';
+    ctx.fillStyle = color;
     for (let i = 0; i < 12; i++) {
         let x = Math.random() * width ^ 0;
         let w = Math.random() * 32 ^ 0;
@@ -35,6 +35,8 @@ let p2 = [0.28, 0.24, 1.5];
 let p3 = [0.51, 0.86, -1.5];
 let stripe = true;
 let timeScale = 1;
+let color0 = '#F00';
+let color1 = '#000';
 
 gl.bufferData(gl.ARRAY_BUFFER, buffer, gl.STATIC_DRAW);
 
@@ -130,9 +132,17 @@ document.body.appendChild(createSlider('p3.y', p3[1], v => {
     p3[1] = v;
 }));
 
-document.body.appendChild(createColor('color', '#FF0000', v => {
+document.body.appendChild(createColor('color0', '#FF0000', v => {
     let code = `rgb(${v[0]},${v[1]},${v[2]})`;
-    createStripeTexture(code);
+    color0 = code;
+    createStripeTexture(color0, color1);
+    updateTex();
+}));
+
+document.body.appendChild(createColor('color1', '#000000', v => {
+    let code = `rgb(${v[0]},${v[1]},${v[2]})`;
+    color1 = code;
+    createStripeTexture(color0, color1);
     updateTex();
 }));
 
