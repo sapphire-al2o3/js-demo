@@ -49,6 +49,10 @@ label {
 	color: #777;
 }
 
+.color {
+	margin-bottom: 4px;
+}
+
 .color span {
 	display: inline-block;
 	width: 16px;
@@ -59,7 +63,7 @@ label {
 	box-shadow: outside 0 2px 2px #EEE;
 }
 
-.color {
+.color box {
 	padding-left: 4px;
 	border: 1px solid #DDD;
 	width: 80px;
