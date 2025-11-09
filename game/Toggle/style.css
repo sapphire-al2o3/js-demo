@@ -32,9 +32,11 @@ td {
     border-radius: 6px;
     box-shadow: 0px 2px #999;
     border: 1px solid #AAA;
+    cursor: pointer;
 }
 
 .on {
     background-color: #AEE;
     box-shadow: 0px 0px #999;
+    cursor: default;
 }
