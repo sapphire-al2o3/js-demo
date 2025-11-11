@@ -1,7 +1,6 @@
-
 const map = [];
-const sizeX = 3;
-const sizeY = 3;
+const sizeX = 5;
+const sizeY = 5;
 
 for (let i = 0; i < sizeY; i++) {
     map.push([]);
@@ -11,7 +10,17 @@ for (let i = 0; i < sizeY; i++) {
 }
 
 const table = document.querySelector('table');
-const cells = document.querySelectorAll('td');
+const cells = [];
+
+for (let i = 0; i < sizeY; i++) {
+    const tr = document.createElement('tr');
+    for (let j = 0; j < sizeX; j++) {
+        const td = document.createElement('td');
+        tr.appendChild(td);
+        cells.push(td);
+    }
+    table.appendChild(tr);
+}
 
 const mapElm = [];
 
@@ -23,10 +32,10 @@ for (let i = 0; i < sizeY; i++) {
         cells[k].setAttribute('x', j);
         cells[k].setAttribute('y', i);
         let r = Math.random() * 2 ^ 0;
-        if (r === 1) {
-            cells[k].classList.toggle('on');
-            map[i][j] = 1;
-        }
+        // if (r === 1) {
+        //     cells[k].classList.toggle('on');
+        //     map[i][j] = 1;
+        // }
         k++;
     }
 }
@@ -55,8 +64,6 @@ table.addEventListener('click', e => {
                 map[y][x + 1] = 1 - map[y][x + 1];
             }
         }
-
-        // e.target.classList.toggle('on');
     }
 }, false);
 
