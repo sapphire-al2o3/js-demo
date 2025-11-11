@@ -1,6 +1,6 @@
 const map = [];
-const sizeX = 5;
-const sizeY = 5;
+const sizeX = 4;
+const sizeY = 4;
 
 for (let i = 0; i < sizeY; i++) {
     map.push([]);
@@ -32,10 +32,10 @@ for (let i = 0; i < sizeY; i++) {
         cells[k].setAttribute('x', j);
         cells[k].setAttribute('y', i);
         let r = Math.random() * 2 ^ 0;
-        // if (r === 1) {
-        //     cells[k].classList.toggle('on');
-        //     map[i][j] = 1;
-        // }
+        if (r === 1) {
+            cells[k].classList.toggle('on');
+            map[i][j] = 1;
+        }
         k++;
     }
 }
