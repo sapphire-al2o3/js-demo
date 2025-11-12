@@ -67,3 +67,20 @@ table.addEventListener('click', e => {
     }
 }, false);
 
+document.getElementById('reset').addEventListener('click', e => {
+    let k = 0;
+    for (let i = 0; i < sizeY; i++) {
+        for (let j = 0; j < sizeX; j++) {
+            let r = Math.random() * 2 ^ 0;
+            if (r === 1) {
+                cells[k].classList.add('on');
+                map[i][j] = 1;
+            } else {
+                cells[k].classList.remove('on');
+                map[i][j] = 0;
+            }
+            k++;
+        }
+    }
+}, false);
+
