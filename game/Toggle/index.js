@@ -1,6 +1,7 @@
 const map = [];
 const sizeX = 4;
 const sizeY = 4;
+const history = [];
 
 for (let i = 0; i < sizeY; i++) {
     map.push([]);
@@ -63,6 +64,7 @@ table.addEventListener('click', e => {
                 mapElm[y][x + 1].classList.toggle('on');
                 map[y][x + 1] = 1 - map[y][x + 1];
             }
+            history.push(y * sizeX + x);
         }
     }
 }, false);
@@ -82,5 +84,31 @@ document.getElementById('reset').addEventListener('click', e => {
             k++;
         }
     }
+    history.length = 0;
 }, false);
 
+document.getElementById('undo').addEventListener('click', e => {
+    if (history.length > 0) {
+        let k = history.pop();
+        let x = k % sizeX;
+        let y = k / sizeX ^ 0;
+        map[y][x] = 0;
+        mapElm[y][x].classList.toggle('on');
+        if (y > 0) {
+            mapElm[y - 1][x].classList.toggle('on');
+            map[y - 1][x] = 1 - map[y - 1][x];
+        }
+        if (y < sizeY - 1) {
+            mapElm[y + 1][x].classList.toggle('on');
+            map[y + 1][x] = 1 - map[y + 1][x];
+        }
+        if (x > 0) {
+            mapElm[y][x - 1].classList.toggle('on');
+            map[y][x - 1] = 1 - map[y][x - 1];
+        }
+        if (x < sizeX - 1) {
+            mapElm[y][x + 1].classList.toggle('on');
+            map[y][x + 1] = 1 - map[y][x + 1];
+        }
+    }
+}, false);
