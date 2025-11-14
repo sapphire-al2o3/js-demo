@@ -11,7 +11,7 @@
     // シェーダを初期化
     program.push(initShader(gl, 'shader-vs', 'shader-fs'));
 
-    // トーラスを作る
+    // プリミティブモデルを作る
     let model = createCube(0.1);
 
     model.meshes[0].vertexStream.position = model.meshes[0].vertexStream.position.map(x => x * 0.4);
@@ -37,9 +37,13 @@
     // 頂点バッファを作成
     initBuffer(gl, model);
 
+    // position
     gl.vertexAttribDivisor(0, 0);
+    // normal
     gl.vertexAttribDivisor(1, 0);
+    // trans
     gl.vertexAttribDivisor(2, 1);
+    // color
     gl.vertexAttribDivisor(3, 1);
 
     let camera = {},
