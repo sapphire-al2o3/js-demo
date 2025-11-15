@@ -1,6 +1,6 @@
 const map = [];
-const sizeX = 4;
-const sizeY = 4;
+const sizeX = 3;
+const sizeY = 3;
 const history = [];
 
 for (let i = 0; i < sizeY; i++) {
@@ -41,6 +41,17 @@ for (let i = 0; i < sizeY; i++) {
     }
 }
 
+function checkClear() {
+    for (let i = 0; i < sizeY; i++) {
+        for (let j = 0; j < sizeX; j++) {
+            if (map[i][j] === 0) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 table.addEventListener('click', e => {
     if (e.target.tagName === 'TD') {
         let x = parseInt(e.target.getAttribute('x'));
@@ -65,6 +76,10 @@ table.addEventListener('click', e => {
                 map[y][x + 1] = 1 - map[y][x + 1];
             }
             history.push(y * sizeX + x);
+
+            if (checkClear()) {
+                console.log('clear');
+            }
         }
     }
 }, false);
