@@ -10,6 +10,7 @@ for (let i = 0; i < sizeY; i++) {
     }
 }
 
+const clearText = document.getElementById('clearText');
 const table = document.querySelector('table');
 const cells = [];
 
@@ -79,6 +80,7 @@ table.addEventListener('click', e => {
 
             if (checkClear()) {
                 console.log('clear');
+                clearText.classList.toggle('clear');
             }
         }
     }
