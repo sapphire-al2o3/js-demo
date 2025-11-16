@@ -80,7 +80,7 @@ table.addEventListener('click', e => {
 
             if (checkClear()) {
                 console.log('clear');
-                clearText.classList.toggle('clear');
+                clearText.classList.add('clear');
             }
         }
     }
@@ -102,6 +102,7 @@ document.getElementById('reset').addEventListener('click', e => {
         }
     }
     history.length = 0;
+    clearText.classList.remove('clear');
 }, false);
 
 document.getElementById('undo').addEventListener('click', e => {
