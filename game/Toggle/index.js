@@ -79,7 +79,6 @@ table.addEventListener('click', e => {
             history.push(y * sizeX + x);
 
             if (checkClear()) {
-                console.log('clear');
                 clearText.classList.add('clear');
             }
         }
