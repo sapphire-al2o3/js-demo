@@ -1,6 +1,6 @@
 const map = [];
-const sizeX = 3;
-const sizeY = 3;
+let sizeX = 3;
+let sizeY = 3;
 const history = [];
 
 for (let i = 0; i < sizeY; i++) {
@@ -129,3 +129,62 @@ document.getElementById('undo').addEventListener('click', e => {
         }
     }
 }, false);
+
+function init(s) {
+    sizeX = s;
+    sizeY = s;
+    map.length = 0;
+    for (let i = 0; i < sizeY; i++) {
+        map.push([]);
+        for (let j = 0; j < sizeX; j++) {
+            map[i].push(0);
+        }
+    }
+
+    while (table.firstChild) {
+        table.removeChild(table.firstChild);
+    }
+
+    cells.length = 0;
+
+    for (let i = 0; i < sizeY; i++) {
+        const tr = document.createElement('tr');
+        for (let j = 0; j < sizeX; j++) {
+            const td = document.createElement('td');
+            tr.appendChild(td);
+            cells.push(td);
+        }
+        table.appendChild(tr);
+    }
+
+    mapElm.length = 0;
+
+    let k = 0;
+    for (let i = 0; i < sizeY; i++) {
+        mapElm.push([]);
+        for (let j = 0; j < sizeX; j++) {
+            mapElm[i].push(cells[k]);
+            cells[k].setAttribute('x', j);
+            cells[k].setAttribute('y', i);
+            let r = Math.random() * 2 ^ 0;
+            if (r === 1) {
+                cells[k].classList.toggle('on');
+                map[i][j] = 1;
+            }
+            k++;
+        }
+    }
+
+    history.length = 0;
+    clearText.classList.remove('clear');
+}
+
+document.getElementById('size3').addEventListener('click', e => {
+    init(3);
+}, false);
+
+document.getElementById('size4').addEventListener('click', e => {
+    init(4);
+}, false);
+
+
