@@ -1,4 +1,4 @@
-var deck = [],
+let deck = [],
     dealer = [],
     player = [];
 
@@ -13,10 +13,10 @@ function print(text) {
 
 // 山札を作る
 function set(deck) {
-    var mark = ['♣', '♥', '♦', '♠'];
-    for(var k = 0; k < 1; k++) {
-        for(var j = 0; j < 4; j++) {
-            for(var i = 0; i < 13; i++) {
+    const mark = ['♣', '♥', '♦', '♠'];
+    for(let k = 0; k < 1; k++) {
+        for(let j = 0; j < 4; j++) {
+            for(let i = 0; i < 13; i++) {
                 deck.push({m: mark[j], n: i + 1});
             }
         }
@@ -25,8 +25,8 @@ function set(deck) {
 	
 // カードを切る
 function shuffle(deck) {
-    for(var i = 0, l = deck.length; i < l; i++) {
-        var j = Math.random() * l ^ 0,
+    for(let i = 0, l = deck.length; i < l; i++) {
+        let j = Math.random() * l ^ 0,
             t = deck[i];
         deck[i] = deck[j];
         deck[j] = t;
@@ -49,7 +49,7 @@ function start() {
         check();
     }
 }
-	
+
 function draw(deck) {
     return deck.pop();
 }
@@ -67,9 +67,9 @@ function tie() {
 }
 
 function total(card) {
-    var sum = 0,
+    let sum = 0,
         a = 0;
-    for(var i = 0; i < card.length; i++) {
+    for(let i = 0; i < card.length; i++) {
         if(card[i].n === 1) {
             a++;
             sum += 11;
@@ -89,7 +89,7 @@ function total(card) {
 }
 	
 function check() {
-    var pt = total(player),
+    let pt = total(player),
         dt = total(dealer);
     
     if(pt > 21) {
@@ -110,7 +110,7 @@ function check() {
 }
 
 function bust(card) {
-    var sum = total(card);
+    let sum = total(card);
     if(sum > 21) {
         print('21を超えました');
         return true;
@@ -145,11 +145,11 @@ function stand() {
     // 勝敗の判定
     check();
 }
-	
+
 function show(f) {
     // プレヤーの手札を表示
-    var str = 'player: ';
-    for(var i = 0; i < player.length; i++) {
+    let str = 'player: ';
+    for(let i = 0; i < player.length; i++) {
         str += player[i].m + '' + player[i].n + ' ';
     }
     print(str);
@@ -159,7 +159,7 @@ function show(f) {
     str = 'dealer: ';
     if(f) {
         str = '';
-        for(i = 0; i < dealer.length; i++) {
+        for(let i = 0; i < dealer.length; i++) {
             str += dealer[i].m + '' + dealer[i].n + ' ';
         }
         print('total ' + total(dealer));
@@ -169,8 +169,8 @@ function show(f) {
     print(str);
 }
 
-document.getElementById('hit').onclick = hit;
-document.getElementById('stand').onclick = stand;
+document.getElementById('hit').addEventListener('click', () => hit());
+document.getElementById('stand').addEventListener('click', () => stand());
 
 print('==== Blackjack ====');
 set(deck);
