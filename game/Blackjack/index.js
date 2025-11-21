@@ -169,8 +169,19 @@ function show(f) {
     print(str);
 }
 
+function reset() {
+    deck.length = 0;
+    player.length = 0;
+    dealer.length = 0;
+    log = '';
+    set(deck);
+    shuffle(deck);
+    start();
+}
+
 document.getElementById('hit').addEventListener('click', () => hit());
 document.getElementById('stand').addEventListener('click', () => stand());
+document.getElementById('reset').addEventListener('click', () => reset());
 
 print('==== Blackjack ====');
 set(deck);
