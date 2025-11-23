@@ -134,7 +134,6 @@ const button = document.getElementById('play');
 button.addEventListener('click', (e) => {
     if (node !== null) {
         node.stop();
-        node.dis
     }
     context.suspend();
     node = play();
