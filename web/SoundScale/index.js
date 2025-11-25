@@ -99,14 +99,14 @@ function setup() {
 
 let scaleName = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'];
 let scaleLevel = [-9, -7, -5, -4, -2, 0, 2, 3]
+let keys = 'asdfghjk';
 const scaleButton = document.getElementById('scales');
 
 let playing = false;
 let start = false;
 let node = null;
 
-function clickPlayScale(e) {
-    let l = parseInt(e.target.getAttribute('hz'));
+function playScale(l) {
     freq = 440 * Math.pow(2, 1 / 12 * l);
     console.log(freq);
     
@@ -116,6 +116,11 @@ function clickPlayScale(e) {
     context.suspend();
     node = play();
     context.resume();
+}
+
+function clickPlayScale(e) {
+    let l = parseInt(e.target.getAttribute('hz'));
+    playScale(l);
 }
 
 for (let i = 0; i < scaleName.length; i++) {
@@ -138,6 +143,13 @@ document.body.appendChild(createRadio(['linear', 'quad', 'bounce', 'none'], (v, 
 document.body.appendChild(createRadio(['sine', 'saw', 'square', 'triangle'], (v, id, i) => {
     wave = i;
 }));
+
+document.body.addEventListener('keydown', e => {
+    let key = keys.indexOf(e.key);
+    if (key >= 0) {
+        playScale(scaleLevel[key]);
+    }
+}, false);
 
 function play() {
     const length = parseFloat(document.getElementById('length').value);
