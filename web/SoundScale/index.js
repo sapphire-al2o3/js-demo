@@ -101,6 +101,8 @@ let scaleName = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'];
 let scaleLevel = [-9, -7, -5, -4, -2, 0, 2, 3]
 let keys = 'asdfghjk';
 const scaleButton = document.getElementById('scales');
+const lengthInput = document.getElementById('length');
+const keyboard = document.getElementById('keyboard');
 
 let playing = false;
 let start = false;
@@ -126,10 +128,16 @@ function clickPlayScale(e) {
 for (let i = 0; i < scaleName.length; i++) {
     const btn = document.createElement('button');
     btn.textContent = scaleName[i];
-    let f = Math.pow();
     btn.setAttribute('hz', scaleLevel[i]);
     btn.addEventListener('click', clickPlayScale);
     scaleButton.appendChild(btn);
+}
+
+for (let i = 0; i < scaleName.length; i++) {
+    const key = document.createElement('div');
+    key.setAttribute('hz', scaleLevel[i]);
+    key.addEventListener('click', clickPlayScale);
+    keyboard.appendChild(key);
 }
 
 document.body.appendChild(createSlider('amp', amp, v => {
@@ -152,7 +160,7 @@ document.body.addEventListener('keydown', e => {
 }, false);
 
 function play() {
-    const length = parseFloat(document.getElementById('length').value);
+    const length = parseFloat(lengthInput.value);
     if (time !== length) {
         time = length;
         resize(time);
