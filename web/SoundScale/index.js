@@ -98,8 +98,10 @@ function setup() {
 }
 
 let scaleName = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'];
-let scaleLevel = [-9, -7, -5, -4, -2, 0, 2, 3]
+let scaleLevel = [-9, -7, -5, -4, -2, 0, 2, 3];
 let keys = 'asdfghjk';
+let scaleSubLevel = [-8, -6, -3, -1, 1];
+let scaleSubLeft = [22, 56, 122, 156, 189];
 const scaleButton = document.getElementById('scales');
 const lengthInput = document.getElementById('length');
 const keyboard = document.getElementById('keyboard');
@@ -136,6 +138,15 @@ for (let i = 0; i < scaleName.length; i++) {
 for (let i = 0; i < scaleName.length; i++) {
     const key = document.createElement('div');
     key.setAttribute('hz', scaleLevel[i]);
+    key.addEventListener('click', clickPlayScale);
+    keyboard.appendChild(key);
+}
+
+for (let i = 0; i < scaleSubLevel.length; i++) {
+    const key = document.createElement('div');
+    key.setAttribute('hz', scaleSubLevel[i]);
+    key.classList.add('black');
+    key.style.left = scaleSubLeft[i] + 'px';
     key.addEventListener('click', clickPlayScale);
     keyboard.appendChild(key);
 }

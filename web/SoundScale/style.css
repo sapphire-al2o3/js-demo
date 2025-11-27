@@ -12,6 +12,10 @@
     border-left: 4px solid #CCC;
 }
 
+#keyboard {
+    position: relative;
+}
+
 #keyboard div {
     display: inline-block;
     width: 32px;
@@ -19,3 +23,13 @@
     border: 1px solid #000;
     margin-right: -1px;
 }
+
+#keyboard div.black {
+    position: absolute;
+    width: 22px;
+    height: 80px;
+    border: none;
+    margin-bottom: 40px;
+    background-color: #000;
+}
+
