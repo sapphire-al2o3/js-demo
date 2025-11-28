@@ -105,6 +105,7 @@ let scaleLevel = [-9, -7, -5, -4, -2, 0, 2, 3];
 let keys = 'asdfghjk';
 let scaleSubLevel = [-8, -6, -3, -1, 1];
 let scaleSubLeft = [22, 56, 121, 155, 189];
+let subKeys = 'wetyu';
 const scaleButton = document.getElementById('scales');
 const lengthInput = document.getElementById('length');
 const keyboard = document.getElementById('keyboard');
@@ -188,6 +189,10 @@ document.body.addEventListener('keydown', e => {
     let key = keys.indexOf(e.key);
     if (key >= 0) {
         playScale(scaleLevel[key]);
+    }
+    key = subKeys.indexOf(e.key);
+    if (key >= 0) {
+        playScale(scaleSubLevel[key]);
     }
 }, false);
 
