@@ -72,7 +72,7 @@ function triangle(t) {
 function waveform(t) {
     switch (wave) {
         case 0:
-            return Math.sin(t * Math.PI);
+            return Math.sin(2 * t * Math.PI);
         case 1:
             return saw(t);
         case 2:
