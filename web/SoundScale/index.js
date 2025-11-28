@@ -1,4 +1,4 @@
-const context = new window.AudioContext;
+const context = new AudioContext();
 let time = 0.5;
 let buffer = context.createBuffer(
     2,
@@ -17,6 +17,7 @@ function resize(length) {
         context.sampleRate * length,
         context.sampleRate
     );
+    return buffer;
 }
 
 function linear(x) {
@@ -84,7 +85,7 @@ function waveform(t) {
     }
 }
 
-function setup() {
+function setup(buffer, time, freq, amp) {
     for (let i = 0; i < buffer.numberOfChannels; i++) {
         const b = buffer.getChannelData(i);
         const l = buffer.length;
@@ -97,11 +98,13 @@ function setup() {
     }
 }
 
+let buffers = [];
+let subBuffers = [];
 let scaleName = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'];
 let scaleLevel = [-9, -7, -5, -4, -2, 0, 2, 3];
 let keys = 'asdfghjk';
 let scaleSubLevel = [-8, -6, -3, -1, 1];
-let scaleSubLeft = [22, 56, 122, 156, 189];
+let scaleSubLeft = [22, 56, 121, 155, 189];
 const scaleButton = document.getElementById('scales');
 const lengthInput = document.getElementById('length');
 const keyboard = document.getElementById('keyboard');
@@ -133,6 +136,15 @@ for (let i = 0; i < scaleName.length; i++) {
     btn.setAttribute('hz', scaleLevel[i]);
     btn.addEventListener('click', clickPlayScale);
     scaleButton.appendChild(btn);
+
+    let b = context.createBuffer(
+        2,
+        context.sampleRate * time,
+        context.sampleRate
+    );
+    buffers.push(b);
+    let f = 440 * Math.pow(2, 1 / 12 * scaleLevel[i]);
+    setup(b, time, f, amp);
 }
 
 for (let i = 0; i < scaleName.length; i++) {
@@ -149,6 +161,15 @@ for (let i = 0; i < scaleSubLevel.length; i++) {
     key.style.left = scaleSubLeft[i] + 'px';
     key.addEventListener('click', clickPlayScale);
     keyboard.appendChild(key);
+
+    let b = context.createBuffer(
+        2,
+        context.sampleRate * time,
+        context.sampleRate
+    );
+    subBuffers.push(b);
+    let f = 440 * Math.pow(2, 1 / 12 * scaleSubLevel[i]);
+    setup(b, time, f, amp);
 }
 
 document.body.appendChild(createSlider('amp', amp, v => {
@@ -176,7 +197,7 @@ function play() {
         time = length;
         resize(time);
     }
-    setup();
+    setup(buffer, time, freq, amp);
     const source = context.createBufferSource();
     source.buffer = buffer;
     source.connect(context.destination);
