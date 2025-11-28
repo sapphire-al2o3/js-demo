@@ -7,7 +7,7 @@ let buffer = context.createBuffer(
 );
 
 let freq = 440;
-let amp = 0.1;
+let amp = 0.2;
 let ease = 0;
 let wave = 0;
 
@@ -58,6 +58,16 @@ function wind(x) {
     }
 }
 
+function tone(t) {
+    let c = 0;
+    let a = 0.5;
+    for (let i = 0; i < 12; i++) {
+        c += Math.sin(t * 2 * Math.PI * (i + 1)) * a;
+        a *= 0.5;
+    }
+    return c;
+}
+
 function saw(t) {
     return (t - Math.floor(t)) * 2 - 1;
 }
@@ -73,9 +83,9 @@ function triangle(t) {
 function waveform(t) {
     switch (wave) {
         case 0:
-            return Math.sin(t * Math.PI);
+            return Math.sin(t * 2 * Math.PI);
         case 1:
-            return saw(t);
+            return tone(t);
         case 2:
             return square(t);
         case 3:
@@ -181,7 +191,7 @@ document.body.appendChild(createRadio(['linear', 'quad', 'bounce', 'none'], (v, 
     ease = i;
 }));
 
-document.body.appendChild(createRadio(['sine', 'saw', 'square', 'triangle'], (v, id, i) => {
+document.body.appendChild(createRadio(['sine', 'overtone', 'square', 'triangle'], (v, id, i) => {
     wave = i;
 }));
 
