@@ -61,7 +61,7 @@ function wind(x) {
 function tone(t) {
     let c = 0;
     let a = 0.5;
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 6; i++) {
         c += Math.sin(t * 2 * Math.PI * (i + 1)) * a;
         a *= 0.5;
     }
@@ -120,33 +120,43 @@ const scaleButton = document.getElementById('scales');
 const lengthInput = document.getElementById('length');
 const keyboard = document.getElementById('keyboard');
 
+lengthInput.value = time;
+
 let playing = false;
 let start = false;
 let node = null;
 
-function playScale(l) {
+function playScale(l, buffer) {
     freq = 440 * Math.pow(2, 1 / 12 * l);
     console.log(freq);
     
     if (node !== null) {
-        node.stop();
+        // node.stop();
     }
-    context.suspend();
-    node = play();
-    context.resume();
+    // context.suspend();
+    node = play(buffer);
+    // context.resume();
 }
 
 function clickPlayScale(e) {
     let l = parseInt(e.target.getAttribute('hz'));
-    playScale(l);
+    let i = parseInt(e.target.getAttribute('index'));
+    playScale(l, buffers[i]);
 }
 
 for (let i = 0; i < scaleName.length; i++) {
     const btn = document.createElement('button');
     btn.textContent = scaleName[i];
     btn.setAttribute('hz', scaleLevel[i]);
+    btn.setAttribute('index', i);
     btn.addEventListener('click', clickPlayScale);
     scaleButton.appendChild(btn);
+
+    const key = document.createElement('div');
+    key.setAttribute('hz', scaleLevel[i]);
+    key.setAttribute('index', i);
+    key.addEventListener('click', clickPlayScale);
+    keyboard.appendChild(key);
 
     let b = context.createBuffer(
         2,
@@ -158,16 +168,10 @@ for (let i = 0; i < scaleName.length; i++) {
     setup(b, time, f, amp);
 }
 
-for (let i = 0; i < scaleName.length; i++) {
-    const key = document.createElement('div');
-    key.setAttribute('hz', scaleLevel[i]);
-    key.addEventListener('click', clickPlayScale);
-    keyboard.appendChild(key);
-}
-
 for (let i = 0; i < scaleSubLevel.length; i++) {
     const key = document.createElement('div');
     key.setAttribute('hz', scaleSubLevel[i]);
+    key.setAttribute('index', i);
     key.classList.add('black');
     key.style.left = scaleSubLeft[i] + 'px';
     key.addEventListener('click', clickPlayScale);
@@ -183,36 +187,49 @@ for (let i = 0; i < scaleSubLevel.length; i++) {
     setup(b, time, f, amp);
 }
 
+function setupAll() {
+    for (let i = 0; i < scaleLevel.length; i++) {
+        let f = 440 * Math.pow(2, 1 / 12 * scaleLevel[i]);
+        setup(buffers[i], time, f, amp);
+    }
+    for (let i = 0; i < scaleSubLevel.length; i++) {
+        let f = 440 * Math.pow(2, 1 / 12 * scaleSubLevel[i]);
+        setup(subBuffers[i], time, f, amp);
+    }
+}
+
 document.body.appendChild(createSlider('amp', amp, v => {
     amp = v;
 }));
 
 document.body.appendChild(createRadio(['linear', 'quad', 'bounce', 'none'], (v, id, i) => {
     ease = i;
+    setupAll();
 }));
 
 document.body.appendChild(createRadio(['sine', 'overtone', 'square', 'triangle'], (v, id, i) => {
     wave = i;
+    setupAll();
 }));
 
 document.body.addEventListener('keydown', e => {
     let key = keys.indexOf(e.key);
     if (key >= 0) {
-        playScale(scaleLevel[key]);
+        playScale(scaleLevel[key], buffers[key]);
     }
     key = subKeys.indexOf(e.key);
     if (key >= 0) {
-        playScale(scaleSubLevel[key]);
+        playScale(scaleSubLevel[key], subBuffers[key]);
     }
 }, false);
 
-function play() {
+function play(buffer) {
     const length = parseFloat(lengthInput.value);
     if (time !== length) {
         time = length;
         resize(time);
     }
-    setup(buffer, time, freq, amp);
+    // setup(buffer, time, freq, amp);
     const source = context.createBufferSource();
     source.buffer = buffer;
     source.connect(context.destination);
