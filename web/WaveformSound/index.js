@@ -6,10 +6,11 @@ let buffer = context.createBuffer(
     context.sampleRate
 );
 
-let freq = 2000;
+let freq = 440;
 let amp = 0.1;
 let ease = 0;
 let wave = 0;
+let octove = false;
 
 function resize(length) {
     buffer = context.createBuffer(
@@ -84,21 +85,33 @@ function waveform(t) {
     }
 }
 
+function overtone(wave, t, n) {
+    let a = 1;
+    let s = 0;
+    let f = 0;
+    for (let i = 0; i < n; i++) {
+        f += wave(t * (i + 1)) * a;
+        s += a;
+        a /= 2;
+    }
+    return f / s;
+}
+
 function setup() {
     for (let i = 0; i < buffer.numberOfChannels; i++) {
         const b = buffer.getChannelData(i);
         const l = buffer.length;
         for (let j = 0; j < buffer.length; j++) {
             let t = j / l * time * freq;
-            let f = waveform(t);
+            let f = octove ? overtone(waveform, t, 8) : waveform(t);
             let w = wind(j / l);
             b[j] = amp * w * f;
         }
     }
 }
 
-document.body.appendChild(createSlider('freq', (freq + 100) / 10000, v => {
-    freq = v * 10000 + 100;
+document.body.appendChild(createSlider('freq', (freq + 100) / 5000, v => {
+    freq = v * 5000 + 100;
 }));
 
 document.body.appendChild(createSlider('amp', amp, v => {
@@ -111,6 +124,10 @@ document.body.appendChild(createRadio(['linear', 'quad', 'bounce', 'none'], (v, 
 
 document.body.appendChild(createRadio(['sine', 'saw', 'square', 'triangle'], (v, id, i) => {
     wave = i;
+}));
+
+document.body.appendChild(createCheckbox('overtone', v => {
+    octove = v;
 }));
 
 function play() {
