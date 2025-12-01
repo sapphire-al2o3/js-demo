@@ -10,6 +10,7 @@ let freq = 440;
 let amp = 0.2;
 let ease = 0;
 let wave = 0;
+let volume = 0.5;
 
 function resize(length) {
     buffer = context.createBuffer(
@@ -198,8 +199,8 @@ function setupAll() {
     }
 }
 
-document.body.appendChild(createSlider('amp', amp, v => {
-    amp = v;
+document.body.appendChild(createSlider('volume', volume, v => {
+    volume = v;
 }));
 
 document.body.appendChild(createRadio(['linear', 'quad', 'bounce', 'none'], (v, id, i) => {
@@ -231,8 +232,11 @@ function play(buffer) {
     }
     // setup(buffer, time, freq, amp);
     const source = context.createBufferSource();
+    const gainNode = context.createGain();
+    gainNode.gain.value = volume;
     source.buffer = buffer;
-    source.connect(context.destination);
+    source.connect(gainNode);
+    gainNode.connect(context.destination);
     source.start();
     return source;
 }
