@@ -1,10 +1,5 @@
 const context = new AudioContext();
 let time = 0.5;
-let buffer = context.createBuffer(
-    2,
-    context.sampleRate * time,
-    context.sampleRate
-);
 
 let freq = 440;
 let amp = 0.2;
@@ -13,12 +8,20 @@ let wave = 0;
 let volume = 0.5;
 
 function resize(length) {
-    buffer = context.createBuffer(
-        2,
-        context.sampleRate * length,
-        context.sampleRate
-    );
-    return buffer;
+    for (let i = 0; i < scaleLevel.length; i++) {
+        buffers[i] = context.createBuffer(
+            2,
+            context.sampleRate * length,
+            context.sampleRate
+        );
+    }
+    for (let i = 0; i < scaleSubLevel.length; i++) {
+        subBuffers[i] = context.createBuffer(
+            2,
+            context.sampleRate * length,
+            context.sampleRate
+        );
+    }
 }
 
 function linear(x) {
@@ -205,13 +208,20 @@ document.body.appendChild(createSlider('volume', volume, v => {
 
 document.body.appendChild(createRadio(['linear', 'quad', 'bounce', 'none'], (v, id, i) => {
     ease = i;
-    setupAll();
 }));
 
 document.body.appendChild(createRadio(['sine', 'overtone', 'square', 'triangle'], (v, id, i) => {
     wave = i;
-    setupAll();
 }));
+
+document.getElementById('setup').addEventListener('click', e => {
+    const length = parseFloat(lengthInput.value);
+    if (time !== length) {
+        time = length;
+        resize(time);
+    }
+    setupAll();
+});
 
 document.body.addEventListener('keydown', e => {
     let key = keys.indexOf(e.key);
@@ -225,12 +235,6 @@ document.body.addEventListener('keydown', e => {
 }, false);
 
 function play(buffer) {
-    const length = parseFloat(lengthInput.value);
-    if (time !== length) {
-        time = length;
-        resize(time);
-    }
-    // setup(buffer, time, freq, amp);
     const source = context.createBufferSource();
     const gainNode = context.createGain();
     gainNode.gain.value = volume;
