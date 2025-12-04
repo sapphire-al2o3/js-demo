@@ -5,7 +5,7 @@ let freq = 440;
 let amp = 0.2;
 let ease = 0;
 let wave = 0;
-let volume = 0.5;
+let volume = 1;
 
 function resize(length) {
     for (let i = 0; i < scaleLevel.length; i++) {
@@ -202,15 +202,17 @@ function setupAll() {
     }
 }
 
-document.body.appendChild(createSlider('volume', volume, v => {
-    volume = v;
+const setting = document.getElementById('setting');
+
+document.body.appendChild(createSlider('volume', volume / 2, v => {
+    volume = v * 2;
 }));
 
-document.body.appendChild(createRadio(['linear', 'quad', 'bounce', 'none'], (v, id, i) => {
+setting.appendChild(createRadio(['linear', 'quad', 'bounce', 'none'], (v, id, i) => {
     ease = i;
 }));
 
-document.body.appendChild(createRadio(['sine', 'overtone', 'square', 'triangle'], (v, id, i) => {
+setting.appendChild(createRadio(['sine', 'overtone', 'square', 'triangle'], (v, id, i) => {
     wave = i;
 }));
 
