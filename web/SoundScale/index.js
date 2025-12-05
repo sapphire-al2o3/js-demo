@@ -6,6 +6,7 @@ let amp = 0.2;
 let ease = 0;
 let wave = 0;
 let volume = 1;
+let octave = 0;
 
 function resize(length) {
     for (let i = 0; i < scaleLevel.length; i++) {
@@ -193,11 +194,11 @@ for (let i = 0; i < scaleSubLevel.length; i++) {
 
 function setupAll() {
     for (let i = 0; i < scaleLevel.length; i++) {
-        let f = 440 * Math.pow(2, 1 / 12 * scaleLevel[i]);
+        let f = 440 * Math.pow(2, 1 / 12 * scaleLevel[i] + octave);
         setup(buffers[i], time, f, amp);
     }
     for (let i = 0; i < scaleSubLevel.length; i++) {
-        let f = 440 * Math.pow(2, 1 / 12 * scaleSubLevel[i]);
+        let f = 440 * Math.pow(2, 1 / 12 * scaleSubLevel[i] + octave);
         setup(subBuffers[i], time, f, amp);
     }
 }
@@ -222,6 +223,7 @@ document.getElementById('setup').addEventListener('click', e => {
         time = length;
         resize(time);
     }
+    octave = parseInt(document.getElementById('octave').value);
     setupAll();
 });
 
