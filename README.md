@@ -199,3 +199,4 @@ https://sapphire-al2o3.github.io/js-demo/
 - [ツールチップ](https://sapphire-al2o3.github.io/js-demo/web/Tooltip/)
 - [ノイズサウンド](https://sapphire-al2o3.github.io/js-demo/web/NoiseSound/)
 - [WaveformSound](https://sapphire-al2o3.github.io/js-demo/web/WaveformSound/)
+- [音階](https://sapphire-al2o3.github.io/js-demo/web/SoundScale/)
