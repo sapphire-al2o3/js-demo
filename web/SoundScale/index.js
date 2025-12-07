@@ -161,6 +161,9 @@ for (let i = 0; i < scaleName.length; i++) {
     key.setAttribute('hz', scaleLevel[i]);
     key.setAttribute('index', i);
     key.addEventListener('click', clickPlayScale);
+    const caption = document.createElement('span');
+    caption.textContent = scaleName[i];
+    key.appendChild(caption);
     keyboard.appendChild(key);
 
     let b = context.createBuffer(
