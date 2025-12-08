@@ -125,6 +125,8 @@ const scaleButton = document.getElementById('scales');
 const lengthInput = document.getElementById('length');
 const keyboard = document.getElementById('keyboard');
 
+let keyLabel = ['ド', 'レ', 'ミ', 'ファ', 'ソ', 'ラ', 'シ', 'ド'];
+
 lengthInput.value = time;
 
 let playing = false;
@@ -162,7 +164,7 @@ for (let i = 0; i < scaleName.length; i++) {
     key.setAttribute('index', i);
     key.addEventListener('click', clickPlayScale);
     const caption = document.createElement('span');
-    caption.textContent = scaleName[i];
+    caption.textContent = keyLabel[i];
     key.appendChild(caption);
     keyboard.appendChild(key);
 

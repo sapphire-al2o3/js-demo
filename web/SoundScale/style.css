@@ -25,6 +25,16 @@
     margin-right: -1px;
 }
 
+#keyboard div span {
+    color: #666;
+    font-size: 12px;
+    user-select: none;
+    text-align: center;
+    display: inline-block;
+    width: 32px;
+    margin-top: 96px;
+}
+
 #keyboard div.black {
     position: absolute;
     width: 22px;
