@@ -146,8 +146,8 @@ function playScale(l, buffer) {
 }
 
 function clickPlayScale(e) {
-    let l = parseInt(e.target.getAttribute('hz'));
-    let i = parseInt(e.target.getAttribute('index'));
+    let l = parseInt(e.currentTarget.getAttribute('hz'));
+    let i = parseInt(e.currentTarget.getAttribute('index'));
     playScale(l, buffers[i]);
 }
 
