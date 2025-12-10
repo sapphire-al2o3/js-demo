@@ -222,6 +222,12 @@ setting.appendChild(createRadio(['sine', 'overtone', 'square', 'triangle'], (v, 
     wave = i;
 }));
 
+document.body.appendChild(createCheckbox('Label', (v) => {
+    document.querySelectorAll('span').forEach(e => {
+        e.classList.toggle('hidden');
+    });
+}, true));
+
 document.getElementById('setup').addEventListener('click', e => {
     const length = parseFloat(lengthInput.value);
     if (time !== length) {

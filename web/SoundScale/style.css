@@ -35,6 +35,10 @@
     margin-top: 96px;
 }
 
+#keyboard div span.hidden {
+    visibility: hidden;
+}
+
 #keyboard div.black {
     position: absolute;
     width: 22px;
