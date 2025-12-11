@@ -25,6 +25,10 @@
     margin-right: -1px;
 }
 
+#keyboard div:active {
+    height: 118px;
+}
+
 #keyboard div span {
     color: #666;
     font-size: 12px;
