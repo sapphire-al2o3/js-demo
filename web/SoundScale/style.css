@@ -46,9 +46,15 @@
 #keyboard div.black {
     position: absolute;
     width: 22px;
-    height: 80px;
+    height: 72px;
     border: none;
     margin-bottom: 40px;
     background-color: #000;
+    border-bottom: 8px solid #333;
+}
+
+#keyboard div.black:active {
+    height: 76px;
+    border-bottom: 4px solid #333;
 }
 
