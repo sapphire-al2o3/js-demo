@@ -107,15 +107,17 @@ function waveform(t) {
 }
 
 function setup(buffer, time, freq, amp) {
-    for (let i = 0; i < buffer.numberOfChannels; i++) {
-        const b = buffer.getChannelData(i);
-        const l = buffer.length;
-        for (let j = 0; j < buffer.length; j++) {
-            let t = j / l * time * freq;
-            let f = waveform(t);
-            let w = wind(j / l);
-            b[j] = amp * w * f;
-        }
+    const l = buffer.length;
+    const b = buffer.getChannelData(0);
+    for (let j = 0; j < buffer.length; j++) {
+        let t = j / l * time * freq;
+        let f = waveform(t);
+        let w = wind(j / l);
+        b[j] = amp * w * f;
+    }
+    const b2 = buffer.getChannelData(1);
+    for (let j = 0; j < buffer.length; j++) {
+        b2[j] = b[j];
     }
 }
 
