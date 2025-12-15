@@ -70,6 +70,10 @@ function triangle(t) {
     return Math.abs(t - Math.floor(t) - 0.5) * 4 - 1;
 }
 
+function pulse(t) {
+    return t - Math.floor(t) > 0.75 ? 1 : -1;
+}
+
 function waveform(t) {
     switch (wave) {
         case 0:
@@ -80,6 +84,8 @@ function waveform(t) {
             return square(t);
         case 3:
             return triangle(t);
+        case 4:
+            return pulse(t);
         default:
             return 1;
     }
@@ -122,7 +128,7 @@ document.body.appendChild(createRadio(['linear', 'quad', 'bounce', 'none'], (v, 
     ease = i;
 }));
 
-document.body.appendChild(createRadio(['sine', 'saw', 'square', 'triangle'], (v, id, i) => {
+document.body.appendChild(createRadio(['sine', 'saw', 'square', 'triangle', 'pulse'], (v, id, i) => {
     wave = i;
 }));
 
