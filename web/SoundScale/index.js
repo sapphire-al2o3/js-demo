@@ -206,6 +206,7 @@ for (let i = 0; i < scaleSubLevel.length; i++) {
 }
 
 function setupAll() {
+    console.time('setup');
     for (let i = 0; i < scaleLevel.length; i++) {
         let f = 440 * Math.pow(2, 1 / 12 * scaleLevel[i] + octave);
         setup(buffers[i], time, f, amp);
@@ -214,6 +215,7 @@ function setupAll() {
         let f = 440 * Math.pow(2, 1 / 12 * scaleSubLevel[i] + octave);
         setup(subBuffers[i], time, f, amp);
     }
+    console.timeEnd('setup');
 }
 
 const setting = document.getElementById('setting');
