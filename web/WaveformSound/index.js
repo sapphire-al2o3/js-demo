@@ -104,15 +104,28 @@ function overtone(wave, t, n) {
 }
 
 function setup() {
-    for (let i = 0; i < buffer.numberOfChannels; i++) {
-        const b = buffer.getChannelData(i);
-        const l = buffer.length;
-        for (let j = 0; j < buffer.length; j++) {
-            let t = j / l * time * freq;
-            let f = octove ? overtone(waveform, t, 8) : waveform(t);
-            let w = wind(j / l);
-            b[j] = amp * w * f;
-        }
+    const b = buffer.getChannelData(0);
+    const l = buffer.length;
+    // for (let j = 0; j < freq; j++) {
+    //     let t = j / l * time * freq;
+    //     let f = octove ? overtone(waveform, t, 8) : waveform(t);
+    //     b[j] = amp * f;
+    // }
+    // for (let j = freq; j < buffer.length; j++) {
+
+    // }
+    
+    for (let j = 0; j < buffer.length; j++) {
+        let t = j / l * time * freq;
+        // t = t - Math.floor(t);
+        let f = octove ? overtone(waveform, t, 8) : waveform(t);
+        let w = wind(j / l);
+        b[j] = amp * w * f;
+    }
+
+    const b2 = buffer.getChannelData(1);
+    for (let j = 0; j < buffer.length; j++) {
+        b2[j] = b[j];
     }
 }
 
