@@ -74,6 +74,17 @@ function pulse(t) {
     return t - Math.floor(t) > 0.75 ? 1 : -1;
 }
 
+const noiseBuffer = [];
+for (let i = 0; i < 100; i++) {
+    noiseBuffer.push(Math.random() * 2 - 1);
+}
+
+
+function noise(t) {
+    let k = (t - Math.floor(t)) * 100 ^ 0;
+    return noiseBuffer[k];
+}
+
 function waveform(t) {
     switch (wave) {
         case 0:
@@ -86,6 +97,8 @@ function waveform(t) {
             return triangle(t);
         case 4:
             return pulse(t);
+        case 5:
+            return noise(t);
         default:
             return 1;
     }
@@ -106,18 +119,8 @@ function overtone(wave, t, n) {
 function setup() {
     const b = buffer.getChannelData(0);
     const l = buffer.length;
-    // for (let j = 0; j < freq; j++) {
-    //     let t = j / l * time * freq;
-    //     let f = octove ? overtone(waveform, t, 8) : waveform(t);
-    //     b[j] = amp * f;
-    // }
-    // for (let j = freq; j < buffer.length; j++) {
-
-    // }
-    
     for (let j = 0; j < buffer.length; j++) {
         let t = j / l * time * freq;
-        // t = t - Math.floor(t);
         let f = octove ? overtone(waveform, t, 8) : waveform(t);
         let w = wind(j / l);
         b[j] = amp * w * f;
@@ -141,7 +144,7 @@ document.body.appendChild(createRadio(['linear', 'quad', 'bounce', 'none'], (v, 
     ease = i;
 }));
 
-document.body.appendChild(createRadio(['sine', 'saw', 'square', 'triangle', 'pulse'], (v, id, i) => {
+document.body.appendChild(createRadio(['sine', 'saw', 'square', 'triangle', 'pulse', 'noise'], (v, id, i) => {
     wave = i;
 }));
 
