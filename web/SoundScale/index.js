@@ -142,7 +142,7 @@ let start = false;
 let node = null;
 
 function playScale(l, buffer) {
-    freq = 440 * Math.pow(2, 1 / 12 * l);
+    freq = 440 * Math.pow(2, 1 / 12 * l + octave);
     console.log(freq);
     
     if (node !== null) {
