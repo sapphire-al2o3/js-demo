@@ -246,6 +246,13 @@ document.getElementById('setup').addEventListener('click', e => {
     }
     octave = parseInt(document.getElementById('octave').value);
     setupAll();
+
+    const buttons = document.querySelectorAll('#scales button');
+    let i = 0;
+    for (; i < buttons.length - 1; i++) {
+        buttons[i].textContent = scaleName[i][0] + (octave + 4).toString();
+    }
+    buttons[i].textContent = scaleName[i][0] + (octave + 5).toString();
 });
 
 document.body.addEventListener('keydown', e => {
