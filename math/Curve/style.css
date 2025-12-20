@@ -1,0 +1,7 @@
+canvas {
+    border: 1px solid #AAA;
+}
+
+#expression {
+    font-family: monospace;
+}
