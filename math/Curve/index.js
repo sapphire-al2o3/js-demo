@@ -15,7 +15,8 @@ let refresh = true;
 let isClamp = true;
 let shapes = [p1, p2];
 
-const text = document.getElementById('expression');
+const textX = document.getElementById('expression-x');
+const textY = document.getElementById('expression-y');
 let exp;
 
 function clamp(x, min, max) {
@@ -107,6 +108,26 @@ function draw() {
     ctx.lineTo(p3.x, p3.y);
     ctx.stroke();
 
+    // ctx.lineWidth = 1.0;
+    // ctx.beginPath();
+    // ctx.moveTo(p0.x, p0.y);
+    // for(let i = 1; i < 100; i++) {
+    //     let p = bezier3(p0, p1, p2, p3, i / 100);
+    //     ctx.lineTo(p0.x + i * 2, p.y);
+    // }
+    // ctx.lineTo(p3.x, p3.y);
+    // ctx.stroke();
+
+    //     ctx.beginPath();
+    // ctx.moveTo(p0.x, p0.y);
+    // for(let i = 1; i < 100; i++) {
+    //     let p = bezier3(p0, p1, p2, p3, i / 100);
+    //     ctx.lineTo(p.x, p0.y + i * 2);
+    // }
+    // ctx.lineTo(p3.x, p3.y);
+    // ctx.stroke();
+
+
     ctx.lineWidth = 0.5;
     ctx.strokeStyle = '#AAA';
     strokeLine(0, p0.y, w, p0.y);
@@ -159,10 +180,11 @@ function draw() {
 printExpression();
 
 function printExpression() {
-    let newExp = `(1 - t)^3 * ${p0.x} + 3 * t * (1 - t)^2 * ${p1.x} + 3 * t * t * (1 - t) * ${p2.x} + t^3 * ${p3.x}`;
+    let newExp = `(1 - t)^3*${p0.x} + 3*t*(1 - t)^2 * ${p1.x} + 3*t*t*(1 - t)*${p2.x} + t^3*${p3.x}`;
     if (exp !== newExp) {
         exp = newExp;
-        text.textContent = exp;
+        textX.textContent = exp;
+        textY.textContent = `(1 - t)^3*${p0.y} + 3*t*(1 - t)^2 * ${p1.y} + 3*t*t*(1 - t)*${p2.y} + t^3*${p3.y}`;
     }
 }
 

@@ -2,6 +2,9 @@ canvas {
     border: 1px solid #AAA;
 }
 
-#expression {
+#expression-x, #expression-y {
     font-family: monospace;
+    border: 1px solid #AAA;
+    padding: 6px;
+    margin-bottom: 6px;
 }
