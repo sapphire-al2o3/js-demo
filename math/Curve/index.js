@@ -134,6 +134,9 @@ function draw() {
     strokeLine(p0.x, 0, p0.x, h);
     strokeLine(0, p3.y, w, p3.y);
     strokeLine(p3.x, 0, p3.x, h);
+
+    strokeLine(0, (p0.y + p3.y) * 0.5, w, (p0.y + p3.y) * 0.5);
+    strokeLine((p0.x + p3.x) * 0.5, 0, (p0.x + p3.x) * 0.5, h);
     
     ctx.fillStyle = 'rgba(255, 80, 192, 1)';
     // if (d.distance(p0) < 6) {
