@@ -170,7 +170,7 @@ for (let i = 0; i < scaleName.length; i++) {
     const key = document.createElement('div');
     key.setAttribute('hz', scaleLevel[i]);
     key.setAttribute('index', i);
-    key.addEventListener('mousedown', clickPlayScale);
+    key.addEventListener('pointerdown', clickPlayScale);
     const caption = document.createElement('span');
     caption.textContent = keyLabel[i];
     key.appendChild(caption);
@@ -192,7 +192,7 @@ for (let i = 0; i < scaleSubLevel.length; i++) {
     key.setAttribute('index', i);
     key.classList.add('black');
     key.style.left = scaleSubLeft[i] + 'px';
-    key.addEventListener('mousedown', clickPlayScale);
+    key.addEventListener('pointerdown', clickPlayScale);
     keyboard.appendChild(key);
 
     let b = context.createBuffer(
