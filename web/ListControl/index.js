@@ -128,7 +128,7 @@ document.getElementById('add').addEventListener('click', e => {
     let removeButton = document.createElement('input');
     input.setAttribute('type', 'text');
     removeButton.setAttribute('type', 'button');
-    removeButton.setAttribute('value', 'x');
+    removeButton.setAttribute('value', '✖');
     removeButton.addEventListener('click', removeListItem);
     item.setAttribute('id', 'item-' + index.toString())
     item.appendChild(input);

@@ -59,3 +59,26 @@ label {
     border: 1px solid #EEE;
     background-color: #F7F7F7;
 }
+
+.listbox input[type="text"]:active {
+    border: 1px solid #EEE;
+    background-color: #EEE;
+}
+
+.listbox input[type="button"] {
+    border: none;
+    background-color: #FFF;
+    color: #FFF;
+    font-size: 14px;
+}
+
+.listbox div:hover input[type="button"] {
+    color: #444;
+}
+
+.listbox .close {
+    height: 16px;
+    color: #444;
+}
+
+
