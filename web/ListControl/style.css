@@ -60,9 +60,10 @@ label {
     background-color: #F7F7F7;
 }
 
-.listbox input[type="text"]:active {
+.listbox input[type="text"]:focus {
+    background-color: #F7F7F7;
     border: 1px solid #EEE;
-    background-color: #EEE;
+    outline: 1px solid #DDD;
 }
 
 .listbox input[type="button"] {
@@ -70,6 +71,7 @@ label {
     background-color: #FFF;
     color: #FFF;
     font-size: 14px;
+    margin-left: 1px;
 }
 
 .listbox div:hover input[type="button"] {
