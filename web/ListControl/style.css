@@ -66,15 +66,16 @@ label {
     outline: 1px solid #DDD;
 }
 
-.listbox input[type="button"] {
+.listbox span {
     border: none;
     background-color: #FFF;
     color: #FFF;
     font-size: 14px;
-    margin-left: 1px;
+    margin-left: 6px;
+    cursor: default;
 }
 
-.listbox div:hover input[type="button"] {
+.listbox div:hover span {
     color: #444;
 }
 

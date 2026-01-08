@@ -125,10 +125,11 @@ let index = 0;
 document.getElementById('add').addEventListener('click', e => {
     let input = document.createElement('input');
     let item = document.createElement('div');
-    let removeButton = document.createElement('input');
+    let removeButton = document.createElement('span');
     input.setAttribute('type', 'text');
-    removeButton.setAttribute('type', 'button');
-    removeButton.setAttribute('value', '✖');
+    // removeButton.setAttribute('type', 'button');
+    // removeButton.setAttribute('value', '✖');
+    removeButton.innerText = '✖';
     removeButton.addEventListener('click', removeListItem);
     item.setAttribute('id', 'item-' + index.toString())
     item.appendChild(input);
