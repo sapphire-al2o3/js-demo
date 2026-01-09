@@ -73,6 +73,7 @@ label {
     font-size: 14px;
     margin-left: 6px;
     cursor: default;
+    user-select: none;
 }
 
 .listbox div:hover span {
