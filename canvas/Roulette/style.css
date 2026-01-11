@@ -1,0 +1,44 @@
+img {
+    width: 320px;
+    height: 320px;
+    image-rendering: pixelated;
+}
+
+#prefectures {
+    display: none;
+}
+
+#map_frame, #map, #font {
+    display: none;
+}
+
+#container {
+    width: fit-content;
+}
+
+#start-container {
+    text-align: center;
+}
+
+#start {
+    text-align: center;
+    font-size: 32px;
+    cursor: pointer;
+    height: 48px;
+    width: 144px;
+    /* background-image: url("./button.png");
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: 0px; */
+    border: none;
+    background-color: #FFF;
+}
+
+.stop {
+    background-position-y: -48px !important;
+}
+
+.disable {
+    color: #777;
+    background-position-y: -96px !important;
+}
