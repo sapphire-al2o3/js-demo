@@ -1,5 +1,3 @@
-
-
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -8,12 +6,16 @@ const height = canvas.height;
 
 
 let items = [
-    'あいう',
+    'あ',
     'い',
     'う',
     'え',
-    'お'
+    'お',
+    'か',
+    'き'
 ];
+
+const reelLength = items.length * 120;
 
 ctx.imageSmoothingEnabled = false;
 
@@ -28,12 +30,11 @@ function shuffle(array) {
 
 window.onload = () => {
 
-    const offscreen = new OffscreenCanvas(128, 64);
-    const offscreenCtx = offscreen.getContext('2d');
     ctx.font = 'bold 96px Meiryo';
-    offscreenCtx.font = 'bold 14px MS UI Gothic';
     ctx.fillStyle = '#EEE';
     ctx.lineWidth = 8;
+
+    // ctx.textBaseline = 'top';
 
     const grad0 = ctx.createLinearGradient(0, 0, 0, 50);
     grad0.addColorStop(0, 'rgba(0, 0, 0, 0.5)');
@@ -102,86 +103,49 @@ window.onload = () => {
         }
     }
 
+    let testOffset = 390;
+
     function draw() {
         
         ctx.clearRect(0, 0, width, height);
-        // ctx.fillStyle = 'rgb(0 0 0 / 0.2)';
         ctx.fillStyle = grad0;
         ctx.fillRect(0, 0, width, 100);
         ctx.fillStyle = grad1;
         ctx.fillRect(0, height - 100, width, 100);
 
+        // reelOffset = testOffset;
+
         ctx.fillStyle = '#000';
         for (let i = 0; i < 4; i++) {
-            const k = i % items.length;
-            const tm = ctx.measureText(items[k]);
-            let y = i * 120 + 100 + reelOffset;
-            ctx.fillText(items[k], (width - tm.width) * 0.5, y);
+            
+            let y = (i * 120 + reelOffset);// % 360 + 100;
+            let k = i;// + ((reelOffset) / 120 ^ 0);
+            if (y > height) {
+                y -= height + 120;
+                k = items.length - (4 - i);
+            }
+            
+            // if (k < 0) k += items.length;
+            const text = items[k % items.length];
+            const tm = ctx.measureText(text);
+            
+            ctx.fillRect(0, y, width, 10);
+            ctx.fillText(text, (width - tm.width) * 0.5, y + 96);
         }
     }
 
-    setAnimationFrame((delta) => {
-
-        if (state === 1) {
-            elapsedTime += delta;
-
-            if (elapsedTime > interval) {
-                if (elapsedTime > interval * 2) {
-                    elapsedTime = 0;
-                } else {
-                    elapsedTime -= interval;
-                }
-                index = (index + 1) % images.length;
-            }
-        } else if (state === 2) {
-            elapsedTime += delta;
-            let i = interval;
-            
-            if (time < 4) {
-                i = i * 30.0 ^ 0;
-            } else if (time < 6) {
-                i = i * 15.0 ^ 0;
-            } else if (time < 8) {
-                i = i * 5.0 ^ 0;
-            } else if (time < 10) {
-                i = i * 2.0 ^ 0;
-            }
-
-            if (elapsedTime > i) {
-                if (elapsedTime > i * 2) {
-                    elapsedTime = 0;
-                } else {
-                    elapsedTime -= i;
-                }
-                index = (index + 1) % images.length;
-            }
-
-            time -= delta * 0.001;
-            if (time < 0) {
-                counter = 6;
-                state = 3;
-                time = 0.5;
-                blink = false;
-            }
-        } else if (state === 3) {
-            time -= delta * 0.001;
-            if (time < 0) {
-                time = 0.3;
-                counter--;
-            }
-            if (counter < 0) {
-                reset();
-            }
-        }
-
+    function update(delta) {
         reelOffset += delta * speed;
-        if (reelOffset > height) {
-            reelOffset = -height;
+        if (reelOffset > reelLength) {
+            reelOffset -= reelLength;
         }
-
+        
         draw();
+    }
 
-    }, 1000 / 30);
+    update(0);
+
+    setAnimationFrame(update, 1000 / 30);
 
     button.addEventListener('click', e => {
         if (state === 0) {
