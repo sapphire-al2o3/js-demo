@@ -3,7 +3,7 @@ const ctx = canvas.getContext('2d');
 
 const width = canvas.width;
 const height = canvas.height;
-
+const itemHeight = 120;
 
 let items = [
     'あ',
@@ -15,7 +15,7 @@ let items = [
     'き'
 ];
 
-const reelLength = items.length * 120;
+const reelLength = items.length * itemHeight;
 
 function shuffle(array) {
     for(var i = 0, l = array.length; i < l; i++) {
@@ -60,20 +60,23 @@ window.onload = () => {
     let counter = 0;
     let blink = false;
     let reelOffset = 0;
-    let speed = 0.1;
+    let speed = 2;
 
     function start() {
         state = 1;
-        index = Math.random() * images.length ^ 0;
+        // index = Math.random() * images.length ^ 0;
         // button.textContent = 'STOP';
         button.classList.add('stop');
+        speed = 0;
     }
 
     function stop() {
-        state = 2;
-        time = 10 + Math.random() * 3;
+        // state = 2;
+        // time = 10 + Math.random() * 3;
         button.classList.remove('stop');
         button.classList.add('disable');
+        state = 0;
+        speed = 0.2;
     }
 
     function reset() {
@@ -116,14 +119,14 @@ window.onload = () => {
         ctx.fillStyle = '#000';
         for (let i = 0; i < 4; i++) {
             
-            let y = (i * 120 + reelOffset);// % 360 + 100;
+            let y = (i * itemHeight + reelOffset);// % 360 + 100;
             let k = i;// + ((reelOffset) / 120 ^ 0);
             if (y > height) {
-                y -= height + 120;
+                y -= height + itemHeight;
                 k = items.length - (4 - i);
             }
             if (y > height) {
-                y -= height + 120;
+                y -= height + itemHeight;
                 k = i - 1;
             }
             
