@@ -17,8 +17,6 @@ let items = [
 
 const reelLength = items.length * 120;
 
-ctx.imageSmoothingEnabled = false;
-
 function shuffle(array) {
     for(var i = 0, l = array.length; i < l; i++) {
         var j = Math.random() * l ^ 0,
@@ -103,7 +101,7 @@ window.onload = () => {
         }
     }
 
-    let testOffset = 390;
+    let testOffset = 600;
 
     function draw() {
         
@@ -123,6 +121,10 @@ window.onload = () => {
             if (y > height) {
                 y -= height + 120;
                 k = items.length - (4 - i);
+            }
+            if (y > height) {
+                y -= height + 120;
+                k = i - 1;
             }
             
             // if (k < 0) k += items.length;
