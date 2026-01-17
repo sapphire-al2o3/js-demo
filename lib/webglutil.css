@@ -1,93 +1,93 @@
 .slider {
-	width: 120px;
-	height: 12px;
-	position: relative;
-	background-color: #DDD;
-	position: relative;
-	box-shadow: inset 0 2px 2px #BBB;
-	display: inline-block;
+    width: 120px;
+    height: 12px;
+    position: relative;
+    background-color: #DDD;
+    position: relative;
+    box-shadow: inset 0 2px 2px #BBB;
+    display: inline-block;
 }
 .slider span {
-	display: block;
-	width: 12px;
-	height: 12px;
-	background-color: #34c0f4;
-	position: absolute;
-	top: 0px;
-	left: 235px;
-	cursor: pointer;
+    display: block;
+    width: 12px;
+    height: 12px;
+    background-color: #34c0f4;
+    position: absolute;
+    top: 0px;
+    left: 235px;
+    cursor: pointer;
 }
 .slider span:hover,
 .slider span.active {
 }
 
 .slider + label {
-	margin-left: 4px;
+    margin-left: 4px;
 }
 
 input[type="checkbox"], input[type="radio"] {
-	display: none;
+    display: none;
 }
 input[type="checkbox"] + label:before, input[type="radio"] + label:before {
-	content: "";
-	display: inline-block;
-	margin-right: 4px;
-	width: 12px;
-	height: 12px;
-	background-color: #DDD;
-	transition-property: background-color;
-	transition-duration: 0.4s;
+    content: "";
+    display: inline-block;
+    margin-right: 4px;
+    width: 12px;
+    height: 12px;
+    background-color: #DDD;
+    transition-property: background-color;
+    transition-duration: 0.4s;
 }
 
 input[type="checkbox"]:checked + label:before, input[type="radio"]:checked + label:before {
-	background-color: #34c0f4;
+    background-color: #34c0f4;
 }
 
 label {
-	font-family: Meiryo;
-	font-size: 10pt;
-	color: #777;
+    font-family: Meiryo;
+    font-size: 10pt;
+    color: #777;
 }
 
 .color {
-	margin-bottom: 4px;
+    margin-bottom: 4px;
 }
 
 .color span {
-	display: inline-block;
-	width: 16px;
-	height: 16px;
-	background-color: #FFF;
-	position: relative;
-	top: 1px;
-	box-shadow: outside 0 2px 2px #EEE;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-color: #FFF;
+    position: relative;
+    top: 1px;
+    box-shadow: outside 0 2px 2px #EEE;
 }
 
 .color box {
-	padding-left: 4px;
-	border: 1px solid #DDD;
-	width: 80px;
-	margin-right: 4px;
+    padding-left: 4px;
+    border: 1px solid #DDD;
+    width: 80px;
+    margin-right: 4px;
 
 }
 
 .color input {
-	border: none;
-	width: 56px;
-	font-family: consolas;
-	padding-left: 6px;
-	color: #777;
-	z-index: 0;
-	outline: none;
-	vertical-align: middle;
-	margin-top: -4px;
-	background: none;
+    border: none;
+    width: 56px;
+    font-family: consolas;
+    padding-left: 6px;
+    color: #777;
+    z-index: 0;
+    outline: none;
+    vertical-align: middle;
+    margin-top: -4px;
+    background: none;
 }
 .color input:focus {
-	outline: none;
+    outline: none;
 }
 
 .button button {
-	font-family: Meiryo;
-	padding: 0px 6px;
+    font-family: Meiryo;
+    padding: 0px 6px;
 }
