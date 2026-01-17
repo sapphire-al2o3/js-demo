@@ -87,3 +87,7 @@ label {
 	outline: none;
 }
 
+.button button {
+	font-family: Meiryo;
+	padding: 0px 6px;
+}
