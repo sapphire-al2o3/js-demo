@@ -12,8 +12,13 @@ let items = [
     'え',
     'お',
     'か',
-    'き'
+    'き',
+    'く',
+    'け',
+    'こ',
 ];
+
+items = items.reverse();
 
 const reelLength = items.length * itemHeight;
 
@@ -85,26 +90,12 @@ window.onload = () => {
         state = 4;
     }
 
-    function drawText(index, x, y) {
-        // let text = prefectures[k];
-        // offscreenCtx.clearRect(0, 0, offscreen.width, offscreen.height);
-        // offscreenCtx.fillText(text, 0, 14);
-        // ctx.drawImage(offscreen, 0, 0, offscreen.width * scale, offscreen.height * scale);
+    let testOffset = 0;
 
-        // ctx.strokeText(text, 20, 60);
-        // ctx.fillText(text, 20, 60);
-
-        let text = yomi[index];
-        let offset = 0;
-        for (let i = 0; i < text.length; i++) {
-            let c = text[i].charCodeAt() - 'a'.charCodeAt();
-            let imageX = fontOffset[c];
-            ctx.drawImage(font, imageX, 0, fontWidth[c], 12, x + offset * scale, y, fontWidth[c] * scale, 12 * scale);
-            offset += fontWidth[c] + 1;
-        }
+    function getText(k) {
+        if (k < 0) k += items.length;
+        return items[k % items.length];
     }
-
-    let testOffset = 600;
 
     function draw() {
         
@@ -116,22 +107,25 @@ window.onload = () => {
 
         // reelOffset = testOffset;
 
+        let itemOffset = reelOffset % itemHeight;
+        let itemIndex = reelOffset / itemHeight ^ 0;
+
         ctx.fillStyle = '#000';
         for (let i = 0; i < 4; i++) {
             
-            let y = (i * itemHeight + reelOffset);// % 360 + 100;
-            let k = i;// + ((reelOffset) / 120 ^ 0);
+            let y = (i * itemHeight + itemOffset);// % 360 + 100;
+            let k = i - itemIndex;// + ((reelOffset) / 120 ^ 0);
             if (y > height) {
                 y -= height + itemHeight;
-                k = items.length - (4 - i);
+                k = items.length - (4 - i + itemIndex);
             }
-            if (y > height) {
-                y -= height + itemHeight;
-                k = i - 1;
-            }
+            // if (y > height) {
+            //     y -= height + itemHeight;
+            //     k = i - 1;
+            // }
             
             // if (k < 0) k += items.length;
-            const text = items[k % items.length];
+            const text = getText(k);
             const tm = ctx.measureText(text);
             
             ctx.fillRect(0, y, width, 10);
@@ -161,4 +155,13 @@ window.onload = () => {
             start();
         }
     }, false);
+
+    document.body.appendChild(createSlider('offset', 0, v => {
+        testOffset = v * reelLength;
+        draw();
+    }));
+
+    document.body.appendChild(createButton('draw', () => {
+        draw();
+    }));
 };
