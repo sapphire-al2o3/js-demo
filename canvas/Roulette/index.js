@@ -4,6 +4,7 @@ const ctx = canvas.getContext('2d');
 const width = canvas.width;
 const height = canvas.height;
 const itemHeight = 120;
+const dispItemNum = height / 120 + 1 ^ 0;
 
 let items = [
     'あ',
@@ -111,13 +112,13 @@ window.onload = () => {
         let itemIndex = reelOffset / itemHeight ^ 0;
 
         ctx.fillStyle = '#000';
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < dispItemNum; i++) {
             
             let y = (i * itemHeight + itemOffset);// % 360 + 100;
             let k = i - itemIndex;// + ((reelOffset) / 120 ^ 0);
             if (y > height) {
                 y -= height + itemHeight;
-                k = items.length - (4 - i + itemIndex);
+                k = items.length - (dispItemNum - i + itemIndex);
             }
             // if (y > height) {
             //     y -= height + itemHeight;
