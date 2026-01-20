@@ -12,11 +12,11 @@ let items = [
     'う',
     'え',
     'お',
-    'か',
-    'き',
-    'く',
-    'け',
-    'こ',
+    // 'か',
+    // 'き',
+    // 'く',
+    // 'け',
+    // 'こ',
 ];
 
 items = items.reverse();
@@ -65,15 +65,16 @@ window.onload = () => {
     let time = 0;
     let counter = 0;
     let blink = false;
-    let reelOffset = 0;
-    let speed = 2;
+    let reelOffset = itemHeight * 1.5;
+    let speed = 0;
 
     function start() {
         state = 1;
         // index = Math.random() * images.length ^ 0;
-        // button.textContent = 'STOP';
+        button.textContent = 'STOP';
         button.classList.add('stop');
-        speed = 0;
+        speed = 2;
+        reelOffset = (reelOffset / itemHeight ^ 0) * itemHeight + itemHeight * 0.5 ^ 0;
     }
 
     function stop() {
@@ -81,8 +82,9 @@ window.onload = () => {
         // time = 10 + Math.random() * 3;
         button.classList.remove('stop');
         button.classList.add('disable');
+        button.textContent = 'START';
         state = 0;
-        speed = 0.2;
+        speed = 0.0;
     }
 
     function reset() {
@@ -156,6 +158,10 @@ window.onload = () => {
             start();
         }
     }, false);
+
+    document.body.appendChild(createSlider('speed', speed / 3, v => {
+        speed = v * 3;
+    }));
 
     document.body.appendChild(createSlider('offset', 0, v => {
         testOffset = v * reelLength;
