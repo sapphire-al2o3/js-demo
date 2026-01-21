@@ -10,14 +10,14 @@ const Max = 30;
 
 let sw = 0.0002;
 let aw = 0.0002;
-let cw = 0.0002;
+let cw = 0.0004;
 
 for (let i = 0; i < Max; i++) {
     boids.push({
         x: Math.random() * w,
         y: Math.random() * h,
-        vx: Math.random(),
-        vy: Math.random(),
+        vx: Math.random() * 2 - 1,
+        vy: Math.random() * 2 - 1,
         dx: 1,
         dy: 0
     });
@@ -39,7 +39,7 @@ function separation(k) {
     for (let i = 0; i < boids.length; i++) {
         if (i !== k) {
             let x = p.x - boids[i].x;
-            let y = p.x - boids[i].y;
+            let y = p.y - boids[i].y;
             let l = x * x + y * y;
             fx += x / l;
             fy += y / l;
@@ -75,8 +75,8 @@ function cohesion(k) {
     }
     let p = boids[k];
     let n = boids.length - 1;
-    cx = cx / n - p.vx;
-    cy = cy / n - p.vy;
+    cx = cx / n - p.x;
+    cy = cy / n - p.y;
     return [cx, cy];
 }
 
@@ -95,6 +95,9 @@ function update() {
 
         boids[i].x += boids[i].vx;
         boids[i].y += boids[i].vy;
+
+        if (boids[i].x < 0 || boids[i].x >= w) boids[i].vx *= -1;
+        if (boids[i].y < 0 || boids[i].y >= h) boids[i].vy *= -1;
     }
 }
 
