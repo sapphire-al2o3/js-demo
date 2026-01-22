@@ -6,7 +6,7 @@ const w = canvas.width;
 const h = canvas.height;
 
 const boids = [];
-const Max = 30;
+const Max = 60;
 
 let sw = 0.0002;
 let aw = 0.0002;
@@ -137,3 +137,17 @@ setAnimationFrame((t) => {
 //     placement(root, 3, 0, rand(1, (1 << treeDepth) - 1));
 //     render();
 // }), false);
+
+
+document.body.appendChild(createSlider('separation', 0.5, v => {
+    sw = v * 0.0004;
+}));
+
+document.body.appendChild(createSlider('alignment', 0.5, v => {
+    aw = v * 0.004;
+}));
+
+document.body.appendChild(createSlider('cohesion', 0.5, v => {
+    cw = v * 0.0004;
+}));
+
