@@ -1,4 +1,3 @@
-// https://note.com/anglers_member/n/nb00eca1226fc
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -6,18 +5,18 @@ const w = canvas.width;
 const h = canvas.height;
 
 const boids = [];
-const Max = 60;
+const Max = 200;
 
-let sw = 0.0002;
-let aw = 0.0002;
-let cw = 0.0004;
+let sw = 0.016;
+let aw = 0.004;
+let cw = 0.008;
 
 for (let i = 0; i < Max; i++) {
     boids.push({
         x: Math.random() * w,
         y: Math.random() * h,
-        vx: Math.random() * 2 - 1,
-        vy: Math.random() * 2 - 1,
+        vx: rand(-2, 2),
+        vy: rand(-2, 2),
         dx: 1,
         dy: 0
     });
@@ -32,12 +31,30 @@ function clamp(x, min, max) {
     return x < min ? min : x > max ? max : x;
 }
 
+function length(x, y) {
+    return x * x + y * y;
+}
+
+function neighbor(p0, p1) {
+    let dx = p1.x - p0.x;
+    let dy = p1.y - p0.y;
+    return dx * dx + dy * dy < 900;
+}
+
+function limitSpeed(p, limit) {
+    let l = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+    if (l > limit) {
+        p.vx = p.vx / l * limit;
+        p.vy = p.vy / l * limit;
+    }
+}
+
 function separation(k) {
     let fx = 0;
     let fy = 0;
     let p = boids[k];
     for (let i = 0; i < boids.length; i++) {
-        if (i !== k) {
+        if (i !== k && neighbor(p, boids[i])) {
             let x = p.x - boids[i].x;
             let y = p.y - boids[i].y;
             let l = x * x + y * y;
@@ -51,32 +68,38 @@ function separation(k) {
 function alignment(k) {
     let vx = 0;
     let vy = 0;
+    let n = 0;
     for (let i = 0; i < boids.length; i++) {
-        if (i !== k) {
+        if (i !== k && neighbor(boids[k], boids[i])) {
             vx += boids[i].vx;
             vy += boids[i].vy;
+            n++;
         }
     }
-    let p = boids[k];
-    let n = boids.length - 1;
-    vx = vx / n - p.vx;
-    vy = vy / n - p.vy;
+    if (n > 0) {
+        let p = boids[k];
+        vx = vx / n - p.vx;
+        vy = vy / n - p.vy;
+    }
     return [vx, vy];
 }
 
 function cohesion(k) {
     let cx = 0;
     let cy = 0;
+    let n = 0;
     for (let i = 0; i < boids.length; i++) {
-        if (i !== k) {
+        if (i !== k && neighbor(boids[k], boids[i])) {
             cx += boids[i].x;
             cy += boids[i].y;
+            n++;
         }
     }
-    let p = boids[k];
-    let n = boids.length - 1;
-    cx = cx / n - p.x;
-    cy = cy / n - p.y;
+    if (n > 0) {
+        let p = boids[k];
+        cx = cx / n - p.x;
+        cy = cy / n - p.y;
+    }
     return [cx, cy];
 }
 
@@ -93,11 +116,25 @@ function update() {
         boids[i].vx += sw * sx + aw * ax + cw * cx;
         boids[i].vy += sw * sy + aw * ay + cw * cy;
 
+        limitSpeed(boids[i], 3);
+
         boids[i].x += boids[i].vx;
         boids[i].y += boids[i].vy;
 
-        if (boids[i].x < 0 || boids[i].x >= w) boids[i].vx *= -1;
-        if (boids[i].y < 0 || boids[i].y >= h) boids[i].vy *= -1;
+        if (boids[i].x < 0) {
+            boids[i].x = 0;
+            boids[i].vx *= -1;
+        } else if (boids[i].x >= w) {
+            boids[i].x = w - 1;
+            boids[i].vx *= -1;
+        }
+        if (boids[i].y < 0) {
+            boids[i].y = 0;
+            boids[i].vy *= -1;
+        } else if (boids[i].y >= h) {
+            boids[i].y = h - 1;
+            boids[i].vy *= -1;
+        }
     }
 }
 
@@ -105,11 +142,23 @@ function render() {
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, w, h);
 
+    ctx.strokeStyle = '#FFF';
     ctx.fillStyle ='#FFF';
     for (let i = 0; i < boids.length; i++) {
         let x = boids[i].x;
         let y = boids[i].y;
-        ctx.fillRect(x, y, 4, 4);
+        let vx = boids[i].vx;
+        let vy = boids[i].vy;
+        let l = Math.sqrt(vx * vx + vy * vy);
+        vx = vx / l * 8;
+        vy = vy / l * 8;
+
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        
+        ctx.lineTo(x - vx, y - vy);
+        ctx.stroke();
+        // ctx.fillRect(x, y, 4, 4);
     }
 }
 
@@ -140,14 +189,14 @@ setAnimationFrame((t) => {
 
 
 document.body.appendChild(createSlider('separation', 0.5, v => {
-    sw = v * 0.0004;
+    sw = v * 0.4;
 }));
 
 document.body.appendChild(createSlider('alignment', 0.5, v => {
-    aw = v * 0.004;
+    aw = v * 0.04;
 }));
 
 document.body.appendChild(createSlider('cohesion', 0.5, v => {
-    cw = v * 0.0004;
+    cw = v * 0.04;
 }));
 
