@@ -7,9 +7,9 @@ const h = canvas.height;
 const boids = [];
 const Max = 200;
 
-let sw = 0.016;
-let aw = 0.004;
-let cw = 0.008;
+let sw = 0.090;
+let aw = 0.010;
+let cw = 0.004;
 
 for (let i = 0; i < Max; i++) {
     boids.push({
@@ -31,9 +31,6 @@ function clamp(x, min, max) {
     return x < min ? min : x > max ? max : x;
 }
 
-function length(x, y) {
-    return x * x + y * y;
-}
 
 function neighbor(p0, p1) {
     let dx = p1.x - p0.x;
@@ -104,8 +101,6 @@ function cohesion(k) {
 }
 
 function update() {
-
-
 
     for (let i = 0; i < boids.length; i++) {
 
@@ -197,6 +192,6 @@ document.body.appendChild(createSlider('alignment', 0.5, v => {
 }));
 
 document.body.appendChild(createSlider('cohesion', 0.5, v => {
-    cw = v * 0.04;
+    cw = v * 0.01;
 }));
 
