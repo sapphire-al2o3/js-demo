@@ -11,6 +11,14 @@ let sw = 0.090;
 let aw = 0.010;
 let cw = 0.004;
 
+let rw = 0.04;
+
+let mouse = {
+    x: 0,
+    y: 0
+};
+let down = false;
+
 for (let i = 0; i < Max; i++) {
     boids.push({
         x: Math.random() * w,
@@ -100,6 +108,22 @@ function cohesion(k) {
     return [cx, cy];
 }
 
+function repulsion(k, p) {
+    let vx = 0;
+    let vy = 0;
+    let dx = boids[k].x - p.x;
+    let dy = boids[k].y - p.y;
+
+    let l = Math.sqrt(dx * dx + dy * dy);
+
+    if (l > 0 && l < 64) {
+        vx = dx / l;
+        vy = dy / l;
+    }
+
+    return [vx, vy];
+}
+
 function update() {
 
     for (let i = 0; i < boids.length; i++) {
@@ -110,6 +134,12 @@ function update() {
 
         boids[i].vx += sw * sx + aw * ax + cw * cx;
         boids[i].vy += sw * sy + aw * ay + cw * cy;
+
+        if (down) {
+            let [rx, ry] = repulsion(i, mouse);
+            boids[i].vx += rx;
+            boids[i].vy += ry;
+        }
 
         limitSpeed(boids[i], 3);
 
@@ -131,6 +161,8 @@ function update() {
             boids[i].vy *= -1;
         }
     }
+
+    down = false;
 }
 
 function render() {
@@ -182,6 +214,12 @@ setAnimationFrame((t) => {
 //     render();
 // }), false);
 
+canvas.addEventListener('click', e => {
+    const rect = e.target.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+    down = true;
+});
 
 document.body.appendChild(createSlider('separation', 0.5, v => {
     sw = v * 0.4;
