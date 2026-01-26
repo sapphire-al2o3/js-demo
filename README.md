@@ -103,7 +103,6 @@ https://sapphire-al2o3.github.io/js-demo/
 
 ## Canvas
 
-- [2011-09-29-1st](https://sapphire-al2o3.github.io/js-demo/canvas/2011-09-29-1st/)
 - [canvas-utilty](https://sapphire-al2o3.github.io/js-demo/canvas/canvas-utilty/)
 - [CanvasでCatmull-Rom曲線を描く](https://sapphire-al2o3.github.io/js-demo/canvas/CanvasでCatmull-Rom曲線を描く/)
 - [Canvasでページめくりエフェクト](https://sapphire-al2o3.github.io/js-demo/canvas/Canvasでページめくりエフェクト/)
@@ -122,6 +121,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [Sequencer](https://sapphire-al2o3.github.io/js-demo/canvas/Sequencer/)
 - [split-drawing](https://sapphire-al2o3.github.io/js-demo/canvas/split-drawing)
 - [string](https://sapphire-al2o3.github.io/js-demo/canvas/string/)
+- [Swirl](https://sapphire-al2o3.github.io/js-demo/canvas/Swirl/)
 - [モアレ](https://sapphire-al2o3.github.io/js-demo/canvas/moire/)
 - [toDataURLの速度](https://sapphire-al2o3.github.io/js-demo/canvas/toDataURLの速度/)
 - [transformでの回転](https://sapphire-al2o3.github.io/js-demo/canvas/transformでの回転/)
