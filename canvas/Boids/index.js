@@ -5,7 +5,9 @@ const w = canvas.width;
 const h = canvas.height;
 
 const boids = [];
-const Max = 200;
+const Max = 60;
+
+const img = document.getElementById('sprite');
 
 let sw = 0.090;
 let aw = 0.010;
@@ -141,7 +143,7 @@ function update() {
             boids[i].vy += ry;
         }
 
-        limitSpeed(boids[i], 3);
+        limitSpeed(boids[i], 6);
 
         boids[i].x += boids[i].vx;
         boids[i].y += boids[i].vy;
@@ -166,7 +168,7 @@ function update() {
 }
 
 function render() {
-    ctx.fillStyle = '#000';
+    ctx.fillStyle = '#FFF';
     ctx.fillRect(0, 0, w, h);
 
     ctx.strokeStyle = '#FFF';
@@ -180,11 +182,17 @@ function render() {
         vx = vx / l * 8;
         vy = vy / l * 8;
 
-        ctx.beginPath();
-        ctx.moveTo(x, y);
+        // ctx.beginPath();
+        // ctx.moveTo(x, y);
         
-        ctx.lineTo(x - vx, y - vy);
-        ctx.stroke();
+        // ctx.lineTo(x - vx, y - vy);
+        // ctx.stroke();
+        let r = Math.atan2(vy, vx) + Math.PI * 0.5;
+        ctx.translate(x, y);
+        ctx.rotate(r);
+        
+        ctx.drawImage(img, 0, 0);
+        ctx.resetTransform();
         // ctx.fillRect(x, y, 4, 4);
     }
 }

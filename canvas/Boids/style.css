@@ -3,3 +3,7 @@ button {
     font-size: 10pt;
     color: #777;
 }
+
+img {
+    display: none;
+}
