@@ -45,3 +45,35 @@ img {
     color: #777;
     background-position-y: -96px !important;
 }
+
+.listbox input[type="text"] {
+    border: 1px solid #EEE;
+    background-color: #F7F7F7;
+}
+
+.listbox input[type="text"]:focus {
+    background-color: #F7F7F7;
+    border: 1px solid #EEE;
+    outline: 1px solid #DDD;
+}
+
+.listbox span {
+    border: none;
+    background-color: #FFF;
+    color: #FFF;
+    font-size: 14px;
+    margin-left: 6px;
+    cursor: default;
+    user-select: none;
+}
+
+.listbox div:hover span {
+    color: #444;
+}
+
+.listbox .close {
+    height: 16px;
+    color: #444;
+}
+
+

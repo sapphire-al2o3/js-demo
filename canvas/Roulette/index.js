@@ -67,6 +67,7 @@ window.onload = () => {
     let blink = false;
     let reelOffset = itemHeight * 1.5;
     let speed = 0;
+    let goal = 0;
 
     function start() {
         state = 1;
@@ -83,8 +84,9 @@ window.onload = () => {
         button.classList.remove('stop');
         button.classList.add('disable');
         button.textContent = 'START';
-        state = 0;
-        speed = 0.0;
+        state = 2;
+        // speed = 0.0;
+        time = 3;
     }
 
     function reset() {
@@ -141,6 +143,27 @@ window.onload = () => {
         if (reelOffset > reelLength) {
             reelOffset -= reelLength;
         }
+
+        if (state === 2) {
+            if (time > 0 && goal === 0) {
+                speed = time / 2;
+                time -= delta * 0.001;
+                if (speed < 0.1) {
+                    goal = ((reelOffset / itemHeight) ^ 0) * itemHeight + itemHeight / 2;
+                    if (reelOffset % itemHeight > itemHeight / 2) {
+                        goal += itemHeight;
+                    }
+                    console.log(goal, reelOffset);
+                }
+            } else if (goal > 0) {
+                let d = goal - reelOffset;
+                if (d < 1) {
+                    state = 0;
+                    speed = 0;
+                    goal = 0;
+                }
+            }
+        }
         
         draw();
     }
@@ -154,21 +177,55 @@ window.onload = () => {
             start();
         } else if (state === 1) {
             stop();
-        } else if (state === 4) {
+        } else if (state === 2) {
             start();
         }
     }, false);
 
-    document.body.appendChild(createSlider('speed', speed / 3, v => {
-        speed = v * 3;
-    }));
+    // document.body.appendChild(createSlider('speed', speed / 3, v => {
+    //     speed = v * 3;
+    // }));
 
-    document.body.appendChild(createSlider('offset', 0, v => {
-        testOffset = v * reelLength;
-        draw();
-    }));
+    // document.body.appendChild(createSlider('offset', 0, v => {
+    //     testOffset = v * reelLength;
+    //     draw();
+    // }));
 
-    document.body.appendChild(createButton('draw', () => {
+    // document.body.appendChild(createButton('draw', () => {
+    //     draw();
+    // }));
+
+    function setup() {
+        items.length = 0;
+        let list = document.querySelectorAll('.list-item');
+        for (let i = 0; i < list.length; i++) {
+            items.push(list[i].value);
+        }
+    }
+
+    document.body.appendChild(createButton('setup', () => {
+        setup();
         draw();
     }));
 };
+
+function removeListItem(e) {
+    document.getElementById('wrapper').removeChild(e.target.parentNode);
+}
+
+let index = 0;
+document.getElementById('add').addEventListener('click', e => {
+    let input = document.createElement('input');
+    let item = document.createElement('div');
+    let removeButton = document.createElement('span');
+    input.setAttribute('type', 'text');
+    input.classList.add('list-item')
+    removeButton.innerText = '✖';
+    removeButton.addEventListener('click', removeListItem);
+    item.setAttribute('id', 'item-' + index.toString())
+    item.appendChild(input);
+    item.appendChild(removeButton);
+    document.getElementById('wrapper').appendChild(item);
+    index++;
+});
+
