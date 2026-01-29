@@ -21,6 +21,8 @@ let mouse = {
 };
 let down = false;
 
+let sprite = false;
+
 for (let i = 0; i < Max; i++) {
     boids.push({
         x: Math.random() * w,
@@ -168,7 +170,7 @@ function update() {
 }
 
 function render() {
-    ctx.fillStyle = '#FFF';
+    ctx.fillStyle = sprite ? '#FFF' : '#000';
     ctx.fillRect(0, 0, w, h);
 
     ctx.strokeStyle = '#FFF';
@@ -182,17 +184,20 @@ function render() {
         vx = vx / l * 8;
         vy = vy / l * 8;
 
-        // ctx.beginPath();
-        // ctx.moveTo(x, y);
-        
-        // ctx.lineTo(x - vx, y - vy);
-        // ctx.stroke();
-        let r = Math.atan2(vy, vx) + Math.PI * 0.5;
-        ctx.translate(x, y);
-        ctx.rotate(r);
-        
-        ctx.drawImage(img, 0, 0);
-        ctx.resetTransform();
+        if (sprite) {
+            let r = Math.atan2(vy, vx) + Math.PI * 0.5;
+            ctx.translate(x, y);
+            ctx.rotate(r);
+            
+            ctx.drawImage(img, 0, 0);
+            ctx.resetTransform();
+        } else {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            
+            ctx.lineTo(x - vx, y - vy);
+            ctx.stroke();
+        }
         // ctx.fillRect(x, y, 4, 4);
     }
 }
