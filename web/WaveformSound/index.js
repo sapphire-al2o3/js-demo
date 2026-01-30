@@ -179,3 +179,54 @@ button.addEventListener('click', (e) => {
     context.resume();
     
 });
+
+function encodeWave(buffer) {
+    const sampleRate = buffer.sampleRate;
+    const bytesPerSample = 2;
+    const dataLength = buffer.length * bytesPerSample;
+    const arrayBuffer = new ArrayBuffer(44 + dataLength);
+    const dataView = new DataView(arrayBuffer);
+
+    dataView.setUint8(0, 'R'.charCodeAt(0));
+    dataView.setUint8(1, 'I'.charCodeAt(0));
+    dataView.setUint8(2, 'F'.charCodeAt(0));
+    dataView.setUint8(3, 'F'.charCodeAt(0));
+    dataView.setUint32(4, 36 + dataLength, true); // RIFF chunk size
+    dataView.setUint8(8, 'W'.charCodeAt(0));
+    dataView.setUint8(9, 'A'.charCodeAt(0));
+    dataView.setUint8(10, 'V'.charCodeAt(0));
+    dataView.setUint8(11, 'E'.charCodeAt(0));
+
+    dataView.setUint8(12, 'f'.charCodeAt(0));
+    dataView.setUint8(13, 'm'.charCodeAt(0));
+    dataView.setUint8(14, 't'.charCodeAt(0));
+    dataView.setUint8(15, ' '.charCodeAt(0));
+    dataView.setUint32(16, 16, true); // chunk size
+    dataView.setUint16(20, 1, true);  // format
+    dataView.setUint16(22, 1, true);  // channels
+    dataView.setUint32(24, sampleRate, true);
+    dataView.setUint32(28, sampleRate * 2, true);
+    dataView.setUint16(32, bytesPerSample, true);
+    dataView.setUint16(34, 8 * bytesPerSample, true);
+    
+    dataView.setUint8(36, 'd'.charCodeAt(0));
+    dataView.setUint8(37, 'a'.charCodeAt(0));
+    dataView.setUint8(38, 't'.charCodeAt(0));
+    dataView.setUint8(39, 'a'.charCodeAt(0));
+    dataView.setUint32(40, dataLength, true);
+
+    const f32 = new Float32Array(arrayBuffer);
+    buffer.copyFromChannel(f32, 0, 44);
+
+    return new Blob([dataView], {type: 'audio/wav'})
+}
+
+document.body.appendChild(createButton('File', v => {
+    const blob = encodeWave(buffer);
+    let anchor = document.createElement('a');
+    anchor.download = 'sound.wav';
+    anchor.textContent = 'DL';
+    anchor.href = URL.createObjectURL(blob);
+    anchor.target = '_blank';
+    anchor.click();
+}));
