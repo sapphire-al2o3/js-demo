@@ -180,9 +180,10 @@ button.addEventListener('click', (e) => {
     
 });
 
-function encodeWave(buffer) {
-    const sampleRate = buffer.sampleRate;
+function encodeWave(audioBuffer) {
+    const sampleRate = audioBuffer.sampleRate;
     const bytesPerSample = 2;
+    const buffer = audioBuffer.getChannelData(0);
     const dataLength = buffer.length * bytesPerSample;
     const arrayBuffer = new ArrayBuffer(44 + dataLength);
     const dataView = new DataView(arrayBuffer);
@@ -204,8 +205,8 @@ function encodeWave(buffer) {
     dataView.setUint32(16, 16, true); // chunk size
     dataView.setUint16(20, 1, true);  // format
     dataView.setUint16(22, 1, true);  // channels
-    dataView.setUint32(24, sampleRate, true);
-    dataView.setUint32(28, sampleRate * 2, true);
+    dataView.setUint32(24, sampleRate, true);   // サンプリング周波数
+    dataView.setUint32(28, sampleRate * bytesPerSample, true);
     dataView.setUint16(32, bytesPerSample, true);
     dataView.setUint16(34, 8 * bytesPerSample, true);
     
@@ -215,8 +216,12 @@ function encodeWave(buffer) {
     dataView.setUint8(39, 'a'.charCodeAt(0));
     dataView.setUint32(40, dataLength, true);
 
-    const f32 = new Float32Array(arrayBuffer);
-    buffer.copyFromChannel(f32, 0, 44);
+    let offset = 44;
+    for (let i = 0; i < buffer.length; i++) {
+        let f = buffer[i];
+        dataView.setInt16(offset, (f > 0 ? f * 0x7FFF : f * 0x8000) ^ 0, true);
+        offset += bytesPerSample;
+    }
 
     return new Blob([dataView], {type: 'audio/wav'})
 }
