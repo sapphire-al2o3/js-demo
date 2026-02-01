@@ -166,6 +166,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [バーンズリーのシダ](https://sapphire-al2o3.github.io/js-demo/canvas/fern/)
 - [日本地図](https://sapphire-al2o3.github.io/js-demo/canvas/JapanMap/)
 - [タイルマップ](https://sapphire-al2o3.github.io/js-demo/canvas/TileMap/)
+- [ルーレット](https://sapphire-al2o3.github.io/js-demo/canvas/Roulette/)
 
 # Image Processing
 
