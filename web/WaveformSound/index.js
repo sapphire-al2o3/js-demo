@@ -130,6 +130,7 @@ function setup() {
     for (let j = 0; j < buffer.length; j++) {
         b2[j] = b[j];
     }
+    document.getElementById('File').disabled = false;
 }
 
 document.body.appendChild(createSlider('freq', (freq + 100) / 5000, v => {
@@ -226,7 +227,7 @@ function encodeWave(audioBuffer) {
     return new Blob([dataView], {type: 'audio/wav'})
 }
 
-document.body.appendChild(createButton('File', v => {
+const fileButton = createButton('File', v => {
     const blob = encodeWave(buffer);
     let anchor = document.createElement('a');
     anchor.download = 'sound.wav';
@@ -234,4 +235,7 @@ document.body.appendChild(createButton('File', v => {
     anchor.href = URL.createObjectURL(blob);
     anchor.target = '_blank';
     anchor.click();
-}));
+});
+
+document.body.appendChild(fileButton);
+document.getElementById('File').disabled = true;
