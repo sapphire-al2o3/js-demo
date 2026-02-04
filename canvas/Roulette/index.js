@@ -6,6 +6,8 @@ const height = canvas.height;
 const itemHeight = 120;
 const dispItemNum = height / 120 + 1 ^ 0;
 
+const audio = new Audio('se.wav');
+
 let items = [
     'あ',
     'い',
@@ -138,10 +140,23 @@ window.onload = () => {
         }
     }
 
+    let prevSE = 0;
+    let intervalSE = 0;
     function update(delta) {
         reelOffset += delta * speed;
         if (reelOffset > reelLength) {
             reelOffset -= reelLength;
+        }
+
+        intervalSE += delta;
+        if (state === 1 || state === 2) {
+            let se = reelOffset / itemHeight ^ 0;
+            if (intervalSE > 80 && se != prevSE) {
+                audio.currentTime = 0;
+                audio.play();
+                prevSE = se;
+                intervalSE = 0;
+            }
         }
 
         if (state === 2) {
