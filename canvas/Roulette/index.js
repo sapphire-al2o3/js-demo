@@ -85,7 +85,7 @@ window.onload = () => {
         // time = 10 + Math.random() * 3;
         button.classList.remove('stop');
         button.classList.add('disable');
-        button.textContent = 'START';
+        
         state = 2;
         // speed = 0.0;
         time = 3;
@@ -94,7 +94,8 @@ window.onload = () => {
     function reset() {
         // button.textContent = 'START';
         button.classList.remove('disable');
-        state = 4;
+        button.textContent = 'START';
+        state = 0;
     }
 
     let testOffset = 0;
@@ -176,6 +177,7 @@ window.onload = () => {
                     state = 0;
                     speed = 0;
                     goal = 0;
+                    reset();
                 }
             }
         }
