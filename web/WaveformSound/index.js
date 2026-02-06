@@ -1,4 +1,4 @@
-const context = new window.AudioContext;
+const context = new AudioContext();
 let time = 1;
 let buffer = context.createBuffer(
     2,
@@ -231,7 +231,6 @@ const fileButton = createButton('File', v => {
     const blob = encodeWave(buffer);
     let anchor = document.createElement('a');
     anchor.download = 'sound.wav';
-    anchor.textContent = 'DL';
     anchor.href = URL.createObjectURL(blob);
     anchor.target = '_blank';
     anchor.click();
