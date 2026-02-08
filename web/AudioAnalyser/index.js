@@ -1,6 +1,6 @@
 
 let context = new window.AudioContext(),
-    source,
+    source = null,
     timer;
 const audio = new Audio('sound.wav');
 const analyser = context.createAnalyser();
@@ -45,14 +45,17 @@ function render() {
         requestAnimationFrame(render);
     } else {
         playButton.disabled = false;
+        source.disconnect();
     }
 }
 
 function play() {
-    let source = context.createMediaElementSource(audio);
+    if (source === null) {
+        source = context.createMediaElementSource(audio);
+    }
     source.connect(analyser);
-    // analyser.connect(context.destination);
-    source.connect(context.destination);
+    analyser.connect(context.destination);
+    // source.connect(context.destination);
     if (context.state === 'suspended') {
         context.resume();
     }
