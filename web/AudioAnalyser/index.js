@@ -14,11 +14,11 @@ const ctx = canvas.getContext('2d');
 function render() {
     analyser.getByteTimeDomainData(timeDomain);
     
-    ctx.fillStyle = "rgb(200, 200, 200)";
+    ctx.fillStyle = "#FFF";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = "rgb(0, 0, 0)";
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "#000";
 
     ctx.beginPath();
 
