@@ -11,6 +11,7 @@ let amp = 0.1;
 let ease = 0;
 let wave = 0;
 let octove = false;
+let add = false;
 
 function resize(length) {
     buffer = context.createBuffer(
@@ -123,7 +124,12 @@ function setup() {
         let t = j / l * time * freq;
         let f = octove ? overtone(waveform, t, 8) : waveform(t);
         let w = wind(j / l);
-        b[j] = amp * w * f;
+
+        if (add) {
+            b[j] += amp * w * f;
+        } else {
+            b[j] = amp * w * f;
+        }
     }
 
     const b2 = buffer.getChannelData(1);
@@ -151,6 +157,10 @@ document.body.appendChild(createRadio(['sine', 'saw', 'square', 'triangle', 'pul
 
 document.body.appendChild(createCheckbox('overtone', v => {
     octove = v;
+}));
+
+document.body.appendChild(createCheckbox('add', v => {
+    add = v;
 }));
 
 function play() {
