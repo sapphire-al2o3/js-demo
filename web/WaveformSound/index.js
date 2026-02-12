@@ -120,6 +120,8 @@ function overtone(wave, t, n) {
 function setup() {
     const b = buffer.getChannelData(0);
     const l = buffer.length;
+    let max = 0;
+    let min = 0;
     for (let j = 0; j < buffer.length; j++) {
         let t = j / l * time * freq;
         let f = octove ? overtone(waveform, t, 8) : waveform(t);
@@ -127,8 +129,16 @@ function setup() {
 
         if (add) {
             b[j] += amp * w * f;
+            if (max < b[j]) max = b[j];
+            if (min > b[j]) min = b[j];
         } else {
             b[j] = amp * w * f;
+        }
+    }
+
+    if (max > amp) {
+        for (let j = 0; j < buffer.length; j++) {
+            b[j] *= amp / max;
         }
     }
 
