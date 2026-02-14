@@ -2,12 +2,12 @@
     color: #444;
 }
 
-.checkbox {
+.radio {
     border-left: 4px solid #DDD;
     padding-left: 8px;
     margin-bottom: 4px;
 }
 
-.checkbox:hover {
+.radio:hover {
     border-left: 4px solid #CCC;
 }
