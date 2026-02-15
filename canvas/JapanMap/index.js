@@ -382,6 +382,8 @@ window.onload = () => {
             if (time < 0) {
                 time = 0.3;
                 counter--;
+                audio.currentTime = 0;
+                audio.play();
             }
             if (counter < 0) {
                 reset();
