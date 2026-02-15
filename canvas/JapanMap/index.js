@@ -187,6 +187,7 @@ for (let i = 0; i < fontWidth.length; i++) {
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
+const audio = new Audio('se.wav');
 
 let scale = 3;
 
@@ -341,6 +342,8 @@ window.onload = () => {
                     elapsedTime -= interval;
                 }
                 index = (index + 1) % images.length;
+                audio.currentTime = 0;
+                audio.play();
             }
         } else if (state === 2) {
             elapsedTime += delta;
@@ -363,6 +366,8 @@ window.onload = () => {
                     elapsedTime -= i;
                 }
                 index = (index + 1) % images.length;
+                audio.currentTime = 0;
+                audio.play();
             }
 
             time -= delta * 0.001;
