@@ -188,6 +188,7 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
 const audio = new Audio('se.wav');
+const audio2 = new Audio('se2.wav');
 
 let scale = 3;
 
@@ -382,8 +383,8 @@ window.onload = () => {
             if (time < 0) {
                 time = 0.3;
                 counter--;
-                audio.currentTime = 0;
-                audio.play();
+                audio2.currentTime = 0;
+                audio2.play();
             }
             if (counter < 0) {
                 reset();
