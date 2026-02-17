@@ -377,6 +377,8 @@ window.onload = () => {
                 state = 3;
                 time = 0.5;
                 blink = false;
+                audio2.currentTime = 0;
+                audio2.play();
             }
         } else if (state === 3) {
             time -= delta * 0.001;
