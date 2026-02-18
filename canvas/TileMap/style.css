@@ -32,3 +32,7 @@ textarea {
 #map-width, #map-height {
     width: 60px;
 }
+
+button {
+    margin-right: 8px;
+}

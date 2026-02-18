@@ -143,6 +143,14 @@ window.onload = () => {
         render();
     });
 
+    document.getElementById('clear').addEventListener('click', e => {
+        for (let i = 0; i < map.length; i++) {
+            map[i] = 0;
+        }
+        dump();
+        render();
+    });
+
     document.getElementById('resize').addEventListener('click', e => {
         const resizeX = parseInt(document.getElementById('map-width').value, 10);
         const resizeY = parseInt(document.getElementById('map-height').value, 10);
