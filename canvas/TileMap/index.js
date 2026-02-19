@@ -126,10 +126,11 @@ window.onload = () => {
         maptipCursor.style.top = (y * block) + 'px';
     });
 
+    loadText();
     render();
     // dump();
 
-    document.getElementById('load').addEventListener('click', e => {
+    function loadText() {
         const text = output.value;
         const lines = text.split('\n');
         let k = 0;
@@ -140,6 +141,10 @@ window.onload = () => {
                 k++;
             }
         }
+    }
+
+    document.getElementById('load').addEventListener('click', e => {
+        loadText();
         render();
     });
 
