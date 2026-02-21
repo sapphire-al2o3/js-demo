@@ -112,6 +112,10 @@ window.onload = () => {
         down = false;
     });
 
+    canvas.addEventListener('mouseout', e => {
+        down = false;
+    });
+
 
     let maptipX = 0;
     let maptipY = 0;
