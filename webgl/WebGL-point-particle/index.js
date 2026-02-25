@@ -1,8 +1,7 @@
 (function() {
     'use strict';
     
-    var canvas = document.getElementById('canvas'),
-        gl = initContext('canvas', {preserveDrawingBuffer: true,}),
+    let gl = initContext('canvas', {preserveDrawingBuffer: true,}),
         label = document.getElementById('particle'),
         max = 60000,
         count = 6000,
@@ -17,7 +16,7 @@
         speed = v;
     }));
     
-    var program = initShader(gl, 'shader-fs', 'shader-vs'),
+    let program = initShader(gl, 'shader-fs', 'shader-vs'),
         fill = initShader(gl, 'shader-fs-fill', 'shader-vs-fill'),
         model = createRandomSphere(max),
         camera = {},
@@ -47,9 +46,9 @@
     
     gl.depthFunc(gl.ALWAYS);
     
-    var frame = 0;
+    let frame = 0;
     
-    setInterval(function() {
+    setInterval(() => {
         frame++;
         render(model);
     }, 1000 / 30);
@@ -87,7 +86,7 @@
     
     // 球面上にランダムに頂点を配置する
     function createRandomSphere(n) {
-        var p = [],
+        let p = [],
             c = [],
             o = [],
             v = [],
@@ -95,7 +94,7 @@
             size = [];
         
         for(; n >= 0; n--) {
-            var s = Math.random() * 2.0 * Math.PI,
+            let s = Math.random() * 2.0 * Math.PI,
                 y = Math.random() * 2.0 - 1.0,
                 r = Math.sqrt(1.0 - y * y),
                 x = r * Math.cos(s),
