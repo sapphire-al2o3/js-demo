@@ -27,7 +27,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [undefined](https://sapphire-al2o3.github.io/js-demo/webgl/undefined/)
 - [uniform配列のテスト](https://sapphire-al2o3.github.io/js-demo/webgl/uniform-array/)
 - [UV Mapping](https://sapphire-al2o3.github.io/js-demo/webgl/UV/)
-- [WebGL-point-particle](https://sapphire-al2o3.github.io/js-demo/webgl/WebGL-point-particle/)
+- [PointParticle](https://sapphire-al2o3.github.io/js-demo/webgl/PointParticle/)
 - [WebGLでゆらゆらさせる](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLでゆらゆらさせる/)
 - [WebGLでアウトライン描画](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLでアウトライン描画/)
 - [WebGLでインデックスカラー画像を表示](https://sapphire-al2o3.github.io/js-demo/webgl/WebGLでインデックスカラー画像を表示/)
