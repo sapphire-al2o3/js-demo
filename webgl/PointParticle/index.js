@@ -7,12 +7,12 @@
         count = 6000,
         speed = 0.2;
     
-    document.body.appendChild(createSlider('Particle Count', count / max, function(v, id) {
+    document.body.appendChild(createSlider('Particle Count', count / max, (v, id) => {
         count = v * max ^ 0;
         label.textContent = count + ' particle';
     }));
     
-    document.body.appendChild(createSlider('Speed', speed, function(v, id) {
+    document.body.appendChild(createSlider('Speed', speed, (v, id) => {
         speed = v;
     }));
     
