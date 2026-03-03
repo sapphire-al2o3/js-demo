@@ -1,5 +1,5 @@
-var canvas = document.getElementById('world');
-var ctx = canvas.getContext('2d');
+const canvas = document.getElementById('world');
+const ctx = canvas.getContext('2d');
 
 ctx.fillStyle = '#000';
 ctx.fillRect(0, 0, 400, 400);
@@ -20,13 +20,20 @@ function draw() {
     ctx.fillRect(0, 0, 400, 400);
 }
 
-canvas.onmousemove = function(e) {
-    var x = e.clientX;
-    var y = e.clientY;
-    var h = x /400 * 360;
-    var grad = ctx.createRadialGradient(x, y, 0, x, y, 200);
+function render(x, y) {
+    let h = x / 400 * 360;
+    let grad = ctx.createRadialGradient(x, y, 0, x, y, 200);
     grad.addColorStop(0, hsva(h, 1, 1, 1));
     grad.addColorStop(1, hsva(h, 0, 0, 1));
     ctx.fillStyle = grad;
     draw();
+}
+
+canvas.onmousemove = (e) => {
+    const rect = e.target.getBoundingClientRect();
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top;
+    render(x, y);
 };
+
+render(canvas.width / 2, canvas.height / 2);
