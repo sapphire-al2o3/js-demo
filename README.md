@@ -141,7 +141,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [コッホ曲線](https://sapphire-al2o3.github.io/js-demo/canvas/koch/)
 - [リサージュ曲線](https://sapphire-al2o3.github.io/js-demo/canvas/Lissajous/)
 - [バタフライ曲線](https://sapphire-al2o3.github.io/js-demo/canvas/ButterflyCurve/)
-- [円形グラデーション](https://sapphire-al2o3.github.io/js-demo/canvas/円形グラデーション/)
+- [円形グラデーション](https://sapphire-al2o3.github.io/js-demo/canvas/RadialGradient/)
 - [円錐グラデーション](https://sapphire-al2o3.github.io/js-demo/canvas/円錐グラデーション/)
 - [動く四角](https://sapphire-al2o3.github.io/js-demo/canvas/動く四角/)
 - [回転して描く](https://sapphire-al2o3.github.io/js-demo/canvas/回転して描く/)
