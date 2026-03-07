@@ -3,7 +3,7 @@ const ctx = canvas.getContext('2d');
 let time = 0;
 function rgba(r, g, b, a) { return 'rgba(' + (r^0) + ',' + g + ',' + b + ',' + a + ')'; };
 
-setInterval(() => {
+const timer = setAnimationFrame(() => {
     ctx.clearRect(0, 0, 400, 400);
     var d = 200;
     for (let i = 0; i < d; i++) {
@@ -24,3 +24,7 @@ setInterval(() => {
     }
     time += 1.0;
 }, 1000/30);
+
+canvas.addEventListener('click', e => {
+    timer.toggle();
+}, false);
