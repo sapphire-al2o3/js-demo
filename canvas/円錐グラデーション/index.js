@@ -13,9 +13,9 @@ function getColor(a) {
     return rgba(r, g, b, 1);
 }
 
-const timer = setAnimationFrame(() => {
+function render() {
     ctx.clearRect(0, 0, 400, 400);
-    var d = 200;
+    const d = 200;
     for (let i = 0; i < d; i++) {
         let r0 = time / 20 + Math.PI * i * 2 / d;
         let r1 = time / 20 + Math.PI * (i + 1) * 2 / d;
@@ -33,7 +33,9 @@ const timer = setAnimationFrame(() => {
         ctx.fill();
     }
     time += 1.0;
-}, 1000 / 30);
+};
+
+const timer = setAnimationFrame(render, 1000 / 30);
 
 canvas.addEventListener('click', e => {
     timer.toggle();
@@ -41,4 +43,7 @@ canvas.addEventListener('click', e => {
 
 document.body.appendChild(createColor('color', '#FF0000', e => {
     color0 = e;
+    if (!timer.isPlaying()) {
+        render();
+    }
 }));
