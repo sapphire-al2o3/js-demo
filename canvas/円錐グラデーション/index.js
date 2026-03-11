@@ -41,8 +41,15 @@ canvas.addEventListener('click', e => {
     timer.toggle();
 }, false);
 
-document.body.appendChild(createColor('color', '#FF0000', e => {
+document.body.appendChild(createColor('color0', '#FF0000', e => {
     color0 = e;
+    if (!timer.isPlaying()) {
+        render();
+    }
+}));
+
+document.body.appendChild(createColor('color1', '#000000', e => {
+    color1 = e;
     if (!timer.isPlaying()) {
         render();
     }
