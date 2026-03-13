@@ -1,7 +1,7 @@
 const canvas = document.getElementById('world');
 const ctx = canvas.getContext('2d');
 let time = 0;
-function rgba(r, g, b, a) { return 'rgba(' + (r^0) + ',' + g + ',' + b + ',' + a + ')'; };
+function rgba(r, g, b, a) { return `rgb(${r} ${g} ${b}/${a})`; }
 
 let color0 = [255, 0, 0];
 let color1 = [0, 0, 0];
