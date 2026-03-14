@@ -5,6 +5,7 @@ function rgba(r, g, b, a) { return `rgb(${r} ${g} ${b}/${a})`; }
 
 let color0 = [255, 0, 0];
 let color1 = [0, 0, 0];
+let colorBG = '#000';
 
 let loop = false;
 
@@ -16,7 +17,9 @@ function getColor(a) {
 }
 
 function render() {
-    ctx.clearRect(0, 0, 400, 400);
+    ctx.fillStyle = colorBG;
+    ctx.fillRect(0, 0, 400, 400);
+    // ctx.clearRect(0, 0, 400, 400);
     const d = 200;
     let h = loop ? 100 : 200;
     let k = 0;
@@ -79,6 +82,13 @@ document.body.appendChild(createColor('color0', '#FF0000', e => {
 
 document.body.appendChild(createColor('color1', '#000000', e => {
     color1 = e;
+    if (!timer.isPlaying()) {
+        render();
+    }
+}));
+
+document.body.appendChild(createColor('background', '#000000', (color, id, text) => {
+    colorBG = text;
     if (!timer.isPlaying()) {
         render();
     }
