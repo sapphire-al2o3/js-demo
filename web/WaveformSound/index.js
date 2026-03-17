@@ -29,6 +29,10 @@ function quad(x) {
     return 1 - x * x;
 }
 
+function quadOut(x) {
+    return (1 - x) * (1 - x);
+}
+
 function bounce(x) {
     const n1 = 7.5625;
     const d1 = 2.75;
@@ -51,8 +55,10 @@ function wind(x) {
         case 1:
             return quad(x);
         case 2:
-            return bounce(x);
+            return quadOut(x);
         case 3:
+            return bounce(x);
+        case 4:
             return 1;
         default:
             return 1;
@@ -157,7 +163,7 @@ document.body.appendChild(createSlider('amp', amp, v => {
     amp = v;
 }));
 
-document.body.appendChild(createRadio(['linear', 'quad', 'bounce', 'none'], (v, id, i) => {
+document.body.appendChild(createRadio(['linear', 'quad', 'quad(out)', 'bounce', 'none'], (v, id, i) => {
     ease = i;
 }));
 
