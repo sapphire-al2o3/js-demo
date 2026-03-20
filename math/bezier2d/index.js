@@ -58,13 +58,13 @@ function strokeLine(a, b, c, d) {
 }
 
 function draw() {
-    var d = new Vector2(mouseX, mouseY);
+    let d = new Vector2(mouseX, mouseY);
     
     if(down) {
-        shapes.forEach(function(e) {
-        if(d.distance(e) < 6) {
-            active = e;
-        }
+        shapes.forEach((e) => {
+            if(d.distance(e) < 6) {
+                active = e;
+            }
         });
         active.x = clickX;
         active.y = clickY;
