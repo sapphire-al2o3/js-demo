@@ -8,6 +8,7 @@ let color1 = [0, 0, 0];
 let colorBG = '#000';
 let point0 = { x: 100, y: 100 };
 let point1 = { x: 200, y: 200 };
+let points = [point0, point1];
 
 let clickX = 0;
 let clickY = 0;
@@ -34,6 +35,15 @@ function render() {
     grad3.addColorStop(1, getColor(1));
     ctx.fillStyle = grad3;
     ctx.fillRect(0, 0, 400, 400);
+
+    ctx.strokeStyle = '#FFF';
+    ctx.beginPath();
+    ctx.arc(point0.x, point0.y, 4, 0, Math.PI * 2, false);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(point1.x, point1.y, 4, 0, Math.PI * 2, false);
+    ctx.stroke();
 };
 
 render();
@@ -57,17 +67,26 @@ canvas.addEventListener('mousedown', e => {
     const rect = e.target.getBoundingClientRect();
     clickX = e.clientX - rect.left;
     clickY = e.clientY - rect.top;
+    for (let i = 0; i < points.length; i++) {
+        let dx = points[i].x - clickX;
+        let dy = points[i].y - clickY;
+        let d = dx * dx + dy * dy;
+        if (d < 16) {
+            active = points[i];
+            break;
+        }
+    }
     down = true;
 }, false);
 
 canvas.addEventListener('mouseup', e => {
     down = false;
-    active = {};
+    active = null;
 }, false);
 
 canvas.addEventListener('mouseout', e => {
     down = false;
-    active = {};
+    active = null;
 }, false);
 
 canvas.addEventListener('mousemove', e => {
@@ -75,9 +94,11 @@ canvas.addEventListener('mousemove', e => {
     mouseX = e.clientX - rect.left;
     mouseY = e.clientY - rect.top;
     if (down) {
-        point0.x = mouseX;
-        point0.y = mouseY;
-        render();
+        if (active) {
+            active.x = mouseX;
+            active.y = mouseY;
+            render();
+        }
     }
     e.stopPropagation();
 }, false);
