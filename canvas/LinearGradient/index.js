@@ -5,6 +5,7 @@ function rgba(r, g, b, a) { return `rgb(${r} ${g} ${b}/${a})`; }
 
 let color0 = [255, 0, 0];
 let color1 = [0, 0, 0];
+let colors = [color0, color1];
 let colorBG = '#000';
 let point0 = { x: 100, y: 100 };
 let point1 = { x: 200, y: 200 };
@@ -16,11 +17,8 @@ let mouseX = 0;
 let mouseY = 0;
 let down = false;
 
-function getColor(a) {
-    let r = color0[0] * a + color1[0] * (1 - a);
-    let g = color0[1] * a + color1[1] * (1 - a);
-    let b = color0[2] * a + color1[2] * (1 - a);
-    return rgba(r, g, b, 1);
+function getColor(i) {
+    return rgba(...colors[i], 1);
 }
 
 function render() {
@@ -49,12 +47,12 @@ function render() {
 render();
 
 document.body.appendChild(createColor('color0', '#FF0000', e => {
-    color0 = e;
+    colors[0] = e;
     render();
 }));
 
 document.body.appendChild(createColor('color1', '#000000', e => {
-    color1 = e;
+    colors[1] = e;
     render();
 }));
 
@@ -71,7 +69,7 @@ canvas.addEventListener('mousedown', e => {
         let dx = points[i].x - clickX;
         let dy = points[i].y - clickY;
         let d = dx * dx + dy * dy;
-        if (d < 16) {
+        if (d < 36) {
             active = points[i];
             break;
         }
