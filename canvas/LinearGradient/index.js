@@ -6,9 +6,8 @@ function rgba(r, g, b, a) { return `rgb(${r} ${g} ${b}/${a})`; }
 let color0 = [255, 0, 0];
 let color1 = [0, 0, 0];
 let colors = [color0, color1];
-let colorBG = '#000';
 let point0 = { x: 100, y: 100 };
-let point1 = { x: 200, y: 200 };
+let point1 = { x: 300, y: 300 };
 let points = [point0, point1];
 
 let clickX = 0;
@@ -22,8 +21,7 @@ function getColor(i) {
 }
 
 function render() {
-    ctx.fillStyle = colorBG;
-    ctx.fillRect(0, 0, 400, 400);
+    
     let x0 = point0.x,
         y0 = point0.y,
         x1 = point1.x,
@@ -53,11 +51,6 @@ document.body.appendChild(createColor('color0', '#FF0000', e => {
 
 document.body.appendChild(createColor('color1', '#000000', e => {
     colors[1] = e;
-    render();
-}));
-
-document.body.appendChild(createColor('background', '#000000', (color, id, text) => {
-    colorBG = text;
     render();
 }));
 
