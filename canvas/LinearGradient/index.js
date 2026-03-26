@@ -20,6 +20,14 @@ function getColor(i) {
     return rgba(...colors[i], 1);
 }
 
+function getPointColor(i) {
+    let r = colors[i][0];
+    let g = colors[i][1];
+    let b = colors[i][2];
+    let y = (r + g + b) / 3 ^ 0;
+    return y >= 140 ? '#444' : '#FFF';
+}
+
 function render() {
     
     let x0 = point0.x,
@@ -32,11 +40,12 @@ function render() {
     ctx.fillStyle = grad3;
     ctx.fillRect(0, 0, 400, 400);
 
-    ctx.strokeStyle = '#FFF';
+    ctx.strokeStyle = getPointColor(0);
     ctx.beginPath();
     ctx.arc(point0.x, point0.y, 4, 0, Math.PI * 2, false);
     ctx.stroke();
 
+    ctx.strokeStyle = getPointColor(1);
     ctx.beginPath();
     ctx.arc(point1.x, point1.y, 4, 0, Math.PI * 2, false);
     ctx.stroke();
