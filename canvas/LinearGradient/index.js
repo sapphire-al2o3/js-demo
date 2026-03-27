@@ -15,6 +15,7 @@ let clickY = 0;
 let mouseX = 0;
 let mouseY = 0;
 let down = false;
+let anchor = true;
 
 function getColor(i) {
     return rgba(...colors[i], 1);
@@ -40,15 +41,17 @@ function render() {
     ctx.fillStyle = grad3;
     ctx.fillRect(0, 0, 400, 400);
 
-    ctx.strokeStyle = getPointColor(0);
-    ctx.beginPath();
-    ctx.arc(point0.x, point0.y, 4, 0, Math.PI * 2, false);
-    ctx.stroke();
+    if (anchor) {
+        ctx.strokeStyle = getPointColor(0);
+        ctx.beginPath();
+        ctx.arc(point0.x, point0.y, 4, 0, Math.PI * 2, false);
+        ctx.stroke();
 
-    ctx.strokeStyle = getPointColor(1);
-    ctx.beginPath();
-    ctx.arc(point1.x, point1.y, 4, 0, Math.PI * 2, false);
-    ctx.stroke();
+        ctx.strokeStyle = getPointColor(1);
+        ctx.beginPath();
+        ctx.arc(point1.x, point1.y, 4, 0, Math.PI * 2, false);
+        ctx.stroke();
+    }
 };
 
 render();
@@ -62,6 +65,11 @@ document.body.appendChild(createColor('color1', '#000000', e => {
     colors[1] = e;
     render();
 }));
+
+document.body.appendChild(createCheckbox('anchor', v => {
+    anchor = v;
+    render();
+}, true));
 
 canvas.addEventListener('mousedown', e => {
     const rect = e.target.getBoundingClientRect();
