@@ -16,6 +16,7 @@ let mouseX = 0;
 let mouseY = 0;
 let down = false;
 let anchor = true;
+let hover = false;
 
 function getColor(i) {
     return rgba(...colors[i], 1);
@@ -41,7 +42,7 @@ function render() {
     ctx.fillStyle = grad3;
     ctx.fillRect(0, 0, 400, 400);
 
-    if (anchor) {
+    if (anchor || hover) {
         ctx.strokeStyle = getPointColor(0);
         ctx.beginPath();
         ctx.arc(point0.x, point0.y, 4, 0, Math.PI * 2, false);
@@ -103,10 +104,19 @@ canvas.addEventListener('mousemove', e => {
     mouseY = e.clientY - rect.top;
     if (down) {
         if (active) {
+            hover = false;
             active.x = mouseX;
             active.y = mouseY;
             render();
         }
+    } else {
+        hover = true;
+        render();
     }
     e.stopPropagation();
+}, false);
+
+canvas.addEventListener('mouseout', e => {
+    hover = false;
+    render();
 }, false);
