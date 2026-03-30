@@ -10,6 +10,8 @@ let point0 = { x: 100, y: 100 };
 let point1 = { x: 300, y: 300 };
 let points = [point0, point1];
 
+let offsets = [0, 1];
+
 let clickX = 0;
 let clickY = 0;
 let mouseX = 0;
@@ -37,8 +39,9 @@ function render() {
         x1 = point1.x,
         y1 = point1.y;
     let grad3 = ctx.createLinearGradient(x0, y0, x1, y1);
-    grad3.addColorStop(0, getColor(0));
-    grad3.addColorStop(1, getColor(1));
+    for (let i = 0; i < colors.length; i++) {
+        grad3.addColorStop(offsets[i], getColor(i));
+    }
     ctx.fillStyle = grad3;
     ctx.fillRect(0, 0, 400, 400);
 
