@@ -12,6 +12,11 @@ let ease = 0;
 let wave = 0;
 let octove = false;
 let add = false;
+let offset = 0.1;
+
+function clamp(x, min, max) {
+    return x < min ? min : x > max ? max : x;
+}
 
 function resize(length) {
     buffer = context.createBuffer(
@@ -128,28 +133,29 @@ function setup() {
     const l = buffer.length;
     let max = 0;
     let min = 0;
-    for (let j = 0; j < buffer.length; j++) {
+    for (let j = 0; j < l; j++) {
         let t = j / l * time * freq;
         let f = octove ? overtone(waveform, t, 8) : waveform(t);
         let w = wind(j / l);
 
         if (add) {
-            b[j] += amp * w * f;
-            if (max < b[j]) max = b[j];
-            if (min > b[j]) min = b[j];
+            let k = clamp((offset * l ^ 0) + j, 0, l - 1);
+            b[k] += amp * w * f;
+            if (max < b[k]) max = b[k];
+            if (min > b[k]) min = b[k];
         } else {
             b[j] = amp * w * f;
         }
     }
 
     if (max > amp) {
-        for (let j = 0; j < buffer.length; j++) {
+        for (let j = 0; j < l; j++) {
             b[j] *= amp / max;
         }
     }
 
     const b2 = buffer.getChannelData(1);
-    for (let j = 0; j < buffer.length; j++) {
+    for (let j = 0; j < l; j++) {
         b2[j] = b[j];
     }
     document.getElementById('File').disabled = false;
@@ -178,6 +184,11 @@ document.body.appendChild(createCheckbox('overtone', v => {
 document.body.appendChild(createCheckbox('add', v => {
     add = v;
 }));
+
+document.body.appendChild(createSlider('offset', 0, v => {
+    offset = v;
+}));
+
 
 function play() {
     const length = parseFloat(document.getElementById('length').value);
