@@ -3,6 +3,10 @@ const ctx = canvas.getContext('2d');
 let time = 0;
 function rgba(r, g, b, a) { return `rgb(${r} ${g} ${b}/${a})`; }
 
+function rgb(r, g, b) {
+    return `#${r.toString(16)}${g}${b}`;
+}
+
 let color0 = [255, 0, 0];
 let color1 = [0, 0, 0];
 let colors = [color0, color1];
@@ -30,6 +34,13 @@ function getPointColor(i) {
     let b = colors[i][2];
     let y = (r + g + b) / 3 ^ 0;
     return y >= 140 ? '#444' : '#FFF';
+}
+
+function lerpColor(x, y, t) {
+    let r = colors[x][0] * (1 - t) + colors[y][0] * t;
+    let g = colors[x][1] * (1 - t) + colors[y][1] * t;
+    let b = colors[x][2] * (1 - t) + colors[y][2] * t;
+    return [r ^ 0, g ^ 0, b ^ 0];
 }
 
 function render() {
@@ -74,6 +85,19 @@ document.body.appendChild(createCheckbox('anchor', v => {
     anchor = v;
     render();
 }, true));
+
+document.getElementById('add').addEventListener('click', () => {
+    let newOffset = (offsets[0] + offsets[1]) * 0.5;
+    offsets.push(newOffset);
+
+    let newColor = lerpColor(0, 1, 0.5);
+    colors.push(newColor);
+
+    document.body.appendChild(createColor('color1', '#000000', e => {
+        colors[2] = e;
+        render();
+    }));
+}, false);
 
 canvas.addEventListener('mousedown', e => {
     const rect = e.target.getBoundingClientRect();
