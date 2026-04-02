@@ -7,6 +7,15 @@ function rgb(r, g, b) {
     return `#${r.toString(16)}${g}${b}`;
 }
 
+function toHex(x) {
+    return (x > 15 ? '' : '0') + x.toString(16);
+}
+
+function toColorCode(r, g, b) {
+    const c = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+    return c.toUpperCase();
+}
+
 let color0 = [255, 0, 0];
 let color1 = [0, 0, 0];
 let colors = [color0, color1];
@@ -71,15 +80,19 @@ function render() {
 
 render();
 
-document.body.appendChild(createColor('color0', '#FF0000', e => {
-    colors[0] = e;
+function changeColor(v, id) {
+    let index = parseInt(document.getElementById(id).getAttribute('index'));
+    colors[index] = v;
     render();
-}));
+}
 
-document.body.appendChild(createColor('color1', '#000000', e => {
-    colors[1] = e;
-    render();
-}));
+const colorUI0 = createColor('color0', '#FF0000', changeColor);
+colorUI0.querySelector('#color0').setAttribute('index', '0');
+document.body.appendChild(colorUI0);
+
+const colorUI1 = createColor('color1', '#000000', changeColor);
+colorUI1.querySelector('#color1').setAttribute('index', '1');
+document.body.appendChild(colorUI1);
 
 document.body.appendChild(createCheckbox('anchor', v => {
     anchor = v;
@@ -93,7 +106,7 @@ document.getElementById('add').addEventListener('click', () => {
     let newColor = lerpColor(0, 1, 0.5);
     colors.push(newColor);
 
-    document.body.appendChild(createColor('color1', '#000000', e => {
+    document.body.appendChild(createColor('color1', toColorCode(colors[2][0], colors[2][1], colors[2][2]), e => {
         colors[2] = e;
         render();
     }));
