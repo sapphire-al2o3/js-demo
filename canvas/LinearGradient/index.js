@@ -106,10 +106,11 @@ document.getElementById('add').addEventListener('click', () => {
     let newColor = lerpColor(0, 1, 0.5);
     colors.push(newColor);
 
-    document.body.appendChild(createColor('color1', toColorCode(colors[2][0], colors[2][1], colors[2][2]), e => {
-        colors[2] = e;
-        render();
-    }));
+    let n = 2;
+    let id = 'color' + n;
+    const newColorUI = createColor(id, toColorCode(...colors[n]), changeColor);
+    newColorUI.querySelector('#' + id).setAttribute('index', n);
+    document.body.appendChild(newColorUI);
 }, false);
 
 canvas.addEventListener('mousedown', e => {
