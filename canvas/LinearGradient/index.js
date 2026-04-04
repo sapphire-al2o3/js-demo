@@ -66,15 +66,12 @@ function render() {
     ctx.fillRect(0, 0, 400, 400);
 
     if (anchor || hover) {
-        ctx.strokeStyle = getPointColor(0);
-        ctx.beginPath();
-        ctx.arc(point0.x, point0.y, 4, 0, Math.PI * 2, false);
-        ctx.stroke();
-
-        ctx.strokeStyle = getPointColor(1);
-        ctx.beginPath();
-        ctx.arc(point1.x, point1.y, 4, 0, Math.PI * 2, false);
-        ctx.stroke();
+        for (let i = 0; i < points.length; i++) {
+            ctx.strokeStyle = getPointColor(i);
+            ctx.beginPath();
+            ctx.arc(points[i].x, points[i].y, 4, 0, Math.PI * 2, false);
+            ctx.stroke();
+        }
     }
 };
 
@@ -86,13 +83,15 @@ function changeColor(v, id) {
     render();
 }
 
+const colorsUI = document.getElementById('colors');
+
 const colorUI0 = createColor('color0', '#FF0000', changeColor);
 colorUI0.querySelector('#color0').setAttribute('index', '0');
-document.body.appendChild(colorUI0);
+colorsUI.appendChild(colorUI0);
 
 const colorUI1 = createColor('color1', '#000000', changeColor);
 colorUI1.querySelector('#color1').setAttribute('index', '1');
-document.body.appendChild(colorUI1);
+colorsUI.appendChild(colorUI1);
 
 document.body.appendChild(createCheckbox('anchor', v => {
     anchor = v;
@@ -106,11 +105,15 @@ document.getElementById('add').addEventListener('click', () => {
     let newColor = lerpColor(0, 1, 0.5);
     colors.push(newColor);
 
+    let x = (points[0].x + points[1].x) * 0.5;
+    let y = (points[0].y + points[1].y) * 0.5;
+    points.push({x, y});
+
     let n = 2;
     let id = 'color' + n;
     const newColorUI = createColor(id, toColorCode(...colors[n]), changeColor);
     newColorUI.querySelector('#' + id).setAttribute('index', n);
-    document.body.appendChild(newColorUI);
+    colorsUI.insertBefore(newColorUI, colorUI1);
 }, false);
 
 canvas.addEventListener('mousedown', e => {
