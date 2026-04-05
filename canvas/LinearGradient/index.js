@@ -66,6 +66,11 @@ function render() {
     ctx.fillRect(0, 0, 400, 400);
 
     if (anchor || hover) {
+        ctx.strokeStyle = '#FFF';
+        ctx.beginPath();
+        ctx.moveTo(point0.x, point0.y);
+        ctx.lineTo(point1.x, point1.y);
+        ctx.stroke();
         for (let i = 0; i < points.length; i++) {
             ctx.strokeStyle = getPointColor(i);
             ctx.beginPath();
