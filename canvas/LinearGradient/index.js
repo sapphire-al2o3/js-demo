@@ -59,6 +59,7 @@ function render() {
         x1 = point1.x,
         y1 = point1.y;
     let grad3 = ctx.createLinearGradient(x0, y0, x1, y1);
+
     for (let i = 0; i < colors.length; i++) {
         grad3.addColorStop(offsets[i], getColor(i));
     }
@@ -71,10 +72,14 @@ function render() {
         ctx.moveTo(point0.x, point0.y);
         ctx.lineTo(point1.x, point1.y);
         ctx.stroke();
-        for (let i = 0; i < points.length; i++) {
+
+        let dx = x1 - x0;
+        let dy = y1 - y0;
+
+        for (let i = 0; i < offsets.length; i++) {
             ctx.strokeStyle = getPointColor(i);
             ctx.beginPath();
-            ctx.arc(points[i].x, points[i].y, 4, 0, Math.PI * 2, false);
+            ctx.arc(dx * offsets[i] + x0, dy * offsets[i] + y0, 4, 0, Math.PI * 2, false);
             ctx.stroke();
         }
     }
@@ -103,7 +108,9 @@ document.body.appendChild(createCheckbox('anchor', v => {
     render();
 }, true));
 
-document.getElementById('add').addEventListener('click', () => {
+const addUI = document.getElementById('add');
+
+addUI.addEventListener('click', () => {
     let newOffset = (offsets[0] + offsets[1]) * 0.5;
     offsets.push(newOffset);
 
@@ -119,6 +126,10 @@ document.getElementById('add').addEventListener('click', () => {
     const newColorUI = createColor(id, toColorCode(...colors[n]), changeColor);
     newColorUI.querySelector('#' + id).setAttribute('index', n);
     colorsUI.insertBefore(newColorUI, colorUI1);
+
+    render();
+
+    addUI.disabled = true;
 }, false);
 
 canvas.addEventListener('mousedown', e => {
