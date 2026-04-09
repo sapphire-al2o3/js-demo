@@ -79,14 +79,20 @@ async function load(file) {
             // PNG
             loadPng(new Uint8Array(buffer, files[i].offset, files[i].size), offsetX);
         } else if (s === 40) {
-            let bcWidth = dataView.getInt32(offset + 4, true);
-            let bcHeight = dataView.getInt32(offset + 8, true);
-            let bcPlanes = dataView.getUint16(offset + 12, true);
-            let bcBitCount = dataView.getUint16(offset + 14, true);
+            let biWidth = dataView.getInt32(offset + 4, true);
+            let biHeight = dataView.getInt32(offset + 8, true);
+            let biPlanes = dataView.getUint16(offset + 12, true);
+            let biBitCount = dataView.getUint16(offset + 14, true);
             let biCompression = dataView.getUint16(offset + 16, true);
             let biSizeImage = dataView.getUint32(offset + 20, true);
-            console.log(bcWidth, bcHeight, bcPlanes, bcBitCount);
+            let biXPixPerMeter = dataView.getUint32(offset + 24, true);
+            let biYPixPerMeter = dataView.getUint32(offset + 28, true);
+            let biClrUsed = dataView.getUint32(offset + 32, true);
+            let biClrImportant = dataView.getUint32(offset + 36, true);
+            console.log('0x' + offset.toString(16))
+            console.log(biWidth, biHeight, biPlanes, biBitCount);
             console.log(biCompression, biSizeImage);
+            let stride = ((((biWidth * biBitCount) + 31) & ~31) >> 3);
         }
         offsetX += files[i].width;
     }
