@@ -10,8 +10,20 @@ async function loadPng(buffer, x) {
     image.close();
 }
 
-function loadBmp(buffer, x) {
+function loadBmp(buffer, w, h, x) {
+    const image = ctx.createImageData(w, h);
+    const data  = image.data;
 
+    for (let i = 0; i < h; i++) {
+        for (let j = 0; j < w; j++) {
+            let k = (i * w + j) * 4;
+            data[k] = buffer[k];
+            data[k + 1] = buffer[k + 1];
+            data[k + 2] = buffer[k + 2];
+            data[k + 3] = buffer[k + 3];
+        }
+    }
+    ctx.putImageData(image, x, 0);
 }
 
 async function load(file) {
@@ -64,7 +76,8 @@ async function load(file) {
         files.push({
             size: dibSize,
             offset: dibOffset,
-            width: width
+            width: width,
+            height: height
         });
     }
     content.textContent = texts.join('\n');
@@ -79,6 +92,7 @@ async function load(file) {
             // PNG
             loadPng(new Uint8Array(buffer, files[i].offset, files[i].size), offsetX);
         } else if (s === 40) {
+            // BMP
             let biWidth = dataView.getInt32(offset + 4, true);
             let biHeight = dataView.getInt32(offset + 8, true);
             let biPlanes = dataView.getUint16(offset + 12, true);
@@ -93,6 +107,8 @@ async function load(file) {
             console.log(biWidth, biHeight, biPlanes, biBitCount);
             console.log(biCompression, biSizeImage);
             let stride = ((((biWidth * biBitCount) + 31) & ~31) >> 3);
+
+            // loadBmp(new Uint8Array(buffer, offset + 40, biWidth * biHeight * 4), files[i].width, files[i].height, offsetX);
         }
         offsetX += files[i].width;
     }
