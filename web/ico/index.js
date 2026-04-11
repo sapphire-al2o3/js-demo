@@ -91,6 +91,8 @@ async function load(file) {
         let s = dataView.getUint8(offset, true);
         if (s === 0x89) {
             // PNG
+            console.log('PNG');
+            console.log('0x' + offset.toString(16))
             loadPng(new Uint8Array(buffer, files[i].offset, files[i].size), offsetX);
         } else if (s === 40) {
             // BMP
@@ -104,7 +106,8 @@ async function load(file) {
             let biYPixPerMeter = dataView.getUint32(offset + 28, true);
             let biClrUsed = dataView.getUint32(offset + 32, true);
             let biClrImportant = dataView.getUint32(offset + 36, true);
-            console.log('0x' + offset.toString(16))
+            console.log('BMP');
+            console.log('0x' + offset.toString(16));
             console.log(`${biWidth} ${biHeight} ${biPlanes} bitCount: ${biBitCount}`);
             console.log(`${biSizeImage}`);
             let stride = ((((biWidth * biBitCount) + 31) & ~31) >> 3);
