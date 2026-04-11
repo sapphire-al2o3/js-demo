@@ -17,10 +17,11 @@ function loadBmp(buffer, w, h, x) {
     for (let i = 0; i < h; i++) {
         for (let j = 0; j < w; j++) {
             let k = (i * w + j) * 4;
-            data[k] = buffer[k];
-            data[k + 1] = buffer[k + 1];
-            data[k + 2] = buffer[k + 2];
-            data[k + 3] = buffer[k + 3];
+            let l = ((h - i - 1) * w + j) * 4;
+            data[k] = buffer[l + 2];
+            data[k + 1] = buffer[l + 1];
+            data[k + 2] = buffer[l + 0];
+            data[k + 3] = buffer[l + 3];
         }
     }
     ctx.putImageData(image, x, 0);
@@ -104,11 +105,14 @@ async function load(file) {
             let biClrUsed = dataView.getUint32(offset + 32, true);
             let biClrImportant = dataView.getUint32(offset + 36, true);
             console.log('0x' + offset.toString(16))
-            console.log(biWidth, biHeight, biPlanes, biBitCount);
-            console.log(biCompression, biSizeImage);
+            console.log(`${biWidth} ${biHeight} ${biPlanes} bitCount: ${biBitCount}`);
+            console.log(`${biSizeImage}`);
             let stride = ((((biWidth * biBitCount) + 31) & ~31) >> 3);
 
-            // loadBmp(new Uint8Array(buffer, offset + 40, biWidth * biHeight * 4), files[i].width, files[i].height, offsetX);
+            let w = files[i].width;
+            let h = files[i].height;
+            let bpp = biBitCount / 8;
+            loadBmp(new Uint8Array(buffer, offset + 40, w * h * bpp), w, h, offsetX);
         }
         offsetX += files[i].width;
     }
