@@ -73,6 +73,7 @@ async function load(file) {
         texts.push(`ColorCount: ${colorCount}`);
         texts.push(`Size: ${dibSize}`);
         texts.push(`Offset: 0x${dibOffset.toString(16)}`);
+        texts.push(``);
 
         files.push({
             size: dibSize,
