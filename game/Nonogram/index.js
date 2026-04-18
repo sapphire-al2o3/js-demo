@@ -6,7 +6,72 @@ const sizeY = 10;
 const hintSizeX = sizeX / 2 ^ 0;
 const hintSizeY = sizeY / 2 ^ 0;
 
+const pixels = [
+    0,0,0,1,1,1,1,0,0,0,
+    0,0,1,0,0,0,0,1,0,0,
+    0,1,0,0,0,0,0,0,1,0,
+    0,1,0,0,0,0,0,0,1,0,
+    1,0,0,0,0,0,0,0,0,1,
+    1,0,0,0,0,0,0,0,0,1,
+    0,1,1,1,1,1,1,1,1,0,
+    0,1,0,1,0,0,1,0,1,0,
+    1,0,0,1,0,0,1,0,0,1,
+    0,0,1,0,0,0,0,1,0,0
+];
 
+let hintX = [];
+let hintY = [];
+
+function generateHint() {
+    for (let i = 0; i < sizeY; i++) {
+        hintY.push([]);
+        let b = 0;
+        for (let j = 0; j < sizeX; j++) {
+            let index = i * sizeX + j;
+            if (pixels[index] === 1) {
+                b++;
+            } else if(b > 0) {
+                hintY[i].push(b);
+                b = 0;
+            }
+        }
+        if (b > 0) {
+            hintY[i].push(b);
+        }
+    }
+    for (let i = 0; i < sizeX; i++) {
+        let y = hintSizeY - hintY[i].length;
+        for (let j = 0; j < y; j++) {
+            hintY[i].push(0);
+        }
+    }
+
+    for (let j = 0; j < sizeX; j++) {
+        hintX.push([]);
+        let b = 0;
+        for (let i = 0; i < sizeY; i++) {
+            let index = i * sizeX + j;
+            if (pixels[index] === 1) {
+                b++;
+            } else if (b > 0) {
+                hintX[j].push(b);
+                b = 0;
+            }
+        }
+        if (b > 0) {
+            hintX[j].push(b);
+        }
+    }
+
+    for (let i = 0; i < sizeY; i++) {
+        let x = hintSizeX - hintX[i];
+        for (let j = 0; j < x; j++) {
+            hintX[i].unshift(0);
+        }
+    }
+}
+
+generateHint();
 
 for (let i = 0; i < hintSizeY; i++) {
     const tr = document.createElement('tr');
@@ -18,7 +83,7 @@ for (let i = 0; i < hintSizeY; i++) {
 
     for (let j = 0; j < sizeX; j++) {
         const th = document.createElement('th');
-        th.textContent = '0';
+        th.textContent = '1';
         tr.appendChild(th);
     }
     table.appendChild(tr);
@@ -30,7 +95,9 @@ for (let i = 0; i < sizeY; i++) {
 
     for (let j = 0; j < hintSizeX; j++) {
         const th = document.createElement('th');
-        th.textContent = '0';
+        if (hintX[i][j] > 0) {
+            th.textContent = '1';
+        }
         tr.appendChild(th);
     }
 
@@ -40,9 +107,13 @@ for (let i = 0; i < sizeY; i++) {
         td.setAttribute('y', i);
         td.setAttribute('k', k);
 
+        if (pixels[k] === 1) {
+            td.classList.toggle('black');
+        }
+
         tr.appendChild(td);
         elems.push(td);
-        cells.push(0);
+        cells.push(pixels[k]);
         k++;
     }
     table.appendChild(tr);
@@ -55,3 +126,5 @@ table.addEventListener('click', e => {
         cells[k] = 1 - cells[k];
     }
 }, false);
+
+
