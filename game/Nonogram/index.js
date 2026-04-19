@@ -42,7 +42,7 @@ function generateHint() {
     for (let i = 0; i < sizeX; i++) {
         let y = hintSizeY - hintY[i].length;
         for (let j = 0; j < y; j++) {
-            hintY[i].push(0);
+            hintY[i].unshift(0);
         }
     }
 
@@ -64,7 +64,7 @@ function generateHint() {
     }
 
     for (let i = 0; i < sizeY; i++) {
-        let x = hintSizeX - hintX[i];
+        let x = hintSizeX - hintX[i].length;
         for (let j = 0; j < x; j++) {
             hintX[i].unshift(0);
         }
@@ -83,7 +83,9 @@ for (let i = 0; i < hintSizeY; i++) {
 
     for (let j = 0; j < sizeX; j++) {
         const th = document.createElement('th');
-        th.textContent = '1';
+        if (hintX[j][i] > 0) {
+            th.textContent = hintX[j][i];
+        }
         tr.appendChild(th);
     }
     table.appendChild(tr);
@@ -95,8 +97,8 @@ for (let i = 0; i < sizeY; i++) {
 
     for (let j = 0; j < hintSizeX; j++) {
         const th = document.createElement('th');
-        if (hintX[i][j] > 0) {
-            th.textContent = '1';
+        if (hintY[i][j] > 0) {
+            th.textContent = hintY[i][j];
         }
         tr.appendChild(th);
     }
@@ -124,7 +126,18 @@ table.addEventListener('click', e => {
         e.target.classList.toggle('black');
         let k = parseInt(e.target.getAttribute('k'));
         cells[k] = 1 - cells[k];
+
+        if (checkComplete()) {
+            console.log('complete');
+        }
     }
 }, false);
 
-
+function checkComplete() {
+    for (let i = 0; i < pixels.length; i++) {
+        if (cells[i] !== pixels[i]) {
+            return false;
+        }
+    }
+    return true;
+}
