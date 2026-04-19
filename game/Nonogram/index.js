@@ -22,13 +22,13 @@ const pixels = [
 let hintX = [];
 let hintY = [];
 
-function generateHint() {
+function generateHint(v) {
     for (let i = 0; i < sizeY; i++) {
         hintY.push([]);
         let b = 0;
         for (let j = 0; j < sizeX; j++) {
             let index = i * sizeX + j;
-            if (pixels[index] === 1) {
+            if (pixels[index] === v) {
                 b++;
             } else if(b > 0) {
                 hintY[i].push(b);
@@ -51,7 +51,7 @@ function generateHint() {
         let b = 0;
         for (let i = 0; i < sizeY; i++) {
             let index = i * sizeX + j;
-            if (pixels[index] === 1) {
+            if (pixels[index] === v) {
                 b++;
             } else if (b > 0) {
                 hintX[j].push(b);
@@ -71,7 +71,7 @@ function generateHint() {
     }
 }
 
-generateHint();
+generateHint(1);
 
 for (let i = 0; i < hintSizeY; i++) {
     const tr = document.createElement('tr');
