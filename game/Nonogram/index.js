@@ -122,13 +122,27 @@ for (let i = 0; i < sizeY; i++) {
         td.setAttribute('y', i);
         td.setAttribute('k', k);
 
+        if (i === 0) {
+            td.classList.add('top_line5');
+        }
+        if (i % 5 === 4) {
+            td.classList.add('bottom_line5');
+        }
+        if (j === 0) {
+            td.classList.add('left_line5');
+        }
+        if (j % 5 === 4) {
+            td.classList.add('right_line5');
+        }
+
         if (pixels[k] === 1) {
-            td.classList.toggle('black');
+            // td.classList.toggle('black');
         }
 
         tr.appendChild(td);
         elems.push(td);
-        cells.push(pixels[k]);
+        cells.push(0);
+        // cells.push(pixels[k]);
         k++;
     }
     table.appendChild(tr);
