@@ -17,6 +17,22 @@ td {
     cursor: pointer;
 }
 
+td.top_line5 {
+    border-top: 1px solid #555;
+}
+
+td.left_line5 {
+    border-left: 1px solid #555;
+}
+
+td.bottom_line5 {
+    border-bottom: 1px solid #555;
+}
+
+td.right_line5 {
+    border-right: 1px solid #555;
+}
+
 th {
     font-size: 14px;
     width: 20px;
@@ -25,4 +41,15 @@ th {
 
 .black {
     background-color: #000;
+}
+
+p {
+    font-size: 36px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    display: none;
+}
+
+.show {
+    display: block;
 }
