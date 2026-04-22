@@ -160,11 +160,14 @@ table.addEventListener('click', e => {
     }
 }, false);
 
+const complete = document.getElementById('complete');
+
 function checkComplete() {
     for (let i = 0; i < pixels.length; i++) {
         if (cells[i] !== pixels[i]) {
             return false;
         }
     }
+    complete.classList.add('show');
     return true;
 }
