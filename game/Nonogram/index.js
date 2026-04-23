@@ -171,3 +171,12 @@ function checkComplete() {
     complete.classList.add('show');
     return true;
 }
+
+
+document.getElementById('reset').addEventListener('click', e => {
+    for (let i = 0; i < cells.length; i++) {
+        cells[i] = 0;
+        elems[i].classList.remove('black');
+    }
+    complete.classList.remove('show');
+}, false);

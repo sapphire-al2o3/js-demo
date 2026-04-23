@@ -5,6 +5,7 @@ body {
 table {
     /* border: 1px solid #AAA; */
     border-collapse: collapse;
+    margin: 0 auto;
 }
 
 td {
@@ -44,12 +45,31 @@ th {
 }
 
 p {
-    font-size: 36px;
+    font-size: 52px;
     font-weight: bold;
     letter-spacing: 2px;
     display: none;
+    margin-top: 24px;
+    margin-bottom: 24px;
 }
 
 .show {
     display: block;
+}
+
+button {
+    font-family: "Noto Sans JP";
+    font-weight: bold;
+    font-size: 16px;
+    border: 1px solid #AAA;
+    background-color: #EEE;
+    /* color: #FFF; */
+    padding: 4px 20px;
+    margin-top: 16px;
+    /* display: none; */
+}
+
+button:hover {
+    background-color: #FFF;
+    cursor: pointer;
 }
