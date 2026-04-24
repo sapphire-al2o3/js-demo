@@ -36,6 +36,8 @@ let hintX = [];
 let hintY = [];
 
 function generateHint(v) {
+    hintX.length = 0;
+    hintY.length = 0;
     for (let i = 0; i < sizeY; i++) {
         hintY.push([]);
         let b = 0;
