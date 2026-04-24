@@ -158,6 +158,7 @@ table.addEventListener('click', e => {
 
         if (checkComplete()) {
             console.log('complete');
+            complete.classList.add('show');
         }
     }
 }, false);
@@ -170,7 +171,6 @@ function checkComplete() {
             return false;
         }
     }
-    complete.classList.add('show');
     return true;
 }
 
