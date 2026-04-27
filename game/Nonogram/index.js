@@ -182,3 +182,15 @@ document.getElementById('reset').addEventListener('click', e => {
     }
     complete.classList.remove('show');
 }, false);
+
+function printPixel() {
+    let text = '';
+    for (let i = 0; i < sizeY; i++) {
+        for (let j = 0; j < sizeX; j++) {
+            let k = i * sizeX + j;
+            text += cells[k].toString() + ',';
+        }
+        text += '\n';
+    }
+    console.log(text);
+}
