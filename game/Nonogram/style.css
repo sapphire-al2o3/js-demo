@@ -90,7 +90,8 @@ button#edit {
     font-weight: normal;
 }
 
-input[type="text"] {
+textarea {
+    margin-top: 32px;
     border: 1px solid #AAA;
     width: 540px;
 }
