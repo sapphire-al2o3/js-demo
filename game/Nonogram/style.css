@@ -91,13 +91,13 @@ button#edit {
 }
 
 textarea {
-    margin-top: 32px;
+    margin-top: 8px;
     border: 1px solid #AAA;
     width: 540px;
 }
 
 #editor {
-    display: none;
+    /* display: none; */
 }
 
 #editor.show {
