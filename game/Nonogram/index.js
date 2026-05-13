@@ -34,6 +34,8 @@ const pixels = [
 
 let hintX = [];
 let hintY = [];
+let hintXElm = [];
+let hintYElm = [];
 
 function generateHint(v) {
     hintX.length = 0;
@@ -96,11 +98,13 @@ for (let i = 0; i < hintSizeY; i++) {
         tr.appendChild(th);
     }
 
+    hintXElm[i] = [];
     for (let j = 0; j < sizeX; j++) {
         const th = document.createElement('th');
         if (hintX[j][i] > 0) {
             th.textContent = hintX[j][i];
         }
+        hintXElm[i].push(th);
         tr.appendChild(th);
     }
     table.appendChild(tr);
@@ -110,11 +114,13 @@ let k = 0;
 for (let i = 0; i < sizeY; i++) {
     const tr = document.createElement('tr');
 
+    hintYElm[i] = [];
     for (let j = 0; j < hintSizeX; j++) {
         const th = document.createElement('th');
         if (hintY[i][j] > 0) {
             th.textContent = hintY[i][j];
         }
+        hintYElm[i].push(th);
         tr.appendChild(th);
     }
 
@@ -194,3 +200,96 @@ function printPixel() {
     }
     console.log(text);
 }
+
+console.log(window.location.hash);
+
+if (window.location.hash === '#edit') {
+    document.getElementById('editor').classList.add('show');
+}
+
+if (window.location.hash[0] === '#') {
+    let hash = window.location.hash.slice(1);
+    console.log(hash);
+}
+
+const url = document.getElementById('url');
+const title = document.getElementById('title');
+
+url.addEventListener('focus', e => {
+    url.select();
+}, false);
+
+function pack(data, p) {
+    let k = 0;
+    let i = 0;
+    let n = data.length / 8 ^ 0;
+    p = p || [];
+    for (; i < n; i++) {
+        p[i] = 0;
+        for (let j = 0; j < 8; j++) {
+            p[i] |= (data[k++] !== 0) << j;
+        }
+    }
+    let m = data.length - n * 8;
+    for (let j = 0; j < m; j++) {
+        p[i] |= (data[k++] !== 0) << j;
+    }
+
+    return p;
+}
+
+function unpack(data, p) {
+    let k = 0;
+    p = p || [];
+    for (let i = 0, n = data.length; i < n; i++) {
+        for (let j = 0; j < 8; j++) {
+            p[k++] = (data[i] >> j) & 1;
+        }
+    }
+    return p;
+}
+
+document.getElementById('edit').addEventListener('click', e => {
+    for (let i = 0; i < pixels.length; i++) {
+        pixels[i] = cells[i];
+    }
+
+    generateHint(1);
+
+    for (let i = 0; i < hintY.length; i++) {
+        for (let j = 0; j < hintY[i].length; j++) {
+            if (hintY[i][j] > 0) {
+                hintYElm[i][j].textContent = hintY[i][j];
+            } else {
+                hintYElm[i][j].textContent = '';
+            }
+        }
+    }
+    for (let i = 0; i < hintX.length; i++) {
+        for (let j = 0; j < hintX[i].length; j++) {
+            if (hintX[i][j] > 0) {
+                hintXElm[j][i].textContent = hintX[i][j];
+            } else {
+                hintXElm[j][i].textContent = '';
+            }
+        }
+    }
+
+    let packedData = new Uint8Array((pixels.length / 8 ^ 0) + 1);
+    pack(pixels, packedData);
+    // let encodedData = Base64.encode(packedData);
+    
+
+    const encoder = new TextEncoder();
+    let bytesTitle = encoder.encode(title.value);
+
+    let bytes = new Uint8Array(packedData.length + bytesTitle.length);
+    bytes.set(packedData);
+    bytes.set(bytesTitle, packedData.length);
+
+    let encodedData = bytes.toBase64({ alphabet: "base64url", omitPadding: true });
+    complete.classList.remove('show');
+
+    url.value = window.location.href + '#' + encodedData;
+}, false);
+
