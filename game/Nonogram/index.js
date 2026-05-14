@@ -32,6 +32,20 @@ const pixels = [
     0,0,1,0,0,0,0,1,0,0
 ];
 
+//#fOz3P_-A48-fA_7zB-OBhuOBpOOBvA
+// const pixels = [
+//     0,0,1,1,1,1,1,0,0,0,
+//     1,1,0,1,1,1,1,1,1,0,
+//     1,1,1,1,1,1,1,1,1,1,
+//     0,0,1,1,1,1,1,1,1,1,
+//     0,0,0,0,0,0,0,1,1,1,
+//     0,0,0,1,1,1,1,1,1,1,
+//     0,0,1,1,1,1,1,1,1,0,
+//     0,1,1,1,0,0,0,0,0,0,
+//     0,1,1,1,1,1,1,1,1,1,
+//     0,0,1,1,1,1,1,1,1,0
+// ];
+
 let hintX = [];
 let hintY = [];
 let hintXElm = [];
@@ -210,6 +224,22 @@ if (window.location.hash === '#edit') {
 if (window.location.hash[0] === '#') {
     let hash = window.location.hash.slice(1);
     console.log(hash);
+
+    let bytes = Uint8Array.fromBase64(hash, {
+        alphabet: "base64url",
+    });
+
+    let length = (pixels.length / 8 ^ 0) + 1;
+    let packedData = new Uint8Array(bytes.buffer, 0, length);
+    unpack(packedData, pixels);
+
+    const decoder = new TextDecoder();
+    let text = decoder.decode(new Uint8Array(bytes.buffer, length));
+
+    document.getElementById('answer').textContent = text;
+
+    generateHint(1);
+    setupHint();
 }
 
 const url = document.getElementById('url');
@@ -238,24 +268,23 @@ function pack(data, p) {
     return p;
 }
 
-function unpack(data, p) {
+function unpack(data, p, length) {
     let k = 0;
     p = p || [];
+    length = length || p.length;
     for (let i = 0, n = data.length; i < n; i++) {
         for (let j = 0; j < 8; j++) {
             p[k++] = (data[i] >> j) & 1;
+            length--;
+            if (length === 0) {
+                break;
+            }
         }
     }
     return p;
 }
 
-document.getElementById('edit').addEventListener('click', e => {
-    for (let i = 0; i < pixels.length; i++) {
-        pixels[i] = cells[i];
-    }
-
-    generateHint(1);
-
+function setupHint() {
     for (let i = 0; i < hintY.length; i++) {
         for (let j = 0; j < hintY[i].length; j++) {
             if (hintY[i][j] > 0) {
@@ -274,6 +303,16 @@ document.getElementById('edit').addEventListener('click', e => {
             }
         }
     }
+}
+
+document.getElementById('edit').addEventListener('click', e => {
+    for (let i = 0; i < pixels.length; i++) {
+        pixels[i] = cells[i];
+    }
+
+    generateHint(1);
+    setupHint();
+
 
     let packedData = new Uint8Array((pixels.length / 8 ^ 0) + 1);
     pack(pixels, packedData);

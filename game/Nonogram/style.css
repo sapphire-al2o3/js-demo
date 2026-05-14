@@ -97,7 +97,7 @@ textarea {
 }
 
 #editor {
-    /* display: none; */
+    display: none;
 }
 
 #editor.show {
