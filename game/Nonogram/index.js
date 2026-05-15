@@ -6,19 +6,6 @@ const sizeY = 10;
 const hintSizeX = sizeX / 2 ^ 0;
 const hintSizeY = sizeY / 2 ^ 0;
 
-// const pixels = [
-//     0,0,0,1,1,1,1,0,0,0,
-//     0,0,1,0,0,0,0,1,0,0,
-//     0,1,0,0,0,0,0,0,1,0,
-//     0,1,0,0,0,0,0,0,1,0,
-//     1,0,0,0,0,0,0,0,0,1,
-//     1,0,0,0,0,0,0,0,0,1,
-//     0,1,1,1,1,1,1,1,1,0,
-//     0,1,0,1,0,0,1,0,1,0,
-//     1,0,0,1,0,0,1,0,0,1,
-//     0,0,1,0,0,0,0,1,0,0
-// ];
-
 const pixels = [
     0,0,1,1,1,1,1,1,0,0,
     0,1,0,1,0,0,1,0,1,0,
@@ -215,13 +202,9 @@ function printPixel() {
     console.log(text);
 }
 
-console.log(window.location.hash);
-
 if (window.location.hash === '#edit') {
     document.getElementById('editor').classList.add('show');
-}
-
-if (window.location.hash[0] === '#') {
+} else if (window.location.hash[0] === '#') {
     let hash = window.location.hash.slice(1);
     console.log(hash);
 
@@ -316,7 +299,6 @@ document.getElementById('edit').addEventListener('click', e => {
 
     let packedData = new Uint8Array((pixels.length / 8 ^ 0) + 1);
     pack(pixels, packedData);
-    // let encodedData = Base64.encode(packedData);
     
 
     const encoder = new TextEncoder();
