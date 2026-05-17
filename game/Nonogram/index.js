@@ -146,14 +146,9 @@ for (let i = 0; i < sizeY; i++) {
             td.classList.add('right_line5');
         }
 
-        if (pixels[k] === 1) {
-            // td.classList.toggle('black');
-        }
-
         tr.appendChild(td);
         elems.push(td);
         cells.push(0);
-        // cells.push(pixels[k]);
         k++;
     }
     table.appendChild(tr);
