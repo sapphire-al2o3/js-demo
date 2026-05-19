@@ -311,3 +311,7 @@ document.getElementById('edit').addEventListener('click', e => {
     url.value = window.location.href + '#' + encodedData;
 }, false);
 
+document.querySelectorAll('a').forEach(v => v.addEventListener('click', e => {
+    location.href = v.href;
+    location.reload();
+}, false));

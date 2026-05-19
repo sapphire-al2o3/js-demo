@@ -104,3 +104,11 @@ textarea {
     display: block;
 }
 
+#stages {
+    margin-top: 32px;
+}
+
+#stages a {
+    padding: 2px 4px;
+}
+
