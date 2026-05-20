@@ -34,6 +34,7 @@ const pixels = [
 // ];
 
 //#4MEP__z0U42ff23XDuOBn-OBkw
+//#AhU68NJL-8ePf_0WCuOBi-OBqw
 
 let hintX = [];
 let hintY = [];
@@ -201,6 +202,7 @@ function printPixel() {
 
 if (window.location.hash === '#edit') {
     document.getElementById('editor').classList.add('show');
+    document.getElementById('answer').textContent = '';
 } else if (window.location.hash[0] === '#') {
     let hash = window.location.hash.slice(1);
     console.log(hash);
@@ -308,7 +310,7 @@ document.getElementById('edit').addEventListener('click', e => {
     let encodedData = bytes.toBase64({ alphabet: "base64url", omitPadding: true });
     complete.classList.remove('show');
 
-    url.value = window.location.href + '#' + encodedData;
+    url.value = window.location.href.replace('#edit', '') + '#' + encodedData;
 }, false);
 
 document.querySelectorAll('a').forEach(v => v.addEventListener('click', e => {
