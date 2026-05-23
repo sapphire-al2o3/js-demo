@@ -318,3 +318,36 @@ document.querySelectorAll('a').forEach(v => v.addEventListener('click', e => {
     location.href = v.href;
     location.reload();
 }, false));
+
+document.getElementById('load').addEventListener('click', e => {
+    let hash = url.value;
+    if (hash[0] !== '#') {
+        return;
+    }
+    hash = hash.replace('#', '');
+    let bytes = Uint8Array.fromBase64(hash, {
+        alphabet: "base64url",
+    });
+
+    let length = (pixels.length / 8 ^ 0) + 1;
+    let packedData = new Uint8Array(bytes.buffer, 0, length);
+    unpack(packedData, pixels);
+
+    const decoder = new TextDecoder();
+    let text = decoder.decode(new Uint8Array(bytes.buffer, length));
+
+    document.getElementById('answer').textContent = text;
+    title.value = text;
+
+    generateHint(1);
+    setupHint();
+
+    for (let i = 0; i < pixels.length; i++) {
+        cells[i] = pixels[i];
+        if (cells[i] !== 0) {
+            elems[i].classList.add('black');
+        } else {
+            elems[i].classList.remove('black');
+        }
+    }
+}, false);
