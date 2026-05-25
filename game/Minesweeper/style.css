@@ -1,0 +1,114 @@
+body {
+    text-align: center;
+}
+
+table {
+    /* border: 1px solid #AAA; */
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+td {
+    width: 20px;
+    height: 20px;
+    background-color: #EEE;
+    /* border-radius: 6px;
+    box-shadow: 0px 2px #999; */
+    /* border: 1px solid #AAA; */
+    border-top: 2px inset #FFF;
+    border-left: 2px inset #FFF;
+    border-right: 1px solid #777;
+    border-bottom: 1px solid #777;
+    cursor: pointer;
+}
+
+td.top_line5 {
+    border-top: 1px solid #555;
+}
+
+td.left_line5 {
+    border-left: 1px solid #555;
+}
+
+td.bottom_line5 {
+    border-bottom: 1px solid #555;
+}
+
+td.right_line5 {
+    border-right: 1px solid #555;
+}
+
+th {
+    font-size: 14px;
+    width: 20px;
+    height: 20px;
+}
+
+.empty {
+    background-color: #AAA;
+}
+
+.black {
+    background-color: #000;
+}
+
+#complete {
+    font-size: 52px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    display: none;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+#complete p {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+#answer {
+    font-size: 24px;
+}
+
+#complete.show {
+    display: block;
+}
+
+button {
+    font-family: "Noto Sans JP";
+    font-weight: bold;
+    font-size: 16px;
+    border: 1px solid #AAA;
+    background-color: #EEE;
+    /* color: #FFF; */
+    padding: 4px 20px;
+    margin-top: 16px;
+    /* display: none; */
+}
+
+button:hover {
+    background-color: #FFF;
+    cursor: pointer;
+}
+
+button#edit {
+    font-size: 10px;
+    padding: 1px 8px;
+    margin-left: 8px;
+    font-weight: normal;
+}
+
+textarea {
+    margin-top: 32px;
+    border: 1px solid #AAA;
+    width: 540px;
+}
+
+#editor {
+    display: none;
+}
+
+#editor.show {
+    display: block;
+}
+
