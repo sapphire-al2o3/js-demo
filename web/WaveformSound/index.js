@@ -13,6 +13,7 @@ let wave = 0;
 let octove = false;
 let add = false;
 let offset = 0.1;
+let reverb = false;
 
 function clamp(x, min, max) {
     return x < min ? min : x > max ? max : x;
@@ -161,6 +162,22 @@ function setup() {
     document.getElementById('File').disabled = false;
 }
 
+function filterReverb(o, n) {
+    const b = buffer.getChannelData(0);
+    const l = buffer.length;
+
+    for (let k = 0; k < n; k++) {
+        for (let j = 0; j < l - o; j++) {
+            b[j + o] = b[j];
+        }
+    }
+
+    const b2 = buffer.getChannelData(1);
+    for (let j = 0; j < l; j++) {
+        b2[j] = b[j];
+    }
+}
+
 document.body.appendChild(createSlider('freq', (freq + 100) / 5000, v => {
     freq = v * 5000 + 100;
 }));
@@ -189,6 +206,24 @@ document.body.appendChild(createSlider('offset', 0, v => {
     offset = v;
 }));
 
+document.body.appendChild(createCheckbox('reverb', v => {
+    reverb = v;
+}));
+
+function createImpulseResponse(duration = 2.0, decay = 1.0, sampleRate = 44100) {
+    const length = context.sampleRate * duration;
+    const impulse = context.createBuffer(1, length, context.sampleRate);
+    const impulseData = impulse.getChannelData(0);
+    
+    for (let i = 0; i < length; i++) {
+        const percent = i / length;
+        impulseData[i] = (Math.random() * 2 - 1) * Math.pow(1 - percent, decay);
+    }
+    return impulse;
+}
+
+const impulseBuffer = createImpulseResponse();
+
 
 function play() {
     const length = parseFloat(document.getElementById('length').value);
@@ -199,7 +234,17 @@ function play() {
     setup();
     const source = context.createBufferSource();
     source.buffer = buffer;
-    source.connect(context.destination);
+
+    if (reverb) {
+        const convolver = context.createConvolver();
+        convolver.buffer = impulseBuffer;
+        convolver.normalize = true;
+        source.connect(convolver);
+        convolver.connect(context.destination);
+    } else {
+        source.connect(context.destination);
+    }
+
     source.start();
     return source;
 }
