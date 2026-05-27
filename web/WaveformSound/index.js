@@ -210,7 +210,7 @@ document.body.appendChild(createCheckbox('reverb', v => {
     reverb = v;
 }));
 
-function createImpulseResponse(duration = 2.0, decay = 1.0, sampleRate = 44100) {
+function createImpulseResponse(duration = 2.0, decay = 4.0) {
     const length = context.sampleRate * duration;
     const impulse = context.createBuffer(1, length, context.sampleRate);
     const impulseData = impulse.getChannelData(0);
@@ -238,7 +238,7 @@ function play() {
     if (reverb) {
         const convolver = context.createConvolver();
         convolver.buffer = impulseBuffer;
-        convolver.normalize = true;
+        // convolver.normalize = true;
         source.connect(convolver);
         convolver.connect(context.destination);
     } else {
