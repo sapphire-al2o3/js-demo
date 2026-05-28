@@ -210,15 +210,21 @@ document.body.appendChild(createCheckbox('reverb', v => {
     reverb = v;
 }));
 
-function createImpulseResponse(duration = 2.0, decay = 4.0) {
+function createImpulseResponse(duration = 2, decay = 2.0) {
     const length = context.sampleRate * duration;
-    const impulse = context.createBuffer(1, length, context.sampleRate);
+    const impulse = context.createBuffer(2, length, context.sampleRate);
     const impulseData = impulse.getChannelData(0);
     
     for (let i = 0; i < length; i++) {
         const percent = i / length;
         impulseData[i] = (Math.random() * 2 - 1) * Math.pow(1 - percent, decay);
     }
+
+    const impulseData2 = buffer.getChannelData(1);
+    for (let j = 0; j < length; j++) {
+        impulseData2[j] = impulseData[j];
+    }
+
     return impulse;
 }
 
