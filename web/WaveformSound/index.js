@@ -1,7 +1,8 @@
 const context = new AudioContext();
 let time = 1;
+const channel = 2;
 let buffer = context.createBuffer(
-    2,
+    channel,
     context.sampleRate * time,
     context.sampleRate
 );
@@ -21,7 +22,7 @@ function clamp(x, min, max) {
 
 function resize(length) {
     buffer = context.createBuffer(
-        2,
+        channel,
         context.sampleRate * length,
         context.sampleRate
     );
@@ -212,7 +213,7 @@ document.body.appendChild(createCheckbox('reverb', v => {
 
 function createImpulseResponse(duration = 2, decay = 2.0) {
     const length = context.sampleRate * duration;
-    const impulse = context.createBuffer(2, length, context.sampleRate);
+    const impulse = context.createBuffer(channel, length, context.sampleRate);
     const impulseData = impulse.getChannelData(0);
     
     for (let i = 0; i < length; i++) {
