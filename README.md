@@ -167,6 +167,7 @@ https://sapphire-al2o3.github.io/js-demo/
 - [日本地図](https://sapphire-al2o3.github.io/js-demo/canvas/JapanMap/)
 - [タイルマップ](https://sapphire-al2o3.github.io/js-demo/canvas/TileMap/)
 - [ルーレット](https://sapphire-al2o3.github.io/js-demo/canvas/Roulette/)
+- [線形グラデーション](https://sapphire-al2o3.github.io/js-demo/canvas/LinearGradient/)
 
 # Image Processing
 
