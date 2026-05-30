@@ -132,6 +132,30 @@ addUI.addEventListener('click', () => {
     addUI.disabled = true;
 }, false);
 
+document.getElementById('horizontal').addEventListener('click', () => {
+    let x = points[0].x;
+    let y = points[0].y;
+    for (let i = 1; i < points.length; i++) {
+        points[i].y = y;
+        if (points[i].x === x) {
+            points[i].x = x + 1;
+        }
+    }
+    render();
+}, false);
+
+document.getElementById('vertical').addEventListener('click', () => {
+    let x = points[0].x;
+    let y = points[0].y;
+    for (let i = 1; i < points.length; i++) {
+        points[i].x = x;
+        if (points[i].y === y) {
+            points[i].y = y + 1;
+        }
+    }
+    render();
+}, false);
+
 canvas.addEventListener('mousedown', e => {
     const rect = e.target.getBoundingClientRect();
     clickX = e.clientX - rect.left;
