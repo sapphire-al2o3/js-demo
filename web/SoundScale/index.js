@@ -7,18 +7,19 @@ let ease = 0;
 let wave = 0;
 let volume = 1;
 let octave = 0;
+const channel = 2;
 
 function resize(length) {
     for (let i = 0; i < scaleLevel.length; i++) {
         buffers[i] = context.createBuffer(
-            2,
+            channel,
             context.sampleRate * length,
             context.sampleRate
         );
     }
     for (let i = 0; i < scaleSubLevel.length; i++) {
         subBuffers[i] = context.createBuffer(
-            2,
+            channel,
             context.sampleRate * length,
             context.sampleRate
         );
@@ -115,9 +116,11 @@ function setup(buffer, time, freq, amp) {
         let w = wind(j / l);
         b[j] = amp * w * f;
     }
-    const b2 = buffer.getChannelData(1);
-    for (let j = 0; j < buffer.length; j++) {
-        b2[j] = b[j];
+    if (channel > 1) {
+        const b2 = buffer.getChannelData(1);
+        for (let j = 0; j < buffer.length; j++) {
+            b2[j] = b[j];
+        }
     }
 }
 
@@ -177,7 +180,7 @@ for (let i = 0; i < scaleName.length; i++) {
     keyboard.appendChild(key);
 
     let b = context.createBuffer(
-        2,
+        channel,
         context.sampleRate * time,
         context.sampleRate
     );
@@ -196,7 +199,7 @@ for (let i = 0; i < scaleSubLevel.length; i++) {
     keyboard.appendChild(key);
 
     let b = context.createBuffer(
-        2,
+        channel,
         context.sampleRate * time,
         context.sampleRate
     );
