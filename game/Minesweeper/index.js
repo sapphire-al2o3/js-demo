@@ -39,15 +39,20 @@ function setupMine(count) {
     for (let i = 0; i < count; i++) {
         let k = rand(n - i);
         let m = t[i];
-        t[i] = t[j];
-        t[j] = m;
-        cells[m] = 1;
+        t[i] = t[k];
+        t[k] = m;
+    }
+
+    for (let i = 0; i < count; i++) {
+        cells[t[i]] = 1;
     }
 
     for (let i = 0; i < sizeY; i++) {
         for (let j = 0; j < sizeX; j++) {
             let k = i * sizeX + j;
-            
+            if (cells[k] === 1) {
+                elems[k].classList.add('mine');
+            }
         }
     }
 }

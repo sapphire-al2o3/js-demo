@@ -112,3 +112,6 @@ textarea {
     display: block;
 }
 
+td.mine {
+    background-color: #000;
+}
