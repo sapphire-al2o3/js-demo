@@ -29,6 +29,21 @@ function rand(n) {
     return Math.random() * n ^ 0;
 }
 
+function checkCell(x, y) {
+    let m = 0;
+    let k = y * sizeX + x;
+    if (x > 0 && cells[k - 1] === 1) m++;
+    if (x < sizeX - 1 && cells[k + 1] === 1) m++;
+    if (y > 0 && cells[k - sizeX] === 1) m++;
+    if (y < sizeY - 1 && cells[k + sizeX] === 1) m++;
+    if (x > 0 && y > 0 && cells[k - sizeX - 1] === 1) m++;
+    if (x < sizeX - 1 && y > 0 && cells[k - sizeX + 1] === 1) m++;
+    if (x > 0 && y < sizeY - 1 && cells[k + sizeX - 1] === 1) m++;
+    if (x < sizeX - 1 && y < sizeY - 1 && cells[k + sizeX + 1] === 1) m++;
+
+    return m;
+}
+
 function setupMine(count) {
     let t = [];
     let n = sizeX * sizeY;
@@ -53,6 +68,8 @@ function setupMine(count) {
             if (cells[k] === 1) {
                 elems[k].classList.add('mine');
             }
+            // elems[k].classList.add('block');
+            elems[k].textContent = checkCell(j, i);
         }
     }
 }
@@ -61,7 +78,7 @@ setupMine(count);
 
 table.addEventListener('click', e => {
     if (e.target.tagName === 'TD') {
-        e.target.classList.toggle('black');
+        e.target.classList.remove('block');
         let k = parseInt(e.target.getAttribute('k'));
         cells[k] = 1 - cells[k];
 

@@ -9,17 +9,16 @@ table {
 }
 
 td {
-    width: 20px;
-    height: 20px;
-    background-color: #EEE;
+    width: 24px;
+    height: 24px;
+    background-color: #CCC;
     /* border-radius: 6px;
     box-shadow: 0px 2px #999; */
-    /* border: 1px solid #AAA; */
-    border-top: 2px inset #FFF;
-    border-left: 2px inset #FFF;
-    border-right: 1px solid #777;
-    border-bottom: 1px solid #777;
+    border: 1px solid #AAA;
     cursor: pointer;
+    font-family: "Noto Sans JP";
+    font-weight: bold;
+    font-size: 14px;
 }
 
 td.top_line5 {
@@ -98,20 +97,15 @@ button#edit {
     font-weight: normal;
 }
 
-textarea {
-    margin-top: 32px;
-    border: 1px solid #AAA;
-    width: 540px;
-}
-
-#editor {
-    display: none;
-}
-
-#editor.show {
-    display: block;
-}
 
 td.mine {
     background-color: #000;
+}
+
+td.block {
+    background-color: #EEE;
+    border-top: 2px inset #FFF;
+    border-left: 2px inset #FFF;
+    border-right: 1px solid #777;
+    border-bottom: 1px solid #777;
 }
