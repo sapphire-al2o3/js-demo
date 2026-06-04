@@ -6,6 +6,7 @@ const sizeX = 9;
 const sizeY = 9;
 const count = 10;
 
+const mineCountText = document.getElementById('mine-count');
 
 let k = 0;
 for (let i = 0; i < sizeY; i++) {
@@ -77,6 +78,8 @@ function setupMine(count) {
             }
         }
     }
+
+    mineCountText.textContent = count;
 }
 
 setupMine(count);
