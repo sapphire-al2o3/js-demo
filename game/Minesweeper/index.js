@@ -1,6 +1,7 @@
 const table = document.querySelector('table');
 const cells = [];
 const elems = [];
+const hints = [];
 const sizeX = 9;
 const sizeY = 9;
 const count = 10;
@@ -19,6 +20,7 @@ for (let i = 0; i < sizeY; i++) {
         tr.appendChild(td);
         elems.push(td);
         cells.push(0);
+        hints.push(0);
         // cells.push(pixels[k]);
         k++;
     }
@@ -69,7 +71,10 @@ function setupMine(count) {
                 elems[k].classList.add('mine');
             }
             // elems[k].classList.add('block');
-            elems[k].textContent = checkCell(j, i);
+            hints[k] = checkCell(j, i);
+            if (hints[k] > 0) {
+                elems[k].textContent = hints[k];
+            }
         }
     }
 }
