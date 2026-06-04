@@ -61,6 +61,12 @@ function setupMine(count) {
         t[k] = m;
     }
 
+    for (let i = 0; i < cells.length; i++) {
+        cells[i] = 0;
+        elems[i].classList.remove('mine');
+        elems[i].textContent = '';
+    }
+
     for (let i = 0; i < count; i++) {
         cells[t[i]] = 1;
     }
@@ -105,9 +111,6 @@ function checkComplete() {
 
 
 document.getElementById('reset').addEventListener('click', e => {
-    for (let i = 0; i < cells.length; i++) {
-        cells[i] = 0;
-        elems[i].classList.remove('black');
-    }
+    setupMine(count);
     complete.classList.remove('show');
 }, false);
