@@ -79,10 +79,6 @@ th {
     margin-bottom: 12px;
 }
 
-#answer {
-    font-size: 24px;
-}
-
 #complete.show {
     display: block;
 }
