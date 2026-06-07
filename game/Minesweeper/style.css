@@ -100,13 +100,6 @@ button:hover {
     cursor: pointer;
 }
 
-button#edit {
-    font-size: 10px;
-    padding: 1px 8px;
-    margin-left: 8px;
-    font-weight: normal;
-}
-
 
 td.mine {
     background-color: #000;
@@ -114,8 +107,8 @@ td.mine {
 
 td.block {
     background-color: #EEE;
-    border-top: 2px inset #FFF;
-    border-left: 2px inset #FFF;
-    border-right: 1px solid #777;
-    border-bottom: 1px solid #777;
+    border-top: 1px inset #F7F7F7;
+    border-left: 1px inset #F7F7F7;
+    border-right: 1px solid #AAA;
+    border-bottom: 1px solid #AAA;
 }
