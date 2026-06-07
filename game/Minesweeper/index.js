@@ -5,6 +5,7 @@ const hints = [];
 const sizeX = 9;
 const sizeY = 9;
 const count = 10;
+let mineCount = count;
 
 const mineCountText = document.getElementById('mine-count');
 
@@ -64,6 +65,7 @@ function setupMine(count) {
     for (let i = 0; i < cells.length; i++) {
         cells[i] = 0;
         elems[i].classList.remove('mine');
+        elems[i].classList.add('block');
         elems[i].textContent = '';
     }
 
@@ -76,6 +78,7 @@ function setupMine(count) {
             let k = i * sizeX + j;
             if (cells[k] === 1) {
                 elems[k].classList.add('mine');
+                elems[k].classList.remove('block');
             }
             // elems[k].classList.add('block');
             hints[k] = checkCell(j, i);
@@ -85,10 +88,15 @@ function setupMine(count) {
         }
     }
 
+    mineCount = count;
     mineCountText.textContent = count;
 }
 
 setupMine(count);
+
+function openCell(x, y) {
+    let k = y * sizeX + x;
+}
 
 table.addEventListener('click', e => {
     if (e.target.tagName === 'TD') {
@@ -96,12 +104,26 @@ table.addEventListener('click', e => {
         let k = parseInt(e.target.getAttribute('k'));
         cells[k] = 1 - cells[k];
 
+        let x = k % sizeX;
+        let y = (k / sizeX) ^ 0;
+
+        openCell(x, y);
+
         if (checkComplete()) {
             console.log('complete');
             complete.classList.add('show');
         }
     }
-}, false);
+
+});
+
+table.addEventListener('contextmenu', e => {
+
+
+
+    e.preventDefault();
+    // e.stopPropagation();
+});
 
 const complete = document.getElementById('complete');
 
