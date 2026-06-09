@@ -63,7 +63,7 @@ function setupMine(count) {
     }
 
     for (let i = 0; i < cells.length; i++) {
-        cells[i] = 0;
+        cells[i] = 2;
         elems[i].classList.remove('mine');
         elems[i].classList.add('block');
         elems[i].textContent = '';
@@ -79,11 +79,13 @@ function setupMine(count) {
             if (cells[k] === 1) {
                 elems[k].classList.add('mine');
                 elems[k].classList.remove('block');
-            }
-            // elems[k].classList.add('block');
-            hints[k] = checkCell(j, i);
-            if (hints[k] > 0) {
-                elems[k].textContent = hints[k];
+            } else {
+                // elems[k].classList.add('block');
+                hints[k] = checkCell(j, i);
+                if (hints[k] > 0) {
+                    // elems[k].textContent = hints[k];
+                    cells[k] = 3;
+                }
             }
         }
     }
@@ -94,6 +96,28 @@ function setupMine(count) {
 
 setupMine(count);
 
+function paint(x, y) {
+    let w = sizeX,
+        h = sizeY,
+        c = cells[y * w + x];
+
+    if (c === 2) {
+        return;
+    }
+
+    (function f(x, y) {
+        if (x >= w || x < 0) return;
+        if (y >= h || y < 0) return;
+        if (cells[y * w + x] === c) {
+            cells[y * w + x] = 2;
+            f(x - 1, y);
+            f(x + 1, y);
+            f(x, y - 1);
+            f(x, y + 1);
+        }
+    })(x, y);
+}
+
 function openCell(x, y) {
     let k = y * sizeX + x;
 }
@@ -102,25 +126,37 @@ table.addEventListener('click', e => {
     if (e.target.tagName === 'TD') {
         e.target.classList.remove('block');
         let k = parseInt(e.target.getAttribute('k'));
-        cells[k] = 1 - cells[k];
 
         let x = k % sizeX;
         let y = (k / sizeX) ^ 0;
 
-        openCell(x, y);
-
-        if (checkComplete()) {
-            console.log('complete');
-            complete.classList.add('show');
+        if (cells[k] === 0) {
+            // opened
+        } else if (cells[k] === 1) {
+            // game over
+            elems[k].classList.add('mine');
+            elems[k].classList.remove('block');
+        } else if (hints[k] > 0) {
+            elems[k].textContent = hints[k];
+            cells[k] = 0;
+        } else {
+            cells[k] = 0;
+            openCell(x, y);
         }
     }
 
 });
 
 table.addEventListener('contextmenu', e => {
+    if (e.target.tagName === 'TD') {
+        e.target.classList.remove('block');
+        let k = parseInt(e.target.getAttribute('k'));
 
-
-
+        if (checkComplete()) {
+            console.log('complete');
+            complete.classList.add('show');
+        }
+    }
     e.preventDefault();
     // e.stopPropagation();
 });
