@@ -107,8 +107,8 @@ td.mine {
 
 td.block {
     background-color: #EEE;
-    border-top: 1px inset #F7F7F7;
-    border-left: 1px inset #F7F7F7;
+    border-top: 1px inset #AAA;
+    border-left: 1px inset #AAA;
     border-right: 1px solid #AAA;
     border-bottom: 1px solid #AAA;
 }
