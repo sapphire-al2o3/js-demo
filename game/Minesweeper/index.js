@@ -77,8 +77,8 @@ function setupMine(count) {
         for (let j = 0; j < sizeX; j++) {
             let k = i * sizeX + j;
             if (cells[k] === 1) {
-                elems[k].classList.add('mine');
-                elems[k].classList.remove('block');
+                // elems[k].classList.add('mine');
+                // elems[k].classList.remove('block');
             } else {
                 // elems[k].classList.add('block');
                 hints[k] = checkCell(j, i);
@@ -101,25 +101,37 @@ function paint(x, y) {
         h = sizeY,
         c = cells[y * w + x];
 
-    if (c === 2) {
+    if (c !== 2) {
+        
         return;
     }
 
     (function f(x, y) {
         if (x >= w || x < 0) return;
         if (y >= h || y < 0) return;
-        if (cells[y * w + x] === c) {
-            cells[y * w + x] = 2;
+        let k = y * w + x;
+        if (cells[k] === 2) {
+            cells[k] = 1;
+            elems[k].classList.remove('block');
             f(x - 1, y);
             f(x + 1, y);
             f(x, y - 1);
             f(x, y + 1);
+
+            f(x - 1, y - 1);
+            f(x + 1, y - 1);
+            f(x - 1, y + 1);
+            f(x + 1, y + 1);
+        } else if (cells[k] === 3) {
+            elems[k].classList.remove('block');
+            elems[k].textContent = hints[k];
         }
     })(x, y);
 }
 
 function openCell(x, y) {
     let k = y * sizeX + x;
+    paint(x, y);
 }
 
 table.addEventListener('click', e => {
@@ -140,7 +152,6 @@ table.addEventListener('click', e => {
             elems[k].textContent = hints[k];
             cells[k] = 0;
         } else {
-            cells[k] = 0;
             openCell(x, y);
         }
     }
