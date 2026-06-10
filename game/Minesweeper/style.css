@@ -65,7 +65,8 @@ th {
     background-color: #000;
 }
 
-#complete {
+#complete,
+#bomb {
     font-size: 52px;
     font-weight: bold;
     letter-spacing: 2px;
@@ -74,13 +75,14 @@ th {
     margin-bottom: 24px;
 }
 
-#complete p {
+#complete p,
+#bomb p {
     margin-top: 12px;
     margin-bottom: 12px;
 }
 
-#complete.show {
-    display: block;
+.show {
+    display: block !important;
 }
 
 button {
