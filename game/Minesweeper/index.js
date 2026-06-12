@@ -1,7 +1,7 @@
 const table = document.querySelector('table');
 const cells = [];
 const elems = [];
-const hints = [];
+// const hints = [];
 const sizeX = 9;
 const sizeY = 9;
 const count = 10;
@@ -22,8 +22,13 @@ for (let i = 0; i < sizeY; i++) {
 
         tr.appendChild(td);
         elems.push(td);
-        cells.push(0);
-        hints.push(0);
+        cells.push({
+            hint: 0,
+            flag: false,
+            mine: false,
+            block: true
+        });
+        // hints.push(0);
         // cells.push(pixels[k]);
         k++;
     }
@@ -37,14 +42,14 @@ function rand(n) {
 function checkCell(x, y) {
     let m = 0;
     let k = y * sizeX + x;
-    if (x > 0 && cells[k - 1] === 1) m++;
-    if (x < sizeX - 1 && cells[k + 1] === 1) m++;
-    if (y > 0 && cells[k - sizeX] === 1) m++;
-    if (y < sizeY - 1 && cells[k + sizeX] === 1) m++;
-    if (x > 0 && y > 0 && cells[k - sizeX - 1] === 1) m++;
-    if (x < sizeX - 1 && y > 0 && cells[k - sizeX + 1] === 1) m++;
-    if (x > 0 && y < sizeY - 1 && cells[k + sizeX - 1] === 1) m++;
-    if (x < sizeX - 1 && y < sizeY - 1 && cells[k + sizeX + 1] === 1) m++;
+    if (x > 0 && cells[k - 1].mine) m++;
+    if (x < sizeX - 1 && cells[k + 1].mine) m++;
+    if (y > 0 && cells[k - sizeX].mine) m++;
+    if (y < sizeY - 1 && cells[k + sizeX].mine) m++;
+    if (x > 0 && y > 0 && cells[k - sizeX - 1].mine) m++;
+    if (x < sizeX - 1 && y > 0 && cells[k - sizeX + 1].mine) m++;
+    if (x > 0 && y < sizeY - 1 && cells[k + sizeX - 1].mine) m++;
+    if (x < sizeX - 1 && y < sizeY - 1 && cells[k + sizeX + 1].mine) m++;
 
     return m;
 }
@@ -64,7 +69,10 @@ function setupMine(count) {
     }
 
     for (let i = 0; i < cells.length; i++) {
-        cells[i] = 2;
+        cells[i].block = true;
+        cells[i].mine = false;
+        cells[i].flag = false;
+        cells[i].hint = 0;
         elems[i].classList.remove('mine');
         elems[i].classList.remove('flag');
         elems[i].classList.add('block');
@@ -72,21 +80,20 @@ function setupMine(count) {
     }
 
     for (let i = 0; i < count; i++) {
-        cells[t[i]] = 1;
+        cells[t[i]].mine = true;
     }
 
     for (let i = 0; i < sizeY; i++) {
         for (let j = 0; j < sizeX; j++) {
             let k = i * sizeX + j;
-            if (cells[k] === 1) {
+            if (cells[k].mine) {
                 // elems[k].classList.add('mine');
                 // elems[k].classList.remove('block');
             } else {
                 // elems[k].classList.add('block');
-                hints[k] = checkCell(j, i);
-                if (hints[k] > 0) {
-                    // elems[k].textContent = hints[k];
-                    cells[k] = 3;
+                cells[k].hint = checkCell(j, i);
+                if (cells[k].hint > 0) {
+                    // elems[k].textContent = cells[k].hint;
                 }
             }
         }
@@ -103,7 +110,7 @@ function paint(x, y) {
         h = sizeY,
         c = cells[y * w + x];
 
-    if (c !== 2) {
+    if (!c.block) {
         
         return;
     }
@@ -112,21 +119,22 @@ function paint(x, y) {
         if (x >= w || x < 0) return;
         if (y >= h || y < 0) return;
         let k = y * w + x;
-        if (cells[k] === 2) {
-            cells[k] = 0;
+        if (cells[k].block) {
+            cells[k].block = false;
             elems[k].classList.remove('block');
-            f(x - 1, y);
-            f(x + 1, y);
-            f(x, y - 1);
-            f(x, y + 1);
+            if (cells[k].hint > 0) {
+                elems[k].textContent = cells[k].hint;
+            } else if(!cells[k].mine) {
+                f(x - 1, y);
+                f(x + 1, y);
+                f(x, y - 1);
+                f(x, y + 1);
 
-            f(x - 1, y - 1);
-            f(x + 1, y - 1);
-            f(x - 1, y + 1);
-            f(x + 1, y + 1);
-        } else if (cells[k] === 3) {
-            elems[k].classList.remove('block');
-            elems[k].textContent = hints[k];
+                f(x - 1, y - 1);
+                f(x + 1, y - 1);
+                f(x - 1, y + 1);
+                f(x + 1, y + 1);
+            }
         }
     })(x, y);
 }
@@ -144,14 +152,14 @@ table.addEventListener('click', e => {
         let x = k % sizeX;
         let y = (k / sizeX) ^ 0;
 
-        if (cells[k] === 0) {
+        if (!cells[k].block) {
             // opened
-        } else if (cells[k] === 1) {
+        } else if (cells[k].mine) {
             // game over
             GameOver();
-        } else if (hints[k] > 0) {
-            elems[k].textContent = hints[k];
-            cells[k] = 0;
+        } else if (cells[k].hint > 0) {
+            elems[k].textContent = cells[k].hint;
+            cells[k].block = false;
         } else {
             openCell(x, y);
         }
@@ -163,15 +171,21 @@ table.addEventListener('contextmenu', e => {
     if (e.target.tagName === 'TD') {
         let k = parseInt(e.target.getAttribute('k'));
 
-        if (cells[k] !== 0 && e.target.textContent === '') {
-            e.target.classList.toggle('flag');
-            flagCount--;
+        if (cells[k].block) {
+            if (cells[k].flag) {
+                e.target.classList.remove('flag');
+                cells[k].flag = false;
+                flagCount++;
+            } else {
+                e.target.classList.add('flag');
+                cells[k].flag = true;
+                flagCount--;
+            }
 
             mineCountText.textContent = flagCount;
         }
 
         if (checkComplete()) {
-            console.log('complete');
             complete.classList.add('show');
         }
     }
@@ -190,7 +204,7 @@ function GameOver() {
     bomb.classList.add('show');
 
     for (let i = 0; i < cells.length; i++) {
-        if (cells[i] === 1) {
+        if (cells[i].mine) {
             elems[i].classList.add('mine');
             elems[i].classList.remove('block');
         }
