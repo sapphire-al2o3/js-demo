@@ -66,6 +66,7 @@ function setupMine(count) {
     for (let i = 0; i < cells.length; i++) {
         cells[i] = 2;
         elems[i].classList.remove('mine');
+        elems[i].classList.remove('flag');
         elems[i].classList.add('block');
         elems[i].textContent = '';
     }
