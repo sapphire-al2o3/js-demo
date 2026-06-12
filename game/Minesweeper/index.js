@@ -163,6 +163,9 @@ table.addEventListener('click', e => {
         } else {
             openCell(x, y);
         }
+        if (checkComplete()) {
+            complete.classList.add('show');
+        }
     }
 
 });
@@ -197,7 +200,16 @@ const complete = document.getElementById('complete');
 const bomb = document.getElementById('bomb');
 
 function checkComplete() {
-    return false;
+
+    for (let i = 0; i < cells.length; i++) {
+        if (cells[i].mine ^ cells[i].flag) {
+            return false;
+        } else if (!cells[i].flag && cells[i].block) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 function GameOver() {
