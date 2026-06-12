@@ -6,6 +6,7 @@ const sizeX = 9;
 const sizeY = 9;
 const count = 10;
 let mineCount = count;
+let flagCount = count;
 
 const mineCountText = document.getElementById('mine-count');
 
@@ -90,7 +91,7 @@ function setupMine(count) {
         }
     }
 
-    mineCount = count;
+    flagCount = count;
     mineCountText.textContent = count;
 }
 
@@ -111,7 +112,7 @@ function paint(x, y) {
         if (y >= h || y < 0) return;
         let k = y * w + x;
         if (cells[k] === 2) {
-            cells[k] = 1;
+            cells[k] = 0;
             elems[k].classList.remove('block');
             f(x - 1, y);
             f(x + 1, y);
@@ -146,8 +147,7 @@ table.addEventListener('click', e => {
             // opened
         } else if (cells[k] === 1) {
             // game over
-            elems[k].classList.add('mine');
-            elems[k].classList.remove('block');
+            GameOver();
         } else if (hints[k] > 0) {
             elems[k].textContent = hints[k];
             cells[k] = 0;
@@ -160,8 +160,14 @@ table.addEventListener('click', e => {
 
 table.addEventListener('contextmenu', e => {
     if (e.target.tagName === 'TD') {
-        e.target.classList.remove('block');
         let k = parseInt(e.target.getAttribute('k'));
+
+        if (cells[k] !== 0 && e.target.textContent === '') {
+            e.target.classList.toggle('flag');
+            flagCount--;
+
+            mineCountText.textContent = flagCount;
+        }
 
         if (checkComplete()) {
             console.log('complete');
@@ -173,13 +179,25 @@ table.addEventListener('contextmenu', e => {
 });
 
 const complete = document.getElementById('complete');
+const bomb = document.getElementById('bomb');
 
 function checkComplete() {
     return false;
 }
 
+function GameOver() {
+    bomb.classList.add('show');
+
+    for (let i = 0; i < cells.length; i++) {
+        if (cells[i] === 1) {
+            elems[i].classList.add('mine');
+            elems[i].classList.remove('block');
+        }
+    }
+}
 
 document.getElementById('reset').addEventListener('click', e => {
     setupMine(count);
     complete.classList.remove('show');
+    bomb.classList.remove('show');
 }, false);

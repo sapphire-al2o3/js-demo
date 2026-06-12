@@ -114,3 +114,7 @@ td.block {
     border-right: 1px solid #AAA;
     border-bottom: 1px solid #AAA;
 }
+
+td.flag {
+    background-color: #48E;
+}
