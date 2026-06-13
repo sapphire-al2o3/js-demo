@@ -5,7 +5,6 @@ const elems = [];
 const sizeX = 9;
 const sizeY = 9;
 const count = 10;
-let mineCount = count;
 let flagCount = count;
 
 const mineCountText = document.getElementById('mine-count');
@@ -121,6 +120,11 @@ function paint(x, y) {
         let k = y * w + x;
         if (cells[k].block) {
             cells[k].block = false;
+            if (cells[k].flag) {
+                cells[k].flag = false;
+                flagCount++;
+            }
+            elems[k].classList.remove('flag');
             elems[k].classList.remove('block');
             if (cells[k].hint > 0) {
                 elems[k].textContent = cells[k].hint;
@@ -137,6 +141,8 @@ function paint(x, y) {
             }
         }
     })(x, y);
+
+    mineCountText.textContent = flagCount;
 }
 
 function openCell(x, y) {
@@ -146,15 +152,22 @@ function openCell(x, y) {
 
 table.addEventListener('click', e => {
     if (e.target.tagName === 'TD') {
-        e.target.classList.remove('block');
         let k = parseInt(e.target.getAttribute('k'));
-
-        let x = k % sizeX;
-        let y = (k / sizeX) ^ 0;
 
         if (!cells[k].block) {
             // opened
-        } else if (cells[k].mine) {
+            return;
+        }
+
+        if (cells[k].flag) {
+            return;
+        }
+
+        elems[k].classList.remove('block');
+        let x = k % sizeX;
+        let y = (k / sizeX) ^ 0;
+
+        if (cells[k].mine) {
             // game over
             GameOver();
         } else if (cells[k].hint > 0) {
@@ -209,7 +222,7 @@ function checkComplete() {
         }
     }
 
-    return true;
+    return flagCount === 0;
 }
 
 function GameOver() {
