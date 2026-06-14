@@ -1,11 +1,11 @@
 const table = document.querySelector('table');
 const cells = [];
 const elems = [];
-// const hints = [];
 const sizeX = 9;
 const sizeY = 9;
 const count = 10;
 let flagCount = count;
+let finish = false;
 
 const mineCountText = document.getElementById('mine-count');
 
@@ -27,8 +27,6 @@ for (let i = 0; i < sizeY; i++) {
             mine: false,
             block: true
         });
-        // hints.push(0);
-        // cells.push(pixels[k]);
         k++;
     }
     table.appendChild(tr);
@@ -151,6 +149,10 @@ function openCell(x, y) {
 }
 
 table.addEventListener('click', e => {
+    if (finish) {
+        return;
+    }
+
     if (e.target.tagName === 'TD') {
         let k = parseInt(e.target.getAttribute('k'));
 
@@ -170,6 +172,7 @@ table.addEventListener('click', e => {
         if (cells[k].mine) {
             // game over
             GameOver();
+            finish = true;
         } else if (cells[k].hint > 0) {
             elems[k].textContent = cells[k].hint;
             cells[k].block = false;
@@ -184,6 +187,12 @@ table.addEventListener('click', e => {
 });
 
 table.addEventListener('contextmenu', e => {
+    e.preventDefault();
+    
+    if (finish) {
+        return;
+    }
+
     if (e.target.tagName === 'TD') {
         let k = parseInt(e.target.getAttribute('k'));
 
@@ -203,9 +212,9 @@ table.addEventListener('contextmenu', e => {
 
         if (checkComplete()) {
             complete.classList.add('show');
+            finish = true;
         }
     }
-    e.preventDefault();
     // e.stopPropagation();
 });
 
@@ -238,6 +247,7 @@ function GameOver() {
 
 document.getElementById('reset').addEventListener('click', e => {
     setupMine(count);
+    finish = false;
     complete.classList.remove('show');
     bomb.classList.remove('show');
 }, false);
