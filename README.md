@@ -205,3 +205,4 @@ https://sapphire-al2o3.github.io/js-demo/
 - [可変リスト](https://sapphire-al2o3.github.io/js-demo/web/ListControl/)
 - [icoファイル表示](https://sapphire-al2o3.github.io/js-demo/web/ico/)
 - [ピクロス](https://sapphire-al2o3.github.io/js-demo/game/Nonogram/)
+- [マインスイーパー](https://sapphire-al2o3.github.io/js-demo/game/Minesweeper/)
