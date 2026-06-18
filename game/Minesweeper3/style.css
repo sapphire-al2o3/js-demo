@@ -1,0 +1,121 @@
+body {
+    text-align: center;
+    font-family: "Noto Sans JP";
+}
+
+div {
+    margin: 0 auto;
+    width: 300px;
+}
+
+#mine-count {
+    text-align: left;
+    font-weight: bold;
+    font-size: 24px;
+    margin-left: 12px;
+    margin-bottom: 4px;
+}
+
+table {
+    /* border: 1px solid #AAA; */
+    border-collapse: collapse;
+    margin: 0 auto;
+    margin-bottom: 12px;
+}
+
+td {
+    width: 24px;
+    height: 24px;
+    background-color: #CCC;
+    /* border-radius: 6px;
+    box-shadow: 0px 2px #999; */
+    border: 1px solid #AAA;
+    cursor: pointer;
+    
+    font-weight: bold;
+    font-size: 14px;
+}
+
+td.top_line5 {
+    border-top: 1px solid #555;
+}
+
+td.left_line5 {
+    border-left: 1px solid #555;
+}
+
+td.bottom_line5 {
+    border-bottom: 1px solid #555;
+}
+
+td.right_line5 {
+    border-right: 1px solid #555;
+}
+
+th {
+    font-size: 14px;
+    width: 20px;
+    height: 20px;
+}
+
+.empty {
+    background-color: #AAA;
+}
+
+.black {
+    background-color: #000;
+}
+
+#complete,
+#bomb {
+    font-size: 52px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    display: none;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+#complete p,
+#bomb p {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.show {
+    display: block !important;
+}
+
+button {
+    font-family: "Noto Sans JP";
+    font-weight: bold;
+    font-size: 16px;
+    border: 1px solid #AAA;
+    background-color: #EEE;
+    /* color: #FFF; */
+    padding: 4px 20px;
+    margin-top: 16px;
+    /* display: none; */
+}
+
+button:hover {
+    background-color: #FFF;
+    cursor: pointer;
+}
+
+
+td.mine {
+    background-color: #000;
+}
+
+td.block {
+    background-color: #EEE;
+    border-top: 1px inset #AAA;
+    border-left: 1px inset #AAA;
+    border-right: 1px solid #AAA;
+    border-bottom: 1px solid #AAA;
+}
+
+td.flag {
+    background-color: #48E;
+}
