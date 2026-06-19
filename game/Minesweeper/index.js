@@ -144,7 +144,6 @@ function paint(x, y) {
 }
 
 function openCell(x, y) {
-    let k = y * sizeX + x;
     paint(x, y);
 }
 
