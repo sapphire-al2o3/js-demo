@@ -4,14 +4,14 @@ const elems = [];
 const sizeX = 5;
 const sizeY = 5;
 const sizeZ = 3;
-const count = 10;
+const count = 5;
 let mineCount = count;
 let finish = false;
 
 const mineCountText = document.getElementById('mine-count');
 
 function createTable(index) {
-    let k = 0;
+    let k = index * sizeX * sizeY;
     for (let i = 0; i < sizeY; i++) {
         const tr = document.createElement('tr');
 
@@ -19,6 +19,7 @@ function createTable(index) {
             const td = document.createElement('td');
             td.setAttribute('x', j);
             td.setAttribute('y', i);
+            td.setAttribute('z', index);
             td.setAttribute('k', k);
 
             tr.appendChild(td);
@@ -115,12 +116,12 @@ function setupMine(count) {
             for (let x = 0; x < sizeX; x++) {
                 let k = z * sizeX * sizeY + y * sizeX + x;
                 if (cells[k].mine) {
-                    elems[k].classList.add('mine');
-                    elems[k].classList.remove('block');
+                    // elems[k].classList.add('mine');
+                    // elems[k].classList.remove('block');
                 } else {
                     cells[k].hint = checkCell(x, y, z);
                     if (cells[k].hint > 0) {
-                        elems[k].textContent = cells[k].hint;
+                        // elems[k].textContent = cells[k].hint;
                         // cells[k] = 3;
                     }
                 }
@@ -134,68 +135,92 @@ function setupMine(count) {
 
 setupMine(count);
 
-function paint(x, y) {
+function paint(x, y, z) {
     let w = sizeX,
         h = sizeY,
-        c = cells[y * w + x];
+        d = sizeZ,
+        c = cells[z * w * h + y * w + x];
 
-    if (c !== 2) {
+     if (!c.block) {
         
         return;
     }
 
-    (function f(x, y) {
+    (function f(x, y, z) {
         if (x >= w || x < 0) return;
         if (y >= h || y < 0) return;
-        let k = y * w + x;
-        if (cells[k] === 2) {
-            cells[k] = 0;
+        if (z >= d || z < 0) return;
+        let k = z * w * h + y * w + x;
+        if (cells[k].block) {
+            cells[k].block = false;
+            if (cells[k].flag) {
+                cells[k].flag = false;
+                flagCount++;
+            }
+            elems[k].classList.remove('flag');
             elems[k].classList.remove('block');
-            f(x - 1, y);
-            f(x + 1, y);
-            f(x, y - 1);
-            f(x, y + 1);
+            if (cells[k].hint > 0) {
+                elems[k].textContent = cells[k].hint;
+            } else if(!cells[k].mine) {
+                f(x - 1, y, z);
+                f(x + 1, y, z);
+                f(x, y - 1, z);
+                f(x, y + 1, z);
+                f(x, y, z - 1);
+                f(x, y, z + 1);
 
-            f(x - 1, y - 1);
-            f(x + 1, y - 1);
-            f(x - 1, y + 1);
-            f(x + 1, y + 1);
-        } else if (cells[k] === 3) {
-            elems[k].classList.remove('block');
-            elems[k].textContent = hints[k];
+                f(x - 1, y - 1, z);
+                f(x + 1, y - 1, z);
+                f(x - 1, y + 1, z);
+                f(x + 1, y + 1, z);
+            }
         }
-    })(x, y);
+    })(x, y, z);
 }
 
-function openCell(x, y) {
-    let k = y * sizeX + x;
-    paint(x, y);
+function openCell(x, y, z) {
+    paint(x, y, z);
 }
 
 function clickCell(e) {
     if (e.target.tagName === 'TD') {
-        e.target.classList.remove('block');
         let k = parseInt(e.target.getAttribute('k'));
 
-        let x = k % sizeX;
-        let y = (k / sizeX) ^ 0;
-
-        if (cells[k] === 0) {
+        if (!cells[k].block) {
             // opened
-        } else if (cells[k] === 1) {
+            return;
+        }
+
+        if (cells[k].flag) {
+            return;
+        }
+
+        elems[k].classList.remove('block');
+        
+        let x = parseInt(e.target.getAttribute('x'));
+        let y = parseInt(e.target.getAttribute('y'));
+        let z = parseInt(e.target.getAttribute('z'));
+
+        if (cells[k].mine) {
             // game over
             GameOver();
-        } else if (hints[k] > 0) {
-            elems[k].textContent = hints[k];
-            cells[k] = 0;
+            finish = true;
+        } else if (cells[k].hint > 0) {
+            elems[k].textContent = cells[k].hint;
+            cells[k].block = false;
         } else {
-            openCell(x, y);
+            openCell(x, y, z);
+        }
+        if (checkComplete()) {
+            complete.classList.add('show');
         }
     }
 }
 tables[0].addEventListener('click', clickCell);
+tables[1].addEventListener('click', clickCell);
+tables[2].addEventListener('click', clickCell);
 
-tables[0].addEventListener('contextmenu', e => {
+function clickFlag(e) {
     if (e.target.tagName === 'TD') {
         e.target.classList.remove('block');
         let k = parseInt(e.target.getAttribute('k'));
@@ -207,7 +232,80 @@ tables[0].addEventListener('contextmenu', e => {
     }
     e.preventDefault();
     // e.stopPropagation();
-});
+}
+
+tables[0].addEventListener('contextmenu', clickFlag);
+tables[1].addEventListener('contextmenu', clickFlag);
+tables[2].addEventListener('contextmenu', clickFlag);
+
+
+function getElem(x, y, z) {
+    if (x < 0 || x >= sizeX) return null;
+    if (y < 0 || y >= sizeY) return null;
+    if (z < 0 || z >= sizeZ) return null;
+    let k = z * sizeX * sizeY + y * sizeX + x;
+    return elems[k];
+}
+
+let prev = null;
+let prevX = 0;
+let prevY = 0;
+let prevZ = 0;
+
+function mouseover(e) {
+    if (e.target.tagName === 'TD') {
+        if (prev) {
+            prev.classList.remove('hover');
+            getElem(prevX - 1, prevY, prevZ)?.classList.remove('hover');
+            getElem(prevX + 1, prevY, prevZ)?.classList.remove('hover');
+            getElem(prevX, prevY - 1, prevZ)?.classList.remove('hover');
+            getElem(prevX, prevY + 1, prevZ)?.classList.remove('hover');
+            getElem(prevX, prevY, prevZ - 1)?.classList.remove('hover');
+            getElem(prevX, prevY, prevZ + 1)?.classList.remove('hover');
+
+        }
+
+        let x = parseInt(e.target.getAttribute('x'));
+        let y = parseInt(e.target.getAttribute('y'));
+        let z = parseInt(e.target.getAttribute('z'));
+
+        e.target.classList.add('hover');
+
+        getElem(x - 1, y, z)?.classList.add('hover');
+        getElem(x + 1, y, z)?.classList.add('hover');
+        getElem(x, y - 1, z)?.classList.add('hover');
+        getElem(x, y + 1, z)?.classList.add('hover');
+        getElem(x, y, z - 1)?.classList.add('hover');
+        getElem(x, y, z + 1)?.classList.add('hover');
+
+        prev = e.target;
+        prevX = x;
+        prevY = y;
+        prevZ = z;
+    }
+}
+
+function mouseout(e) {
+    if (e.target.tagName === 'TD') {
+
+        if (prev) {
+            prev.classList.remove('hover');
+            getElem(prevX - 1, prevY, prevZ)?.classList.remove('hover');
+            getElem(prevX + 1, prevY, prevZ)?.classList.remove('hover');
+            getElem(prevX, prevY - 1, prevZ)?.classList.remove('hover');
+            getElem(prevX, prevY + 1, prevZ)?.classList.remove('hover');
+            getElem(prevX, prevY, prevZ - 1)?.classList.remove('hover');
+            getElem(prevX, prevY, prevZ + 1)?.classList.remove('hover');
+        }
+    }
+}
+
+tables[0].addEventListener('mouseover', mouseover);
+tables[1].addEventListener('mouseover', mouseover);
+tables[2].addEventListener('mouseover', mouseover);
+tables[0].addEventListener('mouseout', mouseout);
+tables[1].addEventListener('mouseout', mouseout);
+tables[2].addEventListener('mouseout', mouseout);
 
 const complete = document.getElementById('complete');
 const bomb = document.getElementById('bomb');

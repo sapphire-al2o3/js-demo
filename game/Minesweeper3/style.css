@@ -119,3 +119,7 @@ td.block {
 td.flag {
     background-color: #48E;
 }
+
+td.hover {
+    background-color: #FA6 !important;
+}
