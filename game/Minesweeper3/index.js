@@ -103,6 +103,7 @@ function setupMine(count) {
         cells[i].flag = false;
         cells[i].hint = 0;
         elems[i].classList.remove('mine');
+        elems[i].classList.remove('flag');
         elems[i].classList.add('block');
         elems[i].textContent = '';
     }
@@ -221,16 +222,34 @@ tables[1].addEventListener('click', clickCell);
 tables[2].addEventListener('click', clickCell);
 
 function clickFlag(e) {
+    e.preventDefault();
+    
+    if (finish) {
+        return;
+    }
+
     if (e.target.tagName === 'TD') {
-        e.target.classList.remove('block');
         let k = parseInt(e.target.getAttribute('k'));
 
+        if (cells[k].block) {
+            if (cells[k].flag) {
+                e.target.classList.remove('flag');
+                cells[k].flag = false;
+                flagCount++;
+            } else {
+                e.target.classList.add('flag');
+                cells[k].flag = true;
+                flagCount--;
+            }
+
+            mineCountText.textContent = flagCount;
+        }
+
         if (checkComplete()) {
-            console.log('complete');
             complete.classList.add('show');
+            finish = true;
         }
     }
-    e.preventDefault();
     // e.stopPropagation();
 }
 
@@ -255,7 +274,7 @@ let prevZ = 0;
 function mouseover(e) {
     if (e.target.tagName === 'TD') {
         if (prev) {
-            prev.classList.remove('hover');
+            // prev.classList.remove('hover');
             getElem(prevX - 1, prevY, prevZ)?.classList.remove('hover');
             getElem(prevX + 1, prevY, prevZ)?.classList.remove('hover');
             getElem(prevX, prevY - 1, prevZ)?.classList.remove('hover');
@@ -269,7 +288,7 @@ function mouseover(e) {
         let y = parseInt(e.target.getAttribute('y'));
         let z = parseInt(e.target.getAttribute('z'));
 
-        e.target.classList.add('hover');
+        // e.target.classList.add('hover');
 
         getElem(x - 1, y, z)?.classList.add('hover');
         getElem(x + 1, y, z)?.classList.add('hover');
@@ -289,7 +308,7 @@ function mouseout(e) {
     if (e.target.tagName === 'TD') {
 
         if (prev) {
-            prev.classList.remove('hover');
+            // prev.classList.remove('hover');
             getElem(prevX - 1, prevY, prevZ)?.classList.remove('hover');
             getElem(prevX + 1, prevY, prevZ)?.classList.remove('hover');
             getElem(prevX, prevY - 1, prevZ)?.classList.remove('hover');
@@ -311,24 +330,32 @@ const complete = document.getElementById('complete');
 const bomb = document.getElementById('bomb');
 
 function checkComplete() {
-    return false;
+
+    for (let i = 0; i < cells.length; i++) {
+        if (cells[i].mine ^ cells[i].flag) {
+            return false;
+        } else if (!cells[i].flag && cells[i].block) {
+            return false;
+        }
+    }
+
+    return flagCount === 0;
 }
 
 function GameOver() {
     bomb.classList.add('show');
 
     for (let i = 0; i < cells.length; i++) {
-        if (cells[i] === 1) {
+        if (cells[i].mine) {
             elems[i].classList.add('mine');
             elems[i].classList.remove('block');
         }
     }
-
-    finish = true;
 }
 
 document.getElementById('reset').addEventListener('click', e => {
     setupMine(count);
+    finish = false;
     complete.classList.remove('show');
     bomb.classList.remove('show');
 }, false);
