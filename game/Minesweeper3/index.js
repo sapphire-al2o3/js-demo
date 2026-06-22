@@ -68,6 +68,10 @@ function checkCell(x, y, z) {
     m += hasMine(x, y - 1, z + 1);
     m += hasMine(x, y + 1, z - 1);
     m += hasMine(x, y + 1, z + 1);
+    m += hasMine(x - 1, y, z - 1);
+    m += hasMine(x - 1, y, z + 1);
+    m += hasMine(x + 1, y, z - 1);
+    m += hasMine(x + 1, y, z + 1);
 
     m += hasMine(x - 1, y - 1, z - 1);
     m += hasMine(x - 1, y - 1, z + 1);
@@ -171,9 +175,13 @@ function paint(x, y, z) {
                 f(x, y, z + 1);
 
                 f(x - 1, y - 1, z);
-                f(x + 1, y - 1, z);
                 f(x - 1, y + 1, z);
+                f(x + 1, y - 1, z);
                 f(x + 1, y + 1, z);
+                f(x, y - 1, z - 1);
+                f(x, y - 1, z + 1);
+                f(x, y + 1, z - 1);
+                f(x, y + 1, z + 1);
             }
         }
     })(x, y, z);
