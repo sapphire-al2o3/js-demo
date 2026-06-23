@@ -180,6 +180,7 @@ table.addEventListener('click', e => {
         }
         if (checkComplete()) {
             complete.classList.add('show');
+            finish = true;
         }
     }
 
