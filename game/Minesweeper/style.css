@@ -116,5 +116,6 @@ td.block {
 }
 
 td.flag {
-    background-color: #48E;
+    background-repeat: no-repeat;
+    background-image: url(flag.png);
 }
