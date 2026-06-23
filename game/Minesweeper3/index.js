@@ -5,7 +5,7 @@ const sizeX = 5;
 const sizeY = 5;
 const sizeZ = 3;
 const count = 5;
-let mineCount = count;
+let flagCount = count;
 let finish = false;
 
 const mineCountText = document.getElementById('mine-count');
@@ -134,7 +134,7 @@ function setupMine(count) {
         }
     }
 
-    mineCount = count;
+    flagCount = count;
     mineCountText.textContent = count;
 }
 
@@ -182,6 +182,15 @@ function paint(x, y, z) {
                 f(x, y - 1, z + 1);
                 f(x, y + 1, z - 1);
                 f(x, y + 1, z + 1);
+
+                f(x - 1, y - 1, z - 1);
+                f(x - 1, y - 1, z + 1);
+                f(x - 1, y + 1, z - 1);
+                f(x - 1, y + 1, z + 1);
+                f(x + 1, y - 1, z - 1);
+                f(x + 1, y - 1, z + 1);
+                f(x + 1, y + 1, z - 1);
+                f(x + 1, y + 1, z + 1);
             }
         }
     })(x, y, z);
@@ -209,6 +218,10 @@ function clickCell(e) {
         let x = parseInt(e.target.getAttribute('x'));
         let y = parseInt(e.target.getAttribute('y'));
         let z = parseInt(e.target.getAttribute('z'));
+
+        if (prev) {
+            hoverOut(x, y, z);
+        }
 
         if (cells[k].mine) {
             // game over
@@ -274,22 +287,58 @@ function getElem(x, y, z) {
     return elems[k];
 }
 
+function getCell(x, y, z) {
+    if (x < 0 || x >= sizeX) return null;
+    if (y < 0 || y >= sizeY) return null;
+    if (z < 0 || z >= sizeZ) return null;
+    let k = z * sizeX * sizeY + y * sizeX + x;
+    return cells[k];
+}
+
 let prev = null;
 let prevX = 0;
 let prevY = 0;
 let prevZ = 0;
 
+function hoverIn(x, y, z) {
+    for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+            for (let k = -1; k <= 1; k++) {
+                if (i !== 0 || j !== 0 || k !== 0) {
+                    let c = getCell(x + k, y + j, z + i);
+                    if (c !== null && c.block) {
+                        getElem(x + k, y + j, z + i)?.classList.add('hover');
+                    }
+                }
+            }
+        }
+    }
+}
+
+function hoverOut(x, y, z) {
+    for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+            for (let k = -1; k <= 1; k++) {
+                if (i !== 0 || j !== 0 || k !== 0) {
+                    getElem(x + k, y + j, z + i)?.classList.remove('hover');
+                }
+            }
+        }
+    }
+}
+
 function mouseover(e) {
     if (e.target.tagName === 'TD') {
         if (prev) {
             // prev.classList.remove('hover');
-            getElem(prevX - 1, prevY, prevZ)?.classList.remove('hover');
-            getElem(prevX + 1, prevY, prevZ)?.classList.remove('hover');
-            getElem(prevX, prevY - 1, prevZ)?.classList.remove('hover');
-            getElem(prevX, prevY + 1, prevZ)?.classList.remove('hover');
-            getElem(prevX, prevY, prevZ - 1)?.classList.remove('hover');
-            getElem(prevX, prevY, prevZ + 1)?.classList.remove('hover');
+            // getElem(prevX - 1, prevY, prevZ)?.classList.remove('hover');
+            // getElem(prevX + 1, prevY, prevZ)?.classList.remove('hover');
+            // getElem(prevX, prevY - 1, prevZ)?.classList.remove('hover');
+            // getElem(prevX, prevY + 1, prevZ)?.classList.remove('hover');
+            // getElem(prevX, prevY, prevZ - 1)?.classList.remove('hover');
+            // getElem(prevX, prevY, prevZ + 1)?.classList.remove('hover');
 
+            hoverOut(prevX, prevY, prevZ);
         }
 
         let x = parseInt(e.target.getAttribute('x'));
@@ -298,12 +347,14 @@ function mouseover(e) {
 
         // e.target.classList.add('hover');
 
-        getElem(x - 1, y, z)?.classList.add('hover');
-        getElem(x + 1, y, z)?.classList.add('hover');
-        getElem(x, y - 1, z)?.classList.add('hover');
-        getElem(x, y + 1, z)?.classList.add('hover');
-        getElem(x, y, z - 1)?.classList.add('hover');
-        getElem(x, y, z + 1)?.classList.add('hover');
+        // getElem(x - 1, y, z)?.classList.add('hover');
+        // getElem(x + 1, y, z)?.classList.add('hover');
+        // getElem(x, y - 1, z)?.classList.add('hover');
+        // getElem(x, y + 1, z)?.classList.add('hover');
+        // getElem(x, y, z - 1)?.classList.add('hover');
+        // getElem(x, y, z + 1)?.classList.add('hover');
+
+        hoverIn(x, y, z);
 
         prev = e.target;
         prevX = x;
@@ -317,12 +368,14 @@ function mouseout(e) {
 
         if (prev) {
             // prev.classList.remove('hover');
-            getElem(prevX - 1, prevY, prevZ)?.classList.remove('hover');
-            getElem(prevX + 1, prevY, prevZ)?.classList.remove('hover');
-            getElem(prevX, prevY - 1, prevZ)?.classList.remove('hover');
-            getElem(prevX, prevY + 1, prevZ)?.classList.remove('hover');
-            getElem(prevX, prevY, prevZ - 1)?.classList.remove('hover');
-            getElem(prevX, prevY, prevZ + 1)?.classList.remove('hover');
+            // getElem(prevX - 1, prevY, prevZ)?.classList.remove('hover');
+            // getElem(prevX + 1, prevY, prevZ)?.classList.remove('hover');
+            // getElem(prevX, prevY - 1, prevZ)?.classList.remove('hover');
+            // getElem(prevX, prevY + 1, prevZ)?.classList.remove('hover');
+            // getElem(prevX, prevY, prevZ - 1)?.classList.remove('hover');
+            // getElem(prevX, prevY, prevZ + 1)?.classList.remove('hover');
+
+            hoverOut(prevX, prevY, prevZ);
         }
     }
 }
@@ -357,6 +410,7 @@ function GameOver() {
         if (cells[i].mine) {
             elems[i].classList.add('mine');
             elems[i].classList.remove('block');
+            elems[i].classList.remove('flag');
         }
     }
 }
