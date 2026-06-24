@@ -1,12 +1,15 @@
 const tables = document.querySelectorAll('table');
 const cells = [];
 const elems = [];
-const sizeX = 5;
-const sizeY = 5;
+const sizeX = 7;
+const sizeY = 7;
 const sizeZ = 3;
-const count = 5;
+const count = 10;
 let flagCount = count;
 let finish = false;
+
+// x:5,y:5,z:5,5
+// x:7,y:7,z:2,10
 
 const mineCountText = document.getElementById('mine-count');
 
@@ -36,9 +39,9 @@ function createTable(index) {
     }
 }
 
-createTable(0);
-createTable(1);
-createTable(2);
+for (let i = 0; i < sizeZ; i++) {
+    createTable(i);
+}
 
 function rand(n) {
     return Math.random() * n ^ 0;
@@ -201,6 +204,10 @@ function openCell(x, y, z) {
 }
 
 function clickCell(e) {
+    if (finish) {
+        return;
+    }
+
     if (e.target.tagName === 'TD') {
         let k = parseInt(e.target.getAttribute('k'));
 
@@ -219,10 +226,6 @@ function clickCell(e) {
         let y = parseInt(e.target.getAttribute('y'));
         let z = parseInt(e.target.getAttribute('z'));
 
-        if (prev) {
-            hoverOut(x, y, z);
-        }
-
         if (cells[k].mine) {
             // game over
             GameOver();
@@ -233,8 +236,15 @@ function clickCell(e) {
         } else {
             openCell(x, y, z);
         }
+
+        if (prev) {
+            hoverOut(x, y, z);
+            hoverIn(x, y, z);
+        }
+
         if (checkComplete()) {
             complete.classList.add('show');
+            finish = true;
         }
     }
 }
