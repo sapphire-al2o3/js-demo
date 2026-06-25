@@ -9,8 +9,8 @@ let flagCount = count;
 let finish = false;
 let timer = 0;
 
-// x:5,y:5,z:5,5
-// x:7,y:7,z:2,10
+// ?x=5&y=5&z=5&m=10
+// ?x=7&y=7&z=3&m=10
 
 const tableContainer = document.getElementById('tables');
 const mineCountText = document.getElementById('mine-count');
@@ -265,6 +265,8 @@ function clickCell(e) {
         if (checkComplete()) {
             complete.classList.add('show');
             finish = true;
+            clearInterval(timer);
+            timer = 0;
         }
     }
 }
