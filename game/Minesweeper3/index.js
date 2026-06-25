@@ -7,12 +7,14 @@ const sizeZ = 3;
 const count = 10;
 let flagCount = count;
 let finish = false;
+let timer = 0;
 
 // x:5,y:5,z:5,5
 // x:7,y:7,z:2,10
 
 const tableContainer = document.getElementById('tables');
 const mineCountText = document.getElementById('mine-count');
+const timerText = document.getElementById('timer');
 
 function createTable(index) {
     let k = index * sizeX * sizeY;
@@ -143,6 +145,7 @@ function setupMine(count) {
 
     flagCount = count;
     mineCountText.textContent = count;
+    timerText.textContent = 0;
 }
 
 setupMine(count);
@@ -215,6 +218,10 @@ function clickCell(e) {
     if (e.target.tagName === 'TD') {
         let k = parseInt(e.target.getAttribute('k'));
 
+        if (timer === 0) {
+            startTimer();
+        }
+
         if (!cells[k].block) {
             // opened
             return;
@@ -267,6 +274,10 @@ function clickFlag(e) {
     if (e.target.tagName === 'TD') {
         let k = parseInt(e.target.getAttribute('k'));
 
+        if (timer === 0) {
+            startTimer();
+        }
+
         if (cells[k].block) {
             if (cells[k].flag) {
                 e.target.classList.remove('flag');
@@ -284,6 +295,8 @@ function clickFlag(e) {
         if (checkComplete()) {
             complete.classList.add('show');
             finish = true;
+            clearInterval(timer);
+            timer = 0;
         }
     }
     // e.stopPropagation();
@@ -425,6 +438,9 @@ function GameOver() {
             elems[i].classList.remove('flag');
         }
     }
+
+    clearInterval(timer);
+    timer = 0;
 }
 
 document.getElementById('reset').addEventListener('click', e => {
@@ -432,4 +448,22 @@ document.getElementById('reset').addEventListener('click', e => {
     finish = false;
     complete.classList.remove('show');
     bomb.classList.remove('show');
+
+    clearInterval(timer);
+    timer = 0;
 }, false);
+
+function startTimer() {
+    clearInterval(timer);
+
+    beginTime = Date.now();
+    prevTime = 0;
+    timer = setInterval(() => {
+        let time = (Date.now() - beginTime) / 1000 ^ 0;
+        if (prevTime != time && time <= 999) {
+            timerText.textContent = time;
+            prevTime = time;
+        }
+    }, 500);
+}
+
