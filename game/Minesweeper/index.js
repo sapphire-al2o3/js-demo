@@ -6,8 +6,11 @@ const sizeY = 9;
 const count = 10;
 let flagCount = count;
 let finish = false;
+let timer = 0;
+let beginTime = 0;
 
 const mineCountText = document.getElementById('mine-count');
+const timerText = document.getElementById('timer');
 
 let k = 0;
 for (let i = 0; i < sizeY; i++) {
@@ -98,6 +101,7 @@ function setupMine(count) {
 
     flagCount = count;
     mineCountText.textContent = count;
+    timerText.textContent = 0;
 }
 
 setupMine(count);
@@ -152,6 +156,11 @@ table.addEventListener('click', e => {
         return;
     }
 
+
+    if (timer === 0) {
+        startTimer();
+    }
+
     if (e.target.tagName === 'TD') {
         let k = parseInt(e.target.getAttribute('k'));
 
@@ -193,6 +202,10 @@ table.addEventListener('contextmenu', e => {
         return;
     }
 
+    if (timer === 0) {
+        startTimer();
+    }
+
     if (e.target.tagName === 'TD') {
         let k = parseInt(e.target.getAttribute('k'));
 
@@ -213,6 +226,8 @@ table.addEventListener('contextmenu', e => {
         if (checkComplete()) {
             complete.classList.add('show');
             finish = true;
+            clearInterval(timer);
+            timer = 0;
         }
     }
     // e.stopPropagation();
@@ -244,11 +259,30 @@ function GameOver() {
             // elems[i].classList.remove('flag');
         }
     }
+
+    clearInterval(timer);
+    timer = 0;
 }
 
 document.getElementById('reset').addEventListener('click', e => {
     setupMine(count);
     finish = false;
+    clearInterval(timer);
+    timer = 0;
     complete.classList.remove('show');
     bomb.classList.remove('show');
 }, false);
+
+function startTimer() {
+    clearInterval(timer);
+
+    beginTime = Date.now();
+    timer = setInterval(() => {
+        let time = (Date.now() - beginTime) / 1000 ^ 0;
+        timerText.textContent = time;
+        if (time >= 999) {
+            clearInterval(timer);
+            timer = 0;
+        }
+    }, 500);
+}

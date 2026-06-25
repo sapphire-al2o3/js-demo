@@ -16,6 +16,14 @@ div {
     margin-bottom: 4px;
 }
 
+#timer {
+    float: right;
+    font-weight: bold;
+    font-size: 24px;
+    margin-top: -35px;
+    padding-right: 12px;
+}
+
 table {
     /* border: 1px solid #AAA; */
     border-collapse: collapse;
