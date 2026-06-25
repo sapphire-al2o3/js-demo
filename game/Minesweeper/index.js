@@ -281,13 +281,10 @@ function startTimer() {
     prevTime = 0;
     timer = setInterval(() => {
         let time = (Date.now() - beginTime) / 1000 ^ 0;
-        if (prevTime != time) {
+        if (prevTime != time && time <= 999) {
             timerText.textContent = time;
             prevTime = time;
         }
-        if (time >= 999) {
-            clearInterval(timer);
-            timer = 0;
-        }
     }, 500);
 }
+
