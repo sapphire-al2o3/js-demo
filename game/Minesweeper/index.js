@@ -8,6 +8,7 @@ let flagCount = count;
 let finish = false;
 let timer = 0;
 let beginTime = 0;
+let prevTime = 0;
 
 const mineCountText = document.getElementById('mine-count');
 const timerText = document.getElementById('timer');
@@ -277,9 +278,13 @@ function startTimer() {
     clearInterval(timer);
 
     beginTime = Date.now();
+    prevTime = 0;
     timer = setInterval(() => {
         let time = (Date.now() - beginTime) / 1000 ^ 0;
-        timerText.textContent = time;
+        if (prevTime != time) {
+            timerText.textContent = time;
+            prevTime = time;
+        }
         if (time >= 999) {
             clearInterval(timer);
             timer = 0;
