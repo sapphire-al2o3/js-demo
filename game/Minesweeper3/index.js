@@ -1,10 +1,10 @@
 const tables = [];
 const cells = [];
 const elems = [];
-const sizeX = 7;
-const sizeY = 7;
-const sizeZ = 3;
-const count = 10;
+let sizeX = 7;
+let sizeY = 7;
+let sizeZ = 3;
+let count = 10;
 let flagCount = count;
 let finish = false;
 let timer = 0;
@@ -15,6 +15,15 @@ let timer = 0;
 const tableContainer = document.getElementById('tables');
 const mineCountText = document.getElementById('mine-count');
 const timerText = document.getElementById('timer');
+
+let params = new URLSearchParams(document.location.search);
+
+if (params.size > 0) {
+    sizeX = parseInt(params.get('x') ?? '7', 10);
+    sizeY = parseInt(params.get('y') ?? '7', 10);
+    sizeZ = parseInt(params.get('z') ?? '3', 10);
+    count = parseInt(params.get('m') ?? '10', 10);
+}
 
 function createTable(index) {
     let k = index * sizeX * sizeY;
