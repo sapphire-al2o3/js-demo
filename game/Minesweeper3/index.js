@@ -1,4 +1,4 @@
-const tables = document.querySelectorAll('table');
+const tables = [];
 const cells = [];
 const elems = [];
 const sizeX = 7;
@@ -11,10 +11,12 @@ let finish = false;
 // x:5,y:5,z:5,5
 // x:7,y:7,z:2,10
 
+const tableContainer = document.getElementById('tables');
 const mineCountText = document.getElementById('mine-count');
 
 function createTable(index) {
     let k = index * sizeX * sizeY;
+    const table = document.createElement('table');
     for (let i = 0; i < sizeY; i++) {
         const tr = document.createElement('tr');
 
@@ -35,8 +37,10 @@ function createTable(index) {
             });
             k++;
         }
-        tables[index].appendChild(tr);
+        table.appendChild(tr);
     }
+    tables[index] = table;
+    tableContainer.appendChild(table);
 }
 
 for (let i = 0; i < sizeZ; i++) {
@@ -248,9 +252,10 @@ function clickCell(e) {
         }
     }
 }
-tables[0].addEventListener('click', clickCell);
-tables[1].addEventListener('click', clickCell);
-tables[2].addEventListener('click', clickCell);
+
+for (let i = 0; i < sizeZ; i++) {
+    tables[i].addEventListener('click', clickCell);
+}
 
 function clickFlag(e) {
     e.preventDefault();
@@ -284,10 +289,9 @@ function clickFlag(e) {
     // e.stopPropagation();
 }
 
-tables[0].addEventListener('contextmenu', clickFlag);
-tables[1].addEventListener('contextmenu', clickFlag);
-tables[2].addEventListener('contextmenu', clickFlag);
-
+for (let i = 0; i < sizeZ; i++) {
+    tables[i].addEventListener('contextmenu', clickFlag);
+}
 
 function getElem(x, y, z) {
     if (x < 0 || x >= sizeX) return null;
@@ -390,12 +394,10 @@ function mouseout(e) {
     }
 }
 
-tables[0].addEventListener('mouseover', mouseover);
-tables[1].addEventListener('mouseover', mouseover);
-tables[2].addEventListener('mouseover', mouseover);
-tables[0].addEventListener('mouseout', mouseout);
-tables[1].addEventListener('mouseout', mouseout);
-tables[2].addEventListener('mouseout', mouseout);
+for (let i = 0; i < sizeZ; i++) {
+    tables[i].addEventListener('mouseover', mouseover);
+    tables[i].addEventListener('mouseout', mouseout);
+}
 
 const complete = document.getElementById('complete');
 const bomb = document.getElementById('bomb');
