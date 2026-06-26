@@ -471,7 +471,10 @@ function startTimer() {
     prevTime = 0;
     timer = setInterval(() => {
         let time = (Date.now() - beginTime) / 1000 ^ 0;
-        if (prevTime != time && time <= 999) {
+        if (time > 1000) {
+            time = 999;
+        }
+        if (prevTime != time) {
             timerText.textContent = time;
             prevTime = time;
         }
