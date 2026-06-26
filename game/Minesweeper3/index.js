@@ -446,7 +446,7 @@ function GameOver() {
         if (cells[i].mine) {
             elems[i].classList.add('mine');
             elems[i].classList.remove('block');
-            elems[i].classList.remove('flag');
+            // elems[i].classList.remove('flag');
         }
     }
 
