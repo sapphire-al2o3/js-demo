@@ -33,6 +33,7 @@ table {
     border-collapse: collapse;
     margin: 0 auto;
     margin-bottom: 12px;
+    user-select: none;
 }
 
 td {
