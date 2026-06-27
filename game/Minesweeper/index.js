@@ -3,7 +3,7 @@ const cells = [];
 const elems = [];
 const sizeX = 9;
 const sizeY = 9;
-const count = 10;
+const count = 20;
 let flagCount = count;
 let finish = false;
 let timer = 0;
@@ -102,7 +102,7 @@ function setupMine(count) {
 
     flagCount = count;
     mineCountText.textContent = count;
-    timerText.textContent = 0;
+    timerText.textContent = getTime(0);
 }
 
 setupMine(count);
@@ -274,6 +274,12 @@ document.getElementById('reset').addEventListener('click', e => {
     bomb.classList.remove('show');
 }, false);
 
+function getTime(time) {
+    let s = time % 60 ^ 0;
+    let m = time / 60 ^ 0;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+}
+
 function startTimer() {
     clearInterval(timer);
 
@@ -281,11 +287,11 @@ function startTimer() {
     prevTime = 0;
     timer = setInterval(() => {
         let time = (Date.now() - beginTime) / 1000 ^ 0;
-        if (time > 1000) {
+        if (time > 60 * 60) {
             time = 999;
         }
         if (prevTime != time) {
-            timerText.textContent = time;
+            timerText.textContent = getTime(time);
             prevTime = time;
         }
     }, 500);
