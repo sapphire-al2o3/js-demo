@@ -16,16 +16,18 @@ div {
     text-align: left;
     font-weight: bold;
     font-size: 24px;
-    margin-left: 12px;
+    margin-left: 24px;
     margin-bottom: 4px;
+    margin-top: 4px;
 }
 
 #timer {
     font-weight: bold;
     font-size: 24px;
     margin-left: auto;
-    margin-right: 12px;
+    margin-right: 24px;
     margin-bottom: 4px;
+    margin-top: 4px;
 }
 
 table {
