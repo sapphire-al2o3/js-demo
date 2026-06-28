@@ -201,6 +201,10 @@ function paint(x, y, z) {
                 f(x, y - 1, z + 1);
                 f(x, y + 1, z - 1);
                 f(x, y + 1, z + 1);
+                f(x - 1, y, z - 1);
+                f(x - 1, y, z + 1);
+                f(x + 1, y, z - 1);
+                f(x + 1, y, z + 1);
 
                 f(x - 1, y - 1, z - 1);
                 f(x - 1, y - 1, z + 1);
