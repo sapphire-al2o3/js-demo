@@ -10,13 +10,15 @@ div {
 
 .header {
     display: flex;
+    position: sticky;
+    top: 12px;
 }
 
 #mine-count {
     text-align: left;
     font-weight: bold;
     font-size: 24px;
-    margin-left: 24px;
+    margin-left: 16px;
     margin-bottom: 4px;
     margin-top: 4px;
 }
@@ -25,7 +27,7 @@ div {
     font-weight: bold;
     font-size: 24px;
     margin-left: auto;
-    margin-right: 24px;
+    margin-right: 16px;
     margin-bottom: 4px;
     margin-top: 4px;
 }
@@ -51,26 +53,8 @@ td {
     font-size: 14px;
 }
 
-td.top_line5 {
-    border-top: 1px solid #555;
-}
-
-td.left_line5 {
-    border-left: 1px solid #555;
-}
-
-td.bottom_line5 {
-    border-bottom: 1px solid #555;
-}
-
-td.right_line5 {
-    border-right: 1px solid #555;
-}
-
-th {
-    font-size: 14px;
-    width: 20px;
-    height: 20px;
+td:hover {
+    color: #E51;
 }
 
 .empty {
@@ -111,6 +95,8 @@ button {
     padding: 4px 20px;
     margin-top: 16px;
     /* display: none; */
+    margin-left: 4px;
+    margin-right: 4px;
 }
 
 button:hover {
