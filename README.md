@@ -206,3 +206,4 @@ https://sapphire-al2o3.github.io/js-demo/
 - [icoファイル表示](https://sapphire-al2o3.github.io/js-demo/web/ico/)
 - [ピクロス](https://sapphire-al2o3.github.io/js-demo/game/Nonogram/)
 - [マインスイーパー](https://sapphire-al2o3.github.io/js-demo/game/Minesweeper/)
+- [マインスイーパー3](https://sapphire-al2o3.github.io/js-demo/game/Minesweeper3/)
