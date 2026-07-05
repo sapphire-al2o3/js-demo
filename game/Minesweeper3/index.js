@@ -25,6 +25,15 @@ if (params.size > 0) {
     count = parseInt(params.get('m') ?? '10', 10);
 }
 
+if (localStorage.length > 0) {
+    const key = `m_${sizeX}_${sizeY}_${sizeZ}_${count}`;
+    const json = localStorage.getItem(key);
+    if (json) {
+        const data = JSON.parse(json);
+        
+    }
+}
+
 function createTable(index) {
     let k = index * sizeX * sizeY;
     const table = document.createElement('table');
@@ -485,3 +494,23 @@ function startTimer() {
     }, 500);
 }
 
+function getSaveKey() {
+    const key = `mine_${sizeX}_${sizeY}_${sizeZ}_${count}`;
+    return key;
+}
+
+function save() {
+    const data = {
+        x: sizeX,
+        y: sizeY,
+        z: sizeZ,
+        m: count,
+        c: cells
+    };
+    
+    localStorage.setItem(getSaveKey(), JSON.stringify(data));
+}
+
+document.getElementById('save')?.addEventListener('click', e => {
+    save();
+}, false);
