@@ -2,5 +2,13 @@ body {
     text-align: center;
 }
 #canvas {
+    margin: 0 auto;
     border: 1px solid #444;
+}
+
+ul {
+    margin: 0 auto;
+    width: 160px;
+    list-style: none;
+    padding: 0;
 }
