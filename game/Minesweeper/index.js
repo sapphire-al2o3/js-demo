@@ -288,7 +288,7 @@ function startTimer() {
     timer = setInterval(() => {
         let time = (Date.now() - beginTime) / 1000 ^ 0;
         if (time > 60 * 60) {
-            time = 999;
+            time = 60 * 60;
         }
         if (prevTime != time) {
             timerText.textContent = getTime(time);
