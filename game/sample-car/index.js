@@ -47,6 +47,7 @@ let y = 60;
 let dir = Math.PI * 0.5;
 let speed = 4;
 let rotSpeed = 0.2;
+let acc = 0.2;
 
 loop((dt) => {
 
@@ -55,7 +56,13 @@ loop((dt) => {
 
     let d = keyX * rotSpeed;
     dir += d;
+    if (dir > Math.PI * 2) dir -= Math.PI * 2;
+    if (dir < -Math.PI * 2) dir += Math.PI * 2;
+
+    // speed += acc * keyY;
+    // let v = speed;
     let v = keyY * speed;
+
     let vx = v * Math.cos(dir);
     let vy = v * Math.sin(dir);
     x += vx;
@@ -75,5 +82,11 @@ loop((dt) => {
     ctx.moveTo(x + 8 * dx, y + 8 * dy);
     ctx.lineTo(x - 8 * dx, y - 8 * dy);
     ctx.stroke();
+
+    ctx.fillStyle = '#FC0';
+    ctx.beginPath();
+    ctx.moveTo(x - 8 * dx, y - 8 * dy);
+    ctx.arc(x - 8 * dx, y - 8 * dy, 32, dir - 0.4 + Math.PI, dir + 0.4 + Math.PI, false);
+    ctx.fill();
 
 }, 1000 / 30);
