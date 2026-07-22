@@ -46,9 +46,12 @@ const H = canvas.height;
 let x = 4;
 let y = 0;
 
-const blockSize = 4;
+const blockSize = 5;
 const stageW = 12;
 const stageH = 21;
+
+const offsetX = 32;
+const offsetY = 15;
 
 let stage = [];
 
@@ -139,25 +142,39 @@ function checkLine() {
 function drawBlock() {
     for (let i = 0; i < stageH; i++) {
         for (let j = 0; j < stageW; j++) {
-
+            if (stage[i][j] === 1) {
+                let bx = j * blockSize + offsetX;
+                let by = i * blockSize + offsetY;
+                ctx.fillRect(bx, by, blockSize, blockSize);
+            }
         }
     }
 
     for (let i = 0; i < block.length; i++) {
-        let bx = (x + block[i].x) * blockSize;
-        let by = (y + block[i].y) * blockSize;
+        let bx = (x + block[i].x) * blockSize + offsetX;
+        let by = (y + block[i].y) * blockSize + offsetY;
         ctx.fillRect(bx, by, blockSize, blockSize);
     }
 }
 
+function drawWall() {
+
+}
+
 let frame = 0;
 
+initStage();
 createBlock(0);
 
 loop((dt) => {
 
     const keyX = keyState['ArrowRight'] - keyState['ArrowLeft'];
     const keyY = keyState['ArrowDown'] - keyState['ArrowUp'];
+
+    if (keyState['Space']) {
+        keyState['Space'] = 0;
+        rotateBlock();
+    }
 
     x += keyX * 4;
     // y += keyY * 4;
@@ -181,7 +198,7 @@ loop((dt) => {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#000';
-    ctx.fillRect(x - 4, y - 4, 8, 8);
+    // ctx.fillRect(x - 4, y - 4, 8, 8);
 
     drawBlock();
 
