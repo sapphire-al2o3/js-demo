@@ -44,14 +44,14 @@ document.addEventListener('keyup', e => {
 const W = canvas.width;
 const H = canvas.height;
 let x = 4;
-let y = 0;
+let y = 1;
 
-const blockSize = 5;
+const blockSize = 8;
 const stageW = 12;
 const stageH = 21;
 
-const offsetX = 32;
-const offsetY = 15;
+const offsetX = 8;
+const offsetY = -16;
 
 let stage = [];
 
@@ -124,6 +124,15 @@ function isGround() {
     return false;
 }
 
+function hitBlock(x, y) {
+    for (let i = 0; i < block.length; i++) {
+        if (stage[y + block[i].y][x + block[i].x] > 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function checkLine() {
     for (let i = stageH - 2; i >= 0; i++) {
         let fill = true;
@@ -168,33 +177,40 @@ createBlock(0);
 
 loop((dt) => {
 
-    const keyX = keyState['ArrowRight'] - keyState['ArrowLeft'];
-    const keyY = keyState['ArrowDown'] - keyState['ArrowUp'];
+    let dx = keyState['ArrowRight'] - keyState['ArrowLeft'];
+    let dy = keyState['ArrowDown'] - keyState['ArrowUp'];
 
     if (keyState['Space']) {
         keyState['Space'] = 0;
         rotateBlock();
     }
 
-    x += keyX * 4;
+    if (hitBlock(x + dx, y)) {
+        dx = 0;
+    }
+
+    x += dx;
     // y += keyY * 4;
 
     if (frame % 20 === 0) {
         y += 1;
 
-        // if (isGround()) {
-        //     for (let i = 0; i < block.length; i++) {
-        //         stage[block[i].y][block[i].x] = 1;
-        //     }
-        //     createBlock();
-        // }
+        if (isGround()) {
+            for (let i = 0; i < block.length; i++) {
+                stage[block[i].y + y][block[i].x + x] = 1;
+            }
+            // createBlock(0);
+            x = 4;
+            y = 1;
+            console.log('ground');
+        }
     }
     frame++;
 
-    if (x <= 4) x = 4;
+    if (x <= 0) x = 0;
     if (y <= 4) y = 4;
-    if (x >= W - 4) x = W - 4;
-    if (y >= H - 4) y = H - 4;
+    if (x >= stageW - 1) x = stageW - 1;
+    if (y >= stageH - 1) y = stageH - 1;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#000';
