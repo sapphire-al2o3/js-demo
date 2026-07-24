@@ -27,6 +27,7 @@ keyState['ArrowLeft'] = 0;
 keyState['ArrowUp'] = 0;
 keyState['ArrowDown'] = 0;
 keyState['Space'] = 0;
+keyState['Enter'] = 0;
 document.addEventListener('keydown', e => {
     if (e.code in keyState) {
         keyState[e.code] = 1;
@@ -96,6 +97,10 @@ function createNextBlocks() {
 
 function createBlock(t) {
     if (t === 0) {
+        // T
+        // 010
+        // 111
+        // 000
         block[0].x = 0;
         block[0].y = -1;
         block[1].x = -1;
@@ -104,6 +109,19 @@ function createBlock(t) {
         block[2].y = 0;
         block[3].x = 1;
         block[3].y = 0;
+    } else if (t === 1) {
+        // 011
+        // 110
+        block[0].x = 0;
+        block[0].y = -1;
+        block[1].x = -1;
+        block[1].y = 0;
+        block[2].x = 0;
+        block[2].y = 0;
+        block[3].x = 1;
+        block[3].y = -1;
+    } else if (t === 2) {
+
     }
 }
 
@@ -133,7 +151,7 @@ function hitBlock(x, y) {
     return false;
 }
 
-function checkLine() {
+function checkLine(y) {
     for (let i = stageH - 2; i >= 0; i++) {
         let fill = true;
         for (let i = 1; i < stageW - 1; i++) {
@@ -171,14 +189,24 @@ function drawWall() {
 }
 
 let frame = 0;
+let pause = false;
 
 initStage();
-createBlock(0);
+createBlock(1);
 
 loop((dt) => {
 
     let dx = keyState['ArrowRight'] - keyState['ArrowLeft'];
     let dy = keyState['ArrowDown'] - keyState['ArrowUp'];
+
+    if (keyState['Enter']) {
+        keyState['Enter'] = 0;
+        pause = !pause;
+    }
+
+    if (pause) {
+        return;
+    }
 
     if (keyState['Space']) {
         keyState['Space'] = 0;
