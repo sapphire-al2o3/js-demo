@@ -240,8 +240,10 @@ loop((dt) => {
     if (x >= stageW - 1) x = stageW - 1;
     if (y >= stageH - 1) y = stageH - 1;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#000';
+    // ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#598000';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#003000';
     // ctx.fillRect(x - 4, y - 4, 8, 8);
 
     drawBlock();
