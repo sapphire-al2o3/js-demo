@@ -44,15 +44,15 @@ document.addEventListener('keyup', e => {
 
 const W = canvas.width;
 const H = canvas.height;
-let x = 4;
+let x = 5;
 let y = 1;
 
 const blockSize = 8;
 const stageW = 12;
-const stageH = 21;
+const stageH = 22;
 
 const offsetX = 8;
-const offsetY = -16;
+const offsetY = -24;
 
 let stage = [];
 
