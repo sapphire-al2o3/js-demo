@@ -44,7 +44,7 @@ document.addEventListener('keyup', e => {
 
 const W = canvas.width;
 const H = canvas.height;
-let x = 5;
+let x = 6;
 let y = 1;
 
 const blockSize = 8;
@@ -121,7 +121,59 @@ function createBlock(t) {
         block[3].x = 1;
         block[3].y = -1;
     } else if (t === 2) {
-
+        // 110
+        // 011
+        block[0].x = 0;
+        block[0].y = -1;
+        block[1].x = -1;
+        block[1].y = -1;
+        block[2].x = 0;
+        block[2].y = 0;
+        block[3].x = 1;
+        block[3].y = 0;
+    } else if (t === 3) {
+        // 110
+        // 110
+        block[0].x = 0;
+        block[0].y = -1;
+        block[1].x = -1;
+        block[1].y = -1;
+        block[2].x = 0;
+        block[2].y = 0;
+        block[3].x = -1;
+        block[3].y = 0;
+    } else if (t === 4) {
+        // 100
+        // 111
+        block[0].x = 0;
+        block[0].y = -1;
+        block[1].x = -1;
+        block[1].y = -1;
+        block[2].x = -1;
+        block[2].y = 0;
+        block[3].x = 1;
+        block[3].y = -1;
+    } else if (t === 5) {
+        // 001
+        // 111
+        block[0].x = 0;
+        block[0].y = -1;
+        block[1].x = -1;
+        block[1].y = -1;
+        block[2].x = 1;
+        block[2].y = 0;
+        block[3].x = 1;
+        block[3].y = -1;
+    } else if (t === 6) {
+        // 1111
+        block[0].x = -2;
+        block[0].y = 0;
+        block[1].x = -1;
+        block[1].y = 0;
+        block[2].x = 0;
+        block[2].y = 0;
+        block[3].x = 1;
+        block[3].y = 0;
     }
 }
 
@@ -192,7 +244,7 @@ let frame = 0;
 let pause = false;
 
 initStage();
-createBlock(1);
+createBlock(5);
 
 loop((dt) => {
 
