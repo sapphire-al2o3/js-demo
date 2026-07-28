@@ -72,7 +72,7 @@ function initStage() {
     }
 }
 
-let blockType = 0;
+
 let nextBlock = [];
 let block = [];
 
@@ -186,12 +186,7 @@ function rotateBlock() {
 }
 
 function isGround() {
-    for (let i = 0; i < block.length; i++) {
-        if (stage[y + block[i].y + 1][x + block[i].x] > 0) {
-            return true;
-        }
-    }
-    return false;
+    return hitBlock(x, y + 1);
 }
 
 function hitBlock(x, y) {
@@ -218,7 +213,11 @@ function checkLine(y) {
     }
 }
 
-function drawBlock() {
+function draw() {
+    ctx.fillStyle = '#598000';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#003000';
+
     for (let i = 0; i < stageH; i++) {
         for (let j = 0; j < stageW; j++) {
             if (stage[i][j] === 1) {
@@ -236,15 +235,12 @@ function drawBlock() {
     }
 }
 
-function drawWall() {
-
-}
-
 let frame = 0;
 let pause = false;
+let blockType = 5;
 
 initStage();
-createBlock(5);
+createBlock(blockType);
 
 loop((dt) => {
 
@@ -279,8 +275,9 @@ loop((dt) => {
             for (let i = 0; i < block.length; i++) {
                 stage[block[i].y + y][block[i].x + x] = 1;
             }
-            // createBlock(0);
-            x = 4;
+            blockType = Math.random() * 7 ^ 0;
+            createBlock(blockType);
+            x = 6;
             y = 1;
             console.log('ground');
         }
@@ -292,12 +289,6 @@ loop((dt) => {
     if (x >= stageW - 1) x = stageW - 1;
     if (y >= stageH - 1) y = stageH - 1;
 
-    // ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#598000';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#003000';
-    // ctx.fillRect(x - 4, y - 4, 8, 8);
-
-    drawBlock();
+    draw();
 
 }, 1000 / 30);
