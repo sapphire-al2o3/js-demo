@@ -100,7 +100,6 @@ function createBlock(t) {
         // T
         // 010
         // 111
-        // 000
         block[0].x = 0;
         block[0].y = -1;
         block[1].x = -1;
@@ -110,6 +109,7 @@ function createBlock(t) {
         block[3].x = 1;
         block[3].y = 0;
     } else if (t === 1) {
+        // S
         // 011
         // 110
         block[0].x = 0;
@@ -121,6 +121,7 @@ function createBlock(t) {
         block[3].x = 1;
         block[3].y = -1;
     } else if (t === 2) {
+        // Z
         // 110
         // 011
         block[0].x = 0;
@@ -132,6 +133,7 @@ function createBlock(t) {
         block[3].x = 1;
         block[3].y = 0;
     } else if (t === 3) {
+        // O
         // 110
         // 110
         block[0].x = 0;
@@ -143,6 +145,7 @@ function createBlock(t) {
         block[3].x = -1;
         block[3].y = 0;
     } else if (t === 4) {
+        // J
         // 100
         // 111
         block[0].x = 0;
@@ -154,6 +157,7 @@ function createBlock(t) {
         block[3].x = 1;
         block[3].y = -1;
     } else if (t === 5) {
+        // L
         // 001
         // 111
         block[0].x = 0;
@@ -165,6 +169,7 @@ function createBlock(t) {
         block[3].x = 1;
         block[3].y = -1;
     } else if (t === 6) {
+        // I
         // 1111
         block[0].x = -2;
         block[0].y = 0;
