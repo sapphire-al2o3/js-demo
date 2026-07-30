@@ -182,21 +182,21 @@ function createBlock(t) {
     }
 }
 
-function rotateBlock() {
-    for (let i = 0; i < block.length; i++) {
-        let t = block[i].x;
-        block[i].x = block[i].y;
-        block[i].y = t;
+function rotateBlock(b) {
+    for (let i = 0; i < b.length; i++) {
+        let t = b[i].x;
+        b[i].x = b[i].y;
+        b[i].y = t;
     }
 }
 
 function isGround() {
-    return hitBlock(x, y + 1);
+    return hitBlock(x, y + 1, block);
 }
 
-function hitBlock(x, y) {
-    for (let i = 0; i < block.length; i++) {
-        if (stage[y + block[i].y][x + block[i].x] > 0) {
+function hitBlock(x, y, b) {
+    for (let i = 0; i < b.length; i++) {
+        if (stage[y + b[i].y][x + b[i].x] > 0) {
             return true;
         }
     }
@@ -263,10 +263,10 @@ loop((dt) => {
 
     if (keyState['Space']) {
         keyState['Space'] = 0;
-        rotateBlock();
+        rotateBlock(block);
     }
 
-    if (hitBlock(x + dx, y)) {
+    if (hitBlock(x + dx, y, block)) {
         dx = 0;
     }
 
