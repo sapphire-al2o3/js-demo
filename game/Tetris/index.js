@@ -290,13 +290,15 @@ function draw() {
 loop((dt) => {
 
     let dx = keyState['ArrowRight'] - keyState['ArrowLeft'];
-    let dy = keyState['ArrowDown'] - keyState['ArrowUp'];
+    let up = keyState['ArrowUp'];
+    let down = keyState['ArrowDown'];
 
     if (keyState['Enter']) {
         pause = !pause;
     }
 
     if (pause) {
+        resetKey();
         return;
     }
 
