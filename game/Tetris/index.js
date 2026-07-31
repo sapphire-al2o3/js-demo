@@ -81,9 +81,14 @@ function initStage() {
 
 let nextBlock = [];
 let block = [];
+let rotBlock = [];
 
 for (let i = 0; i < 4; i++) {
     block.push({
+        x: 0,
+        y: 0
+    });
+    rotBlock.push({
         x: 0,
         y: 0
     });
@@ -195,9 +200,13 @@ let blockType = 3;
 initStage();
 createBlock(blockType);
 
-function rotateBlock(b) {
+function rotateBlock(b, r) {
 
     if (blockType === 3) {
+        for (let i = 0; i < b.length; i++) {
+            r[i].x = b[i].x;
+            r[i].y = b[i].y;
+        }
         return;
     }
 
@@ -211,8 +220,8 @@ function rotateBlock(b) {
     for (let i = 0; i < b.length; i++) {
         let x = b[i].x + dx;
         let y = b[i].y + dy;
-        b[i].x = -y - dx ^ 0;
-        b[i].y = x - dy ^ 0;
+        r[i].x = -y - dx ^ 0;
+        r[i].y = x - dy ^ 0;
     }
 }
 
@@ -292,7 +301,14 @@ loop((dt) => {
     }
 
     if (keyState['Space']) {
-        rotateBlock(block);
+        rotateBlock(block, rotBlock);
+
+        if (!hitBlock(x, y, rotBlock)) {
+            for (let i = 0; i < block.length; i++) {
+                block[i].x = rotBlock[i].x;
+                block[i].y = rotBlock[i].y;
+            }
+        }
     }
 
     resetKey();
