@@ -42,6 +42,12 @@ document.addEventListener('keyup', e => {
     }
 }, false);
 
+function resetKey() {
+    for (let key in keyState) {
+        keyState[key] = 0;
+    }
+}
+
 const W = canvas.width;
 const H = canvas.height;
 let x = 6;
@@ -101,7 +107,7 @@ function createBlock(t) {
         // 010
         // 111
         block[0].x = 0;
-        block[0].y = -1;
+        block[0].y = 1;
         block[1].x = -1;
         block[1].y = 0;
         block[2].x = 0;
@@ -149,44 +155,64 @@ function createBlock(t) {
         // 100
         // 111
         block[0].x = 0;
-        block[0].y = -1;
+        block[0].y = 0;
         block[1].x = -1;
-        block[1].y = -1;
+        block[1].y = 0;
         block[2].x = -1;
-        block[2].y = 0;
+        block[2].y = 1;
         block[3].x = 1;
-        block[3].y = -1;
+        block[3].y = 0;
     } else if (t === 5) {
         // L
         // 001
         // 111
         block[0].x = 0;
-        block[0].y = -1;
+        block[0].y = 0;
         block[1].x = -1;
-        block[1].y = -1;
+        block[1].y = 0;
         block[2].x = 1;
-        block[2].y = 0;
+        block[2].y = 1;
         block[3].x = 1;
-        block[3].y = -1;
+        block[3].y = 0;
     } else if (t === 6) {
         // I
         // 1111
         block[0].x = -2;
-        block[0].y = 0;
+        block[0].y = -1;
         block[1].x = -1;
-        block[1].y = 0;
+        block[1].y = -1;
         block[2].x = 0;
-        block[2].y = 0;
+        block[2].y = -1;
         block[3].x = 1;
-        block[3].y = 0;
+        block[3].y = -1;
     }
 }
 
+let frame = 0;
+let pause = false;
+let blockType = 3;
+
+initStage();
+createBlock(blockType);
+
 function rotateBlock(b) {
+
+    if (blockType === 3) {
+        return;
+    }
+
+    let dx = 0;
+    let dy = 0;
+
+    if (blockType === 6) {
+        dx = 0.5;
+        dy = 0.5;
+    }
     for (let i = 0; i < b.length; i++) {
-        let t = b[i].x;
-        b[i].x = b[i].y;
-        b[i].y = t;
+        let x = b[i].x + dx;
+        let y = b[i].y + dy;
+        b[i].x = -y - dx ^ 0;
+        b[i].y = x - dy ^ 0;
     }
 }
 
@@ -221,6 +247,18 @@ function checkLine(y) {
 function draw() {
     ctx.fillStyle = '#598000';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // ctx.fillStyle = '#75ac57';
+    // for (let i = 0; i < stageH; i++) {
+    //     for (let j = 0; j < stageW; j++) {
+    //         if (j % 2 === 0) {
+    //             let bx = j * blockSize + offsetX;
+    //             let by = i * blockSize + offsetY;
+    //             ctx.fillRect(bx, by, blockSize, blockSize);
+    //         }
+    //     }
+    // }
+
     ctx.fillStyle = '#003000';
 
     for (let i = 0; i < stageH; i++) {
@@ -240,20 +278,12 @@ function draw() {
     }
 }
 
-let frame = 0;
-let pause = false;
-let blockType = 5;
-
-initStage();
-createBlock(blockType);
-
 loop((dt) => {
 
     let dx = keyState['ArrowRight'] - keyState['ArrowLeft'];
     let dy = keyState['ArrowDown'] - keyState['ArrowUp'];
 
     if (keyState['Enter']) {
-        keyState['Enter'] = 0;
         pause = !pause;
     }
 
@@ -262,9 +292,10 @@ loop((dt) => {
     }
 
     if (keyState['Space']) {
-        keyState['Space'] = 0;
         rotateBlock(block);
     }
+
+    resetKey();
 
     if (hitBlock(x + dx, y, block)) {
         dx = 0;
