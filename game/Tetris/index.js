@@ -196,6 +196,10 @@ function createBlock(t) {
 let frame = 0;
 let pause = false;
 let blockType = 3;
+let score = 0;
+let lineScores = [
+    0, 100, 300, 500, 800
+];
 
 initStage();
 createBlock(blockType);
@@ -247,6 +251,7 @@ function shiftStage(k) {
 }
 
 function checkLine(y) {
+    let count = 0;
     for (let i = stageH - 2; i >= 0; i--) {
         let fill = true;
         for (let j = 1; j < stageW - 1; j++) {
@@ -256,10 +261,12 @@ function checkLine(y) {
             }
         }
         if (fill) {
+            count++;
             shiftStage(i);
             i++;
         }
     }
+    score += lineScores[count];
 }
 
 function draw() {
