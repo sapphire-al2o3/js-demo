@@ -238,17 +238,26 @@ function hitBlock(x, y, b) {
     return false;
 }
 
+function shiftStage(k) {
+    for (let i = k - 1; i >= 0; i--) {
+        for (let j = 1; j < stageW - 1; j++) {
+            stage[i + 1][j] = stage[i][j];
+        }
+    }
+}
+
 function checkLine(y) {
-    for (let i = stageH - 2; i >= 0; i++) {
+    for (let i = stageH - 2; i >= 0; i--) {
         let fill = true;
-        for (let i = 1; i < stageW - 1; i++) {
+        for (let j = 1; j < stageW - 1; j++) {
             if (stage[i][j] === 0) {
                 fill = false;
                 break;
             }
         }
         if (fill) {
-
+            shiftStage(i);
+            i++;
         }
     }
 }
@@ -329,11 +338,14 @@ loop((dt) => {
             for (let i = 0; i < block.length; i++) {
                 stage[block[i].y + y][block[i].x + x] = 1;
             }
+            
+            checkLine();
+            
             blockType = Math.random() * 7 ^ 0;
             createBlock(blockType);
             x = 6;
             y = 1;
-            console.log('ground');
+            
         }
     }
     frame++;
