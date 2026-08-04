@@ -269,6 +269,60 @@ function checkLine(y) {
     score += lineScores[count];
 }
 
+const colors = [
+    '#598000',
+    '#003000',
+    '#75ac57'
+];
+
+const numPatterns4x6 = [
+    0x699996,
+    0x622222,
+    0x69124F,
+    0xE16196,
+    0x6AAAF2,
+    0xF8E11E,
+    0x68E996,
+    0xF12244,
+    0x696996,
+    0x699716,
+];
+
+const numPatterns5x6 = [
+    0x1DBDEF6E,
+    0x1C6318C6,
+    0x1DB1999F,
+    0x1DB30F6E,
+    0x0EFDEFE3,
+    0x3F8F0C7E,
+    0x1D8F6F6E,
+    0x3FB198C6,
+    0x1DB76F6E,
+    0x1DBDBC6E
+];
+const numW = 5;
+const numH = 6;
+
+function fillNum(n, x, y, size) {
+    let d = n;
+    let charSize = size * (numW + 1);
+    let k = 0;
+    do {
+        let p = numPatterns5x6[d % 10];
+        let b = numW * numH - 1;
+        for (let i = 0; i < numH; i++) {
+            for (let j = 0; j < numW; j++) {
+                if ((p >> b) & 1) {
+                    ctx.fillRect(j * size + x - charSize * k, i * size + y, size, size);
+                }
+                b--;
+            }
+        }
+        d = d / 10 ^ 0;
+        k++;
+    } while (d > 0)
+}
+
 function draw() {
     ctx.fillStyle = '#598000';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -301,6 +355,8 @@ function draw() {
         let by = (y + block[i].y) * blockSize + offsetY;
         ctx.fillRect(bx, by, blockSize, blockSize);
     }
+
+    fillNum(score, 144, 10, 1);
 }
 
 loop((dt) => {
