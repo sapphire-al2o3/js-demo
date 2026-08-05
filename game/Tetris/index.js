@@ -359,6 +359,9 @@ function draw() {
     fillNum(score, 144, 10, 1);
 }
 
+let speed = 20;
+let fallCount = 0;
+
 loop((dt) => {
 
     let dx = keyState['ArrowRight'] - keyState['ArrowLeft'];
@@ -385,6 +388,11 @@ loop((dt) => {
         }
     }
 
+    if (down) {
+        frame += 10;
+        if (frame > speed) frame = speed;
+    }
+
     resetKey();
 
     if (hitBlock(x + dx, y, block)) {
@@ -394,8 +402,8 @@ loop((dt) => {
     x += dx;
     // y += keyY * 4;
 
-    if (frame % 20 === 0) {
-        y += 1;
+    if (frame % speed === 0) {
+        frame = 0;
 
         if (isGround()) {
             for (let i = 0; i < block.length; i++) {
@@ -410,6 +418,8 @@ loop((dt) => {
             y = 1;
             
         }
+
+        y += 1;
     }
     frame++;
 
