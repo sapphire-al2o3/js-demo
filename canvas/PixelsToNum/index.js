@@ -13,6 +13,8 @@ let h = sizeY * size;
 canvas.width = w;
 canvas.height = h;
 
+let history = [];
+
 for (let i = 0; i < sizeY; i++) {
     pixels[i] = [];
     for (let j = 0; j < sizeX; j++) {
@@ -58,7 +60,7 @@ canvas.addEventListener('click', e => {
 
 render();
 
-document.getElementById('decode').addEventListener('click', e => {
+function decode() {
     let p = parseInt(num.value, 16);
     for (let i = sizeY - 1; i >= 0; i--) {
         for (let j = sizeX - 1; j >= 0; j--) {
@@ -67,4 +69,42 @@ document.getElementById('decode').addEventListener('click', e => {
         }
     }
     render();
+}
+
+document.getElementById('decode').addEventListener('click', e => {
+    decode();
 });
+
+
+function save() {
+
+}
+
+
+
+function removeListItem(e) {
+    document.getElementById('wrapper').removeChild(e.target.parentNode);
+}
+
+function clickListItem(e) {
+    num.value = e.target.getAttribute('val');
+    decode();
+}
+
+let index = 0;
+document.getElementById('add').addEventListener('click', e => {
+    let text = document.createElement('label');
+    let item = document.createElement('div');
+    let removeButton = document.createElement('span');
+    text.setAttribute('val', num.value);
+    text.textContent = num.value;
+    text.addEventListener('click', clickListItem);
+    removeButton.innerText = '✖';
+    removeButton.addEventListener('click', removeListItem);
+    item.setAttribute('id', 'item-' + index.toString())
+    item.appendChild(text);
+    item.appendChild(removeButton);
+    document.getElementById('wrapper').appendChild(item);
+    index++;
+});
+
