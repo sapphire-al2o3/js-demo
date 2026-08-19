@@ -14,6 +14,7 @@ canvas.width = w;
 canvas.height = h;
 
 let history = [];
+let historyId = [];
 
 for (let i = 0; i < sizeY; i++) {
     pixels[i] = [];
@@ -77,12 +78,21 @@ document.getElementById('decode').addEventListener('click', e => {
 
 
 function save() {
+    if (localStorage) {
+        const data = {
 
+        };
+        const str = JSON.parse(str);
+    }
 }
 
 
 
 function removeListItem(e) {
+    const id = parseInt(e.target.getAttribute('index'), 10);
+    const index = historyId.indexOf(id);
+    historyId.splice(index, 1);
+    history.splice(index, 1);
     document.getElementById('wrapper').removeChild(e.target.parentNode);
 }
 
@@ -93,18 +103,22 @@ function clickListItem(e) {
 
 let index = 0;
 document.getElementById('add').addEventListener('click', e => {
-    let text = document.createElement('label');
-    let item = document.createElement('div');
-    let removeButton = document.createElement('span');
+    const text = document.createElement('label');
+    const item = document.createElement('div');
+    const removeButton = document.createElement('span');
     text.setAttribute('val', num.value);
     text.textContent = num.value;
     text.addEventListener('click', clickListItem);
+    removeButton.setAttribute('index', index);
     removeButton.innerText = '✖';
     removeButton.addEventListener('click', removeListItem);
-    item.setAttribute('id', 'item-' + index.toString())
+    const id = 'item-' + index.toString();
+    item.setAttribute('id', id);
     item.appendChild(text);
     item.appendChild(removeButton);
     document.getElementById('wrapper').appendChild(item);
+    history.push(num.value);
+    historyId.push(index);
     index++;
 });
 
