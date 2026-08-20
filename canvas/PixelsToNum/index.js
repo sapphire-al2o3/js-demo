@@ -79,13 +79,24 @@ document.getElementById('decode').addEventListener('click', e => {
 
 function save() {
     if (localStorage) {
-        const data = {
-
-        };
-        const str = JSON.parse(str);
+        const str = JSON.stringify(history);
+        localStorage.setItem('p2n', str);
     }
 }
 
+function load() {
+    if (localStorage) {
+        const str = localStorage.getItem('p2n');
+        if (str) {
+            history = JSON.parse(str); 
+            historyId = [];
+            for (let i = 0; i < history.length; i++) {
+                historyId.push(i);
+            }
+            index = history.length;
+        }
+    }
+}
 
 
 function removeListItem(e) {
