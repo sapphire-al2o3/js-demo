@@ -17,6 +17,7 @@ canvas {
     padding-left: 8px;
     margin: 0px 8px;
     font-size: 14px;
+    cursor: pointer;
 }
 
 .listbox label:focus {
@@ -31,7 +32,7 @@ canvas {
     color: #FFF;
     font-size: 14px;
     margin-left: 6px;
-    cursor: default;
+    cursor: pointer;
     user-select: none;
 }
 
