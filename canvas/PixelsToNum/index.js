@@ -91,9 +91,10 @@ function load() {
             history = JSON.parse(str); 
             historyId = [];
             for (let i = 0; i < history.length; i++) {
+                createListItem(i, history[i]);
                 historyId.push(i);
+                index++;
             }
-            index = history.length;
         }
     }
 }
@@ -105,6 +106,8 @@ function removeListItem(e) {
     historyId.splice(index, 1);
     history.splice(index, 1);
     document.getElementById('wrapper').removeChild(e.target.parentNode);
+
+    save();
 }
 
 function clickListItem(e) {
@@ -113,12 +116,12 @@ function clickListItem(e) {
 }
 
 let index = 0;
-document.getElementById('add').addEventListener('click', e => {
+function createListItem(index, value) {
     const text = document.createElement('label');
     const item = document.createElement('div');
     const removeButton = document.createElement('span');
-    text.setAttribute('val', num.value);
-    text.textContent = num.value;
+    text.setAttribute('val', value);
+    text.textContent = value;
     text.addEventListener('click', clickListItem);
     removeButton.setAttribute('index', index);
     removeButton.innerText = '✖';
@@ -128,8 +131,13 @@ document.getElementById('add').addEventListener('click', e => {
     item.appendChild(text);
     item.appendChild(removeButton);
     document.getElementById('wrapper').appendChild(item);
+}
+document.getElementById('add').addEventListener('click', e => {
+    createListItem(index, num.value);
     history.push(num.value);
     historyId.push(index);
     index++;
+    save();
 });
 
+load();
