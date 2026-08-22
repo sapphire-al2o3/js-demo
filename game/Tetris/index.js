@@ -393,6 +393,15 @@ loop((dt) => {
         if (frame > speed) frame = speed;
     }
 
+    if (up) {
+        for (let i = y; i < stageH; i++) {
+            if (hitBlock(x, i + 1, block)) {
+                y = i;
+                break;
+            }
+        }
+    }
+
     resetKey();
 
     if (hitBlock(x + dx, y, block)) {
