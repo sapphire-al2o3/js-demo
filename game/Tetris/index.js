@@ -80,6 +80,8 @@ function initStage() {
 
 
 let nextBlock = [];
+let nextIndex = 0;
+
 let block = [];
 let rotBlock = [];
 
@@ -94,17 +96,31 @@ for (let i = 0; i < 4; i++) {
     });
 }
 
-function createNextBlocks() {
-    for (let i = 0; i < 6; i++) {
-        nextBlock[i] = i;
+function getNextBlock() {
+    if (nextIndex === 0) {
+        createBlock(7);
+    } else if (nextIndex === 7) {
+        createBlock(0);
     }
-    for (let i = 0; i < 5; i++) {
+
+    nextIndex = (nextIndex + 1) % 14;
+    return nextBlock[nextIndex];
+}
+
+function createNextBlocks(s) {
+    for (let i = 0; i < 7; i++) {
+        nextBlock[i + s] = i;
+    }
+    for (let i = 0; i < 6; i++) {
         let k = Math.random() * i ^ 0;
-        let t = nextBlcok[i];
-        nextBlock[i] = nextBlock[k];
-        nextBlock[n] = t;
+        let t = nextBlock[i + s];
+        nextBlock[i + s] = nextBlock[k + s];
+        nextBlock[k + s] = t;
     }
 }
+
+createNextBlocks(0);
+createNextBlocks(7);
 
 function createBlock(t) {
     if (t === 0) {
@@ -195,7 +211,7 @@ function createBlock(t) {
 
 let frame = 0;
 let pause = false;
-let blockType = 3;
+let blockType = getNextBlock();
 let score = 0;
 let lineScores = [
     0, 100, 300, 500, 800
@@ -421,7 +437,7 @@ loop((dt) => {
             
             checkLine();
             
-            blockType = Math.random() * 7 ^ 0;
+            blockType = getNextBlock();
             createBlock(blockType);
             x = 6;
             y = 1;
