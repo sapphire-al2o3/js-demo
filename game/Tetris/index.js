@@ -51,7 +51,7 @@ function resetKey() {
 const W = canvas.width;
 const H = canvas.height;
 let x = 6;
-let y = 1;
+let y = 2;
 
 const blockSize = 8;
 const stageW = 12;
@@ -440,7 +440,7 @@ loop((dt) => {
             blockType = getNextBlock();
             createBlock(blockType);
             x = 6;
-            y = 1;
+            y = 2;
             
         } else {
 
@@ -450,7 +450,7 @@ loop((dt) => {
     frame++;
 
     if (x <= 0) x = 0;
-    if (y <= 4) y = 4;
+    // if (y <= 4) y = 4;
     if (x >= stageW - 1) x = stageW - 1;
     if (y >= stageH - 1) y = stageH - 1;
 
