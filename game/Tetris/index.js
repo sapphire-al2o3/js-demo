@@ -285,6 +285,15 @@ function checkLine(y) {
     score += lineScores[count];
 }
 
+function checkGameOver() {
+    for (let i = 1; i < stageW - 1; i++) {
+        if (stage[1][i] > 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
 const colors = [
     '#598000',
     '#003000',
@@ -436,6 +445,11 @@ loop((dt) => {
             }
             
             checkLine();
+
+            if (checkGameOver()) {
+                pause = true;
+                console.log('game over');
+            }
             
             blockType = getNextBlock();
             createBlock(blockType);
