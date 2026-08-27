@@ -213,6 +213,7 @@ let frame = 0;
 let pause = false;
 let blockType = getNextBlock();
 let score = 0;
+let lines = 0;
 let lineScores = [
     0, 100, 300, 500, 800
 ];
@@ -282,6 +283,7 @@ function checkLine(y) {
             i++;
         }
     }
+    lines += count;
     score += lineScores[count];
 }
 
@@ -382,6 +384,7 @@ function draw() {
     }
 
     fillNum(score, 144, 10, 1);
+    fillNum(lines, 144, 30, 1);
 }
 
 let speed = 20;
