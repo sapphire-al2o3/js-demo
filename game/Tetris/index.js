@@ -98,9 +98,9 @@ for (let i = 0; i < 4; i++) {
 
 function getNextBlock() {
     if (nextIndex === 0) {
-        createBlock(7);
+        createNextBlocks(7);
     } else if (nextIndex === 7) {
-        createBlock(0);
+        createNextBlocks(0);
     }
 
     nextIndex = (nextIndex + 1) % 14;
