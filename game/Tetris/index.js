@@ -79,11 +79,12 @@ function initStage() {
 }
 
 
-let nextBlock = [];
+let nextBlockType = [];
 let nextIndex = 0;
 
 let block = [];
 let rotBlock = [];
+let nextBlock = [];
 
 for (let i = 0; i < 4; i++) {
     block.push({
@@ -91,6 +92,10 @@ for (let i = 0; i < 4; i++) {
         y: 0
     });
     rotBlock.push({
+        x: 0,
+        y: 0
+    });
+    nextBlock.push({
         x: 0,
         y: 0
     });
@@ -104,25 +109,25 @@ function getNextBlock() {
     }
 
     nextIndex = (nextIndex + 1) % 14;
-    return nextBlock[nextIndex];
+    return nextBlockType[nextIndex];
 }
 
 function createNextBlocks(s) {
     for (let i = 0; i < 7; i++) {
-        nextBlock[i + s] = i;
+        nextBlockType[i + s] = i;
     }
     for (let i = 0; i < 6; i++) {
         let k = Math.random() * i ^ 0;
-        let t = nextBlock[i + s];
-        nextBlock[i + s] = nextBlock[k + s];
-        nextBlock[k + s] = t;
+        let t = nextBlockType[i + s];
+        nextBlockType[i + s] = nextBlockType[k + s];
+        nextBlockType[k + s] = t;
     }
 }
 
 createNextBlocks(0);
 createNextBlocks(7);
 
-function createBlock(t) {
+function createBlock(t, block) {
     if (t === 0) {
         // T
         // 010
@@ -219,7 +224,7 @@ let lineScores = [
 ];
 
 initStage();
-createBlock(blockType);
+createBlock(blockType, block);
 
 function rotateBlock(b, r) {
 
@@ -296,12 +301,6 @@ function checkGameOver() {
     return false;
 }
 
-const colors = [
-    '#598000',
-    '#003000',
-    '#75ac57'
-];
-
 const numPatterns4x6 = [
     0x699996,
     0x622222,
@@ -350,8 +349,31 @@ function fillNum(n, x, y, size) {
     } while (d > 0)
 }
 
+function drawBlock(x, y, index) {
+    const t = nextBlockType[(nextIndex + index) % 14];
+    createBlock(t, nextBlock);
+    for (let i = 0; i < nextBlock.length; i++) {
+        let bx = nextBlock[i].x * blockSize + x;
+        let by = nextBlock[i].y * blockSize + y;
+        ctx.fillRect(bx, by, blockSize, blockSize);
+    }
+}
+
+function drawNextBlock() {
+    drawBlock(130, 80, 1);
+    drawBlock(130, 110, 2);
+
+    ctx.strokeRect(112.5, 68.5, 40, 60);
+}
+
+const colors = [
+    '#598000',
+    '#003000',
+    '#75ac57'
+];
+
 function draw() {
-    ctx.fillStyle = '#598000';
+    ctx.fillStyle = colors[0];
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // ctx.fillStyle = '#75ac57';
@@ -365,7 +387,8 @@ function draw() {
     //     }
     // }
 
-    ctx.fillStyle = '#003000';
+    ctx.fillStyle = colors[1];
+    ctx.strokeStyle = colors[1];
 
     for (let i = 0; i < stageH; i++) {
         for (let j = 0; j < stageW; j++) {
@@ -382,6 +405,8 @@ function draw() {
         let by = (y + block[i].y) * blockSize + offsetY;
         ctx.fillRect(bx, by, blockSize, blockSize);
     }
+
+    drawNextBlock();
 
     fillNum(score, 144, 10, 1);
     fillNum(lines, 144, 30, 1);
@@ -455,7 +480,7 @@ loop((dt) => {
             }
             
             blockType = getNextBlock();
-            createBlock(blockType);
+            createBlock(blockType, block);
             x = 6;
             y = 2;
             
