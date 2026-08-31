@@ -301,19 +301,6 @@ function checkGameOver() {
     return false;
 }
 
-const numPatterns4x6 = [
-    0x699996,
-    0x622222,
-    0x69124F,
-    0xE16196,
-    0x6AAAF2,
-    0xF8E11E,
-    0x68E996,
-    0xF12244,
-    0x696996,
-    0x699716,
-];
-
 const numPatterns5x6 = [
     0x1DBDEF6E,
     0x1C6318C6,
@@ -375,17 +362,6 @@ const colors = [
 function draw() {
     ctx.fillStyle = colors[0];
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // ctx.fillStyle = '#75ac57';
-    // for (let i = 0; i < stageH; i++) {
-    //     for (let j = 0; j < stageW; j++) {
-    //         if (j % 2 === 0) {
-    //             let bx = j * blockSize + offsetX;
-    //             let by = i * blockSize + offsetY;
-    //             ctx.fillRect(bx, by, blockSize, blockSize);
-    //         }
-    //     }
-    // }
 
     ctx.fillStyle = colors[1];
     ctx.strokeStyle = colors[1];
