@@ -316,7 +316,7 @@ const numPatterns5x6 = [
 const numW = 5;
 const numH = 6;
 
-function fillNum(n, x, y, size) {
+function fillNum(n, x, y, size = 1) {
     let d = n;
     let charSize = size * (numW + 1);
     let k = 0;
@@ -336,6 +336,53 @@ function fillNum(n, x, y, size) {
     } while (d > 0)
 }
 
+const charPatterns5x6 = [
+    0x1DBDFF7B,
+    0x3DBF6F7E,
+    0x1DBC636E,
+    0x3DBDEF7E,
+    0x3F8F631F,
+    0x3F8F6318,
+    0x1D8C6F6E,
+    0x37BFEF7B,
+    0x0C6318C6,
+    0x0631EF6E,
+    0x37BF6F7B,
+    0x318C631F,
+    0x23BFFF7B,
+    0x27BFFF79,
+    0x1DBDEF6E,
+    0x3DBDEFD8,
+    0x1DBDFF6F,
+    0x3DBDFB7B,
+    0x1F8E38FE,
+    0x3E6318C6,
+    0x37BDEF6E,
+    0x37BDEDC4,
+    0x37BFFF71,
+    0x37B76F7B,
+    0x37B78CC6,
+    0x3E33331F
+];
+
+function fillText(s, x, y, size = 1) {
+    let charSize = size * 6;
+
+    for (let k = 0; k < s.length; k++) {
+        let d = s[k].charCodeAt(0) - 'A'.charCodeAt(0);
+        let p = charPatterns5x6[d];
+        let b = 0;
+        for (let i = 6 - 1; i >= 0; i--) {
+            for (let j = 5 - 1; j >= 0; j--) {
+                if ((p >> b) & 1) {
+                    ctx.fillRect(j * size + x + charSize * k, i * size + y, size, size);
+                }
+                b++;
+            }
+        }
+    }
+}
+
 function drawBlock(x, y, index) {
     const t = nextBlockType[(nextIndex + index) % 14];
     createBlock(t, nextBlock);
@@ -347,16 +394,20 @@ function drawBlock(x, y, index) {
 }
 
 function drawNextBlock() {
+    fillText('NEXT', 112, 56, 1);
+    
+    ctx.fillStyle = colors[2];
     drawBlock(130, 80, 1);
     drawBlock(130, 110, 2);
 
+    ctx.strokeStyle = colors[2];
     ctx.strokeRect(112.5, 68.5, 40, 60);
 }
 
 const colors = [
     '#598000',
     '#003000',
-    '#75ac57'
+    '#26560a'
 ];
 
 function draw() {
@@ -364,7 +415,7 @@ function draw() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     ctx.fillStyle = colors[1];
-    ctx.strokeStyle = colors[1];
+    
 
     for (let i = 0; i < stageH; i++) {
         for (let j = 0; j < stageW; j++) {
@@ -386,6 +437,11 @@ function draw() {
 
     fillNum(score, 144, 10, 1);
     fillNum(lines, 144, 30, 1);
+
+    if (pause) {
+        ctx.fillStyle = colors[2];
+        fillText('PAUSE', 42, 64);
+    }
 }
 
 let speed = 20;
@@ -403,6 +459,7 @@ loop((dt) => {
 
     if (pause) {
         resetKey();
+        draw();
         return;
     }
 
