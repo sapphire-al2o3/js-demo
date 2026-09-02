@@ -132,8 +132,9 @@ function createBlock(t, block) {
         // T
         // 010
         // 111
+        // 000
         block[0].x = 0;
-        block[0].y = 1;
+        block[0].y = -1;
         block[1].x = -1;
         block[1].y = 0;
         block[2].x = 0;
@@ -145,25 +146,25 @@ function createBlock(t, block) {
         // 011
         // 110
         block[0].x = 0;
-        block[0].y = -1;
+        block[0].y = 0;
         block[1].x = -1;
-        block[1].y = 0;
+        block[1].y = -1;
         block[2].x = 0;
-        block[2].y = 0;
+        block[2].y = -1;
         block[3].x = 1;
-        block[3].y = -1;
+        block[3].y = 0;
     } else if (t === 2) {
         // Z
         // 110
         // 011
         block[0].x = 0;
-        block[0].y = -1;
+        block[0].y = 0;
         block[1].x = -1;
-        block[1].y = -1;
+        block[1].y = 0;
         block[2].x = 0;
-        block[2].y = 0;
+        block[2].y = -1;
         block[3].x = 1;
-        block[3].y = 0;
+        block[3].y = -1;
     } else if (t === 3) {
         // O
         // 110
@@ -185,7 +186,7 @@ function createBlock(t, block) {
         block[1].x = -1;
         block[1].y = 0;
         block[2].x = -1;
-        block[2].y = 1;
+        block[2].y = -1;
         block[3].x = 1;
         block[3].y = 0;
     } else if (t === 5) {
@@ -197,7 +198,7 @@ function createBlock(t, block) {
         block[1].x = -1;
         block[1].y = 0;
         block[2].x = 1;
-        block[2].y = 1;
+        block[2].y = -1;
         block[3].x = 1;
         block[3].y = 0;
     } else if (t === 6) {
