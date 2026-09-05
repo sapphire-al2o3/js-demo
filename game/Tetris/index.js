@@ -217,6 +217,7 @@ function createBlock(t, block) {
 
 let frame = 0;
 let pause = false;
+let gameover = false;
 let blockType = getNextBlock();
 let score = 0;
 let lines = 0;
@@ -439,6 +440,11 @@ function draw() {
     fillNum(score, 144, 10, 1);
     fillNum(lines, 144, 30, 1);
 
+    if (gameover) {
+        ctx.fillStyle = colors[2];
+        fillText('GAME OVER', 32, 64);
+    }
+
     if (pause) {
         ctx.fillStyle = colors[2];
         fillText('PAUSE', 42, 64);
@@ -453,6 +459,20 @@ loop((dt) => {
     let dx = keyState['ArrowRight'] - keyState['ArrowLeft'];
     let up = keyState['ArrowUp'];
     let down = keyState['ArrowDown'];
+
+    if (gameover) {
+        if (keyState['Enter']) {
+            initStage();
+            createNextBlocks(0);
+            createNextBlocks(7);
+            score = 0;
+            lines = 0;
+            gameover = false;
+        }
+        resetKey();
+        draw();
+        return;
+    }
 
     if (keyState['Enter']) {
         pause = !pause;
@@ -509,7 +529,7 @@ loop((dt) => {
             checkLine();
 
             if (checkGameOver()) {
-                pause = true;
+                gameover = true;
                 console.log('game over');
             }
             
