@@ -3,7 +3,6 @@ function sin(x) {
     return Math.sin(x);
 }
 
-// チェビシェフ多項式近似
 function sin2(x) {
     let u = x / (2 * Math.PI);
     let t = u - Math.round(u);
@@ -39,8 +38,6 @@ let plot = [true, true];
 let colors = [
     'rgba(50,50,50,0.5)',
     'rgba(0,100,0,0.5)',
-    'rgba(90,0,0,0.5)',
-    'rgba(0,0,100,0.5)'
 ];
 let func = [
     sin,
