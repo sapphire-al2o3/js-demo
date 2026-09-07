@@ -403,7 +403,7 @@ function drawNextBlock() {
     drawBlock(130, 110, 2);
 
     ctx.strokeStyle = colors[2];
-    ctx.strokeRect(112.5, 68.5, 40, 60);
+    ctx.strokeRect(112.5, 68.5, 40, 54);
 }
 
 const colors = [
@@ -437,8 +437,12 @@ function draw() {
 
     drawNextBlock();
 
-    fillNum(score, 144, 10, 1);
-    fillNum(lines, 144, 30, 1);
+    ctx.fillStyle = colors[1];
+    fillText('SCORE', 112, 4);
+    fillText('LINES', 112, 24);
+    ctx.fillStyle = colors[2];
+    fillNum(score, 144, 12, 1);
+    fillNum(lines, 144, 32, 1);
 
     if (gameover) {
         ctx.fillStyle = colors[2];
