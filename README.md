@@ -207,3 +207,4 @@ https://sapphire-al2o3.github.io/js-demo/
 - [ピクロス](https://sapphire-al2o3.github.io/js-demo/game/Nonogram/)
 - [マインスイーパー](https://sapphire-al2o3.github.io/js-demo/game/Minesweeper/)
 - [マインスイーパー3](https://sapphire-al2o3.github.io/js-demo/game/Minesweeper3/)
+- [テトリス](https://sapphire-al2o3.github.io/js-demo/game/Tetris/)
