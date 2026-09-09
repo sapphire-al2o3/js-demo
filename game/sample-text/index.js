@@ -153,7 +153,11 @@ loop((dt) => {
 
     let mtime = Date.now() - start;
 
-    fillText('TIME', 60, 30, 2);
-    fillNum(mtime, 100, 60, 2);
+    fillText('ABCDEFGHIJKL', 10, 10, 2);
+    fillText('MNOPQRSTUVWX', 10, 24, 2);
+    fillText('YZ', 10, 38, 2);
+
+    fillText('TIME', 60, 50, 2);
+    fillNum(mtime, 100, 70, 2);
 
 }, 1000 / 30);
