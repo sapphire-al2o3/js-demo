@@ -57,6 +57,9 @@ function renderBG(map, sx, size) {
 
 function render() {
     ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#CCC';
+    // ctx.fillRect(0, 0, W, H);
+    renderBG(map[0], 0, 8);
     // far
     ctx.fillStyle = '#777';
     renderBG(map[0], sx[0], size[0]);
