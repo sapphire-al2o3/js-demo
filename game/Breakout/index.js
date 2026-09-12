@@ -50,8 +50,9 @@ function resetKey() {
 
 const W = canvas.width;
 const H = canvas.height;
+const T = 8;
 
-const padW = 16;
+const padW = 24;
 let x = 80;
 let y = 120;
 
@@ -63,11 +64,16 @@ const offsetX = 8;
 const offsetY = -24;
 
 const ball = {
-    x: 0,
-    y: 0,
+    x: 20,
+    y: 20,
     vx: 2,
     vy: 2
-}
+};
+
+const pad = {
+    x: 80,
+    y: 120
+};
 
 let stage = [];
 
@@ -181,9 +187,12 @@ function draw() {
     ctx.fillStyle = colors[0];
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    ctx.fillStyle = colors[2];
+    ctx.fillRect(0, 0, W, T);
+
     ctx.fillStyle = colors[1];
     
-    ctx.fillRect(x - padW / 2, y, padW, 4);
+    ctx.fillRect(pad.x - padW / 2, pad.y, padW, 4);
 
     drawBall();
     // ctx.fillRect(ball.x, ball.y, 2, 2);
@@ -197,6 +206,49 @@ function draw() {
 let speed = 20;
 let fallCount = 0;
 let vx = 4;
+
+function segToSeg(p0, v0, p1, v1) {
+    let c0 = (p1.x - p0.x) * v0.y - (p1.y - p0.y) * v0.x,
+        c1 = (p1.x + v1.x - p0.x) * v0.y - (p1.y + v1.y - p0.y) * v0.x,
+        c2 = (p0.x - p1.x) * v1.y - (p0.y - p1.y) * v1.x,
+        c3 = (p0.x + v0.x - p1.x) * v1.y - (p0.y + v0.y - p1.y) * v1.x;
+    return c0 * c1 < 0 && c2 * c3 < 0;
+}
+
+function interSeg(p0, v0, p1, v1) {
+    let d = v0.x * v1.y - v0.y * v1.x;
+    if (d === 0) {
+        return -1;
+    }
+
+    d = 1 / d;
+
+    return (v1.y * (p1.x - p0.x) - v1.x * (p1.y - p0.y)) * d;
+}
+
+function hitPad() {
+    let p0 = {
+        x: pad.x - padW / 2,
+        y: pad.y
+    };
+    let v0 = {
+        x: padW,
+        y: 0
+    };
+    let p1 = {
+        x: ball.x,
+        y: ball.y
+    };
+    let v1 = {
+        x: ball.vx,
+        y: ball.vy
+    };
+
+    let t0 = interSeg(p0, v0, p1, v1),
+        t1 = interSeg(p1, v1, p0, v0);
+
+    return t0 <= 1.0 && t0 >= 0 && t1 <= 1.0 && t1 >= 0;
+}
 
 loop((dt) => {
 
@@ -213,23 +265,30 @@ loop((dt) => {
         return;
     }
 
+    let px = ball.x;
+    let py = ball.y;
+
+    if (hitPad()) {
+        ball.vy *= -1;
+    }
+
     ball.x += ball.vx;
     ball.y += ball.vy;
 
     if (ball.x < 0 || ball.x >= W) {
         ball.vx *= -1;
     }
-    if (ball.y < 0 || ball.y >= H) {
+    if (ball.y < T || ball.y >= H) {
         ball.vy *= -1;
     }
 
-    x += dx * vx;
+    pad.x += dx * vx;
     // y += keyY * 4;
 
 
-    if (x <= padW / 2) x = padW / 2;
-    if (x >= W - padW / 2) x = W - padW / 2;
-    if (y >= H - 1) y = H - 1;
+    if (pad.x <= padW / 2) pad.x = padW / 2;
+    if (pad.x >= W - padW / 2) pad.x = W - padW / 2;
+    if (pad.y >= H - 1) pad.y = H - 1;
 
     draw();
 
