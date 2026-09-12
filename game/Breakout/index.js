@@ -265,7 +265,7 @@ loop((dt) => {
         return;
     }
 
-    resetKey();
+    keyState['Enter'] = 0;
 
     let px = ball.x;
     let py = ball.y;
