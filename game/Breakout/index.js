@@ -199,7 +199,7 @@ function draw() {
 
     if (pause) {
         ctx.fillStyle = colors[2];
-        fillText('PAUSE', 42, 64);
+        fillText('PAUSE', 64, 64);
     }
 }
 
@@ -264,6 +264,8 @@ loop((dt) => {
         draw();
         return;
     }
+
+    resetKey();
 
     let px = ball.x;
     let py = ball.y;
