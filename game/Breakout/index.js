@@ -50,7 +50,7 @@ function resetKey() {
 
 const W = canvas.width;
 const H = canvas.height;
-const T = 8;
+const T = 16;
 
 const padW = 24;
 let x = 80;
@@ -72,7 +72,7 @@ const ball = {
 
 const pad = {
     x: 80,
-    y: 120
+    y: 128
 };
 
 let stage = [];
@@ -226,6 +226,14 @@ function interSeg(p0, v0, p1, v1) {
     return (v1.y * (p1.x - p0.x) - v1.x * (p1.y - p0.y)) * d;
 }
 
+function seg2Point(p, v, t) {
+    return { x: p.x + v.x * t, y: p.y + v.y * t };
+}
+
+function normalize(x, y) {
+    return Math.sqrt(x * x + y * y);
+}
+
 function hitPad() {
     let p0 = {
         x: pad.x - padW / 2,
@@ -271,7 +279,12 @@ loop((dt) => {
     let py = ball.y;
 
     if (hitPad()) {
+        // let v = noarmaize(ball.vx, ball.vy);
         ball.vy *= -1;
+        // ball.vx += dx;
+        // let l = noarmaize(ball.vx, ball.vy);
+        // ball.vy = ball.vy / l * v;
+        // ball.vx = ball.vx / l * v;
     }
 
     ball.x += ball.vx;
@@ -281,7 +294,14 @@ loop((dt) => {
         ball.vx *= -1;
     }
     if (ball.y < T || ball.y >= H) {
+        if (ball.y < T) {
+            const t = (T - py) / ball.vy;
+            const x = px + ball.vx * t;
+            ball.x = x;
+            ball.y = T;
+        }
         ball.vy *= -1;
+
     }
 
     pad.x += dx * vx;
