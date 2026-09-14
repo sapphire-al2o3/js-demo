@@ -76,8 +76,18 @@ const pad = {
 };
 
 let stage = [];
+let block = [];
+
 
 function initStage() {
+    for (let i = 0; i < 8; i++) {
+        block.push({
+            x: i * 16,
+            y: 20,
+            w: 16,
+            h: 8
+        });
+    }
 }
 
 
@@ -183,6 +193,17 @@ function drawBall() {
     ctx.fill();
 }
 
+function drawBlock() {
+    ctx.fillStyle = colors[1];
+    for (let i = 0; i < block.length; i++) {
+        ctx.fillRect(block[i].x, block[i].y, block[i].w, block[i].h);
+    }
+    ctx.fillStyle = colors[2];
+    for (let i = 0; i < block.length; i++) {
+        ctx.fillRect(block[i].x, block[i].y, block[i].w - 1, block[i].h - 1);
+    }
+}
+
 function draw() {
     ctx.fillStyle = colors[0];
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -194,8 +215,12 @@ function draw() {
     
     ctx.fillRect(pad.x - padW / 2, pad.y, padW, 4);
 
+    drawBlock();
+
     drawBall();
     // ctx.fillRect(ball.x, ball.y, 2, 2);
+
+    
 
     if (pause) {
         ctx.fillStyle = colors[2];
@@ -206,6 +231,8 @@ function draw() {
 let speed = 20;
 let fallCount = 0;
 let vx = 4;
+
+initStage();
 
 function segToSeg(p0, v0, p1, v1) {
     let c0 = (p1.x - p0.x) * v0.y - (p1.y - p0.y) * v0.x,
