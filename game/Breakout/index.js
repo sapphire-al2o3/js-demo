@@ -50,7 +50,7 @@ function resetKey() {
 
 const W = canvas.width;
 const H = canvas.height;
-const T = 16;
+const T = 8;
 
 const padW = 24;
 let x = 80;
@@ -67,7 +67,7 @@ const ball = {
     x: 20,
     y: 20,
     vx: 2,
-    vy: 2
+    vy: -2
 };
 
 const pad = {
@@ -80,13 +80,15 @@ let block = [];
 
 
 function initStage() {
-    for (let i = 0; i < 8; i++) {
-        block.push({
-            x: i * 16,
-            y: 20,
-            w: 16,
-            h: 8
-        });
+    for (let j = 0; j < 8; j++) {
+        for (let i = 0; i < 8; i++) {
+            block.push({
+                x: i * 16 + 16,
+                y: j * 8 + 24,
+                w: 16,
+                h: 8
+            });
+        }
     }
 }
 
@@ -223,6 +225,8 @@ function draw() {
     
 
     if (pause) {
+        ctx.fillStyle = colors[0];
+        ctx.fillRect(62, 62, 34, 10);
         ctx.fillStyle = colors[2];
         fillText('PAUSE', 64, 64);
     }
@@ -231,6 +235,7 @@ function draw() {
 let speed = 20;
 let fallCount = 0;
 let vx = 4;
+let phase = 0;
 
 initStage();
 
@@ -290,8 +295,13 @@ loop((dt) => {
     let dx = keyState['ArrowRight'] - keyState['ArrowLeft'];
     let dy = keyState['ArrowUp'] - keyState['ArrowDown'];
 
-    if (keyState['Enter']) {
+    if (keyState['Enter'] > 0) {
         pause = !pause;
+    }
+
+    if (keyState['Space'] > 0) {
+        phase = 1;
+        resetKey();
     }
 
     if (pause) {
@@ -314,30 +324,39 @@ loop((dt) => {
         // ball.vx = ball.vx / l * v;
     }
 
-    ball.x += ball.vx;
-    ball.y += ball.vy;
-
-    if (ball.x < 0 || ball.x >= W) {
-        ball.vx *= -1;
-    }
-    if (ball.y < T || ball.y >= H) {
-        if (ball.y < T) {
-            const t = (T - py) / ball.vy;
-            const x = px + ball.vx * t;
-            ball.x = x;
-            ball.y = T;
-        }
-        ball.vy *= -1;
-
-    }
-
     pad.x += dx * vx;
-    // y += keyY * 4;
-
 
     if (pad.x <= padW / 2) pad.x = padW / 2;
     if (pad.x >= W - padW / 2) pad.x = W - padW / 2;
     if (pad.y >= H - 1) pad.y = H - 1;
+
+    if (phase === 0) {
+        ball.x = pad.x;
+        ball.y = pad.y - 4;
+    } else {
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+
+        if (ball.x < 0 || ball.x >= W) {
+            ball.vx *= -1;
+        }
+        if (ball.y < T || ball.y >= H) {
+            if (ball.y < T) {
+                const t = (T - py) / ball.vy;
+                const x = px + ball.vx * t;
+                ball.x = x;
+                ball.y = T;
+            }
+            ball.vy *= -1;
+
+        }
+    }
+
+    
+    // y += keyY * 4;
+
+
+
 
     draw();
 
