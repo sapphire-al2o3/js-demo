@@ -1,5 +1,5 @@
 // 矩形同士の当たり判定
-function rectToRect(r0, r1, p) {
+function rectToRect(r0, r1) {
     if(r0.min.x > r1.max.x) return false;
     if(r0.min.y > r1.max.y) return false;
     if(r1.min.x > r0.max.x) return false;
@@ -15,14 +15,14 @@ let canvas = document.getElementById('canvas'),
     start = new Vector2(0, 0),
     down = false;
 
-canvas.onmousedown = function(e) {
+canvas.onmousedown = (e) => {
     down = true;
     var rect = e.target.getBoundingClientRect();
     start.x = e.clientX - rect.left;
     start.y = e.clientY - rect.top;
 };
 
-canvas.onmousemove = function(e) {
+canvas.onmousemove = (e) => {
     if(down) {
         var rect = e.target.getBoundingClientRect();
         mouse.x = e.clientX - rect.left;
@@ -31,15 +31,15 @@ canvas.onmousemove = function(e) {
     }
 };
 
-canvas.onmouseup = function(e) {
+canvas.onmouseup = (e) => {
     down = false;
 };
 
-var rect = {};
+const rect = {};
 rect.min = new Vector2(150, 150);
 rect.max = new Vector2(250, 250);
 
-var rect1 = {};
+const rect1 = {};
 rect1.min = new Vector2(0, 0);
 rect1.max = new Vector2(100, 100);
 
