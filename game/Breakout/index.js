@@ -222,7 +222,17 @@ function draw() {
     drawBall();
     // ctx.fillRect(ball.x, ball.y, 2, 2);
 
-    
+    if (phase === 0) {
+        let a = (startAngle + 1) * Math.PI / 5 + Math.PI * 0.5;
+        let sx = pad.x + Math.sin(a) * 8;
+        let sy = pad.y + Math.cos(a) * 8 - 4;
+        ctx.fillStyle = colors[1];
+        // ctx.beginPath();
+        // ctx.moveTo(pad.x + 0.5, pad.y - 4 + 0.5);
+        // ctx.lineTo(sx + 0.5, sy + 0.5);
+        // ctx.stroke();
+        ctx.fillRect(sx, sy, 1, 1);
+    }
 
     if (pause) {
         ctx.fillStyle = colors[0];
@@ -236,6 +246,7 @@ let speed = 20;
 let fallCount = 0;
 let vx = 4;
 let phase = 0;
+let startAngle = 0;
 
 initStage();
 
@@ -333,6 +344,12 @@ loop((dt) => {
     if (phase === 0) {
         ball.x = pad.x;
         ball.y = pad.y - 4;
+
+        frame++;
+        if (frame > 12) {
+            frame = 0;
+            startAngle = (startAngle + 1) % 4;
+        }
     } else {
         ball.x += ball.vx;
         ball.y += ball.vy;
@@ -354,8 +371,6 @@ loop((dt) => {
 
     
     // y += keyY * 4;
-
-
 
 
     draw();
