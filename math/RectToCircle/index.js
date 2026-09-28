@@ -17,6 +17,10 @@ function rectToPoint(r, x, y) {
     return x > r.min.x && x < r.max.x && y > r.min.y && y < r.max.y;
 }
 
+function segToPoint(x, y, c) {
+
+}
+
 function rectToCircle(r, c) {
     // if (c.x + c.radius < r.min.x) return false;
     // if (c.x - c.radius > r.max.x) return false;
@@ -74,9 +78,6 @@ circle.x = 200;
 circle.y = 200;
 circle.radius = 50;
 
-const rect = {};
-rect.min = new Vector2(150, 150);
-rect.max = new Vector2(250, 250);
 
 const rect1 = {};
 rect1.min = new Vector2(0, 0);
