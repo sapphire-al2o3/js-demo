@@ -17,8 +17,22 @@ function rectToPoint(r, x, y) {
     return x > r.min.x && x < r.max.x && y > r.min.y && y < r.max.y;
 }
 
-function segToPoint(x, y, c) {
-
+function segToPoint(x0, y0, x1, y1, c) {
+    let dx = x1 - x0;
+    let dy = y1 - y0;
+    let cx = x0 - c.x;
+    let cy = y0 - c.y;
+    let d = dx * dx + dy * dy;
+    let t = -(dx * cx + dy * cy);
+    let r2 = c.radius * c.radius;
+    if (t <= 0) {
+        return dist2(c.x, c.y, x0, y0) < r2;
+    }
+    if (t >= d) {
+        return dist2(c.x, c.y, x1, y1) < r2;
+    }
+    let f = dx * cy - dy * cx;
+    return f * f / d < r2;
 }
 
 function rectToCircle(r, c) {
@@ -26,6 +40,13 @@ function rectToCircle(r, c) {
     // if (c.x - c.radius > r.max.x) return false;
     // if (c.y + c.radius < r.min.y) return false;
     // if (c.y - c.radius > r.max.y) return false;
+
+    if (segToPoint(r.min.x, r.min.y, r.max.x, r.min.y, c)) return true;
+    if (segToPoint(r.min.x, r.min.y, r.min.x, r.max.y, c)) return true;
+    if (segToPoint(r.max.x, r.max.y, r.min.x, r.max.y, c)) return true;
+    if (segToPoint(r.max.x, r.max.y, r.max.x, r.min.y, c)) return true;
+    if (c.x > r.min.x && c.x < r.max.x && c.y > r.min.y && c.y < r.max.y) return true;
+    return false;
 
     let p = 0;
     if (rectToPoint(r, c.x - c.radius, c.y - c.radius)) p++;
