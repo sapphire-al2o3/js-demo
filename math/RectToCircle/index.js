@@ -35,8 +35,28 @@ function segToCircle(x0, y0, x1, y1, c) {
     return f * f / d < r2;
 }
 
-function PointToSegX() {
+function circleToSegX(c, x0, x1, y) {
+    let r2 = c.radius * c.radius;
+    if (x0 > c.x) {
+        return dist2(c.x, c.y, x0, y) < r2;
+    }
+    if (x1 < c.x) {
+        return dist2(c.x, c.y, x1, y) < r2;
+    }
+    let dy = c.y - y;
+    return dy * dy < r2;
+}
 
+function circleToSegY(c, x, y0, y1) {
+    let r2 = c.radius * c.radius;
+    if (y0 > c.y) {
+        return dist2(c.x, c.y, x, y0) < r2;
+    }
+    if (y1 < c.y) {
+        return dist2(c.x, c.y, x, y1) < r2;
+    }
+    let dx = c.x - x;
+    return dx * dx < r2;
 }
 
 function rectToCircle(r, c) {
@@ -45,10 +65,16 @@ function rectToCircle(r, c) {
     // if (c.y + c.radius < r.min.y) return false;
     // if (c.y - c.radius > r.max.y) return false;
 
-    if (segToCircle(r.min.x, r.min.y, r.max.x, r.min.y, c)) return true;
-    if (segToCircle(r.min.x, r.min.y, r.min.x, r.max.y, c)) return true;
-    if (segToCircle(r.max.x, r.max.y, r.min.x, r.max.y, c)) return true;
-    if (segToCircle(r.max.x, r.max.y, r.max.x, r.min.y, c)) return true;
+    // if (segToCircle(r.min.x, r.min.y, r.max.x, r.min.y, c)) return true;
+    // if (segToCircle(r.min.x, r.min.y, r.min.x, r.max.y, c)) return true;
+    // if (segToCircle(r.max.x, r.max.y, r.min.x, r.max.y, c)) return true;
+    // if (segToCircle(r.max.x, r.max.y, r.max.x, r.min.y, c)) return true;
+
+    if (circleToSegX(c, r.min.x, r.max.x, r.min.y)) return true;
+    if (circleToSegX(c, r.min.x, r.max.x, r.max.y)) return true;
+    if (circleToSegY(c, r.min.x, r.min.y, r.max.y)) return true;
+    if (circleToSegY(c, r.max.x, r.min.y, r.max.y)) return true;
+
     if (c.x > r.min.x && c.x < r.max.x && c.y > r.min.y && c.y < r.max.y) return true;
     return false;
 
