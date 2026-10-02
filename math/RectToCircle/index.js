@@ -70,6 +70,12 @@ function rectToCircle(r, c) {
     // if (segToCircle(r.max.x, r.max.y, r.min.x, r.max.y, c)) return true;
     // if (segToCircle(r.max.x, r.max.y, r.max.x, r.min.y, c)) return true;
 
+    let nx = Math.max(r.min.x, Math.min(c.x, r.max.x));
+    let ny = Math.max(r.min.y, Math.min(c.y, r.max.y));
+    let dx = c.x - nx;
+    let dy = c.y - ny;
+    return dx * dx + dy * dy <= c.radius * c.radius;
+
     if (circleToSegX(c, r.min.x, r.max.x, r.min.y)) return true;
     if (circleToSegX(c, r.min.x, r.max.x, r.max.y)) return true;
     if (circleToSegY(c, r.min.x, r.min.y, r.max.y)) return true;
@@ -163,6 +169,14 @@ function render() {
         } else {
             ctx.strokeStyle = '#FFF';
         }
+
+        let nx = Math.max(rect1.min.x, Math.min(circle.x, rect1.max.x));
+        let ny = Math.max(rect1.min.y, Math.min(circle.y, rect1.max.y));
+        ctx.fillStyle = '#FFF'
+        ctx.beginPath();
+        ctx.arc(nx, ny, 2, 0, Math.PI * 2);
+        ctx.fill();
+
     }
     // ctx.strokeRect(rect.min.x, rect.min.y, rect.max.x - rect.min.x, rect.max.y - rect.min.y);
     ctx.beginPath();
