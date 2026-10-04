@@ -1,7 +1,7 @@
 // 線分または半直線と矩形との当たり判定
 function segToRect(s, r, p) {
     // 各辺と線との当たり判定をとる
-    for(var i = 0; i < 4; i++) {
+    for(let i = 0; i < 4; i++) {
         if(p(r.e[i], s)) {
             return true;
         }
@@ -11,22 +11,22 @@ function segToRect(s, r, p) {
 
 // 線分と線分の当たり判定
 function segToSeg(a, b) {
-    var v0 = a.end.sub(a.start),
-	c0 = b.start.sub(a.start).cross(v0),
-	c1 = b.end.sub(a.start).cross(v0),
-	v1 = b.end.sub(b.start),
-	c2 = a.start.sub(b.start).cross(v1),
-	c3 = a.end.sub(b.start).cross(v1);
+    const v0 = a.end.sub(a.start),
+    c0 = b.start.sub(a.start).cross(v0),
+    c1 = b.end.sub(a.start).cross(v0),
+    v1 = b.end.sub(b.start),
+    c2 = a.start.sub(b.start).cross(v1),
+    c3 = a.end.sub(b.start).cross(v1);
     return c0 * c1 < 0 && c2 * c3 < 0;
 }
 
 // 線分と半直線(レイ)の当たり判定
 function segToRay(a, b) {
-    var v = b.end.sub(b.start),
-	c0 = a.start.sub(b.start).cross(v),
-	c1 = a.end.sub(b.start).cross(v),
-	c2 = a.start.sub(b.start).dot(v),
-	c3 = a.end.sub(b.start).dot(v);
+    const v = b.end.sub(b.start),
+    c0 = a.start.sub(b.start).cross(v),
+    c1 = a.end.sub(b.start).cross(v),
+    c2 = a.start.sub(b.start).dot(v),
+    c3 = a.end.sub(b.start).dot(v);
     return c0 * c1 < 0 && (c2 >= 0 || c3 >= 0); 
 }
 
@@ -59,10 +59,10 @@ canvas.onmousedown = function(e) {
 
 canvas.onmousemove = function(e) {
     if(down) {
-	var rect = e.target.getBoundingClientRect();
-	mouse.x = e.clientX - rect.left;
-	mouse.y = e.clientY - rect.top;
-	render();
+        const rect = e.target.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+        render();
     }
 };
 
@@ -70,13 +70,13 @@ canvas.onmouseup = function(e) {
     down = false;
 };
 
-var Ray = function(x0, y0, x1, y1) {
+const Ray = function(x0, y0, x1, y1) {
     this.start = new Vector2(x0, y0);
     this.end = new Vector2(x1, y1);
 };
 
-var ray = new Ray(100, 100, 200, 200);
-var rect = {};
+let ray = new Ray(100, 100, 200, 200);
+let rect = {};
 rect.pos = new Vector2(150, 150);
 rect.size = new Vector2(100, 100);
 rect.e = [];
