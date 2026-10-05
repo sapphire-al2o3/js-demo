@@ -1,3 +1,8 @@
+
+function rectToPoint(p, r) {
+    return p.x > r.pos.x && p.x < r.pos.x + r.size.x && p.y > r.pos.y && p.y < r.pos.y + r.size.y;
+}
+
 // 線分または半直線と矩形との当たり判定
 function segToRect(s, r, p) {
     // 各辺と線との当たり判定をとる
@@ -6,6 +11,8 @@ function segToRect(s, r, p) {
             return true;
         }
     }
+    if (rectToPoint(s.start, r)) return true;
+    if (rectToPoint(s.end, r)) return true;
     return false;
 }
 
@@ -31,7 +38,7 @@ function segToRay(a, b) {
 }
 
 
-var canvas = document.getElementById('canvas'),
+let canvas = document.getElementById('canvas'),
     ctx = canvas.getContext('2d'),
     w = canvas.width,
     h = canvas.height,
