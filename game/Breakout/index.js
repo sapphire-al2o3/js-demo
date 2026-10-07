@@ -323,18 +323,6 @@ loop((dt) => {
 
     keyState['Enter'] = 0;
 
-    let px = ball.x;
-    let py = ball.y;
-
-    if (hitPad()) {
-        // let v = noarmaize(ball.vx, ball.vy);
-        ball.vy *= -1;
-        // ball.vx += dx;
-        // let l = noarmaize(ball.vx, ball.vy);
-        // ball.vy = ball.vy / l * v;
-        // ball.vx = ball.vx / l * v;
-    }
-
     pad.x += dx * vx;
 
     if (pad.x <= padW / 2) pad.x = padW / 2;
@@ -351,8 +339,21 @@ loop((dt) => {
             startAngle = (startAngle + 1) % 4;
         }
     } else {
+
+        let px = ball.x;
+        let py = ball.y;
+
         ball.x += ball.vx;
         ball.y += ball.vy;
+
+        if (hitPad()) {
+            // let v = noarmaize(ball.vx, ball.vy);
+            ball.vy *= -1;
+            // ball.vx += dx;
+            // let l = noarmaize(ball.vx, ball.vy);
+            // ball.vy = ball.vy / l * v;
+            // ball.vx = ball.vx / l * v;
+        }
 
         if (ball.x < 0 || ball.x >= W) {
             ball.vx *= -1;
