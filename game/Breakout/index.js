@@ -86,7 +86,8 @@ function initStage() {
                 x: i * 16 + 16,
                 y: j * 8 + 24,
                 w: 16,
-                h: 8
+                h: 8,
+                s: 1
             });
         }
     }
@@ -198,11 +199,15 @@ function drawBall() {
 function drawBlock() {
     ctx.fillStyle = colors[1];
     for (let i = 0; i < block.length; i++) {
-        ctx.fillRect(block[i].x, block[i].y, block[i].w, block[i].h);
+        if (block[i].s > 0) {
+            ctx.fillRect(block[i].x, block[i].y, block[i].w, block[i].h);
+        }
     }
     ctx.fillStyle = colors[2];
     for (let i = 0; i < block.length; i++) {
-        ctx.fillRect(block[i].x, block[i].y, block[i].w - 1, block[i].h - 1);
+        if (block[i].s > 0) {
+            ctx.fillRect(block[i].x, block[i].y, block[i].w - 1, block[i].h - 1);
+        }
     }
 }
 
@@ -301,6 +306,60 @@ function hitPad() {
     return t0 <= 1.0 && t0 >= 0 && t1 <= 1.0 && t1 >= 0;
 }
 
+function hitBlock() {
+    let p = {
+        x: ball.x,
+        y: ball.y
+    };
+    let v = {
+        x: ball.vx,
+        y: ball.vy
+    };
+    let hit = false;
+    for (let i = 0; i < block.length; i++) {
+        if (block[i].s > 0) {
+            
+
+            if (ball.vx > 0) {
+                let p1 = { x: block[i].x, y: block[i].y };
+                let v1 = { x: 0, y: block[i].height };
+                if (segToSeg(p, v, p1, v1)) {
+                    hit = true;
+                    ball.vx *= -1;
+                    break;
+                }
+            } else if (ball.vx < 0) {
+                let p1 = { x: block[i].x + block[i].width, y: block[i].y };
+                let v1 = { x: 0, y: block[i].height };
+                if (segToSeg(p, v, p1, v1)) {
+                    hit = true;
+                    ball.vx *= -1;
+                    break;
+                }
+            } else if (ball.vy > 0) {
+                let p1 = { x: block[i].x, y: block[i].y };
+                let v1 = { x: block[i].width, y: 0 };
+                if (segToSeg(p, v, p1, v1)) {
+                    hit = true;
+                    ball.vy *= -1;
+                    break;
+                }
+            } else if (ball.vy < 0) {
+                let p1 = { x: block[i].x, y: block[i].y + block[i].height };
+                let v1 = { x: block[i].width, y: 0 };
+                if (segToSeg(p, v, p1, v1)) {
+                    hit = true;
+                    ball.vy *= -1;
+                    break;
+                }
+            }
+        }
+    }
+    if (hit) {
+        block[i].s--;
+    }
+}
+
 loop((dt) => {
 
     let dx = keyState['ArrowRight'] - keyState['ArrowLeft'];
@@ -355,6 +414,8 @@ loop((dt) => {
             // ball.vx = ball.vx / l * v;
         }
 
+        hitBlock();
+
         if (ball.x < 0 || ball.x >= W) {
             ball.vx *= -1;
         }
@@ -366,7 +427,6 @@ loop((dt) => {
                 ball.y = T;
             }
             ball.vy *= -1;
-
         }
     }
 
