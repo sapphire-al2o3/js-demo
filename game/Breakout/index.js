@@ -255,11 +255,22 @@ let startAngle = 0;
 
 initStage();
 
+function cross(x0, y0, x1, y1) {
+    return x0 * y1 - x1 * y0;
+}
+
 function segToSeg(p0, v0, p1, v1) {
     let c0 = (p1.x - p0.x) * v0.y - (p1.y - p0.y) * v0.x,
         c1 = (p1.x + v1.x - p0.x) * v0.y - (p1.y + v1.y - p0.y) * v0.x,
         c2 = (p0.x - p1.x) * v1.y - (p0.y - p1.y) * v1.x,
         c3 = (p0.x + v0.x - p1.x) * v1.y - (p0.y + v0.y - p1.y) * v1.x;
+    
+    let c4 = cross(p1.x - p0.x, p1.y - p0.y, v0.x, v0.y);
+    let c5 = cross(p1.x + v1.x - p0.x, p1.y + v1.y + p0.y, v0.x, v0.y);
+    let c6 = cross(p0.x - p1.x, p0.y - p1.y, v1.x, v1.y);
+    let c7 = cross(p0.x + v0.x - p0.x, p0.y + v0.y + p0.y, v1.x, v1.y);
+    return c4 * c5 < 0 && c6 * c7 < 0;
+
     return c0 * c1 < 0 && c2 * c3 < 0;
 }
 
@@ -302,14 +313,14 @@ function hitPad() {
 
     let t0 = interSeg(p0, v0, p1, v1),
         t1 = interSeg(p1, v1, p0, v0);
-
+    
     return t0 <= 1.0 && t0 >= 0 && t1 <= 1.0 && t1 >= 0;
 }
 
-function hitBlock() {
+function hitBlock(px, py) {
     let p = {
-        x: ball.x,
-        y: ball.y
+        x: px,
+        y: py
     };
     let v = {
         x: ball.vx,
@@ -336,7 +347,9 @@ function hitBlock() {
                     ball.vx *= -1;
                     break;
                 }
-            } else if (ball.vy > 0) {
+            }
+            
+            if (ball.vy > 0) {
                 let p1 = { x: block[i].x, y: block[i].y };
                 let v1 = { x: block[i].width, y: 0 };
                 if (segToSeg(p, v, p1, v1)) {
@@ -414,7 +427,7 @@ loop((dt) => {
             // ball.vx = ball.vx / l * v;
         }
 
-        hitBlock();
+        hitBlock(px, py);
 
         if (ball.x < 0 || ball.x >= W) {
             ball.vx *= -1;
