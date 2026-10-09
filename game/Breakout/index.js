@@ -333,17 +333,17 @@ function hitBlock(px, py) {
 
             if (ball.vx > 0) {
                 let p1 = { x: block[i].x, y: block[i].y };
-                let v1 = { x: 0, y: block[i].height };
+                let v1 = { x: 0, y: block[i].h };
                 if (segToSeg(p, v, p1, v1)) {
-                    hit = true;
+                    block[i].s--;
                     ball.vx *= -1;
                     break;
                 }
             } else if (ball.vx < 0) {
-                let p1 = { x: block[i].x + block[i].width, y: block[i].y };
-                let v1 = { x: 0, y: block[i].height };
+                let p1 = { x: block[i].x + block[i].w, y: block[i].y };
+                let v1 = { x: 0, y: block[i].h };
                 if (segToSeg(p, v, p1, v1)) {
-                    hit = true;
+                    block[i].s--;
                     ball.vx *= -1;
                     break;
                 }
@@ -351,25 +351,22 @@ function hitBlock(px, py) {
             
             if (ball.vy > 0) {
                 let p1 = { x: block[i].x, y: block[i].y };
-                let v1 = { x: block[i].width, y: 0 };
+                let v1 = { x: block[i].w, y: 0 };
                 if (segToSeg(p, v, p1, v1)) {
-                    hit = true;
+                    block[i].s--;
                     ball.vy *= -1;
                     break;
                 }
             } else if (ball.vy < 0) {
-                let p1 = { x: block[i].x, y: block[i].y + block[i].height };
-                let v1 = { x: block[i].width, y: 0 };
+                let p1 = { x: block[i].x, y: block[i].y + block[i].h };
+                let v1 = { x: block[i].w, y: 0 };
                 if (segToSeg(p, v, p1, v1)) {
-                    hit = true;
+                    block[i].s--;
                     ball.vy *= -1;
                     break;
                 }
             }
         }
-    }
-    if (hit) {
-        block[i].s--;
     }
 }
 
