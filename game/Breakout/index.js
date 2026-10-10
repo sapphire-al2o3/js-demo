@@ -78,15 +78,18 @@ const pad = {
 let stage = [];
 let block = [];
 
-
+const blockNumX = 2;
+const blockNumY = 2;
+const blockSizeW = 48;//16;
+const blockSizeH = 24;//8;
 function initStage() {
-    for (let j = 0; j < 8; j++) {
-        for (let i = 0; i < 8; i++) {
+    for (let j = 0; j < blockNumY; j++) {
+        for (let i = 0; i < blockNumX; i++) {
             block.push({
-                x: i * 16 + 16,
-                y: j * 8 + 24,
-                w: 16,
-                h: 8,
+                x: i * blockSizeW + 16,
+                y: j * blockSizeH + 24,
+                w: blockSizeW,
+                h: blockSizeH,
                 s: 1
             });
         }
@@ -265,10 +268,10 @@ function segToSeg(p0, v0, p1, v1) {
         c2 = (p0.x - p1.x) * v1.y - (p0.y - p1.y) * v1.x,
         c3 = (p0.x + v0.x - p1.x) * v1.y - (p0.y + v0.y - p1.y) * v1.x;
     
-    let c4 = cross(p1.x - p0.x, p1.y - p0.y, v0.x, v0.y);
-    let c5 = cross(p1.x + v1.x - p0.x, p1.y + v1.y + p0.y, v0.x, v0.y);
-    let c6 = cross(p0.x - p1.x, p0.y - p1.y, v1.x, v1.y);
-    let c7 = cross(p0.x + v0.x - p0.x, p0.y + v0.y + p0.y, v1.x, v1.y);
+    let c4 = cross(v0.x, v0.y, p1.x - p0.x, p1.y - p0.y);
+    let c5 = cross(v0.x, v0.y, p1.x + v1.x - p0.x, p1.y + v1.y + p0.y);
+    let c6 = cross(v1.x, v1.y, p0.x - p1.x, p0.y - p1.y);
+    let c7 = cross(v1.x, v1.y, p0.x + v0.x - p1.x, p0.y + v0.y + p1.y);
     return c4 * c5 < 0 && c6 * c7 < 0;
 
     return c0 * c1 < 0 && c2 * c3 < 0;
@@ -381,6 +384,10 @@ loop((dt) => {
 
     if (keyState['Space'] > 0) {
         phase = 1;
+        let a = (startAngle + 1) * Math.PI / 5 + Math.PI * 0.5;
+        ball.vx =  Math.sin(a) * 3;
+        ball.vy =  Math.cos(a) * 3;
+        
         resetKey();
     }
 
