@@ -78,8 +78,8 @@ const pad = {
 let stage = [];
 let block = [];
 
-const blockNumX = 2;
-const blockNumY = 2;
+const blockNumX = 1;
+const blockNumY = 1;
 const blockSizeW = 48;//16;
 const blockSizeH = 24;//8;
 function initStage() {
@@ -231,7 +231,7 @@ function draw() {
     // ctx.fillRect(ball.x, ball.y, 2, 2);
 
     if (phase === 0) {
-        let a = (startAngle + 1) * Math.PI / 5 + Math.PI * 0.5;
+        let a = (Math.abs(startAngle - 2)  + 1) * Math.PI / 5 + Math.PI * 0.5;
         let sx = pad.x + Math.sin(a) * 8;
         let sy = pad.y + Math.cos(a) * 8 - 4;
         ctx.fillStyle = colors[1];
@@ -329,22 +329,27 @@ function hitBlock(px, py) {
         x: ball.vx,
         y: ball.vy
     };
-    let hit = false;
+    let p1 = { x: 0, y: 0 };
+    let v1 = { x: 0, y: 0 };
     for (let i = 0; i < block.length; i++) {
         if (block[i].s > 0) {
             
 
             if (ball.vx > 0) {
-                let p1 = { x: block[i].x, y: block[i].y };
-                let v1 = { x: 0, y: block[i].h };
+                p1.x = block[i].x;
+                p1.y = block[i].y;
+                v1.x = 0;
+                v1.y = block[i].h;
                 if (segToSeg(p, v, p1, v1)) {
                     block[i].s--;
                     ball.vx *= -1;
                     break;
                 }
             } else if (ball.vx < 0) {
-                let p1 = { x: block[i].x + block[i].w, y: block[i].y };
-                let v1 = { x: 0, y: block[i].h };
+                p1.x = block[i].x + block[i].w;
+                p1.y = block[i].y;
+                v1.x = 0;
+                v1.y = block[i].h;
                 if (segToSeg(p, v, p1, v1)) {
                     block[i].s--;
                     ball.vx *= -1;
@@ -353,16 +358,20 @@ function hitBlock(px, py) {
             }
             
             if (ball.vy > 0) {
-                let p1 = { x: block[i].x, y: block[i].y };
-                let v1 = { x: block[i].w, y: 0 };
+                p1.x = block[i].x;
+                p1.y = block[i].y;
+                v1.x = block[i].w;
+                v1.y = 0;
                 if (segToSeg(p, v, p1, v1)) {
                     block[i].s--;
                     ball.vy *= -1;
                     break;
                 }
             } else if (ball.vy < 0) {
-                let p1 = { x: block[i].x, y: block[i].y + block[i].h };
-                let v1 = { x: block[i].w, y: 0 };
+                p1.x = block[i].x;
+                p1.y = block[i].y + block[i].h;
+                v1.x = block[i].w;
+                v1.y = 0;
                 if (segToSeg(p, v, p1, v1)) {
                     block[i].s--;
                     ball.vy *= -1;
@@ -384,7 +393,7 @@ loop((dt) => {
 
     if (keyState['Space'] > 0) {
         phase = 1;
-        let a = (startAngle + 1) * Math.PI / 5 + Math.PI * 0.5;
+        let a = (Math.abs(startAngle - 2)  + 1) * Math.PI / 5 + Math.PI * 0.5;
         ball.vx =  Math.sin(a) * 3;
         ball.vy =  Math.cos(a) * 3;
         
@@ -410,9 +419,9 @@ loop((dt) => {
         ball.y = pad.y - 4;
 
         frame++;
-        if (frame > 12) {
+        if (frame > 15) {
             frame = 0;
-            startAngle = (startAngle + 1) % 4;
+            startAngle = (startAngle + 1) % 6;
         }
     } else {
 
