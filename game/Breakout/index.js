@@ -78,10 +78,10 @@ const pad = {
 let stage = [];
 let block = [];
 
-const blockNumX = 1;
-const blockNumY = 1;
-const blockSizeW = 48;//16;
-const blockSizeH = 24;//8;
+const blockNumX = 8;
+const blockNumY = 8;
+const blockSizeW = 16;
+const blockSizeH = 8;
 function initStage() {
     for (let j = 0; j < blockNumY; j++) {
         for (let i = 0; i < blockNumX; i++) {
@@ -269,9 +269,9 @@ function segToSeg(p0, v0, p1, v1) {
         c3 = (p0.x + v0.x - p1.x) * v1.y - (p0.y + v0.y - p1.y) * v1.x;
     
     let c4 = cross(v0.x, v0.y, p1.x - p0.x, p1.y - p0.y);
-    let c5 = cross(v0.x, v0.y, p1.x + v1.x - p0.x, p1.y + v1.y + p0.y);
+    let c5 = cross(v0.x, v0.y, p1.x + v1.x - p0.x, p1.y + v1.y - p0.y);
     let c6 = cross(v1.x, v1.y, p0.x - p1.x, p0.y - p1.y);
-    let c7 = cross(v1.x, v1.y, p0.x + v0.x - p1.x, p0.y + v0.y + p1.y);
+    let c7 = cross(v1.x, v1.y, p0.x + v0.x - p1.x, p0.y + v0.y - p1.y);
     return c4 * c5 < 0 && c6 * c7 < 0;
 
     return c0 * c1 < 0 && c2 * c3 < 0;
