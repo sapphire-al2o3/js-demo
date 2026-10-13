@@ -232,14 +232,15 @@ function draw() {
 
     if (phase === 0) {
         let a = (Math.abs(startAngle - 2)  + 1) * Math.PI / 5 + Math.PI * 0.5;
-        let sx = pad.x + Math.sin(a) * 8;
-        let sy = pad.y + Math.cos(a) * 8 - 4;
+        let sx = pad.x + Math.sin(a) * 8 ^ 0;
+        let sy = pad.y + Math.cos(a) * 8 - 4 ^ 0;
         ctx.fillStyle = colors[1];
-        // ctx.beginPath();
-        // ctx.moveTo(pad.x + 0.5, pad.y - 4 + 0.5);
-        // ctx.lineTo(sx + 0.5, sy + 0.5);
-        // ctx.stroke();
         ctx.fillRect(sx, sy, 1, 1);
+    } else if (phase === 2) {
+        ctx.fillStyle = colors[0];
+        ctx.fillRect(62, 62, 34, 10);
+        ctx.fillStyle = colors[2];
+        fillText('CLEAR', 64, 64);
     }
 
     if (pause) {
@@ -292,8 +293,14 @@ function seg2Point(p, v, t) {
     return { x: p.x + v.x * t, y: p.y + v.y * t };
 }
 
-function normalize(x, y) {
+function length(x, y) {
     return Math.sqrt(x * x + y * y);
+}
+
+function normalize(v, w) {
+    const l = length(x, y);
+    w.x /= l;
+    w.y /= l;
 }
 
 function hitPad() {
@@ -382,6 +389,15 @@ function hitBlock(px, py) {
     }
 }
 
+function checkBlock() {
+    for (let i = 0; i < block.length; i++) {
+        if (block[i].s > 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
 loop((dt) => {
 
     let dx = keyState['ArrowRight'] - keyState['ArrowLeft'];
@@ -423,7 +439,7 @@ loop((dt) => {
             frame = 0;
             startAngle = (startAngle + 1) % 6;
         }
-    } else {
+    } else if (phase === 1) {
 
         let px = ball.x;
         let py = ball.y;
@@ -432,15 +448,21 @@ loop((dt) => {
         ball.y += ball.vy;
 
         if (hitPad()) {
-            // let v = noarmaize(ball.vx, ball.vy);
+            // let v = normaize(ball.vx, ball.vy);
             ball.vy *= -1;
-            // ball.vx += dx;
-            // let l = noarmaize(ball.vx, ball.vy);
+            // if (dx > 0 || dx < 0) {
+            //     ball.vx += dx > 0 ? 0.5 : -0.5;
+            // }
+            // let l = normaize(ball.vx, ball.vy);
             // ball.vy = ball.vy / l * v;
             // ball.vx = ball.vx / l * v;
         }
 
         hitBlock(px, py);
+
+        if (checkBlock()) {
+            phase = 2;
+        }
 
         if (ball.x < 0 || ball.x >= W) {
             ball.vx *= -1;
@@ -454,6 +476,8 @@ loop((dt) => {
             }
             ball.vy *= -1;
         }
+    } else if (phase === 2) {
+
     }
 
     
