@@ -63,6 +63,8 @@ const stageH = 22;
 const offsetX = 8;
 const offsetY = -24;
 
+const maxSpeed = 4;
+
 const ball = {
     x: 20,
     y: 20,
@@ -450,12 +452,14 @@ loop((dt) => {
         if (hitPad()) {
             // let v = normaize(ball.vx, ball.vy);
             ball.vy *= -1;
-            // if (dx > 0 || dx < 0) {
-            //     ball.vx += dx > 0 ? 0.5 : -0.5;
-            // }
-            // let l = normaize(ball.vx, ball.vy);
-            // ball.vy = ball.vy / l * v;
-            // ball.vx = ball.vx / l * v;
+            if (dx > 0 || dx < 0) {
+                ball.vx += dx > 0 ? 0.5 : -0.5;
+            }
+            let l = length(ball.vx, ball.vy);
+            if (l > maxSpeed) {
+                ball.vy = ball.vy / l * maxSpeed;
+                ball.vx = ball.vx / l * maxSpeed;
+            }
         }
 
         hitBlock(px, py);
