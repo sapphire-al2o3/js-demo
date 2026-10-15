@@ -280,6 +280,14 @@ function segToSeg(p0, v0, p1, v1) {
     return c0 * c1 < 0 && c2 * c3 < 0;
 }
 
+function segToX(p0, v0, p1, v1y) {
+    let c0 = cross(v0.x, v0.y, p1.x - p0.x, p1.y - p0.y);
+    let c1 = cross(v0.x, v0.y, p1.x - p0.x, p1.y + v1y - p0.y);
+    let c2 = (p1.x - p0.x) * v1y;
+    let c3 = (p1.x - p0.x - v0.x) * v1y;
+    return c0 * c1 < 0 && c2 * c3 < 0;
+}
+
 function interSeg(p0, v0, p1, v1) {
     let d = v0.x * v1.y - v0.y * v1.x;
     if (d === 0) {
@@ -305,7 +313,7 @@ function normalize(v, w) {
     w.y /= l;
 }
 
-function hitPad() {
+function hitPad(px, py) {
     let p0 = {
         x: pad.x - padW / 2,
         y: pad.y
@@ -315,13 +323,15 @@ function hitPad() {
         y: 0
     };
     let p1 = {
-        x: ball.x,
-        y: ball.y
+        x: px,
+        y: py
     };
     let v1 = {
         x: ball.vx,
         y: ball.vy
     };
+
+    // return segToSeg(p0, v0, p1, v1);
 
     let t0 = interSeg(p0, v0, p1, v1),
         t1 = interSeg(p1, v1, p0, v0);
@@ -449,8 +459,9 @@ loop((dt) => {
         ball.x += ball.vx;
         ball.y += ball.vy;
 
-        if (hitPad()) {
-            // let v = normaize(ball.vx, ball.vy);
+        if (hitPad(px, py)) {
+            ball.y = pad.y - 0.5;
+            // let v = normalize(ball.vx, ball.vy);
             ball.vy *= -1;
             if (dx > 0 || dx < 0) {
                 ball.vx += dx > 0 ? 0.5 : -0.5;
