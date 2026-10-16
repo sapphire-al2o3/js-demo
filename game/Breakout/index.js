@@ -96,6 +96,13 @@ function initStage() {
             });
         }
     }
+    block.push({
+        x: 32,
+        y: blockNumY * blockSizeH + 24,
+        w: blockSizeW * 6,
+        h: blockSizeH,
+        s: -1
+    });
 }
 
 
@@ -212,6 +219,13 @@ function drawBlock() {
     for (let i = 0; i < block.length; i++) {
         if (block[i].s > 0) {
             ctx.fillRect(block[i].x, block[i].y, block[i].w - 1, block[i].h - 1);
+        }
+    }
+
+    ctx.fillStyle = colors[1];
+    for (let i = 0; i < block.length; i++) {
+        if (block[i].s === -1) {
+            ctx.fillRect(block[i].x, block[i].y, block[i].w, block[i].h);
         }
     }
 }
@@ -351,7 +365,7 @@ function hitBlock(px, py) {
     let p1 = { x: 0, y: 0 };
     let v1 = { x: 0, y: 0 };
     for (let i = 0; i < block.length; i++) {
-        if (block[i].s > 0) {
+        if (block[i].s !== 0) {
             
 
             if (ball.vx > 0) {
@@ -360,7 +374,7 @@ function hitBlock(px, py) {
                 v1.x = 0;
                 v1.y = block[i].h;
                 if (segToSeg(p, v, p1, v1)) {
-                    block[i].s--;
+                    if (block[i].s > 0) block[i].s--;
                     ball.vx *= -1;
                     break;
                 }
@@ -370,7 +384,7 @@ function hitBlock(px, py) {
                 v1.x = 0;
                 v1.y = block[i].h;
                 if (segToSeg(p, v, p1, v1)) {
-                    block[i].s--;
+                    if (block[i].s > 0) block[i].s--;
                     ball.vx *= -1;
                     break;
                 }
@@ -382,7 +396,7 @@ function hitBlock(px, py) {
                 v1.x = block[i].w;
                 v1.y = 0;
                 if (segToSeg(p, v, p1, v1)) {
-                    block[i].s--;
+                    if (block[i].s > 0) block[i].s--;
                     ball.vy *= -1;
                     break;
                 }
@@ -392,7 +406,7 @@ function hitBlock(px, py) {
                 v1.x = block[i].w;
                 v1.y = 0;
                 if (segToSeg(p, v, p1, v1)) {
-                    block[i].s--;
+                    if (block[i].s > 0) block[i].s--;
                     ball.vy *= -1;
                     break;
                 }
