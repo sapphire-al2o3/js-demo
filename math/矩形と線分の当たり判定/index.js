@@ -19,11 +19,11 @@ function segToRect(s, r, p) {
 // 線分と線分の当たり判定
 function segToSeg(a, b) {
     const v0 = a.end.sub(a.start),
-    c0 = b.start.sub(a.start).cross(v0),
-    c1 = b.end.sub(a.start).cross(v0),
-    v1 = b.end.sub(b.start),
-    c2 = a.start.sub(b.start).cross(v1),
-    c3 = a.end.sub(b.start).cross(v1);
+        c0 = b.start.sub(a.start).cross(v0),
+        c1 = b.end.sub(a.start).cross(v0),
+        v1 = b.end.sub(b.start),
+        c2 = a.start.sub(b.start).cross(v1),
+        c3 = a.end.sub(b.start).cross(v1);
     return c0 * c1 < 0 && c2 * c3 < 0;
 }
 
@@ -49,22 +49,22 @@ let canvas = document.getElementById('canvas'),
     op2 = document.getElementById('op2'),
     isRay = false;
 
-op2.onchange = op.onchange = function(e) {
+op2.onchange = op.onchange = (e) => {
     isRay = !op.value;
     down = true;
     render();
     down = false;
 };
 
-canvas.onmousedown = function(e) {
+canvas.onmousedown = (e) => {
     down = true;
-    var rect = e.target.getBoundingClientRect();
+    const rect = e.target.getBoundingClientRect();
     start.x = e.clientX - rect.left;
     start.y = e.clientY - rect.top;
     isRay = !op.checked;
 };
 
-canvas.onmousemove = function(e) {
+canvas.onmousemove = (e) => {
     if(down) {
         const rect = e.target.getBoundingClientRect();
         mouse.x = e.clientX - rect.left;
@@ -73,7 +73,7 @@ canvas.onmousemove = function(e) {
     }
 };
 
-canvas.onmouseup = function(e) {
+canvas.onmouseup = (e) => {
     down = false;
 };
 
@@ -106,7 +106,7 @@ function line(s) {
 function line_r(s) {
     ctx.beginPath();
     ctx.moveTo(s.start.x, s.start.y);
-    var p = s.end.sub(s.start).mul(w);
+    const p = s.end.sub(s.start).mul(w);
     ctx.lineTo(p.x, p.y);
     ctx.stroke();
 }
