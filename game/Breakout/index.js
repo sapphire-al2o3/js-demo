@@ -94,6 +94,7 @@ function initStage() {
                 h: blockSizeH,
                 s: 1
             });
+            console.log(1, i * blockSizeW + 16, j * blockSizeH + 24, blockSizeW, blockSizeH);
         }
     }
     block.push({
@@ -230,6 +231,11 @@ function drawBlock() {
     }
 }
 
+function drawScore() {
+    ctx.fillStyle = colors[0];
+    fillNum(score, 140, 1, 1);
+}
+
 function draw() {
     ctx.fillStyle = colors[0];
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -245,6 +251,8 @@ function draw() {
 
     drawBall();
     // ctx.fillRect(ball.x, ball.y, 2, 2);
+
+    drawScore();
 
     if (phase === 0) {
         let a = (Math.abs(startAngle - 2)  + 1) * Math.PI / 5 + Math.PI * 0.5;
@@ -294,13 +302,22 @@ function segToSeg(p0, v0, p1, v1) {
     return c0 * c1 < 0 && c2 * c3 < 0;
 }
 
-function segToX(p0, v0, p1, v1y) {
+function segToSegX(p0, v0, p1, v1y) {
     let c0 = cross(v0.x, v0.y, p1.x - p0.x, p1.y - p0.y);
     let c1 = cross(v0.x, v0.y, p1.x - p0.x, p1.y + v1y - p0.y);
     let c2 = (p1.x - p0.x) * v1y;
     let c3 = (p1.x - p0.x - v0.x) * v1y;
     return c0 * c1 < 0 && c2 * c3 < 0;
 }
+
+function segToSegY(p0, v0, p1, v1x) {
+    let c0 = cross(v0.x, v0.y, p1.x - p0.x, p1.y - p0.y);
+    let c1 = cross(v0.x, v0.y, p1.x + v1.x - p0.x, p1.y + v1.y - p0.y);
+    let c2 = v1x * (p0.y - p1.y);
+    let c3 = v1x * (p0.y + v0.y - p1.y);
+    return c0 * c1 < 0 && c2 * c3 < 0;
+}
+
 
 function interSeg(p0, v0, p1, v1) {
     let d = v0.x * v1.y - v0.y * v1.x;
@@ -321,8 +338,12 @@ function length(x, y) {
     return Math.sqrt(x * x + y * y);
 }
 
+function length2(x, y) {
+    return x * x + y * y;
+}
+
 function normalize(v, w) {
-    const l = length(x, y);
+    const l = length(v.x, v.y);
     w.x /= l;
     w.y /= l;
 }
@@ -366,7 +387,6 @@ function hitBlock(px, py) {
     let v1 = { x: 0, y: 0 };
     for (let i = 0; i < block.length; i++) {
         if (block[i].s !== 0) {
-            
 
             if (ball.vx > 0) {
                 p1.x = block[i].x;
@@ -374,7 +394,10 @@ function hitBlock(px, py) {
                 v1.x = 0;
                 v1.y = block[i].h;
                 if (segToSeg(p, v, p1, v1)) {
-                    if (block[i].s > 0) block[i].s--;
+                    if (block[i].s > 0) {
+                        score++;
+                        block[i].s--;
+                    }
                     ball.vx *= -1;
                     break;
                 }
@@ -384,7 +407,10 @@ function hitBlock(px, py) {
                 v1.x = 0;
                 v1.y = block[i].h;
                 if (segToSeg(p, v, p1, v1)) {
-                    if (block[i].s > 0) block[i].s--;
+                    if (block[i].s > 0) {
+                        score++;
+                        block[i].s--;
+                    }
                     ball.vx *= -1;
                     break;
                 }
@@ -396,7 +422,10 @@ function hitBlock(px, py) {
                 v1.x = block[i].w;
                 v1.y = 0;
                 if (segToSeg(p, v, p1, v1)) {
-                    if (block[i].s > 0) block[i].s--;
+                    if (block[i].s > 0) {
+                        score++;
+                        block[i].s--;
+                    }
                     ball.vy *= -1;
                     break;
                 }
@@ -406,7 +435,10 @@ function hitBlock(px, py) {
                 v1.x = block[i].w;
                 v1.y = 0;
                 if (segToSeg(p, v, p1, v1)) {
-                    if (block[i].s > 0) block[i].s--;
+                    if (block[i].s > 0) {
+                        score++;
+                        block[i].s--;
+                    }
                     ball.vy *= -1;
                     break;
                 }
