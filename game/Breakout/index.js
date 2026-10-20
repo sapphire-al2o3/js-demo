@@ -233,7 +233,8 @@ function drawBlock() {
 
 function drawScore() {
     ctx.fillStyle = colors[0];
-    fillNum(score, 140, 1, 1);
+    fillText('SCORE', 100, 1, 1);
+    fillNum(score, 150, 1, 1);
 }
 
 function draw() {
