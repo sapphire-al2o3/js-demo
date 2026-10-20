@@ -100,8 +100,8 @@ function initStage() {
     block.push({
         x: 32,
         y: blockNumY * blockSizeH + 24,
-        w: blockSizeW * 6,
-        h: blockSizeH,
+        w: blockSizeW * 8,
+        h: blockSizeH * 2,
         s: -1
     });
 }
@@ -399,6 +399,7 @@ function hitBlock(px, py) {
                         score++;
                         block[i].s--;
                     }
+                    ball.x = p1.x - 0.5;
                     ball.vx *= -1;
                     break;
                 }
@@ -412,6 +413,7 @@ function hitBlock(px, py) {
                         score++;
                         block[i].s--;
                     }
+                    ball.x = p1.x + 0.5;
                     ball.vx *= -1;
                     break;
                 }
@@ -427,6 +429,7 @@ function hitBlock(px, py) {
                         score++;
                         block[i].s--;
                     }
+                    ball.y = p1.y - 0.5;
                     ball.vy *= -1;
                     break;
                 }
@@ -440,6 +443,7 @@ function hitBlock(px, py) {
                         score++;
                         block[i].s--;
                     }
+                    ball.y = p1.y + 0.5;
                     ball.vy *= -1;
                     break;
                 }
