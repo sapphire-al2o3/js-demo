@@ -111,6 +111,7 @@ let frame = 0;
 let pause = false;
 let gameover = false;
 let score = 0;
+let life = 3;
 
 const numPatterns5x6 = [
     0x1DBDEF6E,
@@ -479,7 +480,7 @@ loop((dt) => {
         resetKey();
     }
 
-    if (pause) {
+    if (phase < 2 && pause) {
         resetKey();
         draw();
         return;
@@ -530,6 +531,14 @@ loop((dt) => {
             phase = 2;
         }
 
+        if (ball.y >= H) {
+            phase = 0;
+            life--;
+            if (life <= 0) {
+                phase = 3;
+            }
+        }
+
         if (ball.x < 0 || ball.x >= W) {
             ball.vx *= -1;
         }
@@ -544,6 +553,8 @@ loop((dt) => {
         }
     } else if (phase === 2) {
 
+    } else if (phase === 3) {
+        
     }
 
     
