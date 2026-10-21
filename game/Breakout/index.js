@@ -232,6 +232,12 @@ function drawBlock() {
     }
 }
 
+function drawLife() {
+    ctx.fillStyle = colors[0];
+    fillText('BALL', 10, 1, 1);
+    fillNum(life, 40, 1, 1);
+}
+
 function drawScore() {
     ctx.fillStyle = colors[0];
     fillText('SCORE', 100, 1, 1);
@@ -255,6 +261,7 @@ function draw() {
     // ctx.fillRect(ball.x, ball.y, 2, 2);
 
     drawScore();
+    drawLife();
 
     if (phase === 0) {
         let a = (Math.abs(startAngle - 2)  + 1) * Math.PI / 5 + Math.PI * 0.5;
@@ -554,7 +561,7 @@ loop((dt) => {
     } else if (phase === 2) {
 
     } else if (phase === 3) {
-        
+
     }
 
     
