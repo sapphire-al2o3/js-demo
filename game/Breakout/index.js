@@ -111,7 +111,7 @@ let frame = 0;
 let pause = false;
 let gameover = false;
 let score = 0;
-let life = 3;
+let life = 1;
 
 const numPatterns5x6 = [
     0x1DBDEF6E,
@@ -274,6 +274,11 @@ function draw() {
         ctx.fillRect(62, 62, 34, 10);
         ctx.fillStyle = colors[2];
         fillText('CLEAR', 64, 64);
+    } else if (phase === 3) {
+        ctx.fillStyle = colors[0];
+        ctx.fillRect(52, 62, 58, 10);
+        ctx.fillStyle = colors[2];
+        fillText('GAME OVER', 54, 64);
     }
 
     if (pause) {
