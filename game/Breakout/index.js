@@ -85,6 +85,7 @@ const blockNumY = 8;
 const blockSizeW = 16;
 const blockSizeH = 8;
 function initStage() {
+    block = [];
     for (let j = 0; j < blockNumY; j++) {
         for (let i = 0; i < blockNumX; i++) {
             block.push({
@@ -289,13 +290,22 @@ function draw() {
     }
 }
 
+function reset() {
+    initStage();
+    pad.x = 80;
+    pad.y = 128;
+    startAngle = 0;
+    phase = 0;
+    // life = 3;
+}
+
 let speed = 20;
 let fallCount = 0;
 let vx = 4;
 let phase = 0;
 let startAngle = 0;
 
-initStage();
+reset();
 
 function cross(x0, y0, x1, y1) {
     return x0 * y1 - x1 * y0;
@@ -479,11 +489,12 @@ loop((dt) => {
     let dx = keyState['ArrowRight'] - keyState['ArrowLeft'];
     let dy = keyState['ArrowUp'] - keyState['ArrowDown'];
 
-    if (keyState['Enter'] > 0) {
+    
+    if (phase < 2 && keyState['Enter'] > 0) {
         pause = !pause;
     }
 
-    if (keyState['Space'] > 0) {
+    if (phase == 0 && keyState['Space'] > 0) {
         phase = 1;
         let a = (Math.abs(startAngle - 2)  + 1) * Math.PI / 5 + Math.PI * 0.5;
         ball.vx =  Math.sin(a) * 3;
@@ -492,7 +503,7 @@ loop((dt) => {
         resetKey();
     }
 
-    if (phase < 2 && pause) {
+    if (pause) {
         resetKey();
         draw();
         return;
