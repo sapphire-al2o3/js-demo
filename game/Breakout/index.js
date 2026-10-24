@@ -494,6 +494,13 @@ loop((dt) => {
         pause = !pause;
     }
 
+    if (phase === 3 && keyState['Enter'] > 0) {
+        resetKey();
+        reset();
+        draw();
+        return;
+    }
+
     if (phase == 0 && keyState['Space'] > 0) {
         phase = 1;
         let a = (Math.abs(startAngle - 2)  + 1) * Math.PI / 5 + Math.PI * 0.5;
@@ -579,9 +586,6 @@ loop((dt) => {
     } else if (phase === 3) {
 
     }
-
-    
-    // y += keyY * 4;
 
 
     draw();
