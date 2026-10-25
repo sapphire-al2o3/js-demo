@@ -296,7 +296,8 @@ function reset() {
     pad.y = 128;
     startAngle = 0;
     phase = 0;
-    // life = 3;
+    score = 0;
+    life = 3;
 }
 
 let speed = 20;
