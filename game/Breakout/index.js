@@ -77,7 +77,10 @@ const pad = {
     y: 128
 };
 
-let stage = [];
+let stage0 = [
+    [1,0,0,2,1],[1,2,0,2,1],[1,4,0,2,1],
+
+];
 let block = [];
 
 const blockNumX = 8;
@@ -86,25 +89,35 @@ const blockSizeW = 16;
 const blockSizeH = 8;
 function initStage() {
     block = [];
-    for (let j = 0; j < blockNumY; j++) {
-        for (let i = 0; i < blockNumX; i++) {
-            block.push({
-                x: i * blockSizeW + 16,
-                y: j * blockSizeH + 24,
-                w: blockSizeW,
-                h: blockSizeH,
-                s: 1
-            });
-            console.log(1, i * blockSizeW + 16, j * blockSizeH + 24, blockSizeW, blockSizeH);
-        }
+    // for (let j = 0; j < blockNumY; j++) {
+    //     for (let i = 0; i < blockNumX; i++) {
+    //         block.push({
+    //             x: i * blockSizeW + 16,
+    //             y: j * blockSizeH + 24,
+    //             w: blockSizeW,
+    //             h: blockSizeH,
+    //             s: 1
+    //         });
+    //         console.log(1, i * blockSizeW + 16, j * blockSizeH + 24, blockSizeW, blockSizeH);
+    //     }
+    // }
+    // block.push({
+    //     x: 32,
+    //     y: blockNumY * blockSizeH + 24,
+    //     w: blockSizeW * 8,
+    //     h: blockSizeH * 2,
+    //     s: -1
+    // });
+
+    for (let i = 0; i < stage0.length; i++) {
+        block.push({
+            s: stage0[i][0],
+            x: stage0[i][1] * 8,
+            y: stage0[i][2] * 8 + 8,
+            w: stage0[i][3] * 8,
+            h: stage0[i][4] * 8,
+        });
     }
-    block.push({
-        x: 32,
-        y: blockNumY * blockSizeH + 24,
-        w: blockSizeW * 8,
-        h: blockSizeH * 2,
-        s: -1
-    });
 }
 
 
@@ -300,6 +313,14 @@ function reset() {
     life = 3;
 }
 
+function next() {
+    initStage();
+    pad.x = 80;
+    pad.y = 128;
+    startAngle = 0;
+    phase = 0;
+}
+
 let speed = 20;
 let fallCount = 0;
 let vx = 4;
@@ -493,6 +514,13 @@ loop((dt) => {
     
     if (phase < 2 && keyState['Enter'] > 0) {
         pause = !pause;
+    }
+
+    if (phase === 2 && keyState['Enter'] > 0) {
+        resetKey();
+        next();
+        draw();
+        return;
     }
 
     if (phase === 3 && keyState['Enter'] > 0) {
