@@ -87,36 +87,38 @@ const blockNumX = 8;
 const blockNumY = 8;
 const blockSizeW = 16;
 const blockSizeH = 8;
-function initStage() {
+function initStage(index) {
     block = [];
-    // for (let j = 0; j < blockNumY; j++) {
-    //     for (let i = 0; i < blockNumX; i++) {
-    //         block.push({
-    //             x: i * blockSizeW + 16,
-    //             y: j * blockSizeH + 24,
-    //             w: blockSizeW,
-    //             h: blockSizeH,
-    //             s: 1
-    //         });
-    //         console.log(1, i * blockSizeW + 16, j * blockSizeH + 24, blockSizeW, blockSizeH);
-    //     }
-    // }
-    // block.push({
-    //     x: 32,
-    //     y: blockNumY * blockSizeH + 24,
-    //     w: blockSizeW * 8,
-    //     h: blockSizeH * 2,
-    //     s: -1
-    // });
-
-    for (let i = 0; i < stage0.length; i++) {
+    if (index === 0) {
+        for (let j = 0; j < blockNumY; j++) {
+            for (let i = 0; i < blockNumX; i++) {
+                block.push({
+                    x: i * blockSizeW + 16,
+                    y: j * blockSizeH + 24,
+                    w: blockSizeW,
+                    h: blockSizeH,
+                    s: 1
+                });
+                console.log(1, i * blockSizeW + 16, j * blockSizeH + 24, blockSizeW, blockSizeH);
+            }
+        }
         block.push({
-            s: stage0[i][0],
-            x: stage0[i][1] * 8,
-            y: stage0[i][2] * 8 + 8,
-            w: stage0[i][3] * 8,
-            h: stage0[i][4] * 8,
+            x: 16,
+            y: 8 * blockSizeH + 24,
+            w: blockSizeW * 8,
+            h: blockSizeH,
+            s: -1
         });
+    } else {
+        for (let i = 0; i < stage0.length; i++) {
+            block.push({
+                s: stage0[i][0],
+                x: stage0[i][1] * 8,
+                y: stage0[i][2] * 8 + 8,
+                w: stage0[i][3] * 8,
+                h: stage0[i][4] * 8,
+            });
+        }
     }
 }
 
@@ -304,23 +306,26 @@ function draw() {
 }
 
 function reset() {
-    initStage();
+    initStage(0);
     pad.x = 80;
     pad.y = 128;
     startAngle = 0;
     phase = 0;
     score = 0;
     life = 3;
+    stageIndex = 0;
 }
 
 function next() {
-    initStage();
+    stageIndex++;
+    initStage(stageIndex);
     pad.x = 80;
     pad.y = 128;
     startAngle = 0;
     phase = 0;
 }
 
+let stageIndex = 0;
 let speed = 20;
 let fallCount = 0;
 let vx = 4;
