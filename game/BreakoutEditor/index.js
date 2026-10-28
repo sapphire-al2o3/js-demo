@@ -23,8 +23,13 @@ canvas.addEventListener('mousedown', e => {
         block.push(b);
     } else {
         const b = map[k];
-        const k2 = b.y * stageW + b.x;
-        map[k2] = null;
+        
+        for (let i = 0; i < b.h; i++) {
+            for (let j = 0; j < b.w; j++) {
+                let k2 = (b.y + i) * stageW + (b.x + j);
+                map[k2] = null;
+            }
+        }
         const i = block.indexOf(b);
         block.splice(i, 1);
     }
@@ -87,6 +92,7 @@ function initStage() {
             block.push(b);
             const k = b.y * stageW + b.x;
             map[k] = b;
+            map[k + 1] = b;
         }
     }
     // block.push({
