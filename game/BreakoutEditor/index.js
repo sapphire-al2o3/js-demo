@@ -1,7 +1,7 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-const cursor = document.getElementById('cursor');
 
+const hard = document.getElementById('hard');
 const size = 16;
 
 canvas.addEventListener('mousedown', e => {
@@ -17,7 +17,7 @@ canvas.addEventListener('mousedown', e => {
             y: y,
             w: 1,
             h: 1,
-            s: 1
+            s: hard.checked ? -1 : 1
         };
         map[k] = b;
         block.push(b);
