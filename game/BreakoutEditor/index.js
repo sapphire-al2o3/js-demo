@@ -93,11 +93,10 @@ canvas.addEventListener('mouseup', e => {
         for (let i = 0; i < b.h; i++) {
             for (let j = 0; j < b.w; j++) {
                 let k = (b.y + i) * stageW + (b.x + j);
-                if (map[k] === null) {
-                    map[k] = b;
-                } else {
+                if (map[k] !== null) {
                     removeBlock(b.x + j, b.y + i);
                 }
+                map[k] = b;
             }
         }
         block.push(b);
