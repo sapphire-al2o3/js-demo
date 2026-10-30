@@ -4,24 +4,26 @@ const ctx = canvas.getContext('2d');
 const hard = document.getElementById('hard');
 const size = 16;
 
-canvas.addEventListener('mousedown', e => {
-    const rect = e.target.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / size ^ 0;
-    const y = (e.clientY - rect.top) / size ^ 0;
+let down = false;
+let start = {
+    x: 0,
+    y: 0
+};
 
-    const k = y * stageW + x;
+let end = {
+    x: 0,
+    y: 0
+};
 
-    if (map[k] === null) {
-        const b = {
-            x: x,
-            y: y,
-            w: 1,
-            h: 1,
-            s: hard.checked ? -1 : 1
-        };
-        map[k] = b;
-        block.push(b);
-    } else {
+let rect = {
+    x: 0,
+    y: 0,
+    w: size,
+    h: size
+};
+
+function removeBlock(x, y) {
+        const k = y * stageW + x;
         const b = map[k];
         
         for (let i = 0; i < b.h; i++) {
@@ -32,22 +34,101 @@ canvas.addEventListener('mousedown', e => {
         }
         const i = block.indexOf(b);
         block.splice(i, 1);
+}
+
+canvas.addEventListener('mousedown', e => {
+    const r = e.target.getBoundingClientRect();
+    const x = (e.clientX - r.left) / size ^ 0;
+    const y = (e.clientY - r.top) / size ^ 0;
+
+    start.x = x;
+    start.y = y;
+
+    const k = y * stageW + x;
+
+    if (map[k] === null) {
+        // const b = {
+        //     x: x,
+        //     y: y,
+        //     w: 1,
+        //     h: 1,
+        //     s: hard.checked ? -1 : 1
+        // };
+        // map[k] = b;
+        // block.push(b);
+
+        rect.x = start.x * size;
+        rect.y = start.y * size;
+        rect.w = size;
+        rect.h = size;
+
+        down = true;
+    } else {
+        removeBlock(x, y);
     }
 
+    
     draw();
 
 }, false);
 
 canvas.addEventListener('mouseup', e => {
+    if (down) {
+        const r = e.target.getBoundingClientRect();
+        const x = (e.clientX - r.left) / size ^ 0;
+        const y = (e.clientY - r.top) / size ^ 0;
+
+        const minX = Math.min(start.x, x);
+        const minY = Math.min(start.y, y);
+        const maxX = Math.max(start.x, x);
+        const maxY = Math.max(start.y, y);
+
+        const b = {
+            x: minX,
+            y: minY,
+            w: maxX - minX + 1,
+            h: maxY - minY + 1,
+            s: hard.checked ? -1 : 1
+        };
+        for (let i = 0; i < b.h; i++) {
+            for (let j = 0; j < b.w; j++) {
+                let k = (b.y + i) * stageW + (b.x + j);
+                if (map[k] === null) {
+                    map[k] = b;
+                } else {
+                    removeBlock(b.x + j, b.y + i);
+                }
+            }
+        }
+        block.push(b);
+
+        draw();
+    }
+    down = false;
 }, false);
 
 canvas.addEventListener('mousemove', e => {
-    const rect = e.target.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / size ^ 0;
-    const y = (e.clientY - rect.top) / size ^ 0;
+    if (down) {
+        const r = e.target.getBoundingClientRect();
+        const x = (e.clientX - r.left) / size ^ 0;
+        const y = (e.clientY - r.top) / size ^ 0;
 
-    // cursor.style.left = (x * size + rect.left) + 'px';
-    // cursor.style.top = (y * size + rect.top) + 'px';
+        end.x = x;
+        end.y = y;
+
+        const minX = Math.min(start.x, x);
+        const minY = Math.min(start.y, y);
+        const maxX = Math.max(start.x, x);
+        const maxY = Math.max(start.y, y);
+
+        rect.x = minX * size;
+        rect.y = minY * size;
+        rect.w = (maxX - minX + 1) * size;
+        rect.h = (maxY - minY + 1) * size;
+
+        draw();
+        drawRect();
+    }
 }, false);
 
 
@@ -230,6 +311,11 @@ function drawBlock() {
     }
 }
 
+function drawRect() {
+    ctx.strokeStyle = '#F00';
+    ctx.strokeRect(rect.x, rect.y, rect.w, rect.h);
+}
+
 function draw() {
     ctx.fillStyle = colors[0];
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -240,7 +326,6 @@ function draw() {
     ctx.fillStyle = colors[1];
 
     drawBlock();
-
 }
 
 function reset() {
