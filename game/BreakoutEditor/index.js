@@ -130,6 +130,12 @@ canvas.addEventListener('mousemove', e => {
     }
 }, false);
 
+document.getElementById('export').addEventListener('click', e => {
+    for (let i = 0; i < block.length; i++) {
+        const b = block[i];
+        console.log(`${b.s},${b.x},${b.y},${b.w},${b.h}`);
+    }
+});
 
 const W = canvas.width;
 const H = canvas.height;
@@ -141,7 +147,7 @@ let y = 120;
 
 const blockSize = 8;
 const stageW = 20;
-const stageH = 22;
+const stageH = 18;
 
 const offsetX = 8;
 const offsetY = -24;
@@ -328,8 +334,8 @@ function draw() {
 }
 
 function reset() {
-    for (let i = 0; i < stageW; i++) {
-        for (let j = 0; j < 16; j++) {
+    for (let i = 0; i < stageH; i++) {
+        for (let j = 0; j < stageW; j++) {
             map[i * stageW + j] = null;
         }
     }
