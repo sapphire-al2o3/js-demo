@@ -2,6 +2,7 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
 const hard = document.getElementById('hard');
+const textarea = document.getElementById('output');
 const size = 16;
 
 let down = false;
@@ -131,10 +132,13 @@ canvas.addEventListener('mousemove', e => {
 }, false);
 
 document.getElementById('export').addEventListener('click', e => {
+    let output = [];
     for (let i = 0; i < block.length; i++) {
         const b = block[i];
+        output.push(`${b.s},${b.x},${b.y},${b.w},${b.h}`);
         console.log(`${b.s},${b.x},${b.y},${b.w},${b.h}`);
     }
+    textarea.textContent = output.join(',\n');
 });
 
 const W = canvas.width;

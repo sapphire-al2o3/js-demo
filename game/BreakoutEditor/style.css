@@ -16,3 +16,8 @@ body {
     top: 0px;
     background: none;
 }
+
+textarea {
+    width: 320px;
+    height: 240px;
+}
