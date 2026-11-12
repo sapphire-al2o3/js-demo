@@ -133,12 +133,57 @@ canvas.addEventListener('mousemove', e => {
 
 document.getElementById('export').addEventListener('click', e => {
     let output = [];
+    let bytes = new Uint8Array(block.length * 5);
+    let k = 0;
     for (let i = 0; i < block.length; i++) {
         const b = block[i];
-        output.push(`${b.s},${b.x},${b.y},${b.w},${b.h}`);
+        let c = 0;
+        c = (c | (b.s < 0 ? 0 : b.s)) << 2;
+        c = (c | b.x) << 5;
+        c = (c | b.y) << 5;
+        c = (c | b.w) << 5;
+        c = (c | b.h);
+        // output.push(`${b.s},${b.x},${b.y},${b.w},${b.h},`);
+        output.push(`${c.toString(16)},`);
+        if (i % 10 === 9) {
+            output.push('\n');
+        }
         console.log(`${b.s},${b.x},${b.y},${b.w},${b.h}`);
+        bytes[k++] = b.s < 0 ? 255 : b.s;
+        bytes[k++] = b.x;
+        bytes[k++] = b.y;
+        bytes[k++] = b.w;
+        bytes[k++] = b.h;
     }
-    textarea.textContent = output.join(',\n');
+    // let text = bytes.toBase64({ alphabet: "base64url", omitPadding: true });
+    textarea.textContent = output.join('');
+});
+
+document.getElementById('import').addEventListener('click', e => {
+
+    block = [];
+
+    for (let i = 0; i < stageH; i++) {
+        for (let j = 0; j < stageW; j++) {
+            map[i * stageW + j] = null;
+        }
+    }
+
+    const text = textarea.textContent;
+    const blocks = text.split(',');
+    for (let i = 0; i < blocks.length; i++) {
+        let n = parseInt(blocks[i], 10);
+        
+        const b = {
+            s: hard.checked ? -1 : 1,
+            x: minX,
+            y: minY,
+            w: maxX - minX + 1,
+            h: n & 0xF
+        };
+    }
+
+    draw();
 });
 
 const W = canvas.width;
