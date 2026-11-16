@@ -143,8 +143,8 @@ document.getElementById('export').addEventListener('click', e => {
         c = (c | b.y) << 5;
         c = (c | b.w) << 5;
         c = (c | b.h);
-        // output.push(`${b.s},${b.x},${b.y},${b.w},${b.h},`);
-        output.push(`${c.toString(16)},`);
+        output.push(`${b.s},${b.x},${b.y},${b.w},${b.h},`);
+        // output.push(`${c.toString(16)},`);
         if (i % 10 === 9) {
             output.push('\n');
         }
@@ -171,16 +171,30 @@ document.getElementById('import').addEventListener('click', e => {
 
     const text = textarea.textContent;
     const blocks = text.split(',');
-    for (let i = 0; i < blocks.length; i++) {
-        let n = parseInt(blocks[i], 10);
-        
+    for (let i = 0; i < blocks.length; i += 5) {
+        // let n = parseInt(blocks[i], 10);
+        let s = parseInt(blocks[i], 10);
+        let x = parseInt(blocks[i + 1], 10);
+        let y = parseInt(blocks[i + 2], 10);
+        let w = parseInt(blocks[i + 3], 10);
+        let h = parseInt(blocks[i + 4], 10);
+
         const b = {
-            s: hard.checked ? -1 : 1,
-            x: minX,
-            y: minY,
-            w: maxX - minX + 1,
-            h: n & 0xF
+            s: s ? 1 : -1,
+            x: x,
+            y: y,
+            w: w,
+            h: h
         };
+
+        for (let i = 0; i < b.h; i++) {
+            for (let j = 0; j < b.w; j++) {
+                let k = (b.y + i) * stageW + (b.x + j);
+                map[k] = b;
+            }
+        }
+
+        block.push(b);
     }
 
     draw();
