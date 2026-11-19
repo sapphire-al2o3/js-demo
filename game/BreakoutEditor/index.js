@@ -131,20 +131,48 @@ canvas.addEventListener('mousemove', e => {
     }
 }, false);
 
+function encodeBlock(b) {
+    let c = 0;
+    c = (c | (b.s < 0 ? 0 : b.s)) << 2;
+    c = (c | b.x) << 5;
+    c = (c | b.y) << 5;
+    c = (c | b.w) << 5;
+    c = (c | b.h);
+    return c.toString(16);
+}
+
+function decodeBlock(s) {
+    let c = parseInt(s, 16);
+    const h = c & 0b11111;
+    c = c >> 5;
+    const w = c & 0b11111;
+    c = c >> 5;
+    const y = c & 0b11111;
+    c = c >> 5;
+    const x = c & 0b11111;
+    c = c >> 2;
+    const s = c & 0b11;
+
+    const b = {
+        s: s ? 1 : -1,
+        x: x,
+        y: y,
+        w: w,
+        h: h
+    };
+
+    return b;
+}
+
 document.getElementById('export').addEventListener('click', e => {
     let output = [];
     let bytes = new Uint8Array(block.length * 5);
     let k = 0;
     for (let i = 0; i < block.length; i++) {
         const b = block[i];
-        let c = 0;
-        c = (c | (b.s < 0 ? 0 : b.s)) << 2;
-        c = (c | b.x) << 5;
-        c = (c | b.y) << 5;
-        c = (c | b.w) << 5;
-        c = (c | b.h);
-        output.push(`${b.s},${b.x},${b.y},${b.w},${b.h},`);
-        // output.push(`${c.toString(16)},`);
+        
+        // output.push(`${b.s},${b.x},${b.y},${b.w},${b.h},`);
+        output.push(`${encodeBlock(b)},`);
         if (i % 10 === 9) {
             output.push('\n');
         }
