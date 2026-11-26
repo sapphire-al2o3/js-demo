@@ -138,11 +138,11 @@ function encodeBlock(b) {
     c = (c | b.y) << 5;
     c = (c | b.w) << 5;
     c = (c | b.h);
-    return c.toString(16);
+    return '0x' + c.toString(16);
 }
 
-function decodeBlock(s) {
-    let c = parseInt(s, 16);
+function decodeBlock(t) {
+    let c = parseInt(t, 16);
     const h = c & 0b11111;
     c = c >> 5;
     const w = c & 0b11111;
