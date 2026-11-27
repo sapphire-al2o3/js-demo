@@ -141,8 +141,7 @@ function encodeBlock(b) {
     return '0x' + c.toString(16);
 }
 
-function decodeBlock(t) {
-    let c = parseInt(t, 16);
+function decodeBlock(c) {
     const h = c & 0b11111;
     c = c >> 5;
     const w = c & 0b11111;
@@ -199,22 +198,27 @@ document.getElementById('import').addEventListener('click', e => {
 
     const text = textarea.textContent;
     const blocks = text.split(',');
-    for (let i = 0; i < blocks.length; i += 5) {
+    // for (let i = 0; i < blocks.length; i += 5) {
+    for (let i = 0; i < blocks.length; i++) {
         if (blocks[i] !== '') {
             // let n = parseInt(blocks[i], 10);
-            let s = parseInt(blocks[i], 10);
-            let x = parseInt(blocks[i + 1], 10);
-            let y = parseInt(blocks[i + 2], 10);
-            let w = parseInt(blocks[i + 3], 10);
-            let h = parseInt(blocks[i + 4], 10);
+            // let s = parseInt(blocks[i], 10);
+            // let x = parseInt(blocks[i + 1], 10);
+            // let y = parseInt(blocks[i + 2], 10);
+            // let w = parseInt(blocks[i + 3], 10);
+            // let h = parseInt(blocks[i + 4], 10);
 
-            const b = {
-                s: s ? 1 : -1,
-                x: x,
-                y: y,
-                w: w,
-                h: h
-            };
+            
+
+            // const b = {
+            //     s: s ? 1 : -1,
+            //     x: x,
+            //     y: y,
+            //     w: w,
+            //     h: h
+            // };
+
+            const b = decodeBlock(parseInt(blocks[i], 16));
 
             for (let i = 0; i < b.h; i++) {
                 for (let j = 0; j < b.w; j++) {
