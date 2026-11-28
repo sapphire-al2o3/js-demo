@@ -132,12 +132,11 @@ canvas.addEventListener('mousemove', e => {
 }, false);
 
 function encodeBlock(b) {
-    let c = 0;
-    c = (c | (b.s < 0 ? 0 : b.s)) << 2;
-    c = (c | b.x) << 5;
-    c = (c | b.y) << 5;
-    c = (c | b.w) << 5;
-    c = (c | b.h);
+    let c = b.s < 0 ? 0 : b.s;
+    c = (c << 5) | b.x;
+    c = (c << 5) | b.y;
+    c = (c << 5) | b.w;
+    c = (c << 5) | b.h;
     return '0x' + c.toString(16);
 }
 
@@ -149,7 +148,7 @@ function decodeBlock(c) {
     const y = c & 0b11111;
     c = c >> 5;
     const x = c & 0b11111;
-    c = c >> 2;
+    c = c >> 5;
     const s = c & 0b11;
 
     const b = {
